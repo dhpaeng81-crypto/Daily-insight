@@ -69,6 +69,30 @@ def collect_news():
     return all_news
  
 # =====================
+# 단일 뉴스 한국어 번역 (백업용)
+# =====================
+def translate_single(news_item):
+    client = OpenAI(api_key=OPENAI_API_KEY)
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": "한국어 번역가입니다. 반드시 한국어로만 답하세요."
+            },
+            {
+                "role": "user",
+                "content": f"아래 뉴스 제목과 내용을 한국어로 번역하고 2-3문장으로 요약해주세요.\n\n제목: {news_item['title']}\n내용: {news_item['summary']}"
+            }
+        ],
+        max_tokens=300
+    )
+    return {
+        "title": news_item["title"],
+        "body": response.choices[0].message.content
+    }
+ 
+# =====================
 # OpenAI 요약
 # =====================
 def generate_content(news_list):
@@ -88,6 +112,8 @@ def generate_content(news_list):
 - 영어 단어가 포함되면 안 됨 (고유명사 제외: 회사명, 인명 등)
 - 전문용어는 쉬운 한국어로 풀어서 설명할 것
 - 왜 중요한지 맥락을 포함할 것
+- news_summaries는 반드시 수집된 모든 뉴스를 포함할 것
+- original_index는 뉴스 데이터의 [index:숫자] 값과 정확히 일치할 것
 - 반드시 아래 JSON 형식으로만 응답할 것 (다른 텍스트 없이)
  
 {{
@@ -127,7 +153,7 @@ def generate_content(news_list):
                 "content": prompt
             }
         ],
-        max_tokens=3000
+        max_tokens=4000
     )
  
     import json
@@ -177,11 +203,31 @@ def build_html(news_list, content):
  
     summaries = content.get("news_summaries", [])
  
+    # 인덱스 기반 매핑
+    summaries_by_index = {}
+    for s in summaries:
+        idx = s.get("original_index")
+        if idx is not None:
+            summaries_by_index[idx] = s
+ 
+    # 제목 기반 매핑 (백업)
+    summaries_by_title = {}
+    for s in summaries:
+        summaries_by_title[s.get("title", "").lower()] = s
+ 
     def get_summary(idx):
-        for s in summaries:
-            if s.get("original_index") == idx:
+        # 1순위: 인덱스로 매핑
+        if idx in summaries_by_index:
+            return summaries_by_index[idx]
+        # 2순위: 제목 유사도로 매핑
+        orig_title = news_list[idx]["title"].lower()
+        for title, s in summaries_by_title.items():
+            words = title.split()[:3]
+            if words and any(word in orig_title for word in words):
                 return s
-        return {"title": news_list[idx]["title"], "body": news_list[idx]["summary"]}
+        # 3순위: 단독 번역 요청
+        print(f"Translating index {idx} individually...")
+        return translate_single(news_list[idx])
  
     finance_cards = ""
     for n in finance_news[:3]:
@@ -402,7 +448,6 @@ a {{ color: inherit; text-decoration: none; }}
 # 텔레그램 발송
 # =====================
 def send_telegram(today, filename):
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     site_url = "https://dhpaeng81-crypto.github.io/Daily-insight"
     message = (
         f"*Daily Insight* 발행 완료\n"
@@ -410,7 +455,7 @@ def send_telegram(today, filename):
         f"👉 [오늘의 브리핑 보기]({site_url})"
     )
     requests.post(
-        url,
+        f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
         json={
             "chat_id": TELEGRAM_CHAT_ID,
             "text": message,
