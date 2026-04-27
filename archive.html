@@ -23,9 +23,9 @@ a { color: inherit; text-decoration: none; }
 .header-inner { max-width: 780px; margin: 0 auto; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
 .logo { font-family: "Playfair Display", serif; font-size: 20px; font-weight: 700; }
 .logo span { color: var(--accent); }
-.header-meta { font-size: 12px; color: var(--ink-muted); }
 .header-nav { display: flex; gap: 20px; font-size: 13px; color: var(--ink-muted); }
 .header-nav a:hover { color: var(--accent); }
+.header-nav .active { color: var(--accent); font-weight: 500; }
 .site-footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
 .footer-inner { max-width: 780px; margin: 0 auto; }
 .footer-logo { font-family: "Playfair Display", serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
@@ -41,119 +41,24 @@ a { color: inherit; text-decoration: none; }
   .header-meta { display: none; }
 }
 
-.archive-hero {
-  max-width: 780px;
-  margin: 0 auto;
-  padding: 56px 24px 40px;
-  border-bottom: 1px solid var(--border);
-}
-.archive-hero-label {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-  background: var(--accent-light);
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 100px;
-  margin-bottom: 20px;
-}
-.archive-hero-title {
-  font-family: "Playfair Display", serif;
-  font-size: clamp(26px, 5vw, 40px);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  margin-bottom: 12px;
-}
-.archive-hero-desc {
-  font-size: 15px;
-  color: var(--ink-soft);
-}
-.archive-main {
-  max-width: 780px;
-  margin: 0 auto;
-  padding: 40px 24px 80px;
-}
-.archive-count {
-  font-size: 13px;
-  color: var(--ink-muted);
-  margin-bottom: 24px;
-}
-.archive-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.archive-card {
-  display: grid;
-  grid-template-columns: 64px 1fr auto;
-  align-items: center;
-  gap: 16px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 20px;
-  transition: box-shadow 0.2s, border-color 0.2s;
-  cursor: pointer;
-}
-.archive-card:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-  border-color: var(--accent);
-}
-.archive-date {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-.archive-date-num {
-  font-family: "Playfair Display", serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1;
-}
-.archive-weekday {
-  font-size: 11px;
-  color: var(--ink-muted);
-}
-.archive-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.archive-title {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--ink);
-  line-height: 1.4;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.archive-meta {
-  font-size: 12px;
-  color: var(--ink-muted);
-}
-.archive-arrow {
-  font-size: 16px;
-  color: var(--ink-muted);
-}
-.archive-card:hover .archive-arrow {
-  color: var(--accent);
-}
-.today-badge {
-  font-size: 10px;
-  font-weight: 500;
-  background: var(--accent);
-  color: #fff;
-  padding: 2px 8px;
-  border-radius: 100px;
-  letter-spacing: 0.05em;
-}
-.header-nav .active { color: var(--accent); font-weight: 500; }
+.archive-hero { max-width: 780px; margin: 0 auto; padding: 56px 24px 40px; border-bottom: 1px solid var(--border); }
+.archive-hero-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); display: inline-block; padding: 4px 12px; border-radius: 100px; margin-bottom: 20px; }
+.archive-hero-title { font-family: "Playfair Display", serif; font-size: clamp(26px, 5vw, 40px); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 12px; }
+.archive-hero-desc { font-size: 15px; color: var(--ink-soft); }
+.archive-main { max-width: 780px; margin: 0 auto; padding: 40px 24px 80px; }
+.archive-count { font-size: 13px; color: var(--ink-muted); margin-bottom: 24px; }
+.archive-list { display: flex; flex-direction: column; gap: 12px; }
+.archive-card { display: grid; grid-template-columns: 64px 1fr auto; align-items: center; gap: 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; transition: box-shadow 0.2s, border-color 0.2s; cursor: pointer; }
+.archive-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-color: var(--accent); }
+.archive-date { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.archive-date-num { font-family: "Playfair Display", serif; font-size: 20px; font-weight: 700; color: var(--ink); line-height: 1; }
+.archive-weekday { font-size: 11px; color: var(--ink-muted); }
+.archive-info { display: flex; flex-direction: column; gap: 4px; }
+.archive-title { font-size: 14px; font-weight: 500; color: var(--ink); line-height: 1.4; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.archive-meta { font-size: 12px; color: var(--ink-muted); }
+.archive-arrow { font-size: 16px; color: var(--ink-muted); }
+.archive-card:hover .archive-arrow { color: var(--accent); }
+.today-badge { font-size: 10px; font-weight: 500; background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 100px; letter-spacing: 0.05em; }
 @media (min-width: 1024px) {
   .archive-hero { max-width: 1080px; padding: 72px 48px 56px; }
   .archive-main { max-width: 1080px; padding: 40px 48px 100px; }
@@ -194,7 +99,7 @@ a { color: inherit; text-decoration: none; }
           <span class="archive-weekday">월요일</span>
         </div>
         <div class="archive-info">
-          <div class="archive-title">K증시, 코스피 6600선 돌파하며 사상 최고 기록 경신 <span class="today-badge">오늘</span></div>
+          <div class="archive-title">코스피 시총 6000조 돌파 <span class="today-badge">오늘</span></div>
           <div class="archive-meta">2026년 04월 27일</div>
         </div>
         <div class="archive-arrow">→</div>
