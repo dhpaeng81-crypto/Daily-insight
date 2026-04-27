@@ -13,17 +13,42 @@ import glob
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
+UNSPLASH_ACCESS_KEY = os.environ.get("UNSPLASH_ACCESS_KEY")
 
 # =====================
-# RSS 피드
+# 카테고리별 Unsplash 검색어
 # =====================
-RSS_FEEDS = [
-    ("Finance", "https://finance.yahoo.com/news/rssindex"),
-    ("Finance", "https://www.hankyung.com/feed/finance"),
-    ("AI/IT", "https://techcrunch.com/category/artificial-intelligence/feed/"),
-    ("Energy", "https://feeds.reuters.com/reuters/businessNews"),
-    ("Energy", "https://www.google.com/alerts/feeds/05107057229753784254/4810996089673190473")
-]
+UNSPLASH_QUERIES = {
+    "Finance": ["stock market", "finance", "investment", "economy", "trading"],
+    "AI/IT": ["artificial intelligence", "technology", "data center", "computer", "digital"],
+    "Energy": ["renewable energy", "solar power", "oil", "electricity", "energy"]
+}
+
+unsplash_cache = {}
+
+# =====================
+# Unsplash 이미지 가져오기
+# =====================
+def get_unsplash_image(category, keyword=""):
+    import random
+    cache_key = f"{category}_{keyword}"
+    if cache_key in unsplash_cache:
+        return unsplash_cache[cache_key]
+    try:
+        query = keyword if keyword else random.choice(UNSPLASH_QUERIES.get(category, ["news"]))
+        response = requests.get(
+            "https://api.unsplash.com/photos/random",
+            params={"query": query, "orientation": "landscape", "content_filter": "high"},
+            headers={"Authorization": f"Client-ID {UNSPLASH_ACCESS_KEY}"},
+            timeout=10
+        )
+        if response.status_code == 200:
+            image_url = response.json()["urls"]["regular"]
+            unsplash_cache[cache_key] = image_url
+            return image_url
+    except Exception as e:
+        print(f"Unsplash error: {e}")
+    return ""
 
 # =====================
 # 이미지 추출
@@ -46,6 +71,14 @@ def extract_image(entry):
 # =====================
 # RSS 수집
 # =====================
+RSS_FEEDS = [
+    ("Finance", "https://finance.yahoo.com/news/rssindex"),
+    ("Finance", "https://www.hankyung.com/feed/finance"),
+    ("AI/IT", "https://techcrunch.com/category/artificial-intelligence/feed/"),
+    ("Energy", "https://feeds.reuters.com/reuters/businessNews"),
+    ("Energy", "https://www.google.com/alerts/feeds/05107057229753784254/4810996089673190473")
+]
+
 def collect_news():
     all_news = []
     for category, url in RSS_FEEDS:
@@ -57,6 +90,9 @@ def collect_news():
                 summary = re.sub('<[^>]+>', '', entry.get("summary", ""))[:200]
                 link = entry.get("link", "")
                 image = extract_image(entry)
+                if not image and UNSPLASH_ACCESS_KEY:
+                    keyword = " ".join(title.split()[:3])
+                    image = get_unsplash_image(category, keyword)
                 all_news.append({
                     "category": category,
                     "title": title,
@@ -78,24 +114,15 @@ def translate_single(news_item):
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
-            {
-                "role": "system",
-                "content": "한국어 번역가입니다. 반드시 한국어로만 답하세요."
-            },
-            {
-                "role": "user",
-                "content": f"아래 뉴스 제목과 내용을 한국어로 번역하고 2-3문장으로 요약해주세요.\n\n제목: {news_item['title']}\n내용: {news_item['summary']}"
-            }
+            {"role": "system", "content": "한국어 번역가입니다. 반드시 한국어로만 답하세요."},
+            {"role": "user", "content": f"아래 뉴스 제목과 내용을 한국어로 번역하고 2-3문장으로 요약해주세요.\n\n제목: {news_item['title']}\n내용: {news_item['summary']}"}
         ],
         max_tokens=300
     )
-    return {
-        "title": news_item["title"],
-        "body": response.choices[0].message.content
-    }
+    return {"title": news_item["title"], "body": response.choices[0].message.content}
 
 # =====================
-# OpenAI 요약
+# OpenAI 요약 (인사이트 강화)
 # =====================
 def generate_content(news_list):
     client = OpenAI(api_key=OPENAI_API_KEY)
@@ -105,37 +132,48 @@ def generate_content(news_list):
         news_text += f"[index:{i}][{n['category']}] {n['title']}\n{n['summary']}\n\n"
 
     prompt = f"""
-당신은 금융,IT,에너지 투자 전문가이자 한국어 전문 뉴스 에디터입니다.
+당신은 15년 경력의 한국인 금융·IT 시장 전문 애널리스트이자 뉴스레터 에디터입니다.
 아래 뉴스를 바탕으로 Daily Insight 웹진 콘텐츠를 작성해주세요.
-독자는 한국인 투자자와 일반인입니다.
- 
+독자는 한국인 투자자와 일반인이며, 깊이 있는 시장 분석과 구체적인 투자 인사이트를 원합니다.
+
 [절대 규칙]
 - 모든 출력은 반드시 한국어로만 작성할 것
-- 영어 단어가 포함되면 안 됨 (고유명사 제외: 회사명, 인명 등)
-- 전문용어는 쉬운 한국어로 풀어서 설명할 것
-- 왜 중요한지 맥락을 포함할 것
-- 인사이트는 구체적인 방향성이나 수치, 시장변화 등을 다루며, 단기/중기 시장 방향성, 영향에 속하는 산업군이나 기업 등을 포함하여 풍부하게 제시할 것 
+- 영어 단어 사용 금지 (고유명사 제외: 회사명, 인명, 지표명 등)
+- 전문용어는 반드시 쉬운 한국어로 풀어서 설명할 것
 - news_summaries는 반드시 수집된 모든 뉴스를 포함할 것
-- original_index는 뉴스 데이터의 [index:숫자] 값과 정확히 일치할 것
+- original_index는 [index:숫자] 값과 정확히 일치할 것
 - 반드시 아래 JSON 형식으로만 응답할 것 (다른 텍스트 없이)
- 
+
+[인사이트 작성 기준 — 반드시 준수]
+1. 시장 방향성: 단순 사실 나열 금지. 상승/하락/보합 방향과 그 이유를 명확히 제시
+2. 수치 근거: 가능한 경우 구체적인 % 변화, 금액, 기간을 포함
+3. 산업 파급효과: 해당 뉴스가 영향을 미치는 상위/하위 산업군을 구체적으로 명시
+4. 관련 기업: 국내외 수혜 또는 피해 기업을 최소 2개 이상 구체적으로 언급
+5. 투자 시사점: "어떻게 대응해야 하는가"에 대한 구체적 방향 제시
+6. 리스크 요인: 반드시 반대 시나리오나 주의사항 포함
+
 {{
-  "hero_title": "오늘의 핵심 헤드라인 100자 이내 한국어",
-  "hero_desc": "오늘 브리핑 전체를 관통하는 한 줄 요약 100자 이내 한국어",
-  "finance_overview": "금융 시장 전반 흐름 2-3문장 한국어",
-  "finance_comment": "투자자 관점 인사이트 3-4문장 한국어",
-  "tech_overview": "AI/IT 트렌드 전반 흐름 2-3문장 한국어",
-  "tech_comment": "IT/투자 관점 인사이트 3-4문장 한국어",
-  "energy_overview": "에너지 시장 전반 흐름 2-3문장 한국어",
-  "energy_comment": "에너지/투자 관점 인사이트 3-4문장 한국어",
-  "key_insight_1": "오늘의 핵심 인사이트 1 100자 이내 한국어",
-  "key_insight_2": "오늘의 핵심 인사이트 2 100자 이내 한국어",
-  "key_insight_3": "오늘의 핵심 인사이트 3 100자 이내 한국어",
+  "hero_title": "오늘의 핵심 헤드라인 20자 이내 한국어 (구체적 수치나 기업명 포함 권장)",
+  "hero_desc": "오늘 시장의 핵심 흐름을 관통하는 한 줄 요약 50자 이내 (방향성과 핵심 키워드 포함)",
+
+  "finance_overview": "금융 시장 전반 흐름 3-4문장. 주요 지수 방향성, 섹터별 강약, 매크로 환경 변화를 구체적으로 서술",
+  "finance_comment": "투자자를 위한 핵심 인사이트 3-4문장. 수혜 섹터, 관련 국내외 기업 2개 이상 언급, 단기/중기 대응 방향, 주의해야 할 리스크 포함",
+
+  "tech_overview": "AI·IT 시장 전반 흐름 3-4문장. 기술 트렌드 변화, 주요 기업 동향, 시장 규모나 성장률 수치 포함",
+  "tech_comment": "IT·투자 관점 핵심 인사이트 3-4문장. 기술 변화로 수혜받는 산업군, 관련 국내외 기업 2개 이상, 주목해야 할 포인트와 리스크 포함",
+
+  "energy_overview": "에너지 시장 전반 흐름 3-4문장. 유가·가스 방향성, 재생에너지 동향, 수급 변화 등 구체적 서술",
+  "energy_comment": "에너지·투자 관점 핵심 인사이트 3-4문장. 에너지 가격 변화가 미치는 산업 파급효과, 관련 국내외 기업 2개 이상, 투자 대응 방향과 리스크 포함",
+
+  "key_insight_1": "오늘의 핵심 인사이트 1: 구체적 수치·기업·방향성 포함 (예: 'AI 전력 수요 급증, LS일렉트릭·HD현대일렉트릭 수혜 전망')",
+  "key_insight_2": "오늘의 핵심 인사이트 2: 구체적 수치·기업·방향성 포함",
+  "key_insight_3": "오늘의 핵심 인사이트 3: 리스크 또는 주의사항 포함 (예: '미 연준 발언 앞두고 변동성 확대 가능성, 방어적 포지션 권장')",
+
   "news_summaries": [
     {{
       "category": "Finance 또는 AI/IT 또는 Energy",
-      "title": "뉴스 제목 한국어로 번역",
-      "body": "2-3문장 해설 한국어로 (왜 중요한지 포함)",
+      "title": "뉴스 제목 한국어로 번역 (구체적으로)",
+      "body": "3문장 해설: 1문장-사실 요약, 1문장-왜 중요한지 맥락, 1문장-관련 기업이나 산업 파급효과",
       "original_index": 0
     }}
   ]
@@ -145,18 +183,18 @@ def generate_content(news_list):
 {news_text}
 """
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gpt-4o",
         messages=[
             {
                 "role": "system",
-                "content": "당신은 한국어 전문 뉴스레터 에디터입니다. 모든 출력은 반드시 한국어로만 작성해야 합니다. 영어로 작성하면 절대 안 됩니다."
+                "content": """당신은 15년 경력의 한국인 금융·IT 시장 전문 애널리스트입니다.
+모든 출력은 반드시 한국어로만 작성하세요.
+인사이트는 반드시 구체적인 수치, 기업명, 산업 파급효과를 포함해야 합니다.
+'전망이다', '주목된다' 같은 모호한 표현 대신 구체적인 방향과 근거를 제시하세요."""
             },
-            {
-                "role": "user",
-                "content": prompt
-            }
+            {"role": "user", "content": prompt}
         ],
-        max_tokens=4000
+        max_tokens=5000
     )
 
     text = response.choices[0].message.content
@@ -169,10 +207,11 @@ def generate_content(news_list):
 def make_news_card(news_item, summary, category_class):
     if news_item["image"]:
         image_html = f'''<div class="news-thumb">
-        <img src="{news_item['image']}" alt="" onerror="this.parentElement.innerHTML='<div class=news-thumb-placeholder>📰</div>'">
+        <img src="{news_item['image']}" alt="{summary['title']}" loading="lazy">
       </div>'''
     else:
-        image_html = '<div class="news-thumb"><div class="news-thumb-placeholder">📰</div></div>'
+        emoji = {"finance": "📈", "tech": "🤖", "energy": "⚡"}.get(category_class, "📰")
+        image_html = f'<div class="news-thumb news-thumb-placeholder">{emoji}</div>'
 
     return f'''
     <div class="news-card">
@@ -213,9 +252,9 @@ a { color: inherit; text-decoration: none; }
 .header-inner { max-width: 780px; margin: 0 auto; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
 .logo { font-family: "Playfair Display", serif; font-size: 20px; font-weight: 700; }
 .logo span { color: var(--accent); }
-.header-meta { font-size: 12px; color: var(--ink-muted); }
 .header-nav { display: flex; gap: 20px; font-size: 13px; color: var(--ink-muted); }
 .header-nav a:hover { color: var(--accent); }
+.header-nav .active { color: var(--accent); font-weight: 500; }
 .site-footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
 .footer-inner { max-width: 780px; margin: 0 auto; }
 .footer-logo { font-family: "Playfair Display", serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
@@ -233,7 +272,7 @@ a { color: inherit; text-decoration: none; }
 '''
 
 # =====================
-# 공통 헤더/푸터 HTML
+# 공통 헤더/푸터
 # =====================
 def get_header_html(active="briefing"):
     briefing_class = "active" if active == "briefing" else ""
@@ -337,25 +376,44 @@ def build_html(news_list, content):
 .section-title {{ font-family: "Playfair Display", serif; font-size: 20px; font-weight: 700; }}
 .section-overview {{ font-size: 15px; color: var(--ink-soft); line-height: 1.75; margin-bottom: 24px; padding: 16px 20px; background: var(--bg-subtle); border-left: 3px solid var(--border); border-radius: 0 8px 8px 0; }}
 .news-list {{ display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }}
-.news-card {{ background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: grid; grid-template-columns: 120px 1fr; }}
-.news-thumb {{ width: 120px; min-height: 110px; overflow: hidden; background: var(--bg-subtle); }}
-.news-thumb img {{ width: 100%; height: 100%; object-fit: cover; display: block; }}
-.news-thumb-placeholder {{ width: 100%; height: 100%; min-height: 110px; display: flex; align-items: center; justify-content: center; font-size: 28px; opacity: 0.3; }}
-.news-content {{ padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; }}
-.news-source-row {{ display: flex; align-items: center; justify-content: space-between; }}
+.news-card {{ background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: box-shadow 0.2s; }}
+.news-card:hover {{ box-shadow: 0 4px 20px rgba(0,0,0,0.08); }}
+.news-thumb {{ width: 100%; height: 200px; overflow: hidden; background: var(--bg-subtle); flex-shrink: 0; }}
+.news-thumb img {{ width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; transition: transform 0.3s ease; }}
+.news-card:hover .news-thumb img {{ transform: scale(1.03); }}
+.news-thumb-placeholder {{ width: 100%; height: 200px; display: flex; align-items: center; justify-content: center; font-size: 40px; background: var(--bg-subtle); opacity: 0.5; }}
+.news-content {{ padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }}
+.news-source-row {{ display: flex; align-items: center; }}
 .news-source {{ font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }}
 .news-category-dot {{ width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-right: 5px; }}
 .news-category-dot.finance {{ background: var(--finance); }}
 .news-category-dot.tech {{ background: var(--tech); }}
 .news-category-dot.energy {{ background: var(--energy); }}
-.news-title {{ font-size: 14px; font-weight: 500; line-height: 1.45; color: var(--ink); }}
+.news-title {{ font-size: 15px; font-weight: 500; line-height: 1.45; color: var(--ink); }}
 .news-title a:hover {{ color: var(--accent); }}
 .news-body {{ font-size: 13px; color: var(--ink-soft); line-height: 1.7; }}
 .read-more {{ font-size: 12px; font-weight: 500; color: var(--accent); margin-top: 4px; display: inline-flex; align-items: center; gap: 3px; }}
-.editor-note {{ background: var(--bg-subtle); border-radius: 10px; padding: 16px 20px; margin-bottom: 48px; display: flex; gap: 12px; }}
-.editor-icon {{ font-size: 18px; flex-shrink: 0; margin-top: 2px; }}
-.editor-label {{ font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }}
-.editor-text {{ font-size: 14px; color: var(--ink-soft); line-height: 1.7; }}
+
+/* 에디터 인사이트 강화 스타일 */
+.editor-note {{
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  padding: 20px 24px;
+  margin-bottom: 48px;
+}}
+.editor-label {{
+  font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+}}
+.editor-text {{
+  font-size: 14px; color: var(--ink); line-height: 1.85;
+  font-weight: 400;
+}}
+.editor-text strong {{ color: var(--accent); font-weight: 500; }}
+
 .section-divider {{ height: 1px; background: var(--border); margin: 0 0 48px; }}
 .summary-box {{ background: var(--ink); color: #fff; border-radius: var(--radius); padding: 32px 36px; margin-bottom: 48px; }}
 .summary-label {{ font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 20px; }}
@@ -363,28 +421,32 @@ def build_html(news_list, content):
 .summary-list {{ list-style: none; display: flex; flex-direction: column; gap: 14px; }}
 .summary-list li {{ display: grid; grid-template-columns: 28px 1fr; gap: 12px; font-size: 14px; color: #d4d4d8; line-height: 1.65; }}
 .summary-num {{ font-family: "Playfair Display", serif; font-size: 22px; color: var(--accent-light); line-height: 1.1; opacity: 0.6; }}
-.header-nav .active {{ color: var(--accent); font-weight: 500; }}
+
 @media (min-width: 1024px) {{
   .hero {{ max-width: 1080px; padding: 72px 48px 56px; }}
   .main {{ max-width: 1080px; padding: 56px 48px 100px; }}
   .hero-title {{ font-size: 52px; }}
   .hero-desc {{ font-size: 18px; max-width: 680px; }}
   .section-title {{ font-size: 24px; }}
-  .section-overview {{ font-size: 17px; }}
-  .news-card {{ grid-template-columns: 160px 1fr; }}
-  .news-thumb {{ width: 160px; min-height: 140px; }}
-  .news-title {{ font-size: 16px; }}
-  .news-body {{ font-size: 15px; }}
-  .editor-text {{ font-size: 16px; }}
+  .section-overview {{ font-size: 16px; }}
+  .news-list {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }}
+  .news-thumb {{ height: 180px; }}
+  .news-thumb-placeholder {{ height: 180px; }}
+  .editor-text {{ font-size: 15px; }}
   .summary-box {{ padding: 40px 48px; }}
   .summary-title {{ font-size: 26px; }}
-  .summary-list li {{ font-size: 16px; }}
+  .summary-list li {{ font-size: 15px; }}
 }}
-@media (max-width: 600px) {{
+@media (min-width: 640px) and (max-width: 1023px) {{
+  .news-list {{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }}
+  .news-thumb {{ height: 180px; }}
+  .news-thumb-placeholder {{ height: 180px; }}
+}}
+@media (max-width: 639px) {{
   .hero {{ padding: 36px 20px 32px; }}
   .main {{ padding: 36px 20px 60px; }}
-  .news-card {{ grid-template-columns: 1fr; }}
-  .news-thumb {{ width: 100%; height: 160px; }}
+  .news-thumb {{ height: 180px; }}
+  .news-thumb-placeholder {{ height: 180px; }}
   .summary-box {{ padding: 24px 20px; }}
 }}
 </style>
@@ -411,11 +473,8 @@ def build_html(news_list, content):
   <p class="section-overview">{content.get("finance_overview", "")}</p>
   <div class="news-list">{finance_cards}</div>
   <div class="editor-note">
-    <div class="editor-icon">💡</div>
-    <div>
-      <div class="editor-label">에디터 인사이트</div>
-      <div class="editor-text">{content.get("finance_comment", "")}</div>
-    </div>
+    <div class="editor-label">💡 애널리스트 인사이트</div>
+    <div class="editor-text">{content.get("finance_comment", "")}</div>
   </div>
   <div class="section-divider"></div>
 
@@ -426,11 +485,8 @@ def build_html(news_list, content):
   <p class="section-overview">{content.get("tech_overview", "")}</p>
   <div class="news-list">{tech_cards}</div>
   <div class="editor-note">
-    <div class="editor-icon">💡</div>
-    <div>
-      <div class="editor-label">에디터 인사이트</div>
-      <div class="editor-text">{content.get("tech_comment", "")}</div>
-    </div>
+    <div class="editor-label">💡 애널리스트 인사이트</div>
+    <div class="editor-text">{content.get("tech_comment", "")}</div>
   </div>
   <div class="section-divider"></div>
 
@@ -441,11 +497,8 @@ def build_html(news_list, content):
   <p class="section-overview">{content.get("energy_overview", "")}</p>
   <div class="news-list">{energy_cards}</div>
   <div class="editor-note">
-    <div class="editor-icon">💡</div>
-    <div>
-      <div class="editor-label">에디터 인사이트</div>
-      <div class="editor-text">{content.get("energy_comment", "")}</div>
-    </div>
+    <div class="editor-label">💡 애널리스트 인사이트</div>
+    <div class="editor-text">{content.get("energy_comment", "")}</div>
   </div>
   <div class="section-divider"></div>
 
@@ -465,7 +518,6 @@ def build_html(news_list, content):
 </html>'''
 
     filename = f"briefing_{today_num}.html"
-
     with open(filename, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"HTML saved: {filename}")
@@ -480,25 +532,21 @@ def build_html(news_list, content):
 # 아카이브 페이지 생성
 # =====================
 def build_archive():
-    # 기존 briefing 파일 목록 수집
     files = sorted(glob.glob("briefing_*.html"), reverse=True)
 
     archive_items = ""
     for f in files:
-        # 파일명에서 날짜 추출 (briefing_20260427.html → 20260427)
         date_str = f.replace("briefing_", "").replace(".html", "")
         try:
             date_obj = datetime.strptime(date_str, "%Y%m%d")
             date_display = date_obj.strftime("%Y년 %m월 %d일")
             weekday = ["월", "화", "수", "목", "금", "토", "일"][date_obj.weekday()]
 
-            # 해당 파일에서 hero_title 추출
             with open(f, "r", encoding="utf-8") as fp:
                 html_content = fp.read()
             title_match = re.search(r'<h1 class="hero-title">(.*?)</h1>', html_content, re.DOTALL)
             hero_title = title_match.group(1).strip() if title_match else "Daily Insight 브리핑"
 
-            # 오늘 날짜면 배지 표시
             is_today = date_str == datetime.now().strftime("%Y%m%d")
             today_badge = '<span class="today-badge">오늘</span>' if is_today else ''
 
@@ -519,7 +567,6 @@ def build_archive():
             continue
 
     common_css = get_common_css()
-    today = datetime.now().strftime("%Y년 %m월 %d일")
 
     archive_html = f'''<!DOCTYPE html>
 <html lang="ko">
@@ -530,119 +577,24 @@ def build_archive():
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 {common_css}
-.archive-hero {{
-  max-width: 780px;
-  margin: 0 auto;
-  padding: 56px 24px 40px;
-  border-bottom: 1px solid var(--border);
-}}
-.archive-hero-label {{
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-  background: var(--accent-light);
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 100px;
-  margin-bottom: 20px;
-}}
-.archive-hero-title {{
-  font-family: "Playfair Display", serif;
-  font-size: clamp(26px, 5vw, 40px);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  margin-bottom: 12px;
-}}
-.archive-hero-desc {{
-  font-size: 15px;
-  color: var(--ink-soft);
-}}
-.archive-main {{
-  max-width: 780px;
-  margin: 0 auto;
-  padding: 40px 24px 80px;
-}}
-.archive-count {{
-  font-size: 13px;
-  color: var(--ink-muted);
-  margin-bottom: 24px;
-}}
-.archive-list {{
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}}
-.archive-card {{
-  display: grid;
-  grid-template-columns: 64px 1fr auto;
-  align-items: center;
-  gap: 16px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 20px;
-  transition: box-shadow 0.2s, border-color 0.2s;
-  cursor: pointer;
-}}
-.archive-card:hover {{
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-  border-color: var(--accent);
-}}
-.archive-date {{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}}
-.archive-date-num {{
-  font-family: "Playfair Display", serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1;
-}}
-.archive-weekday {{
-  font-size: 11px;
-  color: var(--ink-muted);
-}}
-.archive-info {{
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}}
-.archive-title {{
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--ink);
-  line-height: 1.4;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}}
-.archive-meta {{
-  font-size: 12px;
-  color: var(--ink-muted);
-}}
-.archive-arrow {{
-  font-size: 16px;
-  color: var(--ink-muted);
-}}
-.archive-card:hover .archive-arrow {{
-  color: var(--accent);
-}}
-.today-badge {{
-  font-size: 10px;
-  font-weight: 500;
-  background: var(--accent);
-  color: #fff;
-  padding: 2px 8px;
-  border-radius: 100px;
-  letter-spacing: 0.05em;
-}}
-.header-nav .active {{ color: var(--accent); font-weight: 500; }}
+.archive-hero {{ max-width: 780px; margin: 0 auto; padding: 56px 24px 40px; border-bottom: 1px solid var(--border); }}
+.archive-hero-label {{ font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); display: inline-block; padding: 4px 12px; border-radius: 100px; margin-bottom: 20px; }}
+.archive-hero-title {{ font-family: "Playfair Display", serif; font-size: clamp(26px, 5vw, 40px); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 12px; }}
+.archive-hero-desc {{ font-size: 15px; color: var(--ink-soft); }}
+.archive-main {{ max-width: 780px; margin: 0 auto; padding: 40px 24px 80px; }}
+.archive-count {{ font-size: 13px; color: var(--ink-muted); margin-bottom: 24px; }}
+.archive-list {{ display: flex; flex-direction: column; gap: 12px; }}
+.archive-card {{ display: grid; grid-template-columns: 64px 1fr auto; align-items: center; gap: 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; transition: box-shadow 0.2s, border-color 0.2s; cursor: pointer; }}
+.archive-card:hover {{ box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-color: var(--accent); }}
+.archive-date {{ display: flex; flex-direction: column; align-items: center; gap: 2px; }}
+.archive-date-num {{ font-family: "Playfair Display", serif; font-size: 20px; font-weight: 700; color: var(--ink); line-height: 1; }}
+.archive-weekday {{ font-size: 11px; color: var(--ink-muted); }}
+.archive-info {{ display: flex; flex-direction: column; gap: 4px; }}
+.archive-title {{ font-size: 14px; font-weight: 500; color: var(--ink); line-height: 1.4; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }}
+.archive-meta {{ font-size: 12px; color: var(--ink-muted); }}
+.archive-arrow {{ font-size: 16px; color: var(--ink-muted); }}
+.archive-card:hover .archive-arrow {{ color: var(--accent); }}
+.today-badge {{ font-size: 10px; font-weight: 500; background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 100px; letter-spacing: 0.05em; }}
 @media (min-width: 1024px) {{
   .archive-hero {{ max-width: 1080px; padding: 72px 48px 56px; }}
   .archive-main {{ max-width: 1080px; padding: 40px 48px 100px; }}
