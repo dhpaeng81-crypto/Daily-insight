@@ -359,17 +359,22 @@ a {{ color: inherit; text-decoration: none; }}
 </body>
 </html>'''
 
+
+    today_num = datetime.now().strftime("%Y%m%d")
+    filename = f"briefing_{today_num}.html"
+
     # 날짜별 파일 저장
     with open(filename, "w", encoding="utf-8") as f:
-        f.write(content)
+        f.write(html)
     print(f"HTML saved: {filename}")
-    
-    # index.html도 동일하게 저장 (GitHub Pages 메인 페이지)
+
+    # index.html 저장 (GitHub Pages 메인 페이지)
     with open("index.html", "w", encoding="utf-8") as f:
-        f.write(content)
+        f.write(html)
     print("index.html updated")
-    
+
     return filename
+   
 
 # =====================
 # 텔레그램 발송
