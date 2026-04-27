@@ -4,14 +4,16 @@ from openai import OpenAI
 from datetime import datetime
 import re
 import os
- 
+import json
+import glob
+
 # =====================
 # 설정값
 # =====================
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
- 
+
 # =====================
 # RSS 피드
 # =====================
@@ -22,7 +24,7 @@ RSS_FEEDS = [
     ("Energy", "https://feeds.reuters.com/reuters/businessNews"),
     ("Energy", "https://www.google.com/alerts/feeds/05107057229753784254/4810996089673190473")
 ]
- 
+
 # =====================
 # 이미지 추출
 # =====================
@@ -40,7 +42,7 @@ def extract_image(entry):
     if img_match:
         return img_match.group(1)
     return ""
- 
+
 # =====================
 # RSS 수집
 # =====================
@@ -67,7 +69,7 @@ def collect_news():
         except Exception as e:
             print(f"Error ({url}): {e}")
     return all_news
- 
+
 # =====================
 # 단일 뉴스 한국어 번역 (백업용)
 # =====================
@@ -91,17 +93,17 @@ def translate_single(news_item):
         "title": news_item["title"],
         "body": response.choices[0].message.content
     }
- 
+
 # =====================
 # OpenAI 요약
 # =====================
 def generate_content(news_list):
     client = OpenAI(api_key=OPENAI_API_KEY)
- 
+
     news_text = ""
     for i, n in enumerate(news_list):
         news_text += f"[index:{i}][{n['category']}] {n['title']}\n{n['summary']}\n\n"
- 
+
     prompt = f"""
 당신은 금융,IT,에너지 투자 전문가이자 한국어 전문 뉴스 에디터입니다.
 아래 뉴스를 바탕으로 Daily Insight 웹진 콘텐츠를 작성해주세요.
@@ -138,7 +140,7 @@ def generate_content(news_list):
     }}
   ]
 }}
- 
+
 뉴스 데이터:
 {news_text}
 """
@@ -156,12 +158,11 @@ def generate_content(news_list):
         ],
         max_tokens=4000
     )
- 
-    import json
+
     text = response.choices[0].message.content
     text = re.sub(r'```json|```', '', text).strip()
     return json.loads(text)
- 
+
 # =====================
 # 뉴스 카드 HTML 생성
 # =====================
@@ -172,7 +173,7 @@ def make_news_card(news_item, summary, category_class):
       </div>'''
     else:
         image_html = '<div class="news-thumb"><div class="news-thumb-placeholder">📰</div></div>'
- 
+
     return f'''
     <div class="news-card">
       {image_html}
@@ -190,61 +191,128 @@ def make_news_card(news_item, summary, category_class):
         <a href="{news_item['link']}" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>'''
- 
+
+# =====================
+# 공통 CSS
+# =====================
+def get_common_css():
+    return '''
+:root {
+  --ink: #18181b; --ink-soft: #52525b; --ink-muted: #a1a1aa;
+  --bg: #fafaf9; --bg-card: #ffffff; --bg-subtle: #f4f4f5;
+  --accent: #0f766e; --accent-light: #ccfbf1;
+  --finance: #0369a1; --finance-bg: #e0f2fe;
+  --tech: #6d28d9; --tech-bg: #ede9fe;
+  --energy: #b45309; --energy-bg: #fef3c7;
+  --border: #e4e4e7; --radius: 12px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: "Noto Sans KR", sans-serif; font-weight: 300; line-height: 1.8; }
+a { color: inherit; text-decoration: none; }
+.site-header { border-bottom: 1px solid var(--border); background: var(--bg-card); position: sticky; top: 0; z-index: 100; }
+.header-inner { max-width: 780px; margin: 0 auto; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+.logo { font-family: "Playfair Display", serif; font-size: 20px; font-weight: 700; }
+.logo span { color: var(--accent); }
+.header-meta { font-size: 12px; color: var(--ink-muted); }
+.header-nav { display: flex; gap: 20px; font-size: 13px; color: var(--ink-muted); }
+.header-nav a:hover { color: var(--accent); }
+.site-footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
+.footer-inner { max-width: 780px; margin: 0 auto; }
+.footer-logo { font-family: "Playfair Display", serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.footer-logo span { color: var(--accent); }
+.footer-desc { font-size: 12px; color: var(--ink-muted); margin-bottom: 16px; }
+.footer-links { display: flex; justify-content: center; gap: 20px; font-size: 12px; color: var(--ink-muted); }
+.footer-links a:hover { color: var(--accent); }
+@media (min-width: 1024px) {
+  .header-inner { max-width: 1080px; padding: 0 48px; }
+  .footer-inner { max-width: 1080px; }
+}
+@media (max-width: 600px) {
+  .header-meta { display: none; }
+}
+'''
+
+# =====================
+# 공통 헤더/푸터 HTML
+# =====================
+def get_header_html(active="briefing"):
+    briefing_class = "active" if active == "briefing" else ""
+    archive_class = "active" if active == "archive" else ""
+    return f'''
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo"><a href="index.html">Daily<span>Insight</span></a></div>
+    <nav class="header-nav">
+      <a href="index.html" class="{briefing_class}">오늘의 브리핑</a>
+      <a href="archive.html" class="{archive_class}">아카이브</a>
+    </nav>
+  </div>
+</header>'''
+
+def get_footer_html():
+    return '''
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Daily<span>Insight</span></div>
+    <div class="footer-desc">매일 오전 7시, 투자자를 위한 핵심 인사이트</div>
+    <div class="footer-links">
+      <a href="index.html">오늘의 브리핑</a>
+      <a href="archive.html">아카이브</a>
+    </div>
+  </div>
+</footer>'''
+
 # =====================
 # 최종 HTML 생성
 # =====================
 def build_html(news_list, content):
     today = datetime.now().strftime("%Y년 %m월 %d일")
     today_num = datetime.now().strftime("%Y%m%d")
- 
+
     finance_news = [n for n in news_list if n["category"] == "Finance"]
     tech_news = [n for n in news_list if n["category"] == "AI/IT"]
     energy_news = [n for n in news_list if n["category"] == "Energy"]
- 
+
     summaries = content.get("news_summaries", [])
- 
-    # 인덱스 기반 매핑
+
     summaries_by_index = {}
     for s in summaries:
         idx = s.get("original_index")
         if idx is not None:
             summaries_by_index[idx] = s
- 
-    # 제목 기반 매핑 (백업)
+
     summaries_by_title = {}
     for s in summaries:
         summaries_by_title[s.get("title", "").lower()] = s
- 
+
     def get_summary(idx):
-        # 1순위: 인덱스로 매핑
         if idx in summaries_by_index:
             return summaries_by_index[idx]
-        # 2순위: 제목 유사도로 매핑
         orig_title = news_list[idx]["title"].lower()
         for title, s in summaries_by_title.items():
             words = title.split()[:3]
             if words and any(word in orig_title for word in words):
                 return s
-        # 3순위: 단독 번역 요청
         print(f"Translating index {idx} individually...")
         return translate_single(news_list[idx])
- 
+
     finance_cards = ""
     for n in finance_news[:3]:
         orig_idx = news_list.index(n)
         finance_cards += make_news_card(n, get_summary(orig_idx), "finance")
- 
+
     tech_cards = ""
     for n in tech_news[:3]:
         orig_idx = news_list.index(n)
         tech_cards += make_news_card(n, get_summary(orig_idx), "tech")
- 
+
     energy_cards = ""
     for n in energy_news[:3]:
         orig_idx = news_list.index(n)
         energy_cards += make_news_card(n, get_summary(orig_idx), "energy")
- 
+
+    common_css = get_common_css()
+
     html = f'''<!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -253,23 +321,7 @@ def build_html(news_list, content):
 <title>Daily Insight — {today}</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root {{
-  --ink: #18181b; --ink-soft: #52525b; --ink-muted: #a1a1aa;
-  --bg: #fafaf9; --bg-card: #ffffff; --bg-subtle: #f4f4f5;
-  --accent: #0f766e; --accent-light: #ccfbf1;
-  --finance: #0369a1; --finance-bg: #e0f2fe;
-  --tech: #6d28d9; --tech-bg: #ede9fe;
-  --energy: #b45309; --energy-bg: #fef3c7;
-  --border: #e4e4e7; --radius: 12px;
-}}
-* {{ box-sizing: border-box; margin: 0; padding: 0; }}
-body {{ background: var(--bg); color: var(--ink); font-family: "Noto Sans KR", sans-serif; font-weight: 300; line-height: 1.8; }}
-a {{ color: inherit; text-decoration: none; }}
-.site-header {{ border-bottom: 1px solid var(--border); background: var(--bg-card); position: sticky; top: 0; z-index: 100; }}
-.header-inner {{ max-width: 780px; margin: 0 auto; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; }}
-.logo {{ font-family: "Playfair Display", serif; font-size: 20px; font-weight: 700; }}
-.logo span {{ color: var(--accent); }}
-.header-meta {{ font-size: 12px; color: var(--ink-muted); }}
+{common_css}
 .hero {{ max-width: 780px; margin: 0 auto; padding: 56px 24px 40px; border-bottom: 1px solid var(--border); }}
 .issue-badge {{ display: inline-flex; align-items: center; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 100px; margin-bottom: 20px; }}
 .hero-title {{ font-family: "Playfair Display", serif; font-size: clamp(26px, 5vw, 40px); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px; }}
@@ -311,14 +363,8 @@ a {{ color: inherit; text-decoration: none; }}
 .summary-list {{ list-style: none; display: flex; flex-direction: column; gap: 14px; }}
 .summary-list li {{ display: grid; grid-template-columns: 28px 1fr; gap: 12px; font-size: 14px; color: #d4d4d8; line-height: 1.65; }}
 .summary-num {{ font-family: "Playfair Display", serif; font-size: 22px; color: var(--accent-light); line-height: 1.1; opacity: 0.6; }}
-.site-footer {{ border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }}
-.footer-inner {{ max-width: 780px; margin: 0 auto; }}
-.footer-logo {{ font-family: "Playfair Display", serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }}
-.footer-logo span {{ color: var(--accent); }}
-.footer-desc {{ font-size: 12px; color: var(--ink-muted); margin-bottom: 16px; }}
-.footer-links {{ display: flex; justify-content: center; gap: 20px; font-size: 12px; color: var(--ink-muted); }}
+.header-nav .active {{ color: var(--accent); font-weight: 500; }}
 @media (min-width: 1024px) {{
-  .header-inner {{ max-width: 1080px; padding: 0 48px; }}
   .hero {{ max-width: 1080px; padding: 72px 48px 56px; }}
   .main {{ max-width: 1080px; padding: 56px 48px 100px; }}
   .hero-title {{ font-size: 52px; }}
@@ -333,7 +379,6 @@ a {{ color: inherit; text-decoration: none; }}
   .summary-box {{ padding: 40px 48px; }}
   .summary-title {{ font-size: 26px; }}
   .summary-list li {{ font-size: 16px; }}
-  .footer-inner {{ max-width: 1080px; }}
 }}
 @media (max-width: 600px) {{
   .hero {{ padding: 36px 20px 32px; }}
@@ -341,18 +386,12 @@ a {{ color: inherit; text-decoration: none; }}
   .news-card {{ grid-template-columns: 1fr; }}
   .news-thumb {{ width: 100%; height: 160px; }}
   .summary-box {{ padding: 24px 20px; }}
-  .header-meta {{ display: none; }}
 }}
 </style>
 </head>
 <body>
-<header class="site-header">
-  <div class="header-inner">
-    <div class="logo">Daily<span>Insight</span></div>
-    <div class="header-meta">{today}</div>
-  </div>
-</header>
- 
+{get_header_html("briefing")}
+
 <section class="hero">
   <div class="issue-badge">오늘의 브리핑</div>
   <h1 class="hero-title">{content.get("hero_title", "오늘의 Daily Insight")}</h1>
@@ -363,7 +402,7 @@ a {{ color: inherit; text-decoration: none; }}
     <span class="tag">⚡ 에너지</span>
   </div>
 </section>
- 
+
 <main class="main">
   <div class="section-header">
     <span class="section-pill finance">Finance</span>
@@ -379,7 +418,7 @@ a {{ color: inherit; text-decoration: none; }}
     </div>
   </div>
   <div class="section-divider"></div>
- 
+
   <div class="section-header">
     <span class="section-pill tech">Tech</span>
     <span class="section-title">AI · IT 트렌드</span>
@@ -394,7 +433,7 @@ a {{ color: inherit; text-decoration: none; }}
     </div>
   </div>
   <div class="section-divider"></div>
- 
+
   <div class="section-header">
     <span class="section-pill energy">Energy</span>
     <span class="section-title">에너지 · 산업</span>
@@ -409,7 +448,7 @@ a {{ color: inherit; text-decoration: none; }}
     </div>
   </div>
   <div class="section-divider"></div>
- 
+
   <div class="summary-box">
     <div class="summary-label">오늘의 핵심 인사이트</div>
     <div class="summary-title">오늘 꼭 기억할 3가지</div>
@@ -420,31 +459,226 @@ a {{ color: inherit; text-decoration: none; }}
     </ol>
   </div>
 </main>
- 
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-logo">Daily<span>Insight</span></div>
-    <div class="footer-desc">매일 오전 7시, 투자자를 위한 핵심 인사이트</div>
-    <div class="footer-links">
-      <a href="index.html">아카이브</a>
-    </div>
-  </div>
-</footer>
+
+{get_footer_html()}
 </body>
 </html>'''
- 
+
     filename = f"briefing_{today_num}.html"
- 
+
     with open(filename, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"HTML saved: {filename}")
- 
+
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html)
     print("index.html updated")
- 
+
     return filename
- 
+
+# =====================
+# 아카이브 페이지 생성
+# =====================
+def build_archive():
+    # 기존 briefing 파일 목록 수집
+    files = sorted(glob.glob("briefing_*.html"), reverse=True)
+
+    archive_items = ""
+    for f in files:
+        # 파일명에서 날짜 추출 (briefing_20260427.html → 20260427)
+        date_str = f.replace("briefing_", "").replace(".html", "")
+        try:
+            date_obj = datetime.strptime(date_str, "%Y%m%d")
+            date_display = date_obj.strftime("%Y년 %m월 %d일")
+            weekday = ["월", "화", "수", "목", "금", "토", "일"][date_obj.weekday()]
+
+            # 해당 파일에서 hero_title 추출
+            with open(f, "r", encoding="utf-8") as fp:
+                html_content = fp.read()
+            title_match = re.search(r'<h1 class="hero-title">(.*?)</h1>', html_content, re.DOTALL)
+            hero_title = title_match.group(1).strip() if title_match else "Daily Insight 브리핑"
+
+            # 오늘 날짜면 배지 표시
+            is_today = date_str == datetime.now().strftime("%Y%m%d")
+            today_badge = '<span class="today-badge">오늘</span>' if is_today else ''
+
+            archive_items += f'''
+      <a href="{f}" class="archive-card">
+        <div class="archive-date">
+          <span class="archive-date-num">{date_obj.strftime("%m.%d")}</span>
+          <span class="archive-weekday">{weekday}요일</span>
+        </div>
+        <div class="archive-info">
+          <div class="archive-title">{hero_title} {today_badge}</div>
+          <div class="archive-meta">{date_display}</div>
+        </div>
+        <div class="archive-arrow">→</div>
+      </a>'''
+        except Exception as e:
+            print(f"Archive item error ({f}): {e}")
+            continue
+
+    common_css = get_common_css()
+    today = datetime.now().strftime("%Y년 %m월 %d일")
+
+    archive_html = f'''<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Insight — 아카이브</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+{common_css}
+.archive-hero {{
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 56px 24px 40px;
+  border-bottom: 1px solid var(--border);
+}}
+.archive-hero-label {{
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-light);
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 100px;
+  margin-bottom: 20px;
+}}
+.archive-hero-title {{
+  font-family: "Playfair Display", serif;
+  font-size: clamp(26px, 5vw, 40px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}}
+.archive-hero-desc {{
+  font-size: 15px;
+  color: var(--ink-soft);
+}}
+.archive-main {{
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}}
+.archive-count {{
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin-bottom: 24px;
+}}
+.archive-list {{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}}
+.archive-card {{
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  cursor: pointer;
+}}
+.archive-card:hover {{
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  border-color: var(--accent);
+}}
+.archive-date {{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}}
+.archive-date-num {{
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+}}
+.archive-weekday {{
+  font-size: 11px;
+  color: var(--ink-muted);
+}}
+.archive-info {{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}}
+.archive-title {{
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}}
+.archive-meta {{
+  font-size: 12px;
+  color: var(--ink-muted);
+}}
+.archive-arrow {{
+  font-size: 16px;
+  color: var(--ink-muted);
+}}
+.archive-card:hover .archive-arrow {{
+  color: var(--accent);
+}}
+.today-badge {{
+  font-size: 10px;
+  font-weight: 500;
+  background: var(--accent);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 100px;
+  letter-spacing: 0.05em;
+}}
+.header-nav .active {{ color: var(--accent); font-weight: 500; }}
+@media (min-width: 1024px) {{
+  .archive-hero {{ max-width: 1080px; padding: 72px 48px 56px; }}
+  .archive-main {{ max-width: 1080px; padding: 40px 48px 100px; }}
+}}
+@media (max-width: 600px) {{
+  .archive-hero {{ padding: 36px 20px 32px; }}
+  .archive-main {{ padding: 32px 20px 60px; }}
+  .archive-card {{ grid-template-columns: 52px 1fr auto; gap: 12px; padding: 14px 16px; }}
+  .archive-date-num {{ font-size: 17px; }}
+}}
+</style>
+</head>
+<body>
+{get_header_html("archive")}
+
+<section class="archive-hero">
+  <div class="archive-hero-label">아카이브</div>
+  <h1 class="archive-hero-title">지난 브리핑 모아보기</h1>
+  <p class="archive-hero-desc">매일 오전 7시 발행된 Daily Insight 브리핑을 날짜별로 확인하세요.</p>
+</section>
+
+<main class="archive-main">
+  <div class="archive-count">총 {len(files)}개의 브리핑</div>
+  <div class="archive-list">
+    {archive_items}
+  </div>
+</main>
+
+{get_footer_html()}
+</body>
+</html>'''
+
+    with open("archive.html", "w", encoding="utf-8") as f:
+        f.write(archive_html)
+    print("archive.html updated")
+
 # =====================
 # 텔레그램 발송
 # =====================
@@ -464,7 +698,7 @@ def send_telegram(today, filename):
         }
     )
     print("Telegram: OK")
- 
+
 # =====================
 # 실행
 # =====================
@@ -472,16 +706,19 @@ if __name__ == "__main__":
     print("Step 1: Collecting news...")
     news_list = collect_news()
     print(f"Total: {len(news_list)} articles")
- 
+
     print("Step 2: Generating content...")
     content = generate_content(news_list)
     print("Content generated")
- 
+
     print("Step 3: Building HTML...")
     today = datetime.now().strftime("%Y년 %m월 %d일")
     filename = build_html(news_list, content)
- 
-    print("Step 4: Sending Telegram...")
+
+    print("Step 4: Building archive...")
+    build_archive()
+
+    print("Step 5: Sending Telegram...")
     send_telegram(today, filename)
- 
+
     print("All done!")
