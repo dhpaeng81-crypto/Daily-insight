@@ -411,11 +411,11 @@ def send_telegram(today, filename):
     )
     requests.post(
         url,
-        json={{
+        json={
             "chat_id": TELEGRAM_CHAT_ID,
             "text": message,
             "parse_mode": "Markdown"
-        }}
+        }
     )
     print("Telegram: OK")
  
