@@ -61,7 +61,7 @@ a { color: inherit; text-decoration: none; }
 .news-thumb { width: 100%; height: 200px; overflow: hidden; background: var(--bg-subtle); flex-shrink: 0; }
 .news-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; transition: transform 0.3s ease; }
 .news-card:hover .news-thumb img { transform: scale(1.03); }
-.news-thumb-placeholder { width: 100%; height: 200px; display: flex; align-items: center; justify-content: center; font-size: 40px; background: var(--bg-subtle); opacity: 0.5; }
+.news-thumb-empty { width: 100%; height: 100%; background: var(--bg-subtle); }
 .news-content { padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
 .news-source-row { display: flex; align-items: center; }
 .news-source { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
@@ -73,27 +73,9 @@ a { color: inherit; text-decoration: none; }
 .news-title a:hover { color: var(--accent); }
 .news-body { font-size: 13px; color: var(--ink-soft); line-height: 1.7; }
 .read-more { font-size: 12px; font-weight: 500; color: var(--accent); margin-top: 4px; display: inline-flex; align-items: center; gap: 3px; }
-
-/* 에디터 인사이트 강화 스타일 */
-.editor-note {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--accent);
-  border-radius: 0 10px 10px 0;
-  padding: 20px 24px;
-  margin-bottom: 48px;
-}
-.editor-label {
-  font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
-  display: flex; align-items: center; gap: 6px;
-}
-.editor-text {
-  font-size: 14px; color: var(--ink); line-height: 1.85;
-  font-weight: 400;
-}
-.editor-text strong { color: var(--accent); font-weight: 500; }
-
+.editor-note { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 48px; }
+.editor-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.editor-text { font-size: 14px; color: var(--ink); line-height: 1.85; font-weight: 400; }
 .section-divider { height: 1px; background: var(--border); margin: 0 0 48px; }
 .summary-box { background: var(--ink); color: #fff; border-radius: var(--radius); padding: 32px 36px; margin-bottom: 48px; }
 .summary-label { font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 20px; }
@@ -101,7 +83,6 @@ a { color: inherit; text-decoration: none; }
 .summary-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
 .summary-list li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; font-size: 14px; color: #d4d4d8; line-height: 1.65; }
 .summary-num { font-family: "Playfair Display", serif; font-size: 22px; color: var(--accent-light); line-height: 1.1; opacity: 0.6; }
-
 @media (min-width: 1024px) {
   .hero { max-width: 1080px; padding: 72px 48px 56px; }
   .main { max-width: 1080px; padding: 56px 48px 100px; }
@@ -111,7 +92,6 @@ a { color: inherit; text-decoration: none; }
   .section-overview { font-size: 16px; }
   .news-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .news-thumb { height: 180px; }
-  .news-thumb-placeholder { height: 180px; }
   .editor-text { font-size: 15px; }
   .summary-box { padding: 40px 48px; }
   .summary-title { font-size: 26px; }
@@ -120,13 +100,10 @@ a { color: inherit; text-decoration: none; }
 @media (min-width: 640px) and (max-width: 1023px) {
   .news-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .news-thumb { height: 180px; }
-  .news-thumb-placeholder { height: 180px; }
 }
 @media (max-width: 639px) {
   .hero { padding: 36px 20px 32px; }
   .main { padding: 36px 20px 60px; }
-  .news-thumb { height: 180px; }
-  .news-thumb-placeholder { height: 180px; }
   .summary-box { padding: 24px 20px; }
 }
 </style>
@@ -145,8 +122,8 @@ a { color: inherit; text-decoration: none; }
 
 <section class="hero">
   <div class="issue-badge">오늘의 브리핑</div>
-  <h1 class="hero-title">코스피 시총 6000조 돌파</h1>
-  <p class="hero-desc">한국 증시 사상 최고치, 코스피-코스닥 강세 지속</p>
+  <h1 class="hero-title">코스피 6600선 돌파, 사상 최고</h1>
+  <p class="hero-desc">코스피 6600선 마감, 글로벌 금리 불확실성 속 강세</p>
   <div class="hero-tags">
     <span class="tag">💹 금융 시장</span>
     <span class="tag">🤖 AI · IT</span>
@@ -159,12 +136,13 @@ a { color: inherit; text-decoration: none; }
     <span class="section-pill finance">Finance</span>
     <span class="section-title">금융 시장</span>
   </div>
-  <p class="section-overview">한국 증시는 코스피 지수의 6600선 돌파와 함께 시가총액 6000조를 처음으로 넘어서는 쾌거를 이루었습니다. 특히 기술주와 바이오주가 증시를 주도하며 긍정적인 시장 흐름을 펼쳤습니다. 미국 금융업계는 American Express와 Chase가 신용카드 수수료에 새로운 기준을 제시했다는 소식이 있었습니다.</p>
+  <p class="section-overview">금융시장이 지수 상승과 함께 강한 흐름을 보이고 있습니다. 코스피는 2.15% 상승한 6615.03에 마감하며 사상 최고치를 기록했습니다. 이와 함께 코스닥도 새로운 기록을 세웠습니다. 이는 글로벌 불확실성에도 불구하고 국내 경제의 강한 회복세와 외국인 투자 증가에 따른 긍정적인 흐름으로 해석됩니다.</p>
   <div class="news-list">
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://media.zenfs.com/en/thestreet_881/7f6815c5ada9a035a45b3a904037138f" alt="American Express와 Chase, 신용카드 수수료 기준 변경" loading="lazy">
-      </div>
+      <img src="https://media.zenfs.com/en/thestreet_881/7f6815c5ada9a035a45b3a904037138f" alt="American Express와 Chase, 새로운 신용카드 수수료 기준 마련" loading="lazy"
+           onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+    </div>
       <div class="news-content">
         <div class="news-source-row">
           <span class="news-source">
@@ -173,16 +151,17 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://finance.yahoo.com/markets/stocks/articles/american-express-chase-set-precedent-144700033.html" target="_blank">American Express와 Chase, 신용카드 수수료 기준 변경</a>
+          <a href="https://finance.yahoo.com/markets/stocks/articles/american-express-chase-set-precedent-144700033.html" target="_blank">American Express와 Chase, 새로운 신용카드 수수료 기준 마련</a>
         </div>
-        <div class="news-body">American Express와 Chase가 새로운 신용카드 수수료 기준을 제시하며 시장에 영향을 미쳤습니다. 이는 나날이 경쟁이 치열해지는 금융 시장에서 소비자 수수료 구조가 변화할 가능성을 시사합니다. 이러한 변화는 전세계 금융 시장의 이해 방식에 많은 변화를 가져올 수 있습니다.</div>
+        <div class="news-body">American Express와 Chase가 새로운 신용카드 수수료 기준을 설정했습니다. 이는 다른 금융 업체와 카드사의 서비스 정책에 영향을 미칠 수 있으며, 소비자 금융 비용에도 변화를 줄 수 있습니다. 관련 기업은 Visa와 Mastercard로, 이들 또한 경쟁 시장에서의 전략 조정이 필요할 것입니다.</div>
         <a href="https://finance.yahoo.com/markets/stocks/articles/american-express-chase-set-precedent-144700033.html" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://media.zenfs.com/en/oilprice.com/206e41596cd78d70f1f6397e3c9361a1" alt="나이지리아, 연료 수출국 전환 속도" loading="lazy">
-      </div>
+      <img src="https://media.zenfs.com/en/insidermonkey.com/81b4a70e499da97840afdf3405bba123" alt="SoundHound AI (SOUN) Expands Partnership With Casey’s Across 2,600 Locations" loading="lazy"
+           onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+    </div>
       <div class="news-content">
         <div class="news-source-row">
           <span class="news-source">
@@ -191,16 +170,21 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://finance.yahoo.com/sectors/energy/articles/dangote-full-throttle-nigeria-becomes-210000813.html" target="_blank">나이지리아, 연료 수출국 전환 속도</a>
+          <a href="https://finance.yahoo.com/markets/stocks/articles/soundhound-ai-soun-expands-partnership-210703519.html" target="_blank">SoundHound AI (SOUN) Expands Partnership With Casey’s Across 2,600 Locations</a>
         </div>
-        <div class="news-body">Dangote의 적극적인 행보로 나이지리아가 정유 및 수출 산업에서 새로운 강자로 부상하고 있습니다. 이는 나이지리아의 경제적 자립과 지역 내 에너지 시장 재편에 중대한 영향을 미칩니다. Dangote의 성장은 아프리카 연료 산업의 지형을 크게 변화시킬 수 있습니다.</div>
-        <a href="https://finance.yahoo.com/sectors/energy/articles/dangote-full-throttle-nigeria-becomes-210000813.html" class="read-more" target="_blank">원문 읽기 →</a>
+        <div class="news-body">제목: 사운드하운드 AI(SOUN), 케이시스와의 파트너십을 2,600개 매장으로 확대
+
+내용: 사운드하운드 AI는 미국의 편의점 체인 케이시스와의 파트너십을 확대하여 2,600개 매장에서 서비스를 제공하기로 했다. 이번 협력은 고객 경험을 향상시키기 위해 인공지능 기술을 활용하는 방향으로 진행된다.
+
+요약: 사운드하운드 AI는 케이시스와의 파트너십을 확대하여 2,600개 매장에서 인공지능 기반의 서비스를 제공할 예정이다. 이를 통해 고객 경험을 개선하는 데 초점을 맞추고 있다.</div>
+        <a href="https://finance.yahoo.com/markets/stocks/articles/soundhound-ai-soun-expands-partnership-210703519.html" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://media.zenfs.com/en/cryptoprowl_304/892ab38ad1c2a2a26b67610f0b970db7" alt="JPMorgan Says Tokenization Could Transform Fund Operations Over the Next Few Years" loading="lazy">
-      </div>
+      <img src="https://media.zenfs.com/en/insidermonkey.com/bd5808e28efa2cc4e4139af222eb6022" alt="Allogene Therapeutics (ALLO): 10 Best Growth Stocks Under $10 to Invest In" loading="lazy"
+           onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+    </div>
       <div class="news-content">
         <div class="news-source-row">
           <span class="news-source">
@@ -209,17 +193,15 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://finance.yahoo.com/markets/crypto/articles/jpmorgan-says-tokenization-could-transform-201500274.html" target="_blank">JPMorgan Says Tokenization Could Transform Fund Operations Over the Next Few Years</a>
+          <a href="https://finance.yahoo.com/sectors/healthcare/articles/allogene-therapeutics-allo-10-best-210608559.html" target="_blank">Allogene Therapeutics (ALLO): 10 Best Growth Stocks Under $10 to Invest In</a>
         </div>
-        <div class="news-body">제목: JP모건, 토큰화가 향후 몇 년 내에 펀드 운영을 변화시킬 수 있다고 말하다
-
-내용 요약: JP모건은 토큰화 기술이 펀드 운영 방식을 혁신할 수 있는 잠재력을 가지고 있다고 언급했습니다. 이 기술은 자산의 디지털화 과정을 통해 거래와 관리의 효율성을 높일 것으로 기대됩니다. 토큰화는 투자자들에게 새로운 기회를 제공하며, 전체 금융 시스템에 긍정적인 영향을 미칠 수 있습니다.</div>
-        <a href="https://finance.yahoo.com/markets/crypto/articles/jpmorgan-says-tokenization-could-transform-201500274.html" class="read-more" target="_blank">원문 읽기 →</a>
+        <div class="news-body">죄송하지만, 제공된 뉴스 제목과 내용의 구체적인 내용을 알 수 없어서 번역하거나 요약할 수 없습니다. 특정 내용이나 기사를 공유해 주시면 번역 및 요약을 도와드리겠습니다.</div>
+        <a href="https://finance.yahoo.com/sectors/healthcare/articles/allogene-therapeutics-allo-10-best-210608559.html" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div></div>
   <div class="editor-note">
     <div class="editor-label">💡 애널리스트 인사이트</div>
-    <div class="editor-text">현재 한국 증시의 힘은 기술주와 바이오주에서 비롯되고 있으며, 삼성전자와 셀트리온과 같은 기업들이 주목받고 있습니다. 단기적으로는 이들 기업의 모멘텀을 활용하되, 차익 실현을 염두에 둔 방어적 포지셔닝이 필요합니다. 글로벌 금융 움직임 또한 주목해야 합니다. American Express와 Chase의 사례처럼 금융 상품의 변화가 시장 전반에 어떤 영향을 미칠지 주의해야 합니다.</div>
+    <div class="editor-text">현재 금융 시장에서는 정보기술, 헬스케어 및 소비재 분야가 상대적으로 지수 상승을 주도하고 있습니다. 삼성전자와 네이버는 이러한 긍정적인 흐름에서 수혜를 입을 가능성이 큽니다. 하지만 미국의 금리 인상 가능성과 중국의 경제 성장 둔화가 잠재적인 리스크로 작용할 수 있어 중장기적인 주의가 필요합니다. 따라서 단기적으로는 방어적인 투자 전략이 유리할 수 있습니다.</div>
   </div>
   <div class="section-divider"></div>
 
@@ -227,10 +209,13 @@ a { color: inherit; text-decoration: none; }
     <span class="section-pill tech">Tech</span>
     <span class="section-title">AI · IT 트렌드</span>
   </div>
-  <p class="section-overview">AI와 IT 시장에서는 Anthropic의 새로운 실험으로 AI 에이전트 상거래가 부각되었습니다. 이 기술은 향후 온라인 상거래의 판도를 바꿀 가능성이 있습니다. 또한, 데이터 센터 관련 뉴스로는 메인의 주지사가 데이터 센터 건설 중단을 반대하고 나서면서 미국 내 데이터 센터 확장의 새로운 전환점이 될 수 있습니다.</p>
+  <p class="section-overview">AI 및 IT 시장은 기술 통합과 글로벌 확장을 통해 성장하고 있습니다. Anthropic의 에이전트 상거래 실험과 함께 Cohere와 Aleph Alpha의 합병은 AI 기술의 새로운 활용 방안을 제시하고 있습니다. 이러한 움직임은 AI 시장의 빠른 확장과 다양성을 보여주며, 시장 규모는 향후 5년간 연평균 20% 이상의 성장이 기대됩니다.</p>
   <div class="news-list">
     <div class="news-card">
-      <div class="news-thumb news-thumb-placeholder">🤖</div>
+      <div class="news-thumb">
+      <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80" alt="To buy this Bay Area home, you’ll need Anthropic equity" loading="lazy"
+           onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+    </div>
       <div class="news-content">
         <div class="news-source-row">
           <span class="news-source">
@@ -241,15 +226,18 @@ a { color: inherit; text-decoration: none; }
         <div class="news-title">
           <a href="https://techcrunch.com/2026/04/26/to-buy-this-bay-area-home-youll-need-anthropic-equity/" target="_blank">To buy this Bay Area home, you’ll need Anthropic equity</a>
         </div>
-        <div class="news-body">제목: 이 베이 지역의 집을 사려면 앤트로픽 주식이 필요합니다.
-내용: 샌프란시스코 북쪽에 위치한 밀 밸리의 13에이커 부동산에 대해 이례적인 거래가 제안되고 있습니다.
+        <div class="news-body">제목: 이 베이 지역 집을 사려면 앤트로픽 주식이 필요합니다.  
+내용: 샌프란시스코 북쪽에 있는 밀 밸리에 13에이커의 부동산을 위해 이례적인 거래가 제안되고 있습니다.
 
-요약: 밀 밸리에 위치한 13에이커 규모의 부동산을 구매하기 위해서는 앤트로픽의 주식을 필요로 하는 특별한 거래가 제안되고 있습니다. 이 거래는 일반적인 부동산 구매 방식과는 다른 독특한 접근 방식을 보여줍니다.</div>
+요약: 밀 밸리에서 판매 중인 13에이커의 부동산을 구매하기 위해서는 앤트로픽 주식이 필요하다는 특별한 조건이 제시되었습니다. 이는 일반적인 부동산 거래와는 다른 독특한 방식입니다.</div>
         <a href="https://techcrunch.com/2026/04/26/to-buy-this-bay-area-home-youll-need-anthropic-equity/" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
-      <div class="news-thumb news-thumb-placeholder">🤖</div>
+      <div class="news-thumb">
+      <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80" alt="Anthropic created a test marketplace for agent-on-agent commerce" loading="lazy"
+           onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+    </div>
       <div class="news-content">
         <div class="news-source-row">
           <span class="news-source">
@@ -258,14 +246,21 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://techcrunch.com/2026/04/25/anthropic-created-a-test-marketplace-for-agent-on-agent-commerce/" target="_blank">Anthropic, AI 에이전트 상거래 시장 실험</a>
+          <a href="https://techcrunch.com/2026/04/25/anthropic-created-a-test-marketplace-for-agent-on-agent-commerce/" target="_blank">Anthropic created a test marketplace for agent-on-agent commerce</a>
         </div>
-        <div class="news-body">Anthropic이 AI 에이전트를 활용한 상거래 시장 실험을 성공적으로 진행했습니다. 이는 AI를 기반으로 한 새로운 상거래 형태의 가능성을 보여줍니다. 이러한 움직임은 전 세계 e커머스 시장에 중장기적으로 중대한 영향을 미칠 수 있습니다.</div>
+        <div class="news-body">제목: 안트로픽, 에이전트 간 상거래를 위한 테스트 마켓플레이스 구축
+
+내용: 최근 안트로픽은 AI 에이전트가 구매자와 판매자를 각각 대표하여 실제 상품과 실질적인 돈으로 거래를 성사시키는 분류 마켓플레이스를 생성하는 실험을 진행했다.
+
+요약: 안트로픽은 AI 에이전트가 거래를 수행하는 테스트 마켓플레이스를 만들어 실제 상품과 돈으로 거래를 성사시켰습니다. 이 실험은 에이전트 간의 상거래 가능성을 탐구하는 데 중점을 두고 있습니다.</div>
         <a href="https://techcrunch.com/2026/04/25/anthropic-created-a-test-marketplace-for-agent-on-agent-commerce/" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
-      <div class="news-thumb news-thumb-placeholder">🤖</div>
+      <div class="news-thumb">
+      <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&q=80" alt="Maine’s governor vetoes data center moratorium" loading="lazy"
+           onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+    </div>
       <div class="news-content">
         <div class="news-source-row">
           <span class="news-source">
@@ -274,15 +269,19 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://techcrunch.com/2026/04/25/maines-governor-vetoes-data-center-moratorium/" target="_blank">Anthropic, AI 에이전트 상거래 시장 실험</a>
+          <a href="https://techcrunch.com/2026/04/25/maines-governor-vetoes-data-center-moratorium/" target="_blank">Maine’s governor vetoes data center moratorium</a>
         </div>
-        <div class="news-body">Anthropic이 AI 에이전트를 활용한 상거래 시장 실험을 성공적으로 진행했습니다. 이는 AI를 기반으로 한 새로운 상거래 형태의 가능성을 보여줍니다. 이러한 움직임은 전 세계 e커머스 시장에 중장기적으로 중대한 영향을 미칠 수 있습니다.</div>
+        <div class="news-body">제목: 메인 주지사, 데이터 센터 모라토리엄 거부
+
+내용: L.D. 307은 새로운 데이터 센터에 대한 전국 최초의 주 차원 모라토리엄을 시행할 예정이었으며, 이는 2027년 11월 1일까지 지속될 예정이었습니다. 
+
+요약: 메인 주지사는 새로운 데이터 센터에 대한 모라토리엄 법안인 L.D. 307을 거부했습니다. 이 법안은 2027년까지 데이터 센터 건설을 일시 중지하는 내용을 담고 있었습니다.</div>
         <a href="https://techcrunch.com/2026/04/25/maines-governor-vetoes-data-center-moratorium/" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div></div>
   <div class="editor-note">
     <div class="editor-label">💡 애널리스트 인사이트</div>
-    <div class="editor-text">AI 기반 상거래의 활성화는 IT 기업들에 큰 기회를 제공합니다. 특히, 네이버와 카카오는 이 추세에서 수혜를 받을 가능성이 큽니다. 그러나 AI 활용 증가에 따라 개인정보 보호 및 데이터 보안 문제는 지속적인 리스크로 작용할 것입니다. 따라서 관련 규제 변화도 면밀히 관찰해야 합니다.</div>
+    <div class="editor-text">AI 기술의 확산은 반도체 및 데이터 센터 산업에 큰 영향을 미칠 것입니다. 국내에서는 SK텔레콤과 네이버가, 해외에서는 OpenAI와 Anthropic이 주목받고 있습니다. 하지만 AI 시장 확장에 따른 데이터 보안 및 프라이버시 문제는 장기적인 리스크 요인으로 작용할 수 있는 만큼, 투자는 신중하게 접근해야 합니다.</div>
   </div>
   <div class="section-divider"></div>
 
@@ -290,10 +289,13 @@ a { color: inherit; text-decoration: none; }
     <span class="section-pill energy">Energy</span>
     <span class="section-title">에너지 · 산업</span>
   </div>
-  <p class="section-overview">에너지 시장에서는 미국내 원유와 LNG 수출량이 최고치를 기록하며 활기를 띠고 있습니다. 이는 중국 조선소에 대한 반사이익을 제공하고 있으며, 중국은 자국 내 최대 LNG 운반선을 성공적으로 인도하였습니다. LNG 시장의 이러한 증가는 에너지 수급 불균형을 해결하는데 긍정적으로 작용할 수 있습니다.</p>
+  <p class="section-overview">에너지 시장은 최근 LNG 가격 상승과 함께 주목받고 있습니다. 특히, 호르무즈 해협의 불안정성은 LNG 시장에 큰 영향을 미치고 있으며, 이로 인해 가격이 2026년까지 계속해서 상승할 것으로 예상됩니다. 또한, 중국과 미국의 에너지 공급망 확장이 가속화되고 있습니다.</p>
   <div class="news-list">
     <div class="news-card">
-      <div class="news-thumb news-thumb-placeholder">⚡</div>
+      <div class="news-thumb">
+      <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80" alt="Why Strait of Hormuz disruption is more severe for global <b>LNG</b> markets than for oil" loading="lazy"
+           onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+    </div>
       <div class="news-content">
         <div class="news-source-row">
           <span class="news-source">
@@ -302,14 +304,21 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.investing.com/news/commodities-news/why-strait-of-hormuz-disruption-is-more-severe-for-global-lng-markets-than-for-oil-4637438&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw1Ol9TcGL4iJkSnotmbAiUT" target="_blank">Anthropic, AI 에이전트 상거래 시장 실험</a>
+          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.investing.com/news/commodities-news/why-strait-of-hormuz-disruption-is-more-severe-for-global-lng-markets-than-for-oil-4637438&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw1Ol9TcGL4iJkSnotmbAiUT" target="_blank">Why Strait of Hormuz disruption is more severe for global <b>LNG</b> markets than for oil</a>
         </div>
-        <div class="news-body">Anthropic이 AI 에이전트를 활용한 상거래 시장 실험을 성공적으로 진행했습니다. 이는 AI를 기반으로 한 새로운 상거래 형태의 가능성을 보여줍니다. 이러한 움직임은 전 세계 e커머스 시장에 중장기적으로 중대한 영향을 미칠 수 있습니다.</div>
+        <div class="news-body">제목: 호르무즈 해협의 혼잡이 석유보다 세계 LNG 시장에 더 심각한 이유
+
+내용: Investing.com -- 세계 액화천연가스(LNG) 시장은 2026년까지 지속적인 가격 상승을 겪을 것으로 예상하고 있습니다. 
+
+요약: 호르무즈 해협에서의 혼잡이 세계 LNG 시장에 더 큰 영향을 미친다는 분석이 나오고 있습니다. 2026년까지 가격 상승이 지속될 것으로 보이며, 이는 에너지 시장에 중요한 변수가 될 것입니다.</div>
         <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.investing.com/news/commodities-news/why-strait-of-hormuz-disruption-is-more-severe-for-global-lng-markets-than-for-oil-4637438&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw1Ol9TcGL4iJkSnotmbAiUT" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
-      <div class="news-thumb news-thumb-placeholder">⚡</div>
+      <div class="news-thumb">
+      <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80" alt="韓 오랜 단골 뺏겼다…中조선소 웃고, 美는 <b>에너지</b> 수출 최고치 | 중앙일보" loading="lazy"
+           onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+    </div>
       <div class="news-content">
         <div class="news-source-row">
           <span class="news-source">
@@ -318,14 +327,19 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.joongang.co.kr/article/25423415&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw0VogukjIZs1RzN-YVT64Rv" target="_blank">미국 원유·LNG 수출 최고치, 중국 조선 반사이익</a>
+          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.joongang.co.kr/article/25423415&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw0VogukjIZs1RzN-YVT64Rv" target="_blank">韓 오랜 단골 뺏겼다…中조선소 웃고, 美는 <b>에너지</b> 수출 최고치 | 중앙일보</a>
         </div>
-        <div class="news-body">미국에서의 원유와 LNG 수출이 최고의 실적을 기록했습니다. 이는 에너지 산업 전반에 걸친 활력을 제공하며, 특히 중국 내 조선업체들이 이에 따른 수혜를 입고 있습니다. 중국의 대형 LNG 운반선 인도는 글로벌 에너지 수급의 새로운 파장이 될 수 있습니다.</div>
+        <div class="news-body">제목: 한국의 오랜 단골을 빼앗겼다… 중국 조선소는 웃고, 미국은 에너지 수출 최고치를 기록하다
+
+내용 요약: 한국이 오랜 단골 거래처를 잃으면서 중국 조선소가 이익을 보고 있고, 미국은 원유와 액화천연가스(LNG) 수출에서 최고치를 기록했다. 이러한 변화로 인해 에너지 업계는 반사이익을 얻고 있다는 분석이 나오고 있다.</div>
         <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.joongang.co.kr/article/25423415&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw0VogukjIZs1RzN-YVT64Rv" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
-      <div class="news-thumb news-thumb-placeholder">⚡</div>
+      <div class="news-thumb">
+      <img src="https://images.unsplash.com/photo-1534224039826-c7a0eda0e6b3?w=800&q=80" alt="[AI픽] SKT, 베트남서 AI 데이터센터 첫발…'<b>에너지</b> 결합' 승부수" loading="lazy"
+           onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+    </div>
       <div class="news-content">
         <div class="news-source-row">
           <span class="news-source">
@@ -334,15 +348,19 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.koreancenter.or.kr/news/articleView.html%3Fidxno%3D1344972&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw0lfb3p3y_v4VmfMbNCFeY3" target="_blank">Anthropic, AI 에이전트 상거래 시장 실험</a>
+          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.koreancenter.or.kr/news/articleView.html%3Fidxno%3D1344972&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw0lfb3p3y_v4VmfMbNCFeY3" target="_blank">[AI픽] SKT, 베트남서 AI 데이터센터 첫발…'<b>에너지</b> 결합' 승부수</a>
         </div>
-        <div class="news-body">Anthropic이 AI 에이전트를 활용한 상거래 시장 실험을 성공적으로 진행했습니다. 이는 AI를 기반으로 한 새로운 상거래 형태의 가능성을 보여줍니다. 이러한 움직임은 전 세계 e커머스 시장에 중장기적으로 중대한 영향을 미칠 수 있습니다.</div>
+        <div class="news-body">제목: [AI픽] SKT, 베트남서 AI 데이터센터 첫발…'<b>에너지</b> 결합' 승부수
+
+내용: 이번 협력은 SK이노베이션이 추진 중인 '뀐랍 LNG 발전 프로젝트'와 연계된다. 1.5GW 규모의 가스복합화력발전소 등 대형 에너지 인프라를 통해 안정적인 전력을 제공할 예정이다.
+
+요약: SK텔레콤이 베트남에서 첫 AI 데이터센터를 설립하며, SK이노베이션의 LNG 발전 프로젝트와 협력하여 에너지 결합 전략을 추진하고 있다. 이를 통해 1.5GW 규모의 가스복합화력발전소를 통해 안정적인 전력을 공급할 계획이다.</div>
         <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.koreancenter.or.kr/news/articleView.html%3Fidxno%3D1344972&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw0lfb3p3y_v4VmfMbNCFeY3" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div></div>
   <div class="editor-note">
     <div class="editor-label">💡 애널리스트 인사이트</div>
-    <div class="editor-text">LNG 시장의 성장에 힘입어 HD현대중공업과 삼성중공업 등 국내 조선업체들이 수혜를 입을 가능성이 큽니다. 그러나 원유 수급변화나 국제 정치적 리스크가 에너지 시장에 영향을 미칠 수 있음에 유의해야 합니다. 따라서 다양한 시나리오를 염두에 두고 에너지 관련 주식에 대한 투자 방침을 조정해야 합니다.</div>
+    <div class="editor-text">에너지 가격 상승은 국내외 에너지 기업에 혼합된 영향을 미칩니다. 한국조선해양과 SK이노베이션은 LNG 관련 인프라 확장으로 수혜를 볼 수 있습니다. 그러나, 지정학적 리스크와 재생에너지 전환 추세는 향후 에너지 투자의 주요 변수로 작용할 수 있어 신중한 접근이 필요합니다.</div>
   </div>
   <div class="section-divider"></div>
 
@@ -350,9 +368,9 @@ a { color: inherit; text-decoration: none; }
     <div class="summary-label">오늘의 핵심 인사이트</div>
     <div class="summary-title">오늘 꼭 기억할 3가지</div>
     <ol class="summary-list">
-      <li><span class="summary-num">1</span><span>코스피 시총 6000조 돌파, 삼성전자·셀트리온 주도</span></li>
-      <li><span class="summary-num">2</span><span>AI 에이전트 상거래 부상, 네이버·카카오 주목</span></li>
-      <li><span class="summary-num">3</span><span>국제 원유·LNG 수출 증가, 에너지 시장 변동성 예의주시</span></li>
+      <li><span class="summary-num">1</span><span>코스피 지수 6600 돌파로 삼성전자·네이버 주가 상승 기대</span></li>
+      <li><span class="summary-num">2</span><span>AI 시장 확대로 SK텔레콤·OpenAI 성장 가능성</span></li>
+      <li><span class="summary-num">3</span><span>미 금리 인상 및 데이터 보안 문제, 시장 변동성 요인</span></li>
     </ol>
   </div>
 </main>
