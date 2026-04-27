@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Insight — 2026년 04월 27일</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #18181b; --ink-soft: #52525b; --ink-muted: #a1a1aa;
+  --bg: #fafaf9; --bg-card: #ffffff; --bg-subtle: #f4f4f5;
+  --accent: #0f766e; --accent-light: #ccfbf1;
+  --finance: #0369a1; --finance-bg: #e0f2fe;
+  --tech: #6d28d9; --tech-bg: #ede9fe;
+  --energy: #b45309; --energy-bg: #fef3c7;
+  --border: #e4e4e7; --radius: 12px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: "Noto Sans KR", sans-serif; font-weight: 300; line-height: 1.8; }
+a { color: inherit; text-decoration: none; }
+.site-header { border-bottom: 1px solid var(--border); background: var(--bg-card); position: sticky; top: 0; z-index: 100; }
+.header-inner { max-width: 780px; margin: 0 auto; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+.logo { font-family: "Playfair Display", serif; font-size: 20px; font-weight: 700; }
+.logo span { color: var(--accent); }
+.header-meta { font-size: 12px; color: var(--ink-muted); }
+.hero { max-width: 780px; margin: 0 auto; padding: 56px 24px 40px; border-bottom: 1px solid var(--border); }
+.issue-badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 100px; margin-bottom: 20px; }
+.hero-title { font-family: "Playfair Display", serif; font-size: clamp(26px, 5vw, 40px); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px; }
+.hero-desc { font-size: 16px; color: var(--ink-soft); max-width: 560px; margin-bottom: 24px; }
+.hero-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.tag { font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 100px; border: 1px solid var(--border); color: var(--ink-soft); }
+.main { max-width: 780px; margin: 0 auto; padding: 48px 24px 80px; }
+.section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1.5px solid var(--border); }
+.section-pill { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; }
+.section-pill.finance { background: var(--finance-bg); color: var(--finance); }
+.section-pill.tech { background: var(--tech-bg); color: var(--tech); }
+.section-pill.energy { background: var(--energy-bg); color: var(--energy); }
+.section-title { font-family: "Playfair Display", serif; font-size: 20px; font-weight: 700; }
+.section-overview { font-size: 15px; color: var(--ink-soft); line-height: 1.75; margin-bottom: 24px; padding: 16px 20px; background: var(--bg-subtle); border-left: 3px solid var(--border); border-radius: 0 8px 8px 0; }
+.news-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
+.news-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: grid; grid-template-columns: 120px 1fr; }
+.news-thumb { width: 120px; min-height: 110px; overflow: hidden; background: var(--bg-subtle); }
+.news-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.news-thumb-placeholder { width: 100%; height: 100%; min-height: 110px; display: flex; align-items: center; justify-content: center; font-size: 28px; opacity: 0.3; }
+.news-content { padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; }
+.news-source-row { display: flex; align-items: center; justify-content: space-between; }
+.news-source { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
+.news-category-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+.news-category-dot.finance { background: var(--finance); }
+.news-category-dot.tech { background: var(--tech); }
+.news-category-dot.energy { background: var(--energy); }
+.news-title { font-size: 14px; font-weight: 500; line-height: 1.45; color: var(--ink); }
+.news-title a:hover { color: var(--accent); }
+.news-body { font-size: 13px; color: var(--ink-soft); line-height: 1.7; }
+.read-more { font-size: 12px; font-weight: 500; color: var(--accent); margin-top: 4px; display: inline-flex; align-items: center; gap: 3px; }
+.editor-note { background: var(--bg-subtle); border-radius: 10px; padding: 16px 20px; margin-bottom: 48px; display: flex; gap: 12px; }
+.editor-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+.editor-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+.editor-text { font-size: 14px; color: var(--ink-soft); line-height: 1.7; }
+.section-divider { height: 1px; background: var(--border); margin: 0 0 48px; }
+.summary-box { background: var(--ink); color: #fff; border-radius: var(--radius); padding: 32px 36px; margin-bottom: 48px; }
+.summary-label { font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 20px; }
+.summary-title { font-family: "Playfair Display", serif; font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 20px; }
+.summary-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.summary-list li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; font-size: 14px; color: #d4d4d8; line-height: 1.65; }
+.summary-num { font-family: "Playfair Display", serif; font-size: 22px; color: var(--accent-light); line-height: 1.1; opacity: 0.6; }
+.site-footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
+.footer-inner { max-width: 780px; margin: 0 auto; }
+.footer-logo { font-family: "Playfair Display", serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.footer-logo span { color: var(--accent); }
+.footer-desc { font-size: 12px; color: var(--ink-muted); margin-bottom: 16px; }
+.footer-links { display: flex; justify-content: center; gap: 20px; font-size: 12px; color: var(--ink-muted); }
+@media (max-width: 600px) {
+  .hero { padding: 36px 20px 32px; }
+  .main { padding: 36px 20px 60px; }
+  .news-card { grid-template-columns: 1fr; }
+  .news-thumb { width: 100%; height: 160px; }
+  .summary-box { padding: 24px 20px; }
+  .header-meta { display: none; }
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">Daily<span>Insight</span></div>
+    <div class="header-meta">2026년 04월 27일</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="issue-badge">오늘의 브리핑</div>
+  <h1 class="hero-title">금융시장과 AI 최신 동향</h1>
+  <p class="hero-desc">투자자에게 중요한 경제 및 기술 트렌드 요약</p>
+  <div class="hero-tags">
+    <span class="tag">💹 금융 시장</span>
+    <span class="tag">🤖 AI · IT</span>
+    <span class="tag">⚡ 에너지</span>
+  </div>
+</section>
+
+<main class="main">
+  <div class="section-header">
+    <span class="section-pill finance">Finance</span>
+    <span class="section-title">금융 시장</span>
+  </div>
+  <p class="section-overview">금융 시장은 최근 상승세를 보이고 있으며, 코스피는 기관과 개인 투자자의 매수세 덕분에 신고가를 갱신했습니다. 리노공업의 주가는 최대주주 지분 매각 소식으로 하락했습니다.</p>
+  <div class="news-list">
+    <div class="news-card">
+      
+      <div class="news-thumb">
+        <img src="https://media.zenfs.com/en/thestreet_881/002107dd9907057824793c324170e9a2" alt="" onerror="this.parentElement.innerHTML='<div class=news-thumb-placeholder>📰</div>'">
+      </div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot finance"></span>
+            Yahoo Finance
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://finance.yahoo.com/markets/stocks/articles/lockheed-martin-ceo-sends-strong-174700950.html" target="_blank">LNG 시장의 가격 상승 전망</a>
+        </div>
+        <div class="news-body">Strait of Hormuz의 긴장이 LNG 시장에 미치는 영향이 크다고 전문가들은 분석하고 있습니다. 고가격 지속이 예상되어 투자자들의 주의가 요구됩니다.</div>
+        <a href="https://finance.yahoo.com/markets/stocks/articles/lockheed-martin-ceo-sends-strong-174700950.html" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div>
+    <div class="news-card">
+      
+      <div class="news-thumb">
+        <img src="https://media.zenfs.com/en/moneywise_ecomm_711/5d9fbb73815104ab12ecc3b2d7ae9780" alt="" onerror="this.parentElement.innerHTML='<div class=news-thumb-placeholder>📰</div>'">
+      </div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot finance"></span>
+            Yahoo Finance
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://finance.yahoo.com/markets/stocks/articles/had-whole-wrong-idea-warren-141500813.html" target="_blank">‘I had the whole wrong idea’: Warren Buffett thought predicting the market was everything — until he read this book</a>
+        </div>
+        <div class="news-body"></div>
+        <a href="https://finance.yahoo.com/markets/stocks/articles/had-whole-wrong-idea-warren-141500813.html" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div>
+    <div class="news-card">
+      
+      <div class="news-thumb">
+        <img src="https://media.zenfs.com/en/insidermonkey.com/c31b4d9e637d1ea07eba770142c7b2e6" alt="" onerror="this.parentElement.innerHTML='<div class=news-thumb-placeholder>📰</div>'">
+      </div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot finance"></span>
+            Yahoo Finance
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://finance.yahoo.com/markets/stocks/articles/why-brookfield-corp-bn-among-135913587.html" target="_blank">Here is why Brookfield Corp. (BN) is Among the 8 Best Holding Company Stocks to Invest In Now</a>
+        </div>
+        <div class="news-body"></div>
+        <a href="https://finance.yahoo.com/markets/stocks/articles/why-brookfield-corp-bn-among-135913587.html" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div></div>
+  <div class="editor-note">
+    <div class="editor-icon">💡</div>
+    <div>
+      <div class="editor-label">에디터 인사이트</div>
+      <div class="editor-text">현재 코스피의 상승세는 긍정적이나, 리노공업 사례처럼 예상치 못한 변수에도 주의해야 합니다.</div>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section-header">
+    <span class="section-pill tech">Tech</span>
+    <span class="section-title">AI · IT 트렌드</span>
+  </div>
+  <p class="section-overview">AI 기술이 계속 발전하면서, Anthropic과 Cohere의 새로운 거래와 혁신적인 시장 실험이 주목받고 있습니다. 개별 기업의 합병 소식도 AI 산업에 변화를 가져올 전망입니다.</p>
+  <div class="news-list">
+    <div class="news-card">
+      <div class="news-thumb"><div class="news-thumb-placeholder">📰</div></div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot tech"></span>
+            AI News & Artificial Intelligence | TechCrunch
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://techcrunch.com/2026/04/26/to-buy-this-bay-area-home-youll-need-anthropic-equity/" target="_blank">To buy this Bay Area home, you’ll need Anthropic equity</a>
+        </div>
+        <div class="news-body">Someone’s offering an unusual deal for a 13-acre property in Mill Valley, just north of South Francisco.</div>
+        <a href="https://techcrunch.com/2026/04/26/to-buy-this-bay-area-home-youll-need-anthropic-equity/" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-thumb"><div class="news-thumb-placeholder">📰</div></div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot tech"></span>
+            AI News & Artificial Intelligence | TechCrunch
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://techcrunch.com/2026/04/25/anthropic-created-a-test-marketplace-for-agent-on-agent-commerce/" target="_blank">Anthropic created a test marketplace for agent-on-agent commerce</a>
+        </div>
+        <div class="news-body">In a recent experiment, Anthropic created a classified marketplace where AI agents represented both buyers and sellers, striking real deals for real goods and real money.</div>
+        <a href="https://techcrunch.com/2026/04/25/anthropic-created-a-test-marketplace-for-agent-on-agent-commerce/" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-thumb"><div class="news-thumb-placeholder">📰</div></div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot tech"></span>
+            AI News & Artificial Intelligence | TechCrunch
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://techcrunch.com/2026/04/25/maines-governor-vetoes-data-center-moratorium/" target="_blank">Maine’s governor vetoes data center moratorium</a>
+        </div>
+        <div class="news-body">L.D. 307 would have imposed the country’s first statewide moratorium on new data centers — lasting, in this case, until November 1, 2027.</div>
+        <a href="https://techcrunch.com/2026/04/25/maines-governor-vetoes-data-center-moratorium/" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div></div>
+  <div class="editor-note">
+    <div class="editor-icon">💡</div>
+    <div>
+      <div class="editor-label">에디터 인사이트</div>
+      <div class="editor-text">AI 분야의 합병과 협력은 경쟁력을 강화하고 새로운 시장을 창출할 가능성이 높아, 투자자들은 이러한 동향에 주목해야 합니다.</div>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section-header">
+    <span class="section-pill energy">Energy</span>
+    <span class="section-title">에너지 · 산업</span>
+  </div>
+  <p class="section-overview">글로벌 에너지 시장, 특히 액화천연가스(LNG) 시장은 가격 상승세가 전망되고 있습니다. 또한, 미국의 에너지 수출이 최고치를 기록했습니다.</p>
+  <div class="news-list">
+    <div class="news-card">
+      <div class="news-thumb"><div class="news-thumb-placeholder">📰</div></div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot energy"></span>
+            Google Alert - "전력" OR “LNG” OR “에너지“
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.investing.com/news/commodities-news/why-strait-of-hormuz-disruption-is-more-severe-for-global-lng-markets-than-for-oil-4637438&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw1Ol9TcGL4iJkSnotmbAiUT" target="_blank">Why Strait of Hormuz disruption is more severe for global <b>LNG</b> markets than for oil</a>
+        </div>
+        <div class="news-body">Investing.com -- Global Liquefied Natural Gas (LNG) markets are bracing for a period of sustained price elevation throughout 2026 as the ongoing&nbsp;...</div>
+        <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.investing.com/news/commodities-news/why-strait-of-hormuz-disruption-is-more-severe-for-global-lng-markets-than-for-oil-4637438&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw1Ol9TcGL4iJkSnotmbAiUT" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-thumb"><div class="news-thumb-placeholder">📰</div></div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot energy"></span>
+            Google Alert - "전력" OR “LNG” OR “에너지“
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.joongang.co.kr/article/25423415&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw0VogukjIZs1RzN-YVT64Rv" target="_blank">韓 오랜 단골 뺏겼다…中조선소 웃고, 美는 <b>에너지</b> 수출 최고치 | 중앙일보</a>
+        </div>
+        <div class="news-body">... 에너지 업계가 반사이익을 얻고 있다는 분석이 나온다 26일 홍콩 사우스 ... 해운 데이터업체 케플러에 따르면 3~4월 미국산 원유·액화천연가스(LNG)의&nbsp;...</div>
+        <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.joongang.co.kr/article/25423415&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw0VogukjIZs1RzN-YVT64Rv" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-thumb"><div class="news-thumb-placeholder">📰</div></div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot energy"></span>
+            Google Alert - "전력" OR “LNG” OR “에너지“
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.koreancenter.or.kr/news/articleView.html%3Fidxno%3D1344972&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw0lfb3p3y_v4VmfMbNCFeY3" target="_blank">[AI픽] SKT, 베트남서 AI 데이터센터 첫발…'<b>에너지</b> 결합' 승부수</a>
+        </div>
+        <div class="news-body">이번 협력은 SK이노베이션이 추진 중인 '뀐랍 LNG 발전 프로젝트'와 연계된다. 1.5GW 규모의 가스복합화력발전소 등 대형 에너지 인프라를 통해 안정적인 전력을&nbsp;...</div>
+        <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.koreancenter.or.kr/news/articleView.html%3Fidxno%3D1344972&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw0lfb3p3y_v4VmfMbNCFeY3" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div></div>
+  <div class="editor-note">
+    <div class="editor-icon">💡</div>
+    <div>
+      <div class="editor-label">에디터 인사이트</div>
+      <div class="editor-text">LNG 가격 상승은 투자자들에게 장기적인 수익 성장을 예고하며, 에너지 주식의 매력이 높아지고 있습니다.</div>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="summary-box">
+    <div class="summary-label">Today's Key Insights</div>
+    <div class="summary-title">오늘 꼭 기억할 3가지</div>
+    <ol class="summary-list">
+      <li><span class="summary-num">1</span><span>코스피 상승세, 투자자 주목</span></li>
+      <li><span class="summary-num">2</span><span>AI 합병, 경쟁력 강화의 신호</span></li>
+      <li><span class="summary-num">3</span><span>LNG 가격 상승, 투자 기회 제공</span></li>
+    </ol>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Daily<span>Insight</span></div>
+    <div class="footer-desc">매일 오전 7시, 투자자를 위한 핵심 인사이트</div>
+    <div class="footer-links">
+      <a href="index.html">아카이브</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
