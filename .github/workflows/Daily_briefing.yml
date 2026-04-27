@@ -36,6 +36,6 @@ jobs:
         run: |
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Actions"
-          git add briefing_*.html
+          git add briefing_*.html index.html
           git commit -m "Add daily briefing $(date +'%Y%m%d')" || echo "Nothing to commit"
           git push
