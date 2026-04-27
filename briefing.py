@@ -17,7 +17,7 @@ TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 UNSPLASH_ACCESS_KEY = os.environ.get("UNSPLASH_ACCESS_KEY")
 
 # =====================
-# 카테고리별 기본 이미지 풀 (Unsplash 고정 URL)
+# 카테고리별 기본 이미지 풀
 # =====================
 DEFAULT_IMAGES = {
     "Finance": [
@@ -43,9 +43,6 @@ DEFAULT_IMAGES = {
     ]
 }
 
-# =====================
-# Unsplash API 이미지 (키 있을 때)
-# =====================
 unsplash_cache = {}
 
 def get_unsplash_image(category, keyword=""):
@@ -67,7 +64,6 @@ def get_unsplash_image(category, keyword=""):
             unsplash_cache[cache_key] = image_url
             return image_url
         else:
-            print(f"Unsplash API error: {response.status_code}")
             return get_default_image(category)
     except Exception as e:
         print(f"Unsplash error: {e}")
@@ -122,11 +118,8 @@ def collect_news():
                 summary = re.sub('<[^>]+>', '', entry.get("summary", ""))[:200]
                 link = entry.get("link", "")
                 image = extract_image(entry)
-
-                # 이미지 없으면 Unsplash API 또는 기본 이미지
                 if not image:
                     image = get_unsplash_image(category, " ".join(title.split()[:3]))
-
                 all_news.append({
                     "category": category,
                     "title": title,
@@ -139,7 +132,6 @@ def collect_news():
             print(f"OK: {category} ({source_name}) - {count}개 수집")
         except Exception as e:
             print(f"Error ({url}): {e}")
-
     print(f"총 수집: {len(all_news)}개")
     return all_news
 
@@ -159,7 +151,7 @@ def translate_single(news_item):
     return {"title": news_item["title"], "body": response.choices[0].message.content}
 
 # =====================
-# OpenAI 요약 (인사이트 강화)
+# OpenAI 요약
 # =====================
 def generate_content(news_list):
     client = OpenAI(api_key=OPENAI_API_KEY)
@@ -181,30 +173,30 @@ def generate_content(news_list):
 - original_index는 [index:숫자] 값과 정확히 일치할 것
 - 반드시 아래 JSON 형식으로만 응답할 것 (다른 텍스트 없이)
 
-[인사이트 작성 기준 — 반드시 준수]
-1. 시장 방향성: 단순 사실 나열 금지. 상승/하락/보합 방향과 그 이유를 명확히 제시
-2. 수치 근거: 가능한 경우 구체적인 % 변화, 금액, 기간을 포함
-3. 산업 파급효과: 해당 뉴스가 영향을 미치는 상위/하위 산업군을 구체적으로 명시
-4. 관련 기업: 국내외 수혜 또는 피해 기업을 최소 2개 이상 구체적으로 언급
-5. 투자 시사점: "어떻게 대응해야 하는가"에 대한 구체적 방향 제시
-6. 리스크 요인: 반드시 반대 시나리오나 주의사항 포함
+[인사이트 작성 기준]
+1. 시장 방향성: 상승/하락/보합 방향과 이유 명확히 제시
+2. 수치 근거: 구체적인 % 변화, 금액, 기간 포함
+3. 산업 파급효과: 영향받는 상위/하위 산업군 명시
+4. 관련 기업: 국내외 수혜/피해 기업 최소 2개 이상 언급
+5. 투자 시사점: 구체적 대응 방향 제시
+6. 리스크 요인: 반대 시나리오나 주의사항 포함
 
 {{
-  "hero_title": "오늘의 핵심 헤드라인 20자 이내 (구체적 수치나 기업명 포함 권장)",
-  "hero_desc": "오늘 시장의 핵심 흐름 한 줄 요약 50자 이내 (방향성과 핵심 키워드 포함)",
-  "finance_overview": "금융 시장 전반 흐름 3-4문장. 주요 지수 방향성, 섹터별 강약, 매크로 환경 변화를 구체적으로 서술",
-  "finance_comment": "투자자를 위한 핵심 인사이트 3-4문장. 수혜 섹터, 관련 국내외 기업 2개 이상 언급, 단기/중기 대응 방향, 주의해야 할 리스크 포함",
-  "tech_overview": "AI·IT 시장 전반 흐름 3-4문장. 기술 트렌드 변화, 주요 기업 동향, 시장 규모나 성장률 수치 포함",
-  "tech_comment": "IT·투자 관점 핵심 인사이트 3-4문장. 수혜 산업군, 관련 국내외 기업 2개 이상, 주목해야 할 포인트와 리스크 포함",
-  "energy_overview": "에너지 시장 전반 흐름 3-4문장. 유가·가스 방향성, 재생에너지 동향, 수급 변화 등 구체적 서술",
-  "energy_comment": "에너지·투자 관점 핵심 인사이트 3-4문장. 에너지 가격 변화 파급효과, 관련 국내외 기업 2개 이상, 투자 대응 방향과 리스크 포함",
-  "key_insight_1": "핵심 인사이트 1: 구체적 수치·기업·방향성 포함 (예: AI 전력 수요 급증으로 LS일렉트릭·HD현대일렉트릭 수혜 전망)",
+  "hero_title": "오늘의 핵심 헤드라인 20자 이내 (수치나 기업명 포함 권장)",
+  "hero_desc": "오늘 시장 핵심 흐름 한 줄 요약 50자 이내 (방향성과 핵심 키워드 포함)",
+  "finance_overview": "금융 시장 전반 흐름 3-4문장. 주요 지수 방향성, 섹터별 강약, 매크로 환경 변화 구체적 서술",
+  "finance_comment": "투자자 핵심 인사이트 3-4문장. 수혜 섹터, 국내외 기업 2개 이상, 단기/중기 대응 방향, 리스크 포함",
+  "tech_overview": "AI·IT 시장 전반 흐름 3-4문장. 기술 트렌드, 주요 기업 동향, 시장 규모나 성장률 수치 포함",
+  "tech_comment": "IT·투자 관점 인사이트 3-4문장. 수혜 산업군, 국내외 기업 2개 이상, 주목 포인트와 리스크 포함",
+  "energy_overview": "에너지 시장 전반 흐름 3-4문장. 유가·가스 방향성, 재생에너지 동향, 수급 변화 구체적 서술",
+  "energy_comment": "에너지·투자 인사이트 3-4문장. 에너지 가격 변화 파급효과, 국내외 기업 2개 이상, 대응 방향과 리스크 포함",
+  "key_insight_1": "핵심 인사이트 1: 구체적 수치·기업·방향성 포함",
   "key_insight_2": "핵심 인사이트 2: 구체적 수치·기업·방향성 포함",
-  "key_insight_3": "핵심 인사이트 3: 리스크 또는 주의사항 포함 (예: 미 연준 발언 앞두고 변동성 확대 가능성, 방어적 포지션 권장)",
+  "key_insight_3": "핵심 인사이트 3: 리스크 또는 주의사항 포함",
   "news_summaries": [
     {{
       "category": "Finance 또는 AI/IT 또는 Energy",
-      "title": "뉴스 제목 한국어로 번역 (구체적으로)",
+      "title": "뉴스 제목 한국어로 번역",
       "body": "3문장 해설: 1문장-사실 요약, 1문장-왜 중요한지 맥락, 1문장-관련 기업이나 산업 파급효과",
       "original_index": 0
     }}
@@ -256,6 +248,67 @@ def make_news_card(news_item, summary, category_class):
         <a href="{news_item['link']}" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>'''
+
+# =====================
+# 소셜 공유 버튼 HTML (X + 링크 복사)
+# =====================
+def get_share_buttons_html(title, url):
+    encoded_url = requests.utils.quote(url, safe='')
+    encoded_title = requests.utils.quote(title, safe='')
+    twitter_url = f"https://twitter.com/intent/tweet?text={encoded_title}&url={encoded_url}"
+
+    return f'''
+<div class="share-section">
+  <div class="share-label">이 브리핑 공유하기</div>
+  <div class="share-buttons">
+    <a class="share-btn twitter" href="{twitter_url}" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+      X에 공유
+    </a>
+    <button class="share-btn copy" onclick="copyLink()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+      </svg>
+      <span id="copy-text">링크 복사</span>
+    </button>
+  </div>
+</div>
+
+<script>
+function copyLink() {{
+  const url = '{url}';
+  if (navigator.clipboard && window.isSecureContext) {{
+    navigator.clipboard.writeText(url).then(() => {{
+      const btn = document.getElementById('copy-text');
+      btn.textContent = '복사됨 ✓';
+      btn.parentElement.style.background = '#0f766e';
+      btn.parentElement.style.color = '#fff';
+      btn.parentElement.style.borderColor = '#0f766e';
+      setTimeout(() => {{
+        btn.textContent = '링크 복사';
+        btn.parentElement.style.background = '';
+        btn.parentElement.style.color = '';
+        btn.parentElement.style.borderColor = '';
+      }}, 2000);
+    }});
+  }} else {{
+    const textArea = document.createElement('textarea');
+    textArea.value = url;
+    textArea.style.position = 'fixed';
+    textArea.style.opacity = '0';
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    const btn = document.getElementById('copy-text');
+    btn.textContent = '복사됨 ✓';
+    setTimeout(() => {{ btn.textContent = '링크 복사'; }}, 2000);
+  }}
+}}
+</script>'''
 
 # =====================
 # 공통 CSS
@@ -333,6 +386,8 @@ def get_footer_html():
 def build_html(news_list, content):
     today = datetime.now().strftime("%Y년 %m월 %d일")
     today_num = datetime.now().strftime("%Y%m%d")
+    site_url = "https://dhpaeng81-crypto.github.io/Daily-insight"
+    page_url = f"{site_url}/index.html"
 
     finance_news = [n for n in news_list if n["category"] == "Finance"]
     tech_news = [n for n in news_list if n["category"] == "AI/IT"]
@@ -376,6 +431,9 @@ def build_html(news_list, content):
         orig_idx = news_list.index(n)
         energy_cards += make_news_card(n, get_summary(orig_idx), "energy")
 
+    hero_title = content.get("hero_title", "오늘의 Daily Insight")
+    hero_desc = content.get("hero_desc", "Daily Insight 데일리 브리핑")
+    share_buttons = get_share_buttons_html(hero_title, page_url)
     common_css = get_common_css()
 
     html = f'''<!DOCTYPE html>
@@ -384,6 +442,13 @@ def build_html(news_list, content):
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Daily Insight — {today}</title>
+<meta property="og:title" content="Daily Insight — {today}">
+<meta property="og:description" content="{hero_desc}">
+<meta property="og:image" content="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80">
+<meta property="og:url" content="{page_url}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Daily Insight — {today}">
+<meta name="twitter:description" content="{hero_desc}">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 {common_css}
@@ -421,7 +486,7 @@ def build_html(news_list, content):
 .read-more {{ font-size: 12px; font-weight: 500; color: var(--accent); margin-top: 4px; display: inline-flex; align-items: center; gap: 3px; }}
 .editor-note {{ background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 48px; }}
 .editor-label {{ font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }}
-.editor-text {{ font-size: 14px; color: var(--ink); line-height: 1.85; font-weight: 400; }}
+.editor-text {{ font-size: 14px; color: var(--ink); line-height: 1.85; }}
 .section-divider {{ height: 1px; background: var(--border); margin: 0 0 48px; }}
 .summary-box {{ background: var(--ink); color: #fff; border-radius: var(--radius); padding: 32px 36px; margin-bottom: 48px; }}
 .summary-label {{ font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 20px; }}
@@ -429,6 +494,56 @@ def build_html(news_list, content):
 .summary-list {{ list-style: none; display: flex; flex-direction: column; gap: 14px; }}
 .summary-list li {{ display: grid; grid-template-columns: 28px 1fr; gap: 12px; font-size: 14px; color: #d4d4d8; line-height: 1.65; }}
 .summary-num {{ font-family: "Playfair Display", serif; font-size: 22px; color: var(--accent-light); line-height: 1.1; opacity: 0.6; }}
+
+/* 소셜 공유 버튼 */
+.share-section {{
+  border-top: 1px solid var(--border);
+  padding-top: 32px;
+  margin-bottom: 48px;
+  text-align: center;
+}}
+.share-label {{
+  font-size: 12px;
+  color: var(--ink-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}}
+.share-buttons {{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}}
+.share-btn {{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+  font-family: "Noto Sans KR", sans-serif;
+  text-decoration: none;
+}}
+.share-btn:hover {{
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}}
+.share-btn.twitter {{
+  background: #000000;
+  color: #ffffff;
+}}
+.share-btn.copy {{
+  background: var(--bg-subtle);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  transition: transform 0.15s, box-shadow 0.15s, background 0.2s, color 0.2s, border-color 0.2s;
+}}
+
 @media (min-width: 1024px) {{
   .hero {{ max-width: 1080px; padding: 72px 48px 56px; }}
   .main {{ max-width: 1080px; padding: 56px 48px 100px; }}
@@ -451,6 +566,7 @@ def build_html(news_list, content):
   .hero {{ padding: 36px 20px 32px; }}
   .main {{ padding: 36px 20px 60px; }}
   .summary-box {{ padding: 24px 20px; }}
+  .share-btn {{ padding: 9px 18px; font-size: 12px; }}
 }}
 </style>
 </head>
@@ -459,8 +575,8 @@ def build_html(news_list, content):
 
 <section class="hero">
   <div class="issue-badge">오늘의 브리핑</div>
-  <h1 class="hero-title">{content.get("hero_title", "오늘의 Daily Insight")}</h1>
-  <p class="hero-desc">{content.get("hero_desc", "")}</p>
+  <h1 class="hero-title">{hero_title}</h1>
+  <p class="hero-desc">{hero_desc}</p>
   <div class="hero-tags">
     <span class="tag">💹 금융 시장</span>
     <span class="tag">🤖 AI · IT</span>
@@ -514,6 +630,9 @@ def build_html(news_list, content):
       <li><span class="summary-num">3</span><span>{content.get("key_insight_3", "")}</span></li>
     </ol>
   </div>
+
+  {share_buttons}
+
 </main>
 
 {get_footer_html()}
