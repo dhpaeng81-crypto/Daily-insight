@@ -359,10 +359,16 @@ a {{ color: inherit; text-decoration: none; }}
 </body>
 </html>'''
 
-    filename = f"briefing_{today_num}.html"
+    # 날짜별 파일 저장
     with open(filename, "w", encoding="utf-8") as f:
-        f.write(html)
+        f.write(content)
     print(f"HTML saved: {filename}")
+    
+    # index.html도 동일하게 저장 (GitHub Pages 메인 페이지)
+    with open("index.html", "w", encoding="utf-8") as f:
+        f.write(content)
+    print("index.html updated")
+    
     return filename
 
 # =====================
