@@ -6,6 +6,7 @@ import re
 import os
 import json
 import glob
+import random
 
 # =====================
 # 설정값
@@ -16,26 +17,45 @@ TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 UNSPLASH_ACCESS_KEY = os.environ.get("UNSPLASH_ACCESS_KEY")
 
 # =====================
-# 카테고리별 Unsplash 검색어
+# 카테고리별 기본 이미지 풀 (Unsplash 고정 URL)
 # =====================
-UNSPLASH_QUERIES = {
-    "Finance": ["stock market", "finance", "investment", "economy", "trading"],
-    "AI/IT": ["artificial intelligence", "technology", "data center", "computer", "digital"],
-    "Energy": ["renewable energy", "solar power", "oil", "electricity", "energy"]
+DEFAULT_IMAGES = {
+    "Finance": [
+        "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80",
+        "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=800&q=80",
+        "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=800&q=80",
+        "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&q=80",
+        "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?w=800&q=80",
+    ],
+    "AI/IT": [
+        "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80",
+        "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80",
+        "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80",
+        "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80",
+        "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&q=80",
+    ],
+    "Energy": [
+        "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800&q=80",
+        "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80",
+        "https://images.unsplash.com/photo-1534224039826-c7a0eda0e6b3?w=800&q=80",
+        "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80",
+        "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=80",
+    ]
 }
 
+# =====================
+# Unsplash API 이미지 (키 있을 때)
+# =====================
 unsplash_cache = {}
 
-# =====================
-# Unsplash 이미지 가져오기
-# =====================
 def get_unsplash_image(category, keyword=""):
-    import random
+    if not UNSPLASH_ACCESS_KEY:
+        return get_default_image(category)
     cache_key = f"{category}_{keyword}"
     if cache_key in unsplash_cache:
         return unsplash_cache[cache_key]
     try:
-        query = keyword if keyword else random.choice(UNSPLASH_QUERIES.get(category, ["news"]))
+        query = keyword if keyword else category
         response = requests.get(
             "https://api.unsplash.com/photos/random",
             params={"query": query, "orientation": "landscape", "content_filter": "high"},
@@ -46,9 +66,16 @@ def get_unsplash_image(category, keyword=""):
             image_url = response.json()["urls"]["regular"]
             unsplash_cache[cache_key] = image_url
             return image_url
+        else:
+            print(f"Unsplash API error: {response.status_code}")
+            return get_default_image(category)
     except Exception as e:
         print(f"Unsplash error: {e}")
-    return ""
+        return get_default_image(category)
+
+def get_default_image(category):
+    images = DEFAULT_IMAGES.get(category, DEFAULT_IMAGES["Finance"])
+    return random.choice(images)
 
 # =====================
 # 이미지 추출
@@ -85,14 +112,21 @@ def collect_news():
         try:
             feed = feedparser.parse(url)
             source_name = feed.feed.get("title", url)
-            for entry in feed.entries[:5]:
-                title = entry.get("title", "")
+            count = 0
+            for entry in feed.entries:
+                if count >= 5:
+                    break
+                title = entry.get("title", "").strip()
+                if not title:
+                    continue
                 summary = re.sub('<[^>]+>', '', entry.get("summary", ""))[:200]
                 link = entry.get("link", "")
                 image = extract_image(entry)
-                if not image and UNSPLASH_ACCESS_KEY:
-                    keyword = " ".join(title.split()[:3])
-                    image = get_unsplash_image(category, keyword)
+
+                # 이미지 없으면 Unsplash API 또는 기본 이미지
+                if not image:
+                    image = get_unsplash_image(category, " ".join(title.split()[:3]))
+
                 all_news.append({
                     "category": category,
                     "title": title,
@@ -101,9 +135,12 @@ def collect_news():
                     "image": image,
                     "source": source_name
                 })
-            print(f"OK: {category} - {len(feed.entries)} articles")
+                count += 1
+            print(f"OK: {category} ({source_name}) - {count}개 수집")
         except Exception as e:
             print(f"Error ({url}): {e}")
+
+    print(f"총 수집: {len(all_news)}개")
     return all_news
 
 # =====================
@@ -153,22 +190,17 @@ def generate_content(news_list):
 6. 리스크 요인: 반드시 반대 시나리오나 주의사항 포함
 
 {{
-  "hero_title": "오늘의 핵심 헤드라인 20자 이내 한국어 (구체적 수치나 기업명 포함 권장)",
-  "hero_desc": "오늘 시장의 핵심 흐름을 관통하는 한 줄 요약 50자 이내 (방향성과 핵심 키워드 포함)",
-
+  "hero_title": "오늘의 핵심 헤드라인 20자 이내 (구체적 수치나 기업명 포함 권장)",
+  "hero_desc": "오늘 시장의 핵심 흐름 한 줄 요약 50자 이내 (방향성과 핵심 키워드 포함)",
   "finance_overview": "금융 시장 전반 흐름 3-4문장. 주요 지수 방향성, 섹터별 강약, 매크로 환경 변화를 구체적으로 서술",
   "finance_comment": "투자자를 위한 핵심 인사이트 3-4문장. 수혜 섹터, 관련 국내외 기업 2개 이상 언급, 단기/중기 대응 방향, 주의해야 할 리스크 포함",
-
   "tech_overview": "AI·IT 시장 전반 흐름 3-4문장. 기술 트렌드 변화, 주요 기업 동향, 시장 규모나 성장률 수치 포함",
-  "tech_comment": "IT·투자 관점 핵심 인사이트 3-4문장. 기술 변화로 수혜받는 산업군, 관련 국내외 기업 2개 이상, 주목해야 할 포인트와 리스크 포함",
-
+  "tech_comment": "IT·투자 관점 핵심 인사이트 3-4문장. 수혜 산업군, 관련 국내외 기업 2개 이상, 주목해야 할 포인트와 리스크 포함",
   "energy_overview": "에너지 시장 전반 흐름 3-4문장. 유가·가스 방향성, 재생에너지 동향, 수급 변화 등 구체적 서술",
-  "energy_comment": "에너지·투자 관점 핵심 인사이트 3-4문장. 에너지 가격 변화가 미치는 산업 파급효과, 관련 국내외 기업 2개 이상, 투자 대응 방향과 리스크 포함",
-
-  "key_insight_1": "오늘의 핵심 인사이트 1: 구체적 수치·기업·방향성 포함 (예: 'AI 전력 수요 급증, LS일렉트릭·HD현대일렉트릭 수혜 전망')",
-  "key_insight_2": "오늘의 핵심 인사이트 2: 구체적 수치·기업·방향성 포함",
-  "key_insight_3": "오늘의 핵심 인사이트 3: 리스크 또는 주의사항 포함 (예: '미 연준 발언 앞두고 변동성 확대 가능성, 방어적 포지션 권장')",
-
+  "energy_comment": "에너지·투자 관점 핵심 인사이트 3-4문장. 에너지 가격 변화 파급효과, 관련 국내외 기업 2개 이상, 투자 대응 방향과 리스크 포함",
+  "key_insight_1": "핵심 인사이트 1: 구체적 수치·기업·방향성 포함 (예: AI 전력 수요 급증으로 LS일렉트릭·HD현대일렉트릭 수혜 전망)",
+  "key_insight_2": "핵심 인사이트 2: 구체적 수치·기업·방향성 포함",
+  "key_insight_3": "핵심 인사이트 3: 리스크 또는 주의사항 포함 (예: 미 연준 발언 앞두고 변동성 확대 가능성, 방어적 포지션 권장)",
   "news_summaries": [
     {{
       "category": "Finance 또는 AI/IT 또는 Energy",
@@ -187,10 +219,7 @@ def generate_content(news_list):
         messages=[
             {
                 "role": "system",
-                "content": """당신은 15년 경력의 한국인 금융·IT 시장 전문 애널리스트입니다.
-모든 출력은 반드시 한국어로만 작성하세요.
-인사이트는 반드시 구체적인 수치, 기업명, 산업 파급효과를 포함해야 합니다.
-'전망이다', '주목된다' 같은 모호한 표현 대신 구체적인 방향과 근거를 제시하세요."""
+                "content": "당신은 15년 경력의 한국인 금융·IT 시장 전문 애널리스트입니다. 모든 출력은 반드시 한국어로만 작성하세요. 인사이트는 반드시 구체적인 수치, 기업명, 산업 파급효과를 포함해야 합니다."
             },
             {"role": "user", "content": prompt}
         ],
@@ -205,13 +234,10 @@ def generate_content(news_list):
 # 뉴스 카드 HTML 생성
 # =====================
 def make_news_card(news_item, summary, category_class):
-    if news_item["image"]:
-        image_html = f'''<div class="news-thumb">
-        <img src="{news_item['image']}" alt="{summary['title']}" loading="lazy">
-      </div>'''
-    else:
-        emoji = {"finance": "📈", "tech": "🤖", "energy": "⚡"}.get(category_class, "📰")
-        image_html = f'<div class="news-thumb news-thumb-placeholder">{emoji}</div>'
+    image_html = f'''<div class="news-thumb">
+      <img src="{news_item['image']}" alt="{summary['title']}" loading="lazy"
+           onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+    </div>'''
 
     return f'''
     <div class="news-card">
@@ -381,7 +407,7 @@ def build_html(news_list, content):
 .news-thumb {{ width: 100%; height: 200px; overflow: hidden; background: var(--bg-subtle); flex-shrink: 0; }}
 .news-thumb img {{ width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; transition: transform 0.3s ease; }}
 .news-card:hover .news-thumb img {{ transform: scale(1.03); }}
-.news-thumb-placeholder {{ width: 100%; height: 200px; display: flex; align-items: center; justify-content: center; font-size: 40px; background: var(--bg-subtle); opacity: 0.5; }}
+.news-thumb-empty {{ width: 100%; height: 100%; background: var(--bg-subtle); }}
 .news-content {{ padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }}
 .news-source-row {{ display: flex; align-items: center; }}
 .news-source {{ font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }}
@@ -393,27 +419,9 @@ def build_html(news_list, content):
 .news-title a:hover {{ color: var(--accent); }}
 .news-body {{ font-size: 13px; color: var(--ink-soft); line-height: 1.7; }}
 .read-more {{ font-size: 12px; font-weight: 500; color: var(--accent); margin-top: 4px; display: inline-flex; align-items: center; gap: 3px; }}
-
-/* 에디터 인사이트 강화 스타일 */
-.editor-note {{
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--accent);
-  border-radius: 0 10px 10px 0;
-  padding: 20px 24px;
-  margin-bottom: 48px;
-}}
-.editor-label {{
-  font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
-  display: flex; align-items: center; gap: 6px;
-}}
-.editor-text {{
-  font-size: 14px; color: var(--ink); line-height: 1.85;
-  font-weight: 400;
-}}
-.editor-text strong {{ color: var(--accent); font-weight: 500; }}
-
+.editor-note {{ background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 48px; }}
+.editor-label {{ font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }}
+.editor-text {{ font-size: 14px; color: var(--ink); line-height: 1.85; font-weight: 400; }}
 .section-divider {{ height: 1px; background: var(--border); margin: 0 0 48px; }}
 .summary-box {{ background: var(--ink); color: #fff; border-radius: var(--radius); padding: 32px 36px; margin-bottom: 48px; }}
 .summary-label {{ font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 20px; }}
@@ -421,7 +429,6 @@ def build_html(news_list, content):
 .summary-list {{ list-style: none; display: flex; flex-direction: column; gap: 14px; }}
 .summary-list li {{ display: grid; grid-template-columns: 28px 1fr; gap: 12px; font-size: 14px; color: #d4d4d8; line-height: 1.65; }}
 .summary-num {{ font-family: "Playfair Display", serif; font-size: 22px; color: var(--accent-light); line-height: 1.1; opacity: 0.6; }}
-
 @media (min-width: 1024px) {{
   .hero {{ max-width: 1080px; padding: 72px 48px 56px; }}
   .main {{ max-width: 1080px; padding: 56px 48px 100px; }}
@@ -431,7 +438,6 @@ def build_html(news_list, content):
   .section-overview {{ font-size: 16px; }}
   .news-list {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }}
   .news-thumb {{ height: 180px; }}
-  .news-thumb-placeholder {{ height: 180px; }}
   .editor-text {{ font-size: 15px; }}
   .summary-box {{ padding: 40px 48px; }}
   .summary-title {{ font-size: 26px; }}
@@ -440,13 +446,10 @@ def build_html(news_list, content):
 @media (min-width: 640px) and (max-width: 1023px) {{
   .news-list {{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }}
   .news-thumb {{ height: 180px; }}
-  .news-thumb-placeholder {{ height: 180px; }}
 }}
 @media (max-width: 639px) {{
   .hero {{ padding: 36px 20px 32px; }}
   .main {{ padding: 36px 20px 60px; }}
-  .news-thumb {{ height: 180px; }}
-  .news-thumb-placeholder {{ height: 180px; }}
   .summary-box {{ padding: 24px 20px; }}
 }}
 </style>
@@ -594,7 +597,7 @@ def build_archive():
 .archive-meta {{ font-size: 12px; color: var(--ink-muted); }}
 .archive-arrow {{ font-size: 16px; color: var(--ink-muted); }}
 .archive-card:hover .archive-arrow {{ color: var(--accent); }}
-.today-badge {{ font-size: 10px; font-weight: 500; background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 100px; letter-spacing: 0.05em; }}
+.today-badge {{ font-size: 10px; font-weight: 500; background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 100px; }}
 @media (min-width: 1024px) {{
   .archive-hero {{ max-width: 1080px; padding: 72px 48px 56px; }}
   .archive-main {{ max-width: 1080px; padding: 40px 48px 100px; }}
@@ -657,7 +660,6 @@ def send_telegram(today, filename):
 if __name__ == "__main__":
     print("Step 1: Collecting news...")
     news_list = collect_news()
-    print(f"Total: {len(news_list)} articles")
 
     print("Step 2: Generating content...")
     content = generate_content(news_list)
