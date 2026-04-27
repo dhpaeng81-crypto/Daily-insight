@@ -100,7 +100,7 @@ def generate_content(news_list):
     {{
       "category": "Finance 또는 AI/IT 또는 Energy",
       "title": "뉴스 제목 한국어로",
-      "body": "2-3문장 해설 (왜 중요한지 포함)",
+      "body": "2-3문장 해설 한국어로 (왜 중요한지 포함)",
       "original_index": 0
     }}
   ]
@@ -380,10 +380,20 @@ a {{ color: inherit; text-decoration: none; }}
 # 텔레그램 발송
 # =====================
 def send_telegram(today, filename):
-    message = f"*Daily Insight* 발행\n{today}\n\n새 브리핑이 준비됐어요."
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+    site_url = "https://dhpaeng81-crypto.github.io/Daily-insight"
+    message = (
+        f"*Daily Insight* 발행 완료\n"
+        f"{today}\n\n"
+        f"👉 [오늘의 브리핑 보기]({site_url})"
+    )
     requests.post(
-        f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
-        json={"chat_id": TELEGRAM_CHAT_ID, "text": message, "parse_mode": "Markdown"}
+        url,
+        json={
+            "chat_id": TELEGRAM_CHAT_ID,
+            "text": message,
+            "parse_mode": "Markdown"
+        }
     )
     print("Telegram: OK")
 
