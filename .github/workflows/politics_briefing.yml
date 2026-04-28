@@ -2,8 +2,8 @@ name: Politics Briefing
 
 on:
   schedule:
-    - cron: '15 07 * * *'   # 매일 오후 15시 55분 KST (UTC 06:55)
-    - cron: '30 23 * * 0'   # 일요일 오전 8시 30분 KST 심층 분석 (UTC 23:30)
+    - cron: '0 5 * * *'   
+    - cron: '0 23 * * 0'   
   workflow_dispatch:        # 수동 실행 버튼
 
 permissions:
