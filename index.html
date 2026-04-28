@@ -5,15 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Daily Insight — 2026년 04월 28일</title>
 <meta property="og:title" content="Daily Insight — 2026년 04월 28일">
-<meta property="og:description" content="AI반도체 ETF 순매수 증가로 금융 수익 기대감 상승">
+<meta property="og:description" content="미국 도시의 재정 곤경, 투자 전략의 중요성 대두">
 <meta property="og:image" content="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80">
 <meta property="og:url" content="https://dhpaeng81-crypto.github.io/Daily-insight/index.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Daily Insight — 2026년 04월 28일">
-<meta name="twitter:description" content="AI반도체 ETF 순매수 증가로 금융 수익 기대감 상승">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 
+@import url('https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css');
 :root {
   --ink: #18181b; --ink-soft: #52525b; --ink-muted: #a1a1aa;
   --bg: #fafaf9; --bg-card: #ffffff; --bg-subtle: #f4f4f5;
@@ -22,20 +20,23 @@
   --tech: #6d28d9; --tech-bg: #ede9fe;
   --energy: #b45309; --energy-bg: #fef3c7;
   --border: #e4e4e7; --radius: 12px;
+  --font: 'NanumSquare', 'Apple SD Gothic Neo', sans-serif;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--ink); font-family: "Noto Sans KR", sans-serif; font-weight: 300; line-height: 1.8; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font); font-weight: 400; line-height: 1.8; }
 a { color: inherit; text-decoration: none; }
 .site-header { border-bottom: 1px solid var(--border); background: var(--bg-card); position: sticky; top: 0; z-index: 100; }
 .header-inner { max-width: 780px; margin: 0 auto; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
-.logo { font-family: "Playfair Display", serif; font-size: 20px; font-weight: 700; }
+.logo { font-family: var(--font); font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
 .logo span { color: var(--accent); }
-.header-nav { display: flex; gap: 20px; font-size: 13px; color: var(--ink-muted); }
-.header-nav a:hover { color: var(--accent); }
-.header-nav .active { color: var(--accent); font-weight: 500; }
+.header-nav { display: flex; gap: 4px; font-size: 13px; align-items: center; }
+.header-nav a { padding: 6px 12px; border-radius: 6px; color: var(--ink-muted); font-weight: 700; transition: background 0.15s, color 0.15s; }
+.header-nav a:hover { background: var(--bg-subtle); color: var(--ink); }
+.header-nav .active { color: var(--accent); background: var(--accent-light); }
+.header-nav .divider { width: 1px; height: 16px; background: var(--border); margin: 0 4px; }
 .site-footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
 .footer-inner { max-width: 780px; margin: 0 auto; }
-.footer-logo { font-family: "Playfair Display", serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.footer-logo { font-family: var(--font); font-size: 16px; font-weight: 800; margin-bottom: 8px; }
 .footer-logo span { color: var(--accent); }
 .footer-desc { font-size: 12px; color: var(--ink-muted); margin-bottom: 16px; }
 .footer-links { display: flex; justify-content: center; gap: 20px; font-size: 12px; color: var(--ink-muted); }
@@ -44,114 +45,69 @@ a { color: inherit; text-decoration: none; }
   .header-inner { max-width: 1080px; padding: 0 48px; }
   .footer-inner { max-width: 1080px; }
 }
-@media (max-width: 600px) {
-  .header-meta { display: none; }
-}
+@media (max-width: 600px) { .header-meta { display: none; } }
 
 .hero { max-width: 780px; margin: 0 auto; padding: 56px 24px 40px; border-bottom: 1px solid var(--border); }
-.issue-badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 100px; margin-bottom: 20px; }
-.hero-title { font-family: "Playfair Display", serif; font-size: clamp(26px, 5vw, 40px); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px; }
+.issue-badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 100px; margin-bottom: 20px; }
+.hero-title { font-family: var(--font); font-size: clamp(24px, 5vw, 38px); font-weight: 800; line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 16px; }
 .hero-desc { font-size: 16px; color: var(--ink-soft); max-width: 560px; margin-bottom: 24px; line-height: 1.7; }
 .hero-tags { display: flex; gap: 8px; flex-wrap: wrap; }
-.tag { font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 100px; border: 1px solid var(--border); color: var(--ink-soft); }
+.tag { font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 100px; border: 1px solid var(--border); color: var(--ink-soft); }
 .main { max-width: 780px; margin: 0 auto; padding: 48px 24px 80px; }
 .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1.5px solid var(--border); }
-.section-pill { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; }
+.section-pill { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; }
 .section-pill.finance { background: var(--finance-bg); color: var(--finance); }
 .section-pill.tech { background: var(--tech-bg); color: var(--tech); }
 .section-pill.energy { background: var(--energy-bg); color: var(--energy); }
-.section-title { font-family: "Playfair Display", serif; font-size: 20px; font-weight: 700; }
+.section-title { font-family: var(--font); font-size: 20px; font-weight: 800; }
 .section-overview { font-size: 15px; color: var(--ink-soft); line-height: 1.75; margin-bottom: 24px; padding: 16px 20px; background: var(--bg-subtle); border-left: 3px solid var(--border); border-radius: 0 8px 8px 0; }
 .news-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
 .news-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: box-shadow 0.2s; }
 .news-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-.news-thumb { width: 100%; height: 200px; overflow: hidden; background: var(--bg-subtle); flex-shrink: 0; }
-.news-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; transition: transform 0.3s ease; }
+.news-thumb { width: 100%; height: 200px; overflow: hidden; background: var(--bg-subtle); }
+.news-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; transition: transform 0.3s; }
 .news-card:hover .news-thumb img { transform: scale(1.03); }
 .news-thumb-empty { width: 100%; height: 100%; background: var(--bg-subtle); }
 .news-content { padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
 .news-source-row { display: flex; align-items: center; }
-.news-source { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
+.news-source { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-muted); }
 .news-category-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-right: 5px; }
 .news-category-dot.finance { background: var(--finance); }
 .news-category-dot.tech { background: var(--tech); }
 .news-category-dot.energy { background: var(--energy); }
-.news-title { font-size: 15px; font-weight: 500; line-height: 1.45; color: var(--ink); }
+.news-title { font-size: 15px; font-weight: 700; line-height: 1.45; color: var(--ink); }
 .news-title a:hover { color: var(--accent); }
 .news-body { font-size: 13px; color: var(--ink-soft); line-height: 1.7; }
-.read-more { font-size: 12px; font-weight: 500; color: var(--accent); margin-top: 4px; display: inline-flex; align-items: center; gap: 3px; }
-.editor-note { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 48px; }
-.editor-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-.editor-text { font-size: 14px; color: var(--ink); line-height: 1.85; }
+.read-more { font-size: 12px; font-weight: 700; color: var(--accent); margin-top: 4px; display: inline-flex; align-items: center; gap: 3px; }
+.analyst-note { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 48px; }
+.analyst-label { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.analyst-text { font-size: 14px; color: var(--ink); line-height: 1.85; }
 .section-divider { height: 1px; background: var(--border); margin: 0 0 48px; }
 .summary-box { background: var(--ink); color: #fff; border-radius: var(--radius); padding: 32px 36px; margin-bottom: 48px; }
-.summary-label { font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 20px; }
-.summary-title { font-family: "Playfair Display", serif; font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 20px; }
+.summary-label { font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 20px; }
+.summary-title { font-family: var(--font); font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 20px; }
 .summary-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
 .summary-list li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; font-size: 14px; color: #d4d4d8; line-height: 1.65; }
-.summary-num { font-family: "Playfair Display", serif; font-size: 22px; color: var(--accent-light); line-height: 1.1; opacity: 0.6; }
-
-/* 소셜 공유 버튼 */
-.share-section {
-  border-top: 1px solid var(--border);
-  padding-top: 32px;
-  margin-bottom: 48px;
-  text-align: center;
-}
-.share-label {
-  font-size: 12px;
-  color: var(--ink-muted);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-}
-.share-buttons {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.share-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 24px;
-  border-radius: 100px;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  border: none;
-  transition: transform 0.15s, box-shadow 0.15s;
-  font-family: "Noto Sans KR", sans-serif;
-  text-decoration: none;
-}
-.share-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-.share-btn.twitter {
-  background: #000000;
-  color: #ffffff;
-}
-.share-btn.copy {
-  background: var(--bg-subtle);
-  color: var(--ink);
-  border: 1px solid var(--border);
-  transition: transform 0.15s, box-shadow 0.15s, background 0.2s, color 0.2s, border-color 0.2s;
-}
-
+.summary-num { font-family: var(--font); font-size: 20px; font-weight: 800; color: var(--accent-light); line-height: 1.2; opacity: 0.6; }
+.share-section { border-top: 1px solid var(--border); padding-top: 32px; margin-bottom: 48px; text-align: center; }
+.share-label { font-size: 12px; color: var(--ink-muted); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; margin-bottom: 16px; }
+.share-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.share-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; border-radius: 100px; font-size: 13px; font-weight: 700; cursor: pointer; border: none; transition: transform 0.15s, box-shadow 0.15s; font-family: var(--font); text-decoration: none; }
+.share-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.share-btn.twitter { background: #000; color: #fff; }
+.share-btn.copy { background: var(--bg-subtle); color: var(--ink); border: 1px solid var(--border); transition: transform 0.15s, box-shadow 0.15s, background 0.2s, color 0.2s, border-color 0.2s; }
 @media (min-width: 1024px) {
   .hero { max-width: 1080px; padding: 72px 48px 56px; }
   .main { max-width: 1080px; padding: 56px 48px 100px; }
-  .hero-title { font-size: 52px; }
+  .hero-title { font-size: 48px; }
   .hero-desc { font-size: 18px; max-width: 680px; }
   .section-title { font-size: 24px; }
   .section-overview { font-size: 16px; }
   .news-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .news-thumb { height: 180px; }
-  .editor-text { font-size: 15px; }
+  .analyst-text { font-size: 15px; }
   .summary-box { padding: 40px 48px; }
-  .summary-title { font-size: 26px; }
+  .summary-title { font-size: 24px; }
   .summary-list li { font-size: 15px; }
 }
 @media (min-width: 640px) and (max-width: 1023px) {
@@ -172,16 +128,18 @@ a { color: inherit; text-decoration: none; }
   <div class="header-inner">
     <div class="logo"><a href="index.html">Daily<span>Insight</span></a></div>
     <nav class="header-nav">
-      <a href="index.html" class="active">오늘의 브리핑</a>
+      <a href="index.html" class="active">금융·AI·에너지</a>
       <a href="archive.html" class="">아카이브</a>
+      <div class="divider"></div>
+      <a href="politics_index.html" class="">역사·정치</a>
     </nav>
   </div>
 </header>
 
 <section class="hero">
   <div class="issue-badge">오늘의 브리핑</div>
-  <h1 class="hero-title">한투운용 AI ETF 1000억 순매수 달성</h1>
-  <p class="hero-desc">AI반도체 ETF 순매수 증가로 금융 수익 기대감 상승</p>
+  <h1 class="hero-title">미국 재정 위기 속 투자 기회는?</h1>
+  <p class="hero-desc">미국 도시의 재정 곤경, 투자 전략의 중요성 대두</p>
   <div class="hero-tags">
     <span class="tag">💹 금융 시장</span>
     <span class="tag">🤖 AI · IT</span>
@@ -194,13 +152,13 @@ a { color: inherit; text-decoration: none; }
     <span class="section-pill finance">Finance</span>
     <span class="section-title">금융 시장</span>
   </div>
-  <p class="section-overview">오늘 금융 시장은 대체로 상승세를 보였습니다. 특히 한투운용의 AI반도체TOP3+ ETF는 개인 투자자들의 순매수 1000억 돌파로 인해 주목받고 있으며, 이는 인공지능 관련 산업의 성장을 반영합니다. 반면, 에이비엘바이오는 임상 실패 평가로 주가가 급락하는 등 개별 기업 실적에 따른 변동성이 두드러졌습니다.</p>
+  <p class="section-overview">미국 경제 전반에 걸쳐 재정 적신호가 켜지고 있으며, 특히 일부 도시는 심각한 부채 문제를 겪고 있습니다. 이는 소비 위축과 투자 감소를 초래할 수 있어 시장에 부정적 영향을 미칠 가능성이 큽니다. 반면, 비스트라와 같은 원자력 에너지 주식이 배당 수익을 제공하는 투자처로 주목받고 있습니다.</p>
   <div class="news-list">
     <div class="news-card">
       <div class="news-thumb">
-      <img src="https://media.zenfs.com/en/thestreet_881/ecea160ed5efb86243dad8b359501045" alt="AT&T CEO, 고객 충성도 회복위해 새로운 제안 희망" loading="lazy"
-           onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
-    </div>
+        <img src="https://media.zenfs.com/en/thestreet_881/ecea160ed5efb86243dad8b359501045" alt="AT&T CEO hopes new offers will restore customer loyalty" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
       <div class="news-content">
         <div class="news-source-row">
           <span class="news-source">
@@ -209,17 +167,21 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://finance.yahoo.com/markets/stocks/articles/t-hopes-latest-strategy-slow-170700426.html" target="_blank">AT&T CEO, 고객 충성도 회복위해 새로운 제안 희망</a>
+          <a href="https://finance.yahoo.com/markets/stocks/articles/t-hopes-latest-strategy-slow-170700426.html" target="_blank">AT&T CEO hopes new offers will restore customer loyalty</a>
         </div>
-        <div class="news-body">AT&T의 CEO는 경쟁 심화 속에서 고객 충성도를 회복하기 위해 새로운 제안을 계획하고 있습니다. 이는 시장 내 고객 이동이 증가하면서 기존 고객 유지를 위한 전략적 필요성을 강조합니다. AT&T의 이번 전략이 성공할 경우, 통신서비스 시장에서 점유율 확대에 기여할 수 있습니다.</div>
+        <div class="news-body">제목: AT&T CEO는 새로운 제안이 고객 충성도를 회복하기를 희망함
+
+내용: AT&T의 CEO는 새로운 프로모션과 제안이 고객들의 충성도를 회복하는 데 도움이 될 것이라고 밝혔습니다. 이 회사는 고객 이탈 문제를 해결하기 위해 다양한 혜택을 제공할 계획입니다.
+
+요약: AT&T의 CEO는 새로운 프로모션이 고객 충성도를 되찾는 데 기여할 것으로 기대하고 있으며, 이를 위해 다양한 혜택을 마련하고 있습니다.</div>
         <a href="https://finance.yahoo.com/markets/stocks/articles/t-hopes-latest-strategy-slow-170700426.html" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-      <img src="https://media.zenfs.com/en/moneywise_ecomm_711/5abf0bcad4efdf98f9b78a7e16913d0c" alt="Elon Musk: America will '1,000%' go bankrupt due to debt — here’s what he claims can save the country" loading="lazy"
-           onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
-    </div>
+        <img src="https://media.zenfs.com/en/barchart_com_477/0092cb611925d2a4d0382be68cd52ee4" alt="Better Later Than Never? Tesla Stock Hangs in the Crosshairs as Cybercab Finally Enters Production" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
       <div class="news-content">
         <div class="news-source-row">
           <span class="news-source">
@@ -228,19 +190,21 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://finance.yahoo.com/economy/policy/articles/elon-musk-america-1-000-130000517.html" target="_blank">Elon Musk: America will '1,000%' go bankrupt due to debt — here’s what he claims can save the country</a>
+          <a href="https://finance.yahoo.com/markets/stocks/articles/better-later-never-tesla-stock-140002269.html" target="_blank">Better Later Than Never? Tesla Stock Hangs in the Crosshairs as Cybercab Finally Enters Production</a>
         </div>
-        <div class="news-body">제목: 엘론 머스크: 미국은 부채로 인해 '1,000%' 파산할 것이다 - 그가 주장하는 나라를 구할 방법은 여기 있다
+        <div class="news-body">제목: 늦출 바에는 차라리 나은가? 테슬라 주식, 사이버택시의 생산 시작으로 주목받다
 
-내용 요약: 엘론 머스크는 미국이 부채 문제로 인해 심각한 경제 위기를 겪을 것이라고 경고하며, 이를 해결하기 위한 여러 가지 방법을 제안했습니다. 그는 정부의 재정 관리를 개선하고 혁신적인 기술 개발을 촉진하는 것이 필수적이라고 주장했습니다. 이렇게 함으로써 미국은 경제적 위기를 극복하고 지속 가능한 발전을 이룰 수 있다고 설명합니다.</div>
-        <a href="https://finance.yahoo.com/economy/policy/articles/elon-musk-america-1-000-130000517.html" class="read-more" target="_blank">원문 읽기 →</a>
+내용: 테슬라의 사이버택시가 드디어 생산에 들어가면서, 이와 함께 테슬라 주식이 투자자들의 관심을 받고 있다. 이 새로운 전기차 모델은 앞으로 회사의 성장에 중요한 역할을 할 것으로 기대된다.
+
+요약: 테슬라의 사이버택시가 생산에 들어가면서, 회사 주식이 주목받고 있다. 이 모델은 테슬라의 미래 성장에 긍정적인 영향을 미칠 것으로 보인다.</div>
+        <a href="https://finance.yahoo.com/markets/stocks/articles/better-later-never-tesla-stock-140002269.html" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-      <img src="https://media.zenfs.com/en/barchart_com_477/5eb25a85304c8d62708d358eeb1fe485" alt="Spirit Airlines Stock Is Ready for Takeoff Thanks to Trump, but Can This Plane Stay in the Sky?" loading="lazy"
-           onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
-    </div>
+        <img src="https://media.zenfs.com/en/moneywise_ecomm_711/8cce6db26831fe3b601a5d5ccfbf6bac" alt="US city with the most people in financial distress revealed. Find out if it's yours — and how you can dig out of debt" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
       <div class="news-content">
         <div class="news-source-row">
           <span class="news-source">
@@ -249,17 +213,17 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://finance.yahoo.com/markets/stocks/articles/spirit-airlines-stock-ready-takeoff-130001669.html" target="_blank">Spirit Airlines Stock Is Ready for Takeoff Thanks to Trump, but Can This Plane Stay in the Sky?</a>
+          <a href="https://finance.yahoo.com/economy/articles/us-city-most-people-financial-141000878.html" target="_blank">US city with the most people in financial distress revealed. Find out if it's yours — and how you can dig out of debt</a>
         </div>
-        <div class="news-body">제목: 스피릿 항공 주식, 트럼프 덕분에 이륙 준비 완료, 하지만 이 비행기가 하늘에 머무를 수 있을까?
+        <div class="news-body">제목: 재정적 어려움을 겪는 사람들이 가장 많은 미국 도시가 밝혀졌다. 당신의 도시인지 확인하고 부채에서 벗어나는 방법을 찾아보세요.
 
-내용 요약: 트럼프 전 대통령의 정책과 발언이 스피릿 항공의 주가 상승에 긍정적인 영향을 미치고 있으나, 앞으로의 경제적 불확실성이 이 항공사의 성장을 지속할 수 있을지에 대한 질문을 남기고 있다. 시장의 반응과 항공 업계의 동향을 주의 깊게 지켜볼 필요가 있다.</div>
-        <a href="https://finance.yahoo.com/markets/stocks/articles/spirit-airlines-stock-ready-takeoff-130001669.html" class="read-more" target="_blank">원문 읽기 →</a>
+요약: 최근 연구에 따르면, 재정적으로 어려움을 겪는 사람들이 가장 많은 미국 도시는 밝혀졌습니다. 이 기사는 해당 도시를 확인할 수 있는 방법과 부채에서 벗어나기 위한 조언을 제공합니다.</div>
+        <a href="https://finance.yahoo.com/economy/articles/us-city-most-people-financial-141000878.html" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div></div>
-  <div class="editor-note">
-    <div class="editor-label">💡 애널리스트 인사이트</div>
-    <div class="editor-text">인공지능 산업의 성장에 힘입어 투자자들은 한투운용의 ETF와 같은 관련 상품에 주목하고 있습니다. LG전자와 엔비디아의 협력 소식도 관련 종목의 상승 동력으로 작용할 것입니다. 그러나 실적 발표에 따른 개별 종목의 변동성에는 주의가 필요합니다. 중장기적으로는 인공지능 시장의 성장을 반영하는 기업에 대한 관심을 유지하되, 기업의 실적 발표 및 외부 변수에 주의를 기울여야 합니다.</div>
+  <div class="analyst-note">
+    <div class="analyst-label">💡 애널리스트 인사이트</div>
+    <div class="analyst-text">대우건설은 1분기 실적 호조로 주가가 급등했으며, 이는 건설 부문의 강한 회복을 시사합니다. AT&T와 LG전자는 각각 새로운 고객 유치를 위한 전략과 AI 협력 강화로 시장 주목을 받고 있습니다. 그러나 에이비엘바이오의 임상 실패 소식은 의료주에 대한 경계감을 불러일으키고 있습니다.</div>
   </div>
   <div class="section-divider"></div>
 
@@ -267,13 +231,13 @@ a { color: inherit; text-decoration: none; }
     <span class="section-pill tech">Tech</span>
     <span class="section-title">AI · IT 트렌드</span>
   </div>
-  <p class="section-overview">AI 및 IT 시장은 하드웨어와 소프트웨어 부문 모두에서 활발한 움직임을 보이고 있습니다. OpenAI는 Microsoft와 협력을 통해 AWS에서 제품을 판매하게 되었으며 이는 시장 접근성과 수익성을 개선합니다. 또한, Ineffable Intelligence가 11억 달러의 자금을 조달하여 AI 학습 혁신을 목표로 하고 있습니다.</p>
+  <p class="section-overview">AI 시장에서는 OpenAI가 마이크로소프트와의 협약 갱신으로 아마존 서비스를 금지 없게 되었고, 이는 시장에서 긍정적으로 평가되고 있습니다. DeepMind의 설립자 데이비드 실버는 새로운 AI 연구소에 11억 달러의 자금을 유치하며 AI 연구에 큰 발전을 기대할 수 있게 되었습니다.</p>
   <div class="news-list">
     <div class="news-card">
       <div class="news-thumb">
-      <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80" alt="OpenAI ends Microsoft legal peril over its $50B Amazon deal" loading="lazy"
-           onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
-    </div>
+        <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80" alt="OpenAI ends Microsoft legal peril over its $50B Amazon deal" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
       <div class="news-content">
         <div class="news-source-row">
           <span class="news-source">
@@ -284,19 +248,19 @@ a { color: inherit; text-decoration: none; }
         <div class="news-title">
           <a href="https://techcrunch.com/2026/04/27/openai-ends-microsoft-legal-peril-over-its-50b-amazon-deal/" target="_blank">OpenAI ends Microsoft legal peril over its $50B Amazon deal</a>
         </div>
-        <div class="news-body">제목: OpenAI, 500억 달러 아마존 거래에 대한 마이크로소프트의 법적 위험 종료
+        <div class="news-body">제목: OpenAI, 마이크로소프트와의 법적 위험 해소 및 500억 달러 아마존 거래
 
-내용: OpenAI는 최대 주주인 마이크로소프트로부터 큰 양보를 받아냈으며, 이를 통해 AWS에서 제품을 판매할 수 있게 되었습니다. 마이크로소프트는 수익 공유 계약을 통해 더 많은 현금을 얻게 됩니다.
+내용: OpenAI는 최대 주주인 마이크로소프트로부터 중요한 양보를 받아내어 AWS에서 제품을 판매할 수 있게 되었으며, 마이크로소프트는 수익 공유 계약을 통해 더 많은 현금을 얻는 결과를 가져왔다.
 
-요약: OpenAI는 마이크로소프트와의 협상에서 양보를 받아내어 아마존 웹 서비스(AWS)에서 제품을 판매할 수 있는 권리를 얻었습니다. 이러한 협정은 마이크로소프트에도 추가적인 수익을 가져다줄 것으로 보입니다.</div>
+요약: OpenAI는 마이크로소프트와의 협상에서 AWS에서 제품 판매 허가를 얻어내고, 마이크로소프트는 수익 공유 계약을 통해 추가 수익을 확보하게 되었다. 이로써 양측의 법적 위험이 해소되었다.</div>
         <a href="https://techcrunch.com/2026/04/27/openai-ends-microsoft-legal-peril-over-its-50b-amazon-deal/" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-      <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80" alt="DeepMind’s David Silver just raised $1.1B to build an AI that learns without human data" loading="lazy"
-           onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
-    </div>
+        <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80" alt="DeepMind’s David Silver just raised $1.1B to build an AI that learns without human data" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
       <div class="news-content">
         <div class="news-source-row">
           <span class="news-source">
@@ -307,17 +271,19 @@ a { color: inherit; text-decoration: none; }
         <div class="news-title">
           <a href="https://techcrunch.com/2026/04/27/deepminds-david-silver-just-raised-1-1b-to-build-an-ai-that-learns-without-human-data/" target="_blank">DeepMind’s David Silver just raised $1.1B to build an AI that learns without human data</a>
         </div>
-        <div class="news-body">제목: 딥마인드의 데이비드 실버, 사람의 데이터 없이 학습하는 AI 구축을 위해 11억 달러 모금
+        <div class="news-body">제목: 딥마인드의 데이비드 실버, 인간 데이터 없이 학습하는 AI 개발을 위해 11억 달러 조달
 
-내용 요약: 딥마인드의 전 연구원인 데이비드 실버가 새로 설립한 영국의 AI 연구소 '이니페이블 인텔리전스'가 11억 달러의 자금을 모았으며, 기업 가치는 51억 달러에 달한다. 이 연구소는 사람의 데이터 없이 학습하는 AI를 개발하는 데 초점을 맞추고 있다.</div>
+내용: 최근 몇 개월 전 설립된 영국의 AI 연구소인 Ineffable Intelligence가 데이비드 실버에 의해 11억 달러의 자금을 조달하며 51억 달러의 가치를 평가받았다. 
+
+요약: 딥마인드 출신의 연구자 데이비드 실버가 설립한 Ineffable Intelligence가 11억 달러의 자금을 확보하며 AI 개발에 나섰다. 이 연구소는 인간 데이터 없이 학습하는 AI를 목표로 하고 있다.</div>
         <a href="https://techcrunch.com/2026/04/27/deepminds-david-silver-just-raised-1-1b-to-build-an-ai-that-learns-without-human-data/" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-      <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80" alt="Investors back Skye’s AI home screen app for iPhone ahead of launch" loading="lazy"
-           onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
-    </div>
+        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80" alt="Investors back Skye’s AI home screen app for iPhone ahead of launch" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
       <div class="news-content">
         <div class="news-source-row">
           <span class="news-source">
@@ -328,17 +294,17 @@ a { color: inherit; text-decoration: none; }
         <div class="news-title">
           <a href="https://techcrunch.com/2026/04/27/investors-back-skye-signull-labs-ai-home-screen-app-for-iphone-ahead-of-launch/" target="_blank">Investors back Skye’s AI home screen app for iPhone ahead of launch</a>
         </div>
-        <div class="news-body">제목: 투자자들은 출시를 앞둔 스카이의 AI 홈 스크린 앱에 투자하다
+        <div class="news-body">제목: 투자자들, 출시 전 스카이의 AI 홈 스크린 앱 지원
 
-내용: 스카이의 새로운 AI 앱이 출시되기 전에 투자자들의 관심을 끌었다. 이는 AI 기능이 강화된 아이폰에 대한 관심을 나타내는 신호이다.
+내용: 스카이의 새로운 AI 앱이 출시되기 전에 투자자들의 관심을 끌었다. 이는 더 많은 AI 기능을 갖춘 아이폰에 대한 관심을 나타내는 신호로 해석될 수 있다.
 
-요약: 스카이의 AI 홈 스크린 앱이 출시 전에 투자자들의 지지를 받으면서 AI 기능이 강화된 아이폰에 대한 수요가 높아지고 있는 것으로 보인다.</div>
+요약: 스카이의 AI 홈 스크린 앱이 출시 전에 이미 투자자들의 관심을 받으며 지원을 끌어냈다. 이는 소비자들이 AI 기능이 강화된 아이폰에 대해 높은 관심을 보이고 있다는 것을 보여준다.</div>
         <a href="https://techcrunch.com/2026/04/27/investors-back-skye-signull-labs-ai-home-screen-app-for-iphone-ahead-of-launch/" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div></div>
-  <div class="editor-note">
-    <div class="editor-label">💡 애널리스트 인사이트</div>
-    <div class="editor-text">AI 시장의 급성장은 소프트웨어 기업뿐 아니라 하드웨어 분야에서도 기회를 제공합니다. OpenAI와 Microsoft의 협력은 기술 발전과 시장 확대 측면에서 긍정적이며, 국내 기업인 LG전자와 엔비디아의 협력이 국내 시장에도 긍정적 영향을 미칠 것입니다. 그러나 AI 기술 발전 속도와 규제 변화에 따른 리스크를 항상 주의해야 합니다.</div>
+  <div class="analyst-note">
+    <div class="analyst-label">💡 애널리스트 인사이트</div>
+    <div class="analyst-text">메타의 AI 확장 계획이 중국의 규제로 좌절되면서 글로벌 AI 업계는 향후 규제 리스크에 더 신경쓸 필요가 있습니다. 반면, 스카이의 AI 앱 출시는 투자자들의 이목을 끌고 있으며, 국내에서는 LG전자와 엔비디아의 AI 협력이 주목받고 있습니다.</div>
   </div>
   <div class="section-divider"></div>
 
@@ -346,13 +312,13 @@ a { color: inherit; text-decoration: none; }
     <span class="section-pill energy">Energy</span>
     <span class="section-title">에너지 · 산업</span>
   </div>
-  <p class="section-overview">에너지 시장에서는 LNG 수급이 중요한 변수로 작용하고 있습니다. 베트남이 LNG 수입을 늘렸으며 이는 글로벌 공급 차질을 반영합니다. 그러나 중동의 불안으로 인해 가스 공급은 여전히 불안정하여 시장 변동성이 예상됩니다.</p>
+  <p class="section-overview">베트남과 일본은 글로벌 LNG 공급이 불안정한 상황에서 수입을 확대하고 있으며, 이는 에너지 안보 강화와 관련이 있습니다. 그러나 중동에서의 긴장이 지속되면서 LNG 시장의 불확실성은 여전히 존재합니다.</p>
   <div class="news-list">
     <div class="news-card">
       <div class="news-thumb">
-      <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80" alt="Vietnam buys more <b>LNG</b> as temperatures set to rise above average - The Business Times" loading="lazy"
-           onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
-    </div>
+        <img src="https://images.unsplash.com/photo-1534224039826-c7a0eda0e6b3?w=800&q=80" alt="Vietnam buys more <b>LNG</b> as temperatures set to rise above average - The Business Times" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
       <div class="news-content">
         <div class="news-source-row">
           <span class="news-source">
@@ -363,18 +329,18 @@ a { color: inherit; text-decoration: none; }
         <div class="news-title">
           <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.businesstimes.com.sg/international/asean/vietnam-buys-more-lng-temperatures-set-rise-above-average&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw1fQS23sI95lqnJ8Am-Ae1-" target="_blank">Vietnam buys more <b>LNG</b> as temperatures set to rise above average - The Business Times</a>
         </div>
-        <div class="news-body">제목: 베트남, 기온 상승에 따라 더 많은 액화천연가스(LNG) 구매 - 비즈니스 타임스  
-내용: [싱가포르] 베트남은 이란 전쟁으로 인해 글로벌 공급이 제한됨에 따라 높은 가격으로 액화천연가스(LNG)를 더 많이 수입하고 있습니다.
+        <div class="news-body">제목: 베트남, 평균 기온 상승에 따라 더 많은 액화천연가스(LNG) 구매 - 비즈니스 타임스  
+내용: [싱가포르] 베트남은 이란 전쟁으로 인해 세계 공급이 제한되면서 높은 가격으로 액화천연가스(LNG)를 더 많이 수입하고 있습니다.
 
-요약: 베트남은 이란 전쟁으로 글로벌 액화천연가스 공급이 축소됨에 따라 가격이 상승하고 있는 상황에서 더 많은 LNG를 수입하고 있습니다. 이에 따라 베트남의 기온이 평균 이상으로 상승할 것으로 예상됩니다.</div>
+요약: 베트남은 이란 전쟁으로 인해 글로벌 공급이 감소하면서 높은 가격에 액화천연가스(LNG) 수입을 증가시키고 있습니다. 기온 상승을 대비하기 위한 조치로 보입니다.</div>
         <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.businesstimes.com.sg/international/asean/vietnam-buys-more-lng-temperatures-set-rise-above-average&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw1fQS23sI95lqnJ8Am-Ae1-" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-      <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80" alt="“대형 가스터빈 105기 수출”… <b>에너지</b> 안보 주축 자리매김 - 문화일보" loading="lazy"
-           onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
-    </div>
+        <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80" alt="“대형 가스터빈 105기 수출”… <b>에너지</b> 안보 주축 자리매김 - 문화일보" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
       <div class="news-content">
         <div class="news-source-row">
           <span class="news-source">
@@ -386,17 +352,17 @@ a { color: inherit; text-decoration: none; }
           <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.munhwa.com/article/11585124&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw1vxU5d3mfguHIOBhzyBAC7" target="_blank">“대형 가스터빈 105기 수출”… <b>에너지</b> 안보 주축 자리매김 - 문화일보</a>
         </div>
         <div class="news-body">제목: “대형 가스터빈 105기 수출”… 에너지 안보 주축 자리매김 - 문화일보  
-내용: 탈석탄 정책과 재생에너지의 불규칙한 공급을 보완하려는 필요성이 커지고 있으며, 인공지능(AI) 데이터 센터에서의 전력 소비 증가와 함께 가스터빈 시장이 성장하고 있다. 글로벌 시장에서도 이러한 경향이 두드러지고 있다.
+내용: 탈석탄 기조와 재생에너지의 간헐성을 보완하기 위한 수요와 인공지능 데이터센터에서의 전력 소비 증가가 맞물리며 가스터빈 시장이 성장하고 있다. 글로벌 시장에서의 이 움직임은 에너지 안보를 강화하는 중요한 역할을 하고 있다.
 
-요약: 탈석탄과 재생에너지의 간헐성을 보완하려는 수요 증가로 가스터빈 시장이 성장하고 있으며, 대형 가스터빈 105기가 수출되면서 에너지 안보의 핵심으로 자리 잡고 있다. AI 데이터 센터의 전력 소비 증가도 이 시장에 긍정적인 영향을 미치고 있다.</div>
+요약: 대형 가스터빈 105기가 수출되며 에너지 안보의 핵심으로 자리매김하고 있다. 탈석탄과 재생에너지를 지원하는 수요 증가와 인공지능 데이터센터의 전력 소비 급증이 가스터빈 시장의 성장을 이끌고 있다.</div>
         <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.munhwa.com/article/11585124&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw1vxU5d3mfguHIOBhzyBAC7" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-      <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=80" alt="<b>LNG</b> tanker orders gain pace despite mixed outlook from Iran war - Reuters" loading="lazy"
-           onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
-    </div>
+        <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800&q=80" alt="<b>LNG</b> tanker orders gain pace despite mixed outlook from Iran war - Reuters" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
       <div class="news-content">
         <div class="news-source-row">
           <span class="news-source">
@@ -407,15 +373,16 @@ a { color: inherit; text-decoration: none; }
         <div class="news-title">
           <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.reuters.com/business/energy/lng-tanker-orders-gain-pace-despite-mixed-outlook-iran-war-2026-04-27/&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw01-Qu10PbuA_nbX-wf-ur_" target="_blank"><b>LNG</b> tanker orders gain pace despite mixed outlook from Iran war - Reuters</a>
         </div>
-        <div class="news-body">제목: LNG 선박 주문 증가, 이란 전쟁의 혼재된 전망에도 불구하고 - 로이터
+        <div class="news-body">제목: <b>LNG</b> 탱커 발주 증가, 이란 전쟁으로 인한 혼재된 전망에도 불구하고 - 로이터
+내용: 액화천연가스 캐리어(LNGC) 건조를 위한 글로벌 주문이 올해 증가할 것으로 예상되며, 이는 2025년 하락세 이후의 반등입니다. 이는 LNG 생산의 증가에 기인합니다.
 
-내용 요약: 올해 전 세계에서 액화천연가스운반선(LNGC) 주문이 증가할 것으로 예상되며, 이는 2025년의 침체 이후 반등을 의미합니다. LNG 생산이 증가함에 따라 해양 운송 수요가 높아지고 있습니다.</div>
+요약: 이란 전쟁으로 인한 불확실성에도 불구하고, 액화천연가스 캐리어의 수주가 올해 증가할 것으로 보이며, 이는 LNG 생산량 증가와 관련이 있습니다.</div>
         <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.reuters.com/business/energy/lng-tanker-orders-gain-pace-despite-mixed-outlook-iran-war-2026-04-27/&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw01-Qu10PbuA_nbX-wf-ur_" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div></div>
-  <div class="editor-note">
-    <div class="editor-label">💡 애널리스트 인사이트</div>
-    <div class="editor-text">LNG 시장에서는 공급차질 우려로 가격 변동성이 지속될 가능성이 큽니다. 일본의 JERA와 같은 대형 수입기업들은 충분한 재고를 확보하며 시장 안정에 기여하지만, 중동 불안 요소는 여전히 리스크로 작용합니다. 안정적 투자를 위해서는 관련 기업의 리스크 관리를 지속 모니터링해야 합니다.</div>
+  <div class="analyst-note">
+    <div class="analyst-label">💡 애널리스트 인사이트</div>
+    <div class="analyst-text">LNG 시장은 이란 위기에도 불구하고 선박 주문 증가로 회복세를 보일 가능성이 있으며 이는 한국 조선사들에게 긍정적입니다. 그러나 중동 갈등이 지속되면 LNG 공급망에 추가적인 리스크가 발생할 수 있습니다. 이 때문에 현대중공업과 같은 조선 기업들은 주문 확대의 기회를 잡을 필요가 있습니다.</div>
   </div>
   <div class="section-divider"></div>
 
@@ -423,17 +390,16 @@ a { color: inherit; text-decoration: none; }
     <div class="summary-label">오늘의 핵심 인사이트</div>
     <div class="summary-title">오늘 꼭 기억할 3가지</div>
     <ol class="summary-list">
-      <li><span class="summary-num">1</span><span>한투운용 'ACE AI반도체TOP3+' ETF는 개인 순매수 1000억 원을 기록하며 인공지능 산업 투자에 대한 높은 관심을 반영하고 있습니다.</span></li>
-      <li><span class="summary-num">2</span><span>OpenAI와 Microsoft 협력은 AI 제품의 시장 접근성을 확대시켜, IT 산업 전반에 긍정적인 파급효과를 미칠 것으로 예상됩니다.</span></li>
-      <li><span class="summary-num">3</span><span>중동의 불안정한 정세로 LNG 공급에 차질이 예상되며, 이는 에너지 가격 변동성의 주요 요인으로 작용할 수 있습니다.</span></li>
+      <li><span class="summary-num">1</span><span>AT&T의 고객 충성도 회복 전략이 시장에서 긍정적으로 작용할 수 있으며, 이는 통신 산업 전반에 영향을 미칠 것입니다.</span></li>
+      <li><span class="summary-num">2</span><span>비스트라와 케메코 같은 원자력 관련 기업은 배당 수익성이 강점으로 작용하여 투자 매력도를 높이고 있습니다.</span></li>
+      <li><span class="summary-num">3</span><span>중국의 메타 규제는 글로벌 AI 기업에게 새로운 리스크 요인으로 부각되며, 이는 향후 사업 확장에 제약이 될 수 있습니다.</span></li>
     </ol>
   </div>
-
   
 <div class="share-section">
   <div class="share-label">이 브리핑 공유하기</div>
   <div class="share-buttons">
-    <a class="share-btn twitter" href="https://twitter.com/intent/tweet?text=%ED%95%9C%ED%88%AC%EC%9A%B4%EC%9A%A9%20AI%20ETF%201000%EC%96%B5%20%EC%88%9C%EB%A7%A4%EC%88%98%20%EB%8B%AC%EC%84%B1&url=https%3A%2F%2Fdhpaeng81-crypto.github.io%2FDaily-insight%2Findex.html" target="_blank" rel="noopener">
+    <a class="share-btn twitter" href="https://twitter.com/intent/tweet?text=%EB%AF%B8%EA%B5%AD%20%EC%9E%AC%EC%A0%95%20%EC%9C%84%EA%B8%B0%20%EC%86%8D%20%ED%88%AC%EC%9E%90%20%EA%B8%B0%ED%9A%8C%EB%8A%94%3F&url=https%3A%2F%2Fdhpaeng81-crypto.github.io%2FDaily-insight%2Findex.html" target="_blank" rel="noopener">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
       </svg>
@@ -448,7 +414,6 @@ a { color: inherit; text-decoration: none; }
     </button>
   </div>
 </div>
-
 <script>
 function copyLink() {
   const url = 'https://dhpaeng81-crypto.github.io/Daily-insight/index.html';
@@ -459,29 +424,18 @@ function copyLink() {
       btn.parentElement.style.background = '#0f766e';
       btn.parentElement.style.color = '#fff';
       btn.parentElement.style.borderColor = '#0f766e';
-      setTimeout(() => {
-        btn.textContent = '링크 복사';
-        btn.parentElement.style.background = '';
-        btn.parentElement.style.color = '';
-        btn.parentElement.style.borderColor = '';
-      }, 2000);
+      setTimeout(() => { btn.textContent = '링크 복사'; btn.parentElement.style.background = ''; btn.parentElement.style.color = ''; btn.parentElement.style.borderColor = ''; }, 2000);
     });
   } else {
-    const textArea = document.createElement('textarea');
-    textArea.value = url;
-    textArea.style.position = 'fixed';
-    textArea.style.opacity = '0';
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textArea);
+    const t = document.createElement('textarea');
+    t.value = url; t.style.position = 'fixed'; t.style.opacity = '0';
+    document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t);
     const btn = document.getElementById('copy-text');
     btn.textContent = '복사됨 ✓';
     setTimeout(() => { btn.textContent = '링크 복사'; }, 2000);
   }
 }
 </script>
-
 </main>
 
 
@@ -490,8 +444,9 @@ function copyLink() {
     <div class="footer-logo">Daily<span>Insight</span></div>
     <div class="footer-desc">매일 오전 7시, 투자자를 위한 핵심 인사이트</div>
     <div class="footer-links">
-      <a href="index.html">오늘의 브리핑</a>
+      <a href="index.html">금융·AI·에너지</a>
       <a href="archive.html">아카이브</a>
+      <a href="politics_index.html">역사·정치 브리핑</a>
     </div>
   </div>
 </footer>

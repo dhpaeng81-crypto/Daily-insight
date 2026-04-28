@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Daily Insight — 아카이브</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 
+@import url('https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css');
 :root {
   --ink: #18181b; --ink-soft: #52525b; --ink-muted: #a1a1aa;
   --bg: #fafaf9; --bg-card: #ffffff; --bg-subtle: #f4f4f5;
@@ -15,20 +15,23 @@
   --tech: #6d28d9; --tech-bg: #ede9fe;
   --energy: #b45309; --energy-bg: #fef3c7;
   --border: #e4e4e7; --radius: 12px;
+  --font: 'NanumSquare', 'Apple SD Gothic Neo', sans-serif;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--ink); font-family: "Noto Sans KR", sans-serif; font-weight: 300; line-height: 1.8; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font); font-weight: 400; line-height: 1.8; }
 a { color: inherit; text-decoration: none; }
 .site-header { border-bottom: 1px solid var(--border); background: var(--bg-card); position: sticky; top: 0; z-index: 100; }
 .header-inner { max-width: 780px; margin: 0 auto; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
-.logo { font-family: "Playfair Display", serif; font-size: 20px; font-weight: 700; }
+.logo { font-family: var(--font); font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
 .logo span { color: var(--accent); }
-.header-nav { display: flex; gap: 20px; font-size: 13px; color: var(--ink-muted); }
-.header-nav a:hover { color: var(--accent); }
-.header-nav .active { color: var(--accent); font-weight: 500; }
+.header-nav { display: flex; gap: 4px; font-size: 13px; align-items: center; }
+.header-nav a { padding: 6px 12px; border-radius: 6px; color: var(--ink-muted); font-weight: 700; transition: background 0.15s, color 0.15s; }
+.header-nav a:hover { background: var(--bg-subtle); color: var(--ink); }
+.header-nav .active { color: var(--accent); background: var(--accent-light); }
+.header-nav .divider { width: 1px; height: 16px; background: var(--border); margin: 0 4px; }
 .site-footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
 .footer-inner { max-width: 780px; margin: 0 auto; }
-.footer-logo { font-family: "Playfair Display", serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.footer-logo { font-family: var(--font); font-size: 16px; font-weight: 800; margin-bottom: 8px; }
 .footer-logo span { color: var(--accent); }
 .footer-desc { font-size: 12px; color: var(--ink-muted); margin-bottom: 16px; }
 .footer-links { display: flex; justify-content: center; gap: 20px; font-size: 12px; color: var(--ink-muted); }
@@ -37,38 +40,28 @@ a { color: inherit; text-decoration: none; }
   .header-inner { max-width: 1080px; padding: 0 48px; }
   .footer-inner { max-width: 1080px; }
 }
-@media (max-width: 600px) {
-  .header-meta { display: none; }
-}
+@media (max-width: 600px) { .header-meta { display: none; } }
 
 .archive-hero { max-width: 780px; margin: 0 auto; padding: 56px 24px 40px; border-bottom: 1px solid var(--border); }
-.archive-hero-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); display: inline-block; padding: 4px 12px; border-radius: 100px; margin-bottom: 20px; }
-.archive-hero-title { font-family: "Playfair Display", serif; font-size: clamp(26px, 5vw, 40px); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 12px; }
+.archive-hero-label { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); display: inline-block; padding: 4px 12px; border-radius: 100px; margin-bottom: 20px; }
+.archive-hero-title { font-family: var(--font); font-size: clamp(24px, 5vw, 38px); font-weight: 800; line-height: 1.25; margin-bottom: 12px; }
 .archive-hero-desc { font-size: 15px; color: var(--ink-soft); }
 .archive-main { max-width: 780px; margin: 0 auto; padding: 40px 24px 80px; }
-.archive-count { font-size: 13px; color: var(--ink-muted); margin-bottom: 24px; }
+.archive-count { font-size: 13px; color: var(--ink-muted); margin-bottom: 24px; font-weight: 700; }
 .archive-list { display: flex; flex-direction: column; gap: 12px; }
 .archive-card { display: grid; grid-template-columns: 64px 1fr auto; align-items: center; gap: 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; transition: box-shadow 0.2s, border-color 0.2s; cursor: pointer; }
 .archive-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-color: var(--accent); }
 .archive-date { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-.archive-date-num { font-family: "Playfair Display", serif; font-size: 20px; font-weight: 700; color: var(--ink); line-height: 1; }
-.archive-weekday { font-size: 11px; color: var(--ink-muted); }
+.archive-date-num { font-family: var(--font); font-size: 18px; font-weight: 800; color: var(--ink); line-height: 1; }
+.archive-weekday { font-size: 11px; color: var(--ink-muted); font-weight: 700; }
 .archive-info { display: flex; flex-direction: column; gap: 4px; }
-.archive-title { font-size: 14px; font-weight: 500; color: var(--ink); line-height: 1.4; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.archive-title { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.4; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .archive-meta { font-size: 12px; color: var(--ink-muted); }
 .archive-arrow { font-size: 16px; color: var(--ink-muted); }
 .archive-card:hover .archive-arrow { color: var(--accent); }
-.today-badge { font-size: 10px; font-weight: 500; background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 100px; }
-@media (min-width: 1024px) {
-  .archive-hero { max-width: 1080px; padding: 72px 48px 56px; }
-  .archive-main { max-width: 1080px; padding: 40px 48px 100px; }
-}
-@media (max-width: 600px) {
-  .archive-hero { padding: 36px 20px 32px; }
-  .archive-main { padding: 32px 20px 60px; }
-  .archive-card { grid-template-columns: 52px 1fr auto; gap: 12px; padding: 14px 16px; }
-  .archive-date-num { font-size: 17px; }
-}
+.today-badge { font-size: 10px; font-weight: 800; background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 100px; }
+@media (min-width: 1024px) { .archive-hero { max-width: 1080px; padding: 72px 48px 56px; } .archive-main { max-width: 1080px; padding: 40px 48px 100px; } }
+@media (max-width: 600px) { .archive-hero { padding: 36px 20px 32px; } .archive-main { padding: 32px 20px 60px; } .archive-card { grid-template-columns: 52px 1fr auto; gap: 12px; padding: 14px 16px; } }
 </style>
 </head>
 <body>
@@ -77,29 +70,28 @@ a { color: inherit; text-decoration: none; }
   <div class="header-inner">
     <div class="logo"><a href="index.html">Daily<span>Insight</span></a></div>
     <nav class="header-nav">
-      <a href="index.html" class="">오늘의 브리핑</a>
+      <a href="index.html" class="">금융·AI·에너지</a>
       <a href="archive.html" class="active">아카이브</a>
+      <div class="divider"></div>
+      <a href="politics_index.html" class="">역사·정치</a>
     </nav>
   </div>
 </header>
-
 <section class="archive-hero">
   <div class="archive-hero-label">아카이브</div>
   <h1 class="archive-hero-title">지난 브리핑 모아보기</h1>
   <p class="archive-hero-desc">매일 오전 7시 발행된 Daily Insight 브리핑을 날짜별로 확인하세요.</p>
 </section>
-
 <main class="archive-main">
   <div class="archive-count">총 2개의 브리핑</div>
   <div class="archive-list">
-    
       <a href="briefing_20260428.html" class="archive-card">
         <div class="archive-date">
           <span class="archive-date-num">04.28</span>
           <span class="archive-weekday">화요일</span>
         </div>
         <div class="archive-info">
-          <div class="archive-title">한투운용 AI ETF 1000억 순매수 달성 <span class="today-badge">오늘</span></div>
+          <div class="archive-title">미국 재정 위기 속 투자 기회는? <span class="today-badge">오늘</span></div>
           <div class="archive-meta">2026년 04월 28일</div>
         </div>
         <div class="archive-arrow">→</div>
@@ -114,18 +106,17 @@ a { color: inherit; text-decoration: none; }
           <div class="archive-meta">2026년 04월 27일</div>
         </div>
         <div class="archive-arrow">→</div>
-      </a>
-  </div>
+      </a></div>
 </main>
-
 
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-logo">Daily<span>Insight</span></div>
     <div class="footer-desc">매일 오전 7시, 투자자를 위한 핵심 인사이트</div>
     <div class="footer-links">
-      <a href="index.html">오늘의 브리핑</a>
+      <a href="index.html">금융·AI·에너지</a>
       <a href="archive.html">아카이브</a>
+      <a href="politics_index.html">역사·정치 브리핑</a>
     </div>
   </div>
 </footer>
