@@ -42,3 +42,4 @@ jobs:
           git commit -m "Add politics briefing $(date +'%Y%m%d')" || echo "Nothing to commit"
           git push
 
+
