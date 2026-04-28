@@ -7,6 +7,7 @@ import os
 import json
 import glob
 import random
+import base64
 
 # =====================
 # 설정값
@@ -15,6 +16,8 @@ OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 UNSPLASH_ACCESS_KEY = os.environ.get("UNSPLASH_ACCESS_KEY")
+GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
+GITHUB_REPO = os.environ.get("GITHUB_REPO")
 
 # =====================
 # 기본 이미지 풀
@@ -78,18 +81,15 @@ def extract_image(entry):
     return ""
 
 # =====================
-# RSS 피드 — 강한 보수 성향 소스
+# RSS 피드 — 보수 성향 소스
 # =====================
 RSS_FEEDS = [
-    # 국내 정치 — 보수 성향 핵심 매체
-    ("Politics", "https://www.chosun.com/arc/outboundfeeds/rss/category/politics/"),   # 조선일보 정치
-    ("Politics", "http://rss.donga.com/politics.xml"),                                  # 동아일보 정치
-    ("Politics", "http://rss.donga.com/editorials.xml"),                                # 동아일보 사설·칼럼
-    ("Politics", "https://www.munhwa.com/rss/politics.xml"),                            # 문화일보 정치
-
-    # 국제·안보 — 친서방·반공 관점
-    ("International", "https://www.rfa.org/korean/rss2.xml"),                           # 자유아시아방송 (북한·자유)
-    ("International", "https://www.voakorea.com/api/z_mpetyitop"),                      # 미국의소리 한국어
+    ("Politics", "https://www.chosun.com/arc/outboundfeeds/rss/category/politics/"),
+    ("Politics", "http://rss.donga.com/politics.xml"),
+    ("Politics", "http://rss.donga.com/editorials.xml"),
+    ("Politics", "https://www.munhwa.com/rss/politics.xml"),
+    ("International", "https://www.rfa.org/korean/rss2.xml"),
+    ("International", "https://www.voakorea.com/api/z_mpetyitop"),
 ]
 
 def collect_news():
@@ -137,9 +137,6 @@ def translate_single(news_item):
     )
     return {"title": news_item["title"], "body": response.choices[0].message.content}
 
-# =====================
-# OpenAI 요약 — 보수 관점 역사·정치 분석
-# =====================
 def generate_content(news_list):
     client = OpenAI(api_key=OPENAI_API_KEY)
     is_sunday = datetime.now().weekday() == 6
@@ -180,14 +177,14 @@ def generate_content(news_list):
 11. 반드시 아래 JSON 형식으로만 응답 (다른 텍스트 없이)
 
 {{
-  "hero_title": "오늘의 핵심 헤드라인 100자 이내 (구체적 사안 포함)",
+  "hero_title": "오늘의 핵심 헤드라인 100자 이내",
   "hero_desc": "오늘 브리핑의 핵심 메시지 100자 이내",
   "today_summary": "오늘의 정치 지형 전반 요약 3-4문장. 헌법적 가치 관점에서의 현 상황 진단",
   "politics_overview": "국내 정치 현안 흐름 3-4문장. 주요 이슈의 본질과 헌법적 의미 분석",
   "politics_comment": "보수 관점 핵심 인사이트 4-5문장. 역사적 선례, 팩트 근거, 진보 주장에 대한 반론, 자유민주주의 관점의 평가 포함",
   "international_overview": "국제 정세 흐름 3-4문장. 한미동맹·자유진영 관점에서의 분석",
   "international_comment": "지정학적 인사이트 4-5문장. 한국의 국익 관점, 역사적 맥락, 안보 리스크 포함",
-  "history_insight": "오늘 이슈와 연결되는 역사적 교훈 4-5문장. 구체적인 역사적 사례와 날짜, 인물 반드시 포함. 대한민국 건국 정통성과 자유민주주의 발전 과정과 연결",
+  "history_insight": "오늘 이슈와 연결되는 역사적 교훈 4-5문장. 구체적인 역사적 사례와 날짜, 인물 반드시 포함",
   "key_insight_1": "핵심 인사이트 1: 오늘의 가장 중요한 정치적 함의 (구체적 근거 포함)",
   "key_insight_2": "핵심 인사이트 2: 국제 관계나 안보 관점의 핵심 메시지",
   "key_insight_3": "핵심 인사이트 3: 역사적 교훈이나 향후 주목해야 할 포인트",
@@ -195,7 +192,7 @@ def generate_content(news_list):
     {{
       "category": "Politics 또는 International",
       "title": "뉴스 제목 한국어로",
-      "body": "3문장: 1문장-사실 요약, 1문장-헌법적/역사적 의미, 1문장-자유민주주의 관점의 평가",
+      "body": "3문장: 사실 요약, 헌법적/역사적 의미, 자유민주주의 관점 평가",
       "original_index": 0
     }}
   ]
@@ -209,7 +206,7 @@ def generate_content(news_list):
         messages=[
             {
                 "role": "system",
-                "content": "당신은 대한민국 헌법적 가치와 자유민주주의를 수호하는 역사학자이자 정치 평론가입니다. 모든 분석은 반드시 한국어로 작성하세요. 사실과 역사적 근거에 기반한 보수적 관점의 깊이 있는 분석을 제공하세요."
+                "content": "당신은 대한민국 헌법적 가치와 자유민주주의를 수호하는 역사학자이자 정치 평론가입니다. 모든 분석은 반드시 한국어로 작성하세요."
             },
             {"role": "user", "content": prompt}
         ],
@@ -287,9 +284,6 @@ function copyLink() {{
 }}
 </script>'''
 
-# =====================
-# 공통 CSS — 나눔스퀘어 + 역사·정치 테마
-# =====================
 def get_common_css():
     return '''
 @import url('https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css');
@@ -329,9 +323,6 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 600px) { .header-meta { display: none; } }
 '''
 
-# =====================
-# 헤더/푸터 — 두 브리핑 모두 메뉴에 표시
-# =====================
 def get_header_html(active="briefing"):
     b = "active" if active == "briefing" else ""
     a = "active" if active == "archive" else ""
@@ -663,6 +654,47 @@ def build_archive():
         f.write(archive_html)
     print("politics_archive.html updated")
 
+# =====================
+# GitHub Pages 업로드
+# =====================
+def push_to_github(files_to_push):
+    if not GITHUB_TOKEN or not GITHUB_REPO:
+        print("GitHub token or repo not set, skipping push")
+        return
+
+    headers = {
+        "Authorization": f"token {GITHUB_TOKEN}",
+        "Accept": "application/vnd.github.v3+json"
+    }
+    base_url = f"https://api.github.com/repos/{GITHUB_REPO}/contents"
+
+    for filepath in files_to_push:
+        try:
+            with open(filepath, "r", encoding="utf-8") as f:
+                content = f.read()
+            encoded = base64.b64encode(content.encode("utf-8")).decode("utf-8")
+
+            check = requests.get(f"{base_url}/{filepath}", headers=headers)
+            sha = check.json().get("sha") if check.status_code == 200 else None
+
+            payload = {
+                "message": f"Update {filepath} - {datetime.now().strftime('%Y%m%d %H:%M')}",
+                "content": encoded
+            }
+            if sha:
+                payload["sha"] = sha
+
+            response = requests.put(f"{base_url}/{filepath}", headers=headers, json=payload)
+            if response.status_code in [200, 201]:
+                print(f"GitHub push OK: {filepath}")
+            else:
+                print(f"GitHub push failed: {filepath} - {response.status_code}")
+        except Exception as e:
+            print(f"GitHub push error ({filepath}): {e}")
+
+# =====================
+# 텔레그램 발송
+# =====================
 def send_telegram(today, filename):
     site_url = "https://dhpaeng81-crypto.github.io/Daily-insight"
     is_sunday = datetime.now().weekday() == 6
@@ -674,6 +706,9 @@ def send_telegram(today, filename):
     )
     print("Telegram: OK")
 
+# =====================
+# 실행
+# =====================
 if __name__ == "__main__":
     print("Step 1: Collecting news...")
     news_list = collect_news()
@@ -682,9 +717,16 @@ if __name__ == "__main__":
     print("Content generated")
     print("Step 3: Building HTML...")
     today = datetime.now().strftime("%Y년 %m월 %d일")
+    today_num = datetime.now().strftime("%Y%m%d")
     filename = build_html(news_list, content)
     print("Step 4: Building archive...")
     build_archive()
-    print("Step 5: Sending Telegram...")
+    print("Step 5: Pushing to GitHub...")
+    push_to_github([
+        "politics_index.html",
+        "politics_archive.html",
+        f"politics_{today_num}.html"
+    ])
+    print("Step 6: Sending Telegram...")
     send_telegram(today, filename)
     print("All done!")
