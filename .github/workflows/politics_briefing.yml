@@ -41,3 +41,4 @@ jobs:
           git add politics_*.html politics_index.html politics_archive.html
           git commit -m "Add politics briefing $(date +'%Y%m%d')" || echo "Nothing to commit"
           git push
+
