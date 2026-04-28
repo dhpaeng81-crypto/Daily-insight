@@ -7,6 +7,7 @@ import os
 import json
 import glob
 import random
+import base64
 
 # =====================
 # 설정값
@@ -15,6 +16,8 @@ OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 UNSPLASH_ACCESS_KEY = os.environ.get("UNSPLASH_ACCESS_KEY")
+GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
+GITHUB_REPO = os.environ.get("GITHUB_REPO")
 
 # =====================
 # 기본 이미지 풀
@@ -271,9 +274,6 @@ function copyLink() {{
 }}
 </script>'''
 
-# =====================
-# 공통 CSS — 나눔스퀘어 폰트
-# =====================
 def get_common_css():
     return '''
 @import url('https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css');
@@ -313,12 +313,8 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 600px) { .header-meta { display: none; } }
 '''
 
-# =====================
-# 헤더/푸터 — 두 브리핑 모두 메뉴에 표시
-# =====================
 def get_header_html(active="briefing"):
     d_class = "active" if active == "briefing" else ""
-    k_class = ""
     a_class = "active" if active == "archive" else ""
     return f'''
 <header class="site-header">
@@ -328,7 +324,7 @@ def get_header_html(active="briefing"):
       <a href="index.html" class="{d_class}">금융·AI·에너지</a>
       <a href="archive.html" class="{a_class}">아카이브</a>
       <div class="divider"></div>
-      <a href="politics_index.html" class="{k_class}">역사·정치</a>
+      <a href="politics_index.html">역사·정치</a>
     </nav>
   </div>
 </header>'''
@@ -630,6 +626,48 @@ def build_archive():
         f.write(archive_html)
     print("archive.html updated")
 
+# =====================
+# GitHub Pages 업로드
+# =====================
+def push_to_github(files_to_push):
+    if not GITHUB_TOKEN or not GITHUB_REPO:
+        print("GitHub token or repo not set, skipping push")
+        return
+
+    headers = {
+        "Authorization": f"token {GITHUB_TOKEN}",
+        "Accept": "application/vnd.github.v3+json"
+    }
+    base_url = f"https://api.github.com/repos/{GITHUB_REPO}/contents"
+
+    for filepath in files_to_push:
+        try:
+            with open(filepath, "r", encoding="utf-8") as f:
+                content = f.read()
+            encoded = base64.b64encode(content.encode("utf-8")).decode("utf-8")
+
+            # 기존 파일 SHA 확인 (업데이트 시 필요)
+            check = requests.get(f"{base_url}/{filepath}", headers=headers)
+            sha = check.json().get("sha") if check.status_code == 200 else None
+
+            payload = {
+                "message": f"Update {filepath} - {datetime.now().strftime('%Y%m%d %H:%M')}",
+                "content": encoded
+            }
+            if sha:
+                payload["sha"] = sha
+
+            response = requests.put(f"{base_url}/{filepath}", headers=headers, json=payload)
+            if response.status_code in [200, 201]:
+                print(f"GitHub push OK: {filepath}")
+            else:
+                print(f"GitHub push failed: {filepath} - {response.status_code}")
+        except Exception as e:
+            print(f"GitHub push error ({filepath}): {e}")
+
+# =====================
+# 텔레그램 발송
+# =====================
 def send_telegram(today, filename):
     site_url = "https://dhpaeng81-crypto.github.io/Daily-insight"
     message = f"*Daily Insight* 발행 완료\n{today}\n\n👉 [오늘의 브리핑 보기]({site_url})"
@@ -639,6 +677,9 @@ def send_telegram(today, filename):
     )
     print("Telegram: OK")
 
+# =====================
+# 실행
+# =====================
 if __name__ == "__main__":
     print("Step 1: Collecting news...")
     news_list = collect_news()
@@ -647,9 +688,16 @@ if __name__ == "__main__":
     print("Content generated")
     print("Step 3: Building HTML...")
     today = datetime.now().strftime("%Y년 %m월 %d일")
+    today_num = datetime.now().strftime("%Y%m%d")
     filename = build_html(news_list, content)
     print("Step 4: Building archive...")
     build_archive()
-    print("Step 5: Sending Telegram...")
+    print("Step 5: Pushing to GitHub...")
+    push_to_github([
+        "index.html",
+        "archive.html",
+        f"briefing_{today_num}.html"
+    ])
+    print("Step 6: Sending Telegram...")
     send_telegram(today, filename)
     print("All done!")
