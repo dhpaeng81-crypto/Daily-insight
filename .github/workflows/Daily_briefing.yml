@@ -39,3 +39,4 @@ jobs:
           git add briefing_*.html index.html archive.html
           git commit -m "Add daily briefing $(date +'%Y%m%d')" || echo "Nothing to commit"
           git push
+
