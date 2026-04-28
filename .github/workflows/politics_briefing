@@ -1,0 +1,43 @@
+name: Politics Briefing
+
+on:
+  schedule:
+    - cron: '0 22 * * *'   # 매일 오전 7시 KST (UTC 22:00)
+    - cron: '0 23 * * 0'   # 일요일 오전 8시 KST 심층 분석 (UTC 23:00)
+  workflow_dispatch:        # 수동 실행 버튼
+
+permissions:
+  contents: write
+
+jobs:
+  run-politics-briefing:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install feedparser openai requests
+
+      - name: Run politics briefing script
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+        run: python politics_briefing.py
+
+      - name: Upload HTML to repository
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Actions"
+          git add politics_*.html politics_index.html politics_archive.html
+          git commit -m "Add politics briefing $(date +'%Y%m%d')" || echo "Nothing to commit"
+          git push
