@@ -7,7 +7,7 @@ import os
 import json
 import glob
 import random
- 
+
 # =====================
 # 설정값
 # =====================
@@ -15,7 +15,7 @@ OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 UNSPLASH_ACCESS_KEY = os.environ.get("UNSPLASH_ACCESS_KEY")
- 
+
 # =====================
 # 기본 이미지 풀
 # =====================
@@ -35,9 +35,9 @@ DEFAULT_IMAGES = {
         "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80",
     ]
 }
- 
+
 unsplash_cache = {}
- 
+
 def get_unsplash_image(category, keyword=""):
     if not UNSPLASH_ACCESS_KEY:
         return get_default_image(category)
@@ -59,13 +59,10 @@ def get_unsplash_image(category, keyword=""):
     except Exception as e:
         print(f"Unsplash error: {e}")
         return get_default_image(category)
- 
+
 def get_default_image(category):
     return random.choice(DEFAULT_IMAGES.get(category, DEFAULT_IMAGES["Politics"]))
- 
-# =====================
-# 이미지 추출
-# =====================
+
 def extract_image(entry):
     if hasattr(entry, "media_thumbnail") and entry.media_thumbnail:
         return entry.media_thumbnail[0].get("url", "")
@@ -79,18 +76,22 @@ def extract_image(entry):
     if img_match:
         return img_match.group(1)
     return ""
- 
+
 # =====================
-# RSS 피드
+# RSS 피드 — 강한 보수 성향 소스
 # =====================
 RSS_FEEDS = [
-    ("Politics", "https://www.chosun.com/arc/outboundfeeds/rss/"),
-    ("Politics", "https://rss.joins.com/joins_news_list.xml"),
-    ("Politics", "https://www.yonhapnews.co.kr/RSS/politics.xml"),
-    ("International", "https://www.voakorea.com/api/z_mpetyitop"),
-    ("International", "https://www.rfa.org/korean/rss2.xml"),
+    # 국내 정치 — 보수 성향 핵심 매체
+    ("Politics", "https://www.chosun.com/arc/outboundfeeds/rss/category/politics/"),   # 조선일보 정치
+    ("Politics", "http://rss.donga.com/politics.xml"),                                  # 동아일보 정치
+    ("Politics", "http://rss.donga.com/editorials.xml"),                                # 동아일보 사설·칼럼
+    ("Politics", "https://www.munhwa.com/rss/politics.xml"),                            # 문화일보 정치
+
+    # 국제·안보 — 친서방·반공 관점
+    ("International", "https://www.rfa.org/korean/rss2.xml"),                           # 자유아시아방송 (북한·자유)
+    ("International", "https://www.voakorea.com/api/z_mpetyitop"),                      # 미국의소리 한국어
 ]
- 
+
 def collect_news():
     all_news = []
     for category, url in RSS_FEEDS:
@@ -123,10 +124,7 @@ def collect_news():
             print(f"Error ({url}): {e}")
     print(f"총 수집: {len(all_news)}개")
     return all_news
- 
-# =====================
-# 단일 번역 (백업)
-# =====================
+
 def translate_single(news_item):
     client = OpenAI(api_key=OPENAI_API_KEY)
     response = client.chat.completions.create(
@@ -138,18 +136,18 @@ def translate_single(news_item):
         max_tokens=300
     )
     return {"title": news_item["title"], "body": response.choices[0].message.content}
- 
+
 # =====================
-# OpenAI 요약
+# OpenAI 요약 — 보수 관점 역사·정치 분석
 # =====================
 def generate_content(news_list):
     client = OpenAI(api_key=OPENAI_API_KEY)
     is_sunday = datetime.now().weekday() == 6
- 
+
     news_text = ""
     for i, n in enumerate(news_list):
         news_text += f"[index:{i}][{n['category']}] {n['title']}\n{n['summary']}\n\n"
- 
+
     depth_instruction = """
 오늘은 일요일입니다. 주간 심층 분석 모드로 작성해주세요.
 - 이번 주 주요 사건들의 역사적 맥락과 구조적 의미 심층 분석
@@ -161,34 +159,35 @@ def generate_content(news_list):
 - 오늘의 핵심 뉴스 요약과 보수적 관점의 분석
 - 간결하고 명확한 인사이트 제공
 """
- 
+
     prompt = f"""
 당신은 대한민국 헌법적 가치와 자유민주주의를 수호하는 20년 경력의 역사학자이자 정치 평론가입니다.
 아래 뉴스를 바탕으로 역사·정치 브리핑 콘텐츠를 작성해주세요.
- 
+
 {depth_instruction}
- 
+
 [편집 원칙]
-1. 대한민국 건국 정통성과 자유민주주의 헌법 가치를 기준으로 분석
+1. 대한민국 건국 정통성(1948년 건국)과 자유민주주의 헌법 가치를 기준으로 분석
 2. 역사적 사실과 1차 사료, 통계, 공식 기록에 근거한 객관적 서술
-3. 반대 주장도 소개하되, 팩트에 근거한 반론 제시
-4. 한미동맹과 자유진영 관점에서 국제 정세 해석
-5. 선동적·감정적 표현 배제, 논리적 근거 중심
-6. 역사적 선례: 현재 사건과 유사한 과거 사례 구체적으로 언급
-7. 모든 출력은 반드시 한국어로만 작성
-8. news_summaries는 수집된 모든 뉴스 포함
-9. original_index는 [index:숫자] 값과 정확히 일치
-10. 반드시 아래 JSON 형식으로만 응답 (다른 텍스트 없이)
- 
+3. 좌파·진보 진영의 주장도 소개하되, 팩트에 근거한 명확한 반론 제시
+4. 한미동맹 강화와 자유진영 연대 관점에서 국제 정세 해석
+5. 선동적·감정적 표현 배제, 논리와 근거 중심
+6. 주류 진보 언론의 프레임과 다른 보수적 시각 제시
+7. 역사적 선례: 현재 사건과 유사한 과거 사례 구체적으로 언급
+8. 모든 출력은 반드시 한국어로만 작성
+9. news_summaries는 수집된 모든 뉴스 포함
+10. original_index는 [index:숫자] 값과 정확히 일치
+11. 반드시 아래 JSON 형식으로만 응답 (다른 텍스트 없이)
+
 {{
-  "hero_title": "오늘의 핵심 헤드라인 25자 이내",
+  "hero_title": "오늘의 핵심 헤드라인 25자 이내 (구체적 사안 포함)",
   "hero_desc": "오늘 브리핑의 핵심 메시지 60자 이내",
   "today_summary": "오늘의 정치 지형 전반 요약 3-4문장. 헌법적 가치 관점에서의 현 상황 진단",
   "politics_overview": "국내 정치 현안 흐름 3-4문장. 주요 이슈의 본질과 헌법적 의미 분석",
-  "politics_comment": "보수 관점 핵심 인사이트 4-5문장. 역사적 선례, 팩트 근거, 반대 주장과 반론, 자유민주주의 관점의 평가 포함",
+  "politics_comment": "보수 관점 핵심 인사이트 4-5문장. 역사적 선례, 팩트 근거, 진보 주장에 대한 반론, 자유민주주의 관점의 평가 포함",
   "international_overview": "국제 정세 흐름 3-4문장. 한미동맹·자유진영 관점에서의 분석",
-  "international_comment": "지정학적 인사이트 4-5문장. 한국의 국익 관점, 역사적 맥락, 주목해야 할 리스크 포함",
-  "history_insight": "오늘 이슈와 연결되는 역사적 교훈 4-5문장. 구체적인 역사적 사례와 날짜, 인물 반드시 포함",
+  "international_comment": "지정학적 인사이트 4-5문장. 한국의 국익 관점, 역사적 맥락, 안보 리스크 포함",
+  "history_insight": "오늘 이슈와 연결되는 역사적 교훈 4-5문장. 구체적인 역사적 사례와 날짜, 인물 반드시 포함. 대한민국 건국 정통성과 자유민주주의 발전 과정과 연결",
   "key_insight_1": "핵심 인사이트 1: 오늘의 가장 중요한 정치적 함의 (구체적 근거 포함)",
   "key_insight_2": "핵심 인사이트 2: 국제 관계나 안보 관점의 핵심 메시지",
   "key_insight_3": "핵심 인사이트 3: 역사적 교훈이나 향후 주목해야 할 포인트",
@@ -196,12 +195,12 @@ def generate_content(news_list):
     {{
       "category": "Politics 또는 International",
       "title": "뉴스 제목 한국어로",
-      "body": "3문장: 1문장-사실 요약, 1문장-헌법적/역사적 의미, 1문장-자유민주주의 관점 평가",
+      "body": "3문장: 1문장-사실 요약, 1문장-헌법적/역사적 의미, 1문장-자유민주주의 관점의 평가",
       "original_index": 0
     }}
   ]
 }}
- 
+
 뉴스 데이터:
 {news_text}
 """
@@ -210,20 +209,16 @@ def generate_content(news_list):
         messages=[
             {
                 "role": "system",
-                "content": "당신은 대한민국 헌법적 가치와 자유민주주의를 수호하는 역사학자이자 정치 평론가입니다. 모든 분석은 반드시 한국어로 작성하세요. 사실에 근거한 보수적 관점의 깊이 있는 분석을 제공하되, 근거 없는 주장은 배제하세요."
+                "content": "당신은 대한민국 헌법적 가치와 자유민주주의를 수호하는 역사학자이자 정치 평론가입니다. 모든 분석은 반드시 한국어로 작성하세요. 사실과 역사적 근거에 기반한 보수적 관점의 깊이 있는 분석을 제공하세요."
             },
             {"role": "user", "content": prompt}
         ],
         max_tokens=5000
     )
- 
     text = response.choices[0].message.content
     text = re.sub(r'```json|```', '', text).strip()
     return json.loads(text)
- 
-# =====================
-# 뉴스 카드 HTML
-# =====================
+
 def make_news_card(news_item, summary, category_class):
     return f'''
     <div class="news-card">
@@ -245,10 +240,7 @@ def make_news_card(news_item, summary, category_class):
         <a href="{news_item['link']}" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>'''
- 
-# =====================
-# 소셜 공유 버튼
-# =====================
+
 def get_share_buttons_html(title, url):
     eu = requests.utils.quote(url, safe='')
     et = requests.utils.quote(title, safe='')
@@ -282,30 +274,25 @@ function copyLink() {{
       btn.parentElement.style.background = '#7c3aed';
       btn.parentElement.style.color = '#fff';
       btn.parentElement.style.borderColor = '#7c3aed';
-      setTimeout(() => {{
-        btn.textContent = '링크 복사';
-        btn.parentElement.style.background = '';
-        btn.parentElement.style.color = '';
-        btn.parentElement.style.borderColor = '';
-      }}, 2000);
+      setTimeout(() => {{ btn.textContent = '링크 복사'; btn.parentElement.style.background = ''; btn.parentElement.style.color = ''; btn.parentElement.style.borderColor = ''; }}, 2000);
     }});
   }} else {{
     const t = document.createElement('textarea');
     t.value = url; t.style.position = 'fixed'; t.style.opacity = '0';
-    document.body.appendChild(t); t.select(); document.execCommand('copy');
-    document.body.removeChild(t);
+    document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t);
     const btn = document.getElementById('copy-text');
     btn.textContent = '복사됨 ✓';
     setTimeout(() => {{ btn.textContent = '링크 복사'; }}, 2000);
   }}
 }}
 </script>'''
- 
+
 # =====================
-# 공통 CSS
+# 공통 CSS — 나눔스퀘어 + 역사·정치 테마
 # =====================
 def get_common_css():
     return '''
+@import url('https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css');
 :root {
   --ink: #1a1a2e; --ink-soft: #4a4a6a; --ink-muted: #9a9ab0;
   --bg: #f8f8fc; --bg-card: #ffffff; --bg-subtle: #f0f0f8;
@@ -314,21 +301,23 @@ def get_common_css():
   --international: #065f46; --international-bg: #d1fae5;
   --history: #92400e; --history-bg: #fef3c7;
   --border: #e0e0f0; --radius: 12px;
+  --font: 'NanumSquare', 'Apple SD Gothic Neo', sans-serif;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--ink); font-family: "Noto Sans KR", sans-serif; font-weight: 300; line-height: 1.8; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font); font-weight: 400; line-height: 1.8; }
 a { color: inherit; text-decoration: none; }
 .site-header { border-bottom: 1px solid var(--border); background: var(--bg-card); position: sticky; top: 0; z-index: 100; }
 .header-inner { max-width: 780px; margin: 0 auto; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
-.logo { font-family: "Playfair Display", serif; font-size: 20px; font-weight: 700; }
+.logo { font-family: var(--font); font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
 .logo span { color: var(--accent); }
-.header-nav { display: flex; gap: 16px; font-size: 13px; color: var(--ink-muted); align-items: center; }
-.header-nav a:hover { color: var(--accent); }
-.header-nav .active { color: var(--accent); font-weight: 500; }
-.header-nav .external { border-left: 1px solid var(--border); padding-left: 16px; }
+.header-nav { display: flex; gap: 4px; font-size: 13px; align-items: center; }
+.header-nav a { padding: 6px 12px; border-radius: 6px; color: var(--ink-muted); font-weight: 700; transition: background 0.15s, color 0.15s; }
+.header-nav a:hover { background: var(--bg-subtle); color: var(--ink); }
+.header-nav .active { color: var(--accent); background: var(--accent-light); }
+.header-nav .divider { width: 1px; height: 16px; background: var(--border); margin: 0 4px; }
 .site-footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
 .footer-inner { max-width: 780px; margin: 0 auto; }
-.footer-logo { font-family: "Playfair Display", serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.footer-logo { font-family: var(--font); font-size: 16px; font-weight: 800; margin-bottom: 8px; }
 .footer-logo span { color: var(--accent); }
 .footer-desc { font-size: 12px; color: var(--ink-muted); margin-bottom: 16px; }
 .footer-links { display: flex; justify-content: center; gap: 20px; font-size: 12px; color: var(--ink-muted); }
@@ -339,9 +328,9 @@ a { color: inherit; text-decoration: none; }
 }
 @media (max-width: 600px) { .header-meta { display: none; } }
 '''
- 
+
 # =====================
-# 헤더/푸터
+# 헤더/푸터 — 두 브리핑 모두 메뉴에 표시
 # =====================
 def get_header_html(active="briefing"):
     b = "active" if active == "briefing" else ""
@@ -351,13 +340,14 @@ def get_header_html(active="briefing"):
   <div class="header-inner">
     <div class="logo"><a href="politics_index.html">Korea<span>Insight</span></a></div>
     <nav class="header-nav">
-      <a href="politics_index.html" class="{b}">오늘의 브리핑</a>
+      <a href="politics_index.html" class="{b}">역사·정치</a>
       <a href="politics_archive.html" class="{a}">아카이브</a>
-      <a href="index.html" class="external">Daily Insight →</a>
+      <div class="divider"></div>
+      <a href="index.html">금융·AI·에너지</a>
     </nav>
   </div>
 </header>'''
- 
+
 def get_footer_html():
     return '''
 <footer class="site-footer">
@@ -365,39 +355,35 @@ def get_footer_html():
     <div class="footer-logo">Korea<span>Insight</span></div>
     <div class="footer-desc">자유민주주의 가치 기반의 역사·정치 브리핑</div>
     <div class="footer-links">
-      <a href="politics_index.html">오늘의 브리핑</a>
+      <a href="politics_index.html">역사·정치 브리핑</a>
       <a href="politics_archive.html">아카이브</a>
-      <a href="index.html">Daily Insight</a>
+      <a href="index.html">Daily Insight (금융·AI·에너지)</a>
     </div>
   </div>
 </footer>'''
- 
-# =====================
-# HTML 생성
-# =====================
+
 def build_html(news_list, content):
     today = datetime.now().strftime("%Y년 %m월 %d일")
     today_num = datetime.now().strftime("%Y%m%d")
     is_sunday = datetime.now().weekday() == 6
     issue_label = "주간 심층 분석" if is_sunday else "오늘의 브리핑"
- 
+
     site_url = "https://dhpaeng81-crypto.github.io/Daily-insight"
     page_url = f"{site_url}/politics_index.html"
- 
+
     politics_news = [n for n in news_list if n["category"] == "Politics"]
     international_news = [n for n in news_list if n["category"] == "International"]
- 
+
     summaries = content.get("news_summaries", [])
     summaries_by_index = {}
     for s in summaries:
         idx = s.get("original_index")
         if idx is not None:
             summaries_by_index[idx] = s
- 
     summaries_by_title = {}
     for s in summaries:
         summaries_by_title[s.get("title", "").lower()] = s
- 
+
     def get_summary(idx):
         if idx in summaries_by_index:
             return summaries_by_index[idx]
@@ -406,22 +392,16 @@ def build_html(news_list, content):
             words = title.split()[:3]
             if words and any(word in orig_title for word in words):
                 return s
-        print(f"Translating index {idx} individually...")
         return translate_single(news_list[idx])
- 
-    politics_cards = ""
-    for n in politics_news[:3]:
-        politics_cards += make_news_card(n, get_summary(news_list.index(n)), "politics")
- 
-    international_cards = ""
-    for n in international_news[:3]:
-        international_cards += make_news_card(n, get_summary(news_list.index(n)), "international")
- 
+
+    politics_cards = "".join([make_news_card(n, get_summary(news_list.index(n)), "politics") for n in politics_news[:3]])
+    international_cards = "".join([make_news_card(n, get_summary(news_list.index(n)), "international") for n in international_news[:3]])
+
     hero_title = content.get("hero_title", "오늘의 KoreaInsight")
     hero_desc = content.get("hero_desc", "자유민주주의 관점의 역사·정치 브리핑")
     share_buttons = get_share_buttons_html(hero_title, page_url)
     common_css = get_common_css()
- 
+
     html = f'''<!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -433,26 +413,25 @@ def build_html(news_list, content):
 <meta property="og:image" content="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=800&q=80">
 <meta property="og:url" content="{page_url}">
 <meta name="twitter:card" content="summary_large_image">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 {common_css}
 .hero {{ max-width: 780px; margin: 0 auto; padding: 56px 24px 40px; border-bottom: 1px solid var(--border); }}
-.issue-badge {{ display: inline-flex; align-items: center; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 100px; margin-bottom: 20px; }}
-.hero-title {{ font-family: "Playfair Display", serif; font-size: clamp(26px, 5vw, 40px); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px; }}
+.issue-badge {{ display: inline-flex; align-items: center; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 100px; margin-bottom: 20px; }}
+.hero-title {{ font-family: var(--font); font-size: clamp(24px, 5vw, 38px); font-weight: 800; line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 16px; }}
 .hero-desc {{ font-size: 16px; color: var(--ink-soft); max-width: 560px; margin-bottom: 24px; line-height: 1.7; }}
 .hero-tags {{ display: flex; gap: 8px; flex-wrap: wrap; }}
-.tag {{ font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 100px; border: 1px solid var(--border); color: var(--ink-soft); }}
+.tag {{ font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 100px; border: 1px solid var(--border); color: var(--ink-soft); }}
 .today-summary {{ max-width: 780px; margin: 0 auto; padding: 24px 24px 0; }}
 .today-summary-box {{ background: var(--ink); color: #fff; border-radius: var(--radius); padding: 24px 28px; }}
-.today-summary-label {{ font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 10px; }}
+.today-summary-label {{ font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 10px; }}
 .today-summary-text {{ font-size: 15px; line-height: 1.8; color: #d4d4e8; }}
 .main {{ max-width: 780px; margin: 0 auto; padding: 48px 24px 80px; }}
 .section-header {{ display: flex; align-items: center; gap: 10px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1.5px solid var(--border); }}
-.section-pill {{ font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; }}
+.section-pill {{ font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; }}
 .section-pill.politics {{ background: var(--politics-bg); color: var(--politics); }}
 .section-pill.international {{ background: var(--international-bg); color: var(--international); }}
 .section-pill.history {{ background: var(--history-bg); color: var(--history); }}
-.section-title {{ font-family: "Playfair Display", serif; font-size: 20px; font-weight: 700; }}
+.section-title {{ font-family: var(--font); font-size: 20px; font-weight: 800; }}
 .section-overview {{ font-size: 15px; color: var(--ink-soft); line-height: 1.75; margin-bottom: 24px; padding: 16px 20px; background: var(--bg-subtle); border-left: 3px solid var(--border); border-radius: 0 8px 8px 0; }}
 .news-list {{ display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }}
 .news-card {{ background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: box-shadow 0.2s; }}
@@ -463,31 +442,31 @@ def build_html(news_list, content):
 .news-thumb-empty {{ width: 100%; height: 100%; background: var(--bg-subtle); }}
 .news-content {{ padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }}
 .news-source-row {{ display: flex; align-items: center; }}
-.news-source {{ font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }}
+.news-source {{ font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-muted); }}
 .news-category-dot {{ width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-right: 5px; }}
 .news-category-dot.politics {{ background: var(--politics); }}
 .news-category-dot.international {{ background: var(--international); }}
-.news-title {{ font-size: 15px; font-weight: 500; line-height: 1.45; color: var(--ink); }}
+.news-title {{ font-size: 15px; font-weight: 700; line-height: 1.45; color: var(--ink); }}
 .news-title a:hover {{ color: var(--accent); }}
 .news-body {{ font-size: 13px; color: var(--ink-soft); line-height: 1.7; }}
-.read-more {{ font-size: 12px; font-weight: 500; color: var(--accent); margin-top: 4px; display: inline-flex; align-items: center; gap: 3px; }}
+.read-more {{ font-size: 12px; font-weight: 700; color: var(--accent); margin-top: 4px; display: inline-flex; align-items: center; gap: 3px; }}
 .analyst-note {{ background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 48px; }}
-.analyst-label {{ font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }}
+.analyst-label {{ font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }}
 .analyst-text {{ font-size: 14px; color: var(--ink); line-height: 1.85; }}
 .history-box {{ background: var(--history-bg); border: 1px solid #fcd34d; border-radius: var(--radius); padding: 24px 28px; margin-bottom: 48px; }}
-.history-label {{ font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--history); margin-bottom: 10px; }}
+.history-label {{ font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--history); margin-bottom: 10px; }}
 .history-text {{ font-size: 14px; color: #78350f; line-height: 1.85; }}
 .section-divider {{ height: 1px; background: var(--border); margin: 0 0 48px; }}
 .summary-box {{ background: var(--ink); color: #fff; border-radius: var(--radius); padding: 32px 36px; margin-bottom: 48px; }}
-.summary-label {{ font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 20px; }}
-.summary-title {{ font-family: "Playfair Display", serif; font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 20px; }}
+.summary-label {{ font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 20px; }}
+.summary-title {{ font-family: var(--font); font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 20px; }}
 .summary-list {{ list-style: none; display: flex; flex-direction: column; gap: 14px; }}
 .summary-list li {{ display: grid; grid-template-columns: 28px 1fr; gap: 12px; font-size: 14px; color: #d4d4d8; line-height: 1.65; }}
-.summary-num {{ font-family: "Playfair Display", serif; font-size: 22px; color: var(--accent-light); line-height: 1.1; opacity: 0.6; }}
+.summary-num {{ font-family: var(--font); font-size: 20px; font-weight: 800; color: var(--accent-light); line-height: 1.2; opacity: 0.6; }}
 .share-section {{ border-top: 1px solid var(--border); padding-top: 32px; margin-bottom: 48px; text-align: center; }}
-.share-label {{ font-size: 12px; color: var(--ink-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }}
+.share-label {{ font-size: 12px; color: var(--ink-muted); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; margin-bottom: 16px; }}
 .share-buttons {{ display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }}
-.share-btn {{ display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; border-radius: 100px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; transition: transform 0.15s, box-shadow 0.15s; font-family: "Noto Sans KR", sans-serif; text-decoration: none; }}
+.share-btn {{ display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; border-radius: 100px; font-size: 13px; font-weight: 700; cursor: pointer; border: none; transition: transform 0.15s, box-shadow 0.15s; font-family: var(--font); text-decoration: none; }}
 .share-btn:hover {{ transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }}
 .share-btn.twitter {{ background: #000; color: #fff; }}
 .share-btn.copy {{ background: var(--bg-subtle); color: var(--ink); border: 1px solid var(--border); transition: transform 0.15s, box-shadow 0.15s, background 0.2s, color 0.2s, border-color 0.2s; }}
@@ -495,7 +474,7 @@ def build_html(news_list, content):
   .hero {{ max-width: 1080px; padding: 72px 48px 56px; }}
   .today-summary {{ max-width: 1080px; padding: 24px 48px 0; }}
   .main {{ max-width: 1080px; padding: 56px 48px 100px; }}
-  .hero-title {{ font-size: 52px; }}
+  .hero-title {{ font-size: 48px; }}
   .hero-desc {{ font-size: 18px; max-width: 680px; }}
   .section-title {{ font-size: 24px; }}
   .section-overview {{ font-size: 16px; }}
@@ -504,7 +483,7 @@ def build_html(news_list, content):
   .analyst-text {{ font-size: 15px; }}
   .history-text {{ font-size: 15px; }}
   .summary-box {{ padding: 40px 48px; }}
-  .summary-title {{ font-size: 26px; }}
+  .summary-title {{ font-size: 24px; }}
   .summary-list li {{ font-size: 15px; }}
 }}
 @media (min-width: 640px) and (max-width: 1023px) {{
@@ -522,7 +501,7 @@ def build_html(news_list, content):
 </head>
 <body>
 {get_header_html("briefing")}
- 
+
 <section class="hero">
   <div class="issue-badge">{issue_label}</div>
   <h1 class="hero-title">{hero_title}</h1>
@@ -533,14 +512,14 @@ def build_html(news_list, content):
     <span class="tag">📜 역사적 맥락</span>
   </div>
 </section>
- 
+
 <div class="today-summary">
   <div class="today-summary-box">
     <div class="today-summary-label">📋 오늘의 정치 지형</div>
     <div class="today-summary-text">{content.get("today_summary", "")}</div>
   </div>
 </div>
- 
+
 <main class="main">
   <div class="section-header">
     <span class="section-pill politics">Politics</span>
@@ -553,7 +532,7 @@ def build_html(news_list, content):
     <div class="analyst-text">{content.get("politics_comment", "")}</div>
   </div>
   <div class="section-divider"></div>
- 
+
   <div class="section-header">
     <span class="section-pill international">International</span>
     <span class="section-title">국제 정세</span>
@@ -565,7 +544,7 @@ def build_html(news_list, content):
     <div class="analyst-text">{content.get("international_comment", "")}</div>
   </div>
   <div class="section-divider"></div>
- 
+
   <div class="section-header">
     <span class="section-pill history">History</span>
     <span class="section-title">역사적 교훈</span>
@@ -575,7 +554,7 @@ def build_html(news_list, content):
     <div class="history-text">{content.get("history_insight", "")}</div>
   </div>
   <div class="section-divider"></div>
- 
+
   <div class="summary-box">
     <div class="summary-label">오늘의 핵심 인사이트</div>
     <div class="summary-title">오늘 꼭 기억할 3가지</div>
@@ -585,28 +564,22 @@ def build_html(news_list, content):
       <li><span class="summary-num">3</span><span>{content.get("key_insight_3", "")}</span></li>
     </ol>
   </div>
- 
   {share_buttons}
 </main>
- 
+
 {get_footer_html()}
 </body>
 </html>'''
- 
+
     filename = f"politics_{today_num}.html"
     with open(filename, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"HTML saved: {filename}")
- 
     with open("politics_index.html", "w", encoding="utf-8") as f:
         f.write(html)
     print("politics_index.html updated")
- 
     return filename
- 
-# =====================
-# 아카이브 페이지
-# =====================
+
 def build_archive():
     files = sorted(glob.glob("politics_2*.html"), reverse=True)
     archive_items = ""
@@ -616,17 +589,14 @@ def build_archive():
             date_obj = datetime.strptime(date_str, "%Y%m%d")
             date_display = date_obj.strftime("%Y년 %m월 %d일")
             weekday = ["월", "화", "수", "목", "금", "토", "일"][date_obj.weekday()]
-            is_sunday = date_obj.weekday() == 6
- 
+            is_sunday_file = date_obj.weekday() == 6
             with open(f, "r", encoding="utf-8") as fp:
                 html_content = fp.read()
             title_match = re.search(r'<h1 class="hero-title">(.*?)</h1>', html_content, re.DOTALL)
             hero_title = title_match.group(1).strip() if title_match else "KoreaInsight 브리핑"
- 
             is_today = date_str == datetime.now().strftime("%Y%m%d")
             today_badge = '<span class="today-badge">오늘</span>' if is_today else ''
-            sunday_badge = '<span class="sunday-badge">심층분석</span>' if is_sunday else ''
- 
+            sunday_badge = '<span class="sunday-badge">심층분석</span>' if is_sunday_file else ''
             archive_items += f'''
       <a href="{f}" class="archive-card">
         <div class="archive-date">
@@ -641,8 +611,7 @@ def build_archive():
       </a>'''
         except Exception as e:
             print(f"Archive item error ({f}): {e}")
-            continue
- 
+
     common_css = get_common_css()
     archive_html = f'''<!DOCTYPE html>
 <html lang="ko">
@@ -650,38 +619,29 @@ def build_archive():
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KoreaInsight — 아카이브</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 {common_css}
 .archive-hero {{ max-width: 780px; margin: 0 auto; padding: 56px 24px 40px; border-bottom: 1px solid var(--border); }}
-.archive-hero-label {{ font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); display: inline-block; padding: 4px 12px; border-radius: 100px; margin-bottom: 20px; }}
-.archive-hero-title {{ font-family: "Playfair Display", serif; font-size: clamp(26px, 5vw, 40px); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 12px; }}
+.archive-hero-label {{ font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); display: inline-block; padding: 4px 12px; border-radius: 100px; margin-bottom: 20px; }}
+.archive-hero-title {{ font-family: var(--font); font-size: clamp(24px, 5vw, 38px); font-weight: 800; line-height: 1.25; margin-bottom: 12px; }}
 .archive-hero-desc {{ font-size: 15px; color: var(--ink-soft); }}
 .archive-main {{ max-width: 780px; margin: 0 auto; padding: 40px 24px 80px; }}
-.archive-count {{ font-size: 13px; color: var(--ink-muted); margin-bottom: 24px; }}
+.archive-count {{ font-size: 13px; color: var(--ink-muted); margin-bottom: 24px; font-weight: 700; }}
 .archive-list {{ display: flex; flex-direction: column; gap: 12px; }}
 .archive-card {{ display: grid; grid-template-columns: 64px 1fr auto; align-items: center; gap: 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; transition: box-shadow 0.2s, border-color 0.2s; cursor: pointer; }}
 .archive-card:hover {{ box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-color: var(--accent); }}
 .archive-date {{ display: flex; flex-direction: column; align-items: center; gap: 2px; }}
-.archive-date-num {{ font-family: "Playfair Display", serif; font-size: 20px; font-weight: 700; color: var(--ink); line-height: 1; }}
-.archive-weekday {{ font-size: 11px; color: var(--ink-muted); }}
+.archive-date-num {{ font-family: var(--font); font-size: 18px; font-weight: 800; color: var(--ink); line-height: 1; }}
+.archive-weekday {{ font-size: 11px; color: var(--ink-muted); font-weight: 700; }}
 .archive-info {{ display: flex; flex-direction: column; gap: 4px; }}
-.archive-title {{ font-size: 14px; font-weight: 500; color: var(--ink); line-height: 1.4; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }}
+.archive-title {{ font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.4; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }}
 .archive-meta {{ font-size: 12px; color: var(--ink-muted); }}
 .archive-arrow {{ font-size: 16px; color: var(--ink-muted); }}
 .archive-card:hover .archive-arrow {{ color: var(--accent); }}
-.today-badge {{ font-size: 10px; font-weight: 500; background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 100px; }}
-.sunday-badge {{ font-size: 10px; font-weight: 500; background: var(--history); color: #fff; padding: 2px 8px; border-radius: 100px; }}
-@media (min-width: 1024px) {{
-  .archive-hero {{ max-width: 1080px; padding: 72px 48px 56px; }}
-  .archive-main {{ max-width: 1080px; padding: 40px 48px 100px; }}
-}}
-@media (max-width: 600px) {{
-  .archive-hero {{ padding: 36px 20px 32px; }}
-  .archive-main {{ padding: 32px 20px 60px; }}
-  .archive-card {{ grid-template-columns: 52px 1fr auto; gap: 12px; padding: 14px 16px; }}
-  .archive-date-num {{ font-size: 17px; }}
-}}
+.today-badge {{ font-size: 10px; font-weight: 800; background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 100px; }}
+.sunday-badge {{ font-size: 10px; font-weight: 800; background: var(--history); color: #fff; padding: 2px 8px; border-radius: 100px; }}
+@media (min-width: 1024px) {{ .archive-hero {{ max-width: 1080px; padding: 72px 48px 56px; }} .archive-main {{ max-width: 1080px; padding: 40px 48px 100px; }} }}
+@media (max-width: 600px) {{ .archive-hero {{ padding: 36px 20px 32px; }} .archive-main {{ padding: 32px 20px 60px; }} .archive-card {{ grid-template-columns: 52px 1fr auto; gap: 12px; padding: 14px 16px; }} }}
 </style>
 </head>
 <body>
@@ -698,52 +658,33 @@ def build_archive():
 {get_footer_html()}
 </body>
 </html>'''
- 
+
     with open("politics_archive.html", "w", encoding="utf-8") as f:
         f.write(archive_html)
     print("politics_archive.html updated")
- 
-# =====================
-# 텔레그램 발송
-# =====================
+
 def send_telegram(today, filename):
     site_url = "https://dhpaeng81-crypto.github.io/Daily-insight"
     is_sunday = datetime.now().weekday() == 6
     label = "주간 심층 분석" if is_sunday else "역사·정치 브리핑"
-    message = (
-        f"*KoreaInsight* {label} 발행\n"
-        f"{today}\n\n"
-        f"👉 [브리핑 보기]({site_url}/politics_index.html)"
-    )
+    message = f"*KoreaInsight* {label} 발행\n{today}\n\n👉 [브리핑 보기]({site_url}/politics_index.html)"
     requests.post(
         f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
-        json={
-            "chat_id": TELEGRAM_CHAT_ID,
-            "text": message,
-            "parse_mode": "Markdown"
-        }
+        json={"chat_id": TELEGRAM_CHAT_ID, "text": message, "parse_mode": "Markdown"}
     )
     print("Telegram: OK")
- 
-# =====================
-# 실행
-# =====================
+
 if __name__ == "__main__":
     print("Step 1: Collecting news...")
     news_list = collect_news()
- 
     print("Step 2: Generating content...")
     content = generate_content(news_list)
     print("Content generated")
- 
     print("Step 3: Building HTML...")
     today = datetime.now().strftime("%Y년 %m월 %d일")
     filename = build_html(news_list, content)
- 
     print("Step 4: Building archive...")
     build_archive()
- 
     print("Step 5: Sending Telegram...")
     send_telegram(today, filename)
- 
     print("All done!")
