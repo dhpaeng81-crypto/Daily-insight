@@ -1,7 +1,7 @@
 import FinanceDataReader as fdr
 from openai import OpenAI
 import pandas as pd
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import os
 import requests
 import re
@@ -10,11 +10,16 @@ import json
 
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
+# 한국시간 (KST = UTC+9)
+KST = timezone(timedelta(hours=9))
+def now_kst():
+    return datetime.now(KST)
+
 # =====================
 # 날짜 설정 — 전 영업일 기준
 # =====================
 def get_business_date():
-    today = datetime.now()
+    today = now_kst()
     delta = 1
     while True:
         prev = today - timedelta(days=delta)
