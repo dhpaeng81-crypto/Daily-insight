@@ -1,7 +1,7 @@
 import feedparser
 import requests
 from openai import OpenAI
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import re
 import os
 import json
@@ -13,6 +13,11 @@ import base64
 # 설정값
 # =====================
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+
+# 한국시간 (KST = UTC+9)
+KST = timezone(timedelta(hours=9))
+def now_kst():
+    return datetime.now(KST)
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 UNSPLASH_ACCESS_KEY = os.environ.get("UNSPLASH_ACCESS_KEY")
@@ -85,15 +90,11 @@ def extract_image(entry):
 # =====================
 RSS_FEEDS = [
     ("Politics", "https://www.chosun.com/arc/outboundfeeds/rss/category/politics/"),
-    ("Politics", "https://www.newdaily.co.kr/site/data/rss/rss.xml"),        # 뉴데일리
-    ("Politics", "https://www.pennmike.com/rss/allArticle.xml"),              # 펜앤드마이크
+    ("Politics", "http://rss.donga.com/politics.xml"),
     ("Politics", "http://rss.donga.com/editorials.xml"),
     ("Politics", "https://www.munhwa.com/rss/politics.xml"),
     ("International", "https://www.rfa.org/korean/rss2.xml"),
     ("International", "https://www.voakorea.com/api/z_mpetyitop"),
-    ("International", "https://thediplomat.com/feed/"),                       # The Diplomat
-    ("International", "https://warontherocks.com/feed/"),                     # War on the Rocks
-    ("International", "https://www.38north.org/feed/"),  
 ]
 
 def collect_news():
@@ -143,7 +144,7 @@ def translate_single(news_item):
 
 def generate_content(news_list):
     client = OpenAI(api_key=OPENAI_API_KEY)
-    is_sunday = datetime.now().weekday() == 6
+    is_sunday = now_kst().weekday() == 6
 
     news_text = ""
     for i, n in enumerate(news_list):
@@ -181,8 +182,8 @@ def generate_content(news_list):
 11. 반드시 아래 JSON 형식으로만 응답 (다른 텍스트 없이)
 
 {{
-  "hero_title": "오늘의 핵심 헤드라인 100자 이내",
-  "hero_desc": "오늘 브리핑의 핵심 메시지 100자 이내",
+  "hero_title": "오늘의 핵심 헤드라인 25자 이내",
+  "hero_desc": "오늘 브리핑의 핵심 메시지 60자 이내",
   "today_summary": "오늘의 정치 지형 전반 요약 3-4문장. 헌법적 가치 관점에서의 현 상황 진단",
   "politics_overview": "국내 정치 현안 흐름 3-4문장. 주요 이슈의 본질과 헌법적 의미 분석",
   "politics_comment": "보수 관점 핵심 인사이트 4-5문장. 역사적 선례, 팩트 근거, 진보 주장에 대한 반론, 자유민주주의 관점의 평가 포함",
@@ -358,9 +359,9 @@ def get_footer_html():
 </footer>'''
 
 def build_html(news_list, content):
-    today = datetime.now().strftime("%Y년 %m월 %d일")
-    today_num = datetime.now().strftime("%Y%m%d")
-    is_sunday = datetime.now().weekday() == 6
+    today = now_kst().strftime("%Y년 %m월 %d일")
+    today_num = now_kst().strftime("%Y%m%d")
+    is_sunday = now_kst().weekday() == 6
     issue_label = "주간 심층 분석" if is_sunday else "오늘의 브리핑"
 
     site_url = "https://dhpaeng81-crypto.github.io/Daily-insight"
@@ -589,7 +590,7 @@ def build_archive():
                 html_content = fp.read()
             title_match = re.search(r'<h1 class="hero-title">(.*?)</h1>', html_content, re.DOTALL)
             hero_title = title_match.group(1).strip() if title_match else "KoreaInsight 브리핑"
-            is_today = date_str == datetime.now().strftime("%Y%m%d")
+            is_today = date_str == now_kst().strftime("%Y%m%d")
             today_badge = '<span class="today-badge">오늘</span>' if is_today else ''
             sunday_badge = '<span class="sunday-badge">심층분석</span>' if is_sunday_file else ''
             archive_items += f'''
@@ -682,7 +683,7 @@ def push_to_github(files_to_push):
             sha = check.json().get("sha") if check.status_code == 200 else None
 
             payload = {
-                "message": f"Update {filepath} - {datetime.now().strftime('%Y%m%d %H:%M')}",
+                "message": f"Update {filepath} - {now_kst().strftime('%Y%m%d %H:%M')}",
                 "content": encoded
             }
             if sha:
@@ -701,7 +702,7 @@ def push_to_github(files_to_push):
 # =====================
 def send_telegram(today, filename):
     site_url = "https://dhpaeng81-crypto.github.io/Daily-insight"
-    is_sunday = datetime.now().weekday() == 6
+    is_sunday = now_kst().weekday() == 6
     label = "주간 심층 분석" if is_sunday else "역사·정치 브리핑"
     message = f"*KoreaInsight* {label} 발행\n{today}\n\n👉 [브리핑 보기]({site_url}/politics_index.html)"
     requests.post(
@@ -720,8 +721,8 @@ if __name__ == "__main__":
     content = generate_content(news_list)
     print("Content generated")
     print("Step 3: Building HTML...")
-    today = datetime.now().strftime("%Y년 %m월 %d일")
-    today_num = datetime.now().strftime("%Y%m%d")
+    today = now_kst().strftime("%Y년 %m월 %d일")
+    today_num = now_kst().strftime("%Y%m%d")
     filename = build_html(news_list, content)
     print("Step 4: Building archive...")
     build_archive()
