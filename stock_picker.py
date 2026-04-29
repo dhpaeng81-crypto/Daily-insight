@@ -27,162 +27,196 @@ def get_date_display(date_str):
     weekday = ["월", "화", "수", "목", "금", "토", "일"][date_obj.weekday()]
     return f"{date_obj.strftime('%Y년 %m월 %d일')} ({weekday}요일)"
 
-def date_to_str(date_str):
+def fmt(date_str):
     return f"{date_str[:4]}-{date_str[4:6]}-{date_str[6:]}"
+
+def prev_biz(date_str, n=1):
+    d = datetime.strptime(date_str, "%Y%m%d")
+    count = 0
+    while count < n:
+        d -= timedelta(days=1)
+        if d.weekday() < 5:
+            count += 1
+    return d.strftime("%Y%m%d")
+
+# =====================
+# FDR로 단일 종목 OHLCV 가져오기
+# =====================
+def get_ohlcv(ticker, start_str, end_str):
+    try:
+        df = fdr.DataReader(ticker, fmt(start_str), fmt(end_str))
+        if df is not None and not df.empty:
+            return df
+    except Exception as e:
+        pass
+    return None
 
 # =====================
 # 특징주 1 — 전일 대비 상승률 15% 이상 중 거래대금 최대
+# KRX 시총 상위 종목 중 스크리닝
 # =====================
 def get_top_surge_stock(date_str):
     try:
         print(f"특징주 1 수집 중... (날짜: {date_str})")
-        date_fmt = date_to_str(date_str)
+        pd_str = prev_biz(date_str, 1)
+        ppd_str = prev_biz(date_str, 5)  # 5영업일 전부터 수집
 
-        # 전일 날짜
-        prev_delta = 1
-        while True:
-            prev_date = datetime.strptime(date_str, "%Y%m%d") - timedelta(days=prev_delta)
-            if prev_date.weekday() < 5:
-                prev_date_str = prev_date.strftime("%Y%m%d")
-                break
-            prev_delta += 1
-        prev_date_fmt = date_to_str(prev_date_str)
+        # 코스피 + 코스닥 분리 수집
+        print("KOSPI/KOSDAQ 종목 리스트 수집 중...")
 
-        # KRX 전체 종목 리스트
-        print("종목 리스트 수집 중...")
-        df_krx = fdr.StockListing('KRX')
-        if df_krx is None or df_krx.empty:
+        def normalize_listing(df):
+            col_map = {}
+            for c in df.columns:
+                cl = c.lower()
+                if cl in ["code", "symbol", "종목코드"]:
+                    col_map[c] = "Code"
+                elif cl in ["name", "종목명"]:
+                    col_map[c] = "Name"
+                elif cl in ["marcap", "시가총액"]:
+                    col_map[c] = "Marcap"
+            return df.rename(columns=col_map)
+
+        df_kospi = fdr.StockListing("KOSPI")
+        df_kosdaq = fdr.StockListing("KOSDAQ")
+
+        if (df_kospi is None or df_kospi.empty) and (df_kosdaq is None or df_kosdaq.empty):
             print("종목 리스트 수집 실패")
             return None
 
-        print(f"전체 종목 수: {len(df_krx)}")
+        frames = []
+        if df_kospi is not None and not df_kospi.empty:
+            df_kospi = normalize_listing(df_kospi)
+            if "Code" in df_kospi.columns:
+                if "Marcap" in df_kospi.columns:
+                    df_kospi = df_kospi.sort_values("Marcap", ascending=False).head(150)
+                else:
+                    df_kospi = df_kospi.head(150)
+                frames.append(df_kospi)
+                print(f"KOSPI: {len(df_kospi)}개")
 
-        # 상위 500개 종목만 샘플링 (시총 기준 정렬 후)
-        # Code 컬럼 확인
-        code_col = None
-        for col in ["Code", "Symbol", "종목코드", "code"]:
-            if col in df_krx.columns:
-                code_col = col
-                break
+        if df_kosdaq is not None and not df_kosdaq.empty:
+            df_kosdaq = normalize_listing(df_kosdaq)
+            if "Code" in df_kosdaq.columns:
+                if "Marcap" in df_kosdaq.columns:
+                    df_kosdaq = df_kosdaq.sort_values("Marcap", ascending=False).head(150)
+                else:
+                    df_kosdaq = df_kosdaq.head(150)
+                frames.append(df_kosdaq)
+                print(f"KOSDAQ: {len(df_kosdaq)}개")
 
-        name_col = None
-        for col in ["Name", "종목명", "name"]:
-            if col in df_krx.columns:
-                name_col = col
-                break
-
-        if code_col is None:
-            print(f"종목코드 컬럼 없음. 컬럼: {list(df_krx.columns)}")
+        if not frames:
+            print("유효한 종목 리스트 없음")
             return None
 
-        print(f"종목코드 컬럼: {code_col}, 종목명 컬럼: {name_col}")
+        df_all = pd.concat(frames, ignore_index=True)
 
-        # 시총 컬럼으로 상위 300개 선택
-        marcap_col = None
-        for col in ["Marcap", "시가총액", "marcap"]:
-            if col in df_krx.columns:
-                marcap_col = col
-                break
+        name_map = {}
+        if "Name" in df_all.columns and "Code" in df_all.columns:
+            name_map = dict(zip(df_all["Code"], df_all["Name"]))
 
-        if marcap_col:
-            df_krx = df_krx.sort_values(marcap_col, ascending=False).head(300)
-        else:
-            df_krx = df_krx.head(300)
+        tickers = df_all["Code"].dropna().tolist()
+        print(f"스크리닝 대상: {len(tickers)}개 종목 (KOSPI+KOSDAQ)")
 
-        tickers = df_krx[code_col].tolist()
-        names = {row[code_col]: row[name_col] for _, row in df_krx.iterrows()} if name_col else {}
-
-        surge_candidates = []
-        print(f"종목별 데이터 수집 중... (총 {len(tickers)}개)")
+        surge_list = []
+        threshold = 15.0
 
         for i, ticker in enumerate(tickers):
             try:
-                # 최근 2일 데이터 수집
-                df = fdr.DataReader(ticker, prev_date_fmt, date_fmt)
+                df = get_ohlcv(ticker, ppd_str, date_str)
                 if df is None or len(df) < 2:
                     continue
 
-                # 마지막 2개 행
+                # Close 컬럼 찾기
+                close_col = next((c for c in df.columns if c.lower() in ["close", "종가"]), None)
+                vol_col = next((c for c in df.columns if c.lower() in ["volume", "거래량"]), None)
+                open_col = next((c for c in df.columns if c.lower() in ["open", "시가"]), None)
+                high_col = next((c for c in df.columns if c.lower() in ["high", "고가"]), None)
+                low_col = next((c for c in df.columns if c.lower() in ["low", "저가"]), None)
+                change_col = next((c for c in df.columns if c.lower() in ["change", "등락률"]), None)
+
+                if close_col is None:
+                    continue
+
                 today_row = df.iloc[-1]
                 prev_row = df.iloc[-2]
 
-                today_close = float(today_row.get("Close", today_row.get("종가", 0)))
-                prev_close = float(prev_row.get("Close", prev_row.get("종가", 0)))
+                today_close = float(today_row[close_col])
+                prev_close = float(prev_row[close_col])
 
                 if prev_close <= 0 or today_close <= 0:
                     continue
 
-                change_rate = (today_close - prev_close) / prev_close * 100
+                if change_col:
+                    change_rate = float(today_row[change_col]) * 100
+                else:
+                    change_rate = (today_close - prev_close) / prev_close * 100
 
-                # 거래대금
-                volume = float(today_row.get("Volume", today_row.get("거래량", 0)))
-                trading_value = today_close * volume  # 거래대금 추정
+                volume = float(today_row[vol_col]) if vol_col else 0
+                trading_value = today_close * volume
 
-                # Change 컬럼 있으면 사용
-                if "Change" in today_row.index:
-                    change_rate = float(today_row["Change"]) * 100
-
-                if change_rate >= 15:
-                    surge_candidates.append({
+                if change_rate >= threshold:
+                    surge_list.append({
                         "ticker": ticker,
-                        "name": names.get(ticker, ticker),
+                        "name": name_map.get(ticker, ticker),
                         "close": int(today_close),
-                        "prev_close": int(prev_close),
                         "change_rate": round(change_rate, 2),
                         "volume": int(volume),
                         "trading_value": int(trading_value),
-                        "open": int(today_row.get("Open", today_row.get("시가", 0))),
-                        "high": int(today_row.get("High", today_row.get("고가", 0))),
-                        "low": int(today_row.get("Low", today_row.get("저가", 0))),
+                        "open": int(today_row[open_col]) if open_col else 0,
+                        "high": int(today_row[high_col]) if high_col else 0,
+                        "low": int(today_row[low_col]) if low_col else 0,
                     })
 
                 if (i + 1) % 50 == 0:
-                    print(f"  진행: {i+1}/{len(tickers)} (급등 후보: {len(surge_candidates)}개)")
+                    print(f"  진행: {i+1}/{len(tickers)}, 급등 후보: {len(surge_list)}개")
 
-                time.sleep(0.05)  # 요청 간격
+                time.sleep(0.03)
 
-            except Exception as e:
+            except Exception:
                 continue
 
-        if not surge_candidates:
-            print("15% 이상 급등 종목 없음 — 5% 이상으로 기준 완화")
-            # 5% 이상으로 재시도
-            for ticker in tickers[:100]:
+        # 15% 이상 없으면 기준 완화
+        if not surge_list:
+            print("15% 이상 급등 종목 없음 — 상위 등락률 종목으로 대체")
+            all_changes = []
+            for ticker in tickers[:50]:
                 try:
-                    df = fdr.DataReader(ticker, prev_date_fmt, date_fmt)
+                    df = get_ohlcv(ticker, ppd_str, date_str)
                     if df is None or len(df) < 2:
                         continue
-                    today_row = df.iloc[-1]
-                    prev_row = df.iloc[-2]
-                    today_close = float(today_row.get("Close", 0))
-                    prev_close = float(prev_row.get("Close", 0))
+                    close_col = next((c for c in df.columns if c.lower() in ["close", "종가"]), None)
+                    vol_col = next((c for c in df.columns if c.lower() in ["volume", "거래량"]), None)
+                    if not close_col:
+                        continue
+                    today_close = float(df.iloc[-1][close_col])
+                    prev_close = float(df.iloc[-2][close_col])
                     if prev_close <= 0:
                         continue
                     change_rate = (today_close - prev_close) / prev_close * 100
-                    volume = float(today_row.get("Volume", 0))
-                    if change_rate >= 5:
-                        surge_candidates.append({
-                            "ticker": ticker,
-                            "name": names.get(ticker, ticker),
-                            "close": int(today_close),
-                            "change_rate": round(change_rate, 2),
-                            "volume": int(volume),
-                            "trading_value": int(today_close * volume),
-                            "open": int(today_row.get("Open", 0)),
-                            "high": int(today_row.get("High", 0)),
-                            "low": int(today_row.get("Low", 0)),
-                        })
-                    time.sleep(0.05)
+                    volume = float(df.iloc[-1][vol_col]) if vol_col else 0
+                    all_changes.append({
+                        "ticker": ticker,
+                        "name": name_map.get(ticker, ticker),
+                        "close": int(today_close),
+                        "change_rate": round(change_rate, 2),
+                        "volume": int(volume),
+                        "trading_value": int(today_close * volume),
+                        "open": 0, "high": 0, "low": 0,
+                    })
+                    time.sleep(0.03)
                 except:
                     continue
+            if all_changes:
+                # 등락률 상위 1개
+                surge_list = sorted(all_changes, key=lambda x: x["change_rate"], reverse=True)[:1]
 
-        if not surge_candidates:
+        if not surge_list:
             print("급등 종목 없음")
             return None
 
         # 거래대금 기준 정렬
-        surge_candidates.sort(key=lambda x: x["trading_value"], reverse=True)
-        top = surge_candidates[0]
+        surge_list.sort(key=lambda x: x["trading_value"], reverse=True)
+        top = surge_list[0]
         print(f"특징주 1: {top['name']} ({top['ticker']}) +{top['change_rate']}%")
         return top
 
@@ -193,127 +227,132 @@ def get_top_surge_stock(date_str):
         return None
 
 # =====================
-# 특징주 2 — 네이버 금융 외국인 순매수 1위
+# 특징주 2 — 삼성전자 + 외국인 순매수 대형주 고정 분석
+# (외국인 순매수 데이터 소스가 불안정하므로 안정적인 방식 사용)
 # =====================
 def get_top_foreign_buy_stock(date_str):
     try:
-        print(f"특징주 2 수집 중... (외국인 순매수)")
+        print(f"특징주 2 수집 중... (날짜: {date_str})")
+        ppd_str = prev_biz(date_str, 5)
 
-        # 네이버 금융 외국인 순매수 상위 종목
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-        }
+        # 외국인 선호 대형주 후보 (코스피 대표 종목)
+        # 이 중 최근 5일 외국인 순매수가 가장 많을 것으로 추정되는 종목을
+        # 거래량 증가율로 대체 선정
+        candidates = [
+            # 코스피 대형주
+            ("005930", "삼성전자"),
+            ("000660", "SK하이닉스"),
+            ("005380", "현대차"),
+            ("035420", "NAVER"),
+            ("051910", "LG화학"),
+            ("006400", "삼성SDI"),
+            ("105560", "KB금융"),
+            ("055550", "신한지주"),
+            ("012330", "현대모비스"),
+            ("000270", "기아"),
+            ("068270", "셀트리온"),
+            ("207940", "삼성바이오로직스"),
+            ("028260", "삼성물산"),
+            ("066570", "LG전자"),
+            ("003550", "LG"),
+            ("034730", "SK"),
+            ("017670", "SK텔레콤"),
+            ("030200", "KT"),
+            ("032830", "삼성생명"),
+            ("086790", "하나금융지주"),
+            ("316140", "우리금융지주"),
+            ("024110", "기업은행"),
+            ("018260", "삼성에스디에스"),
+            ("009540", "HD한국조선해양"),
+            ("011200", "HMM"),
+            ("010950", "S-Oil"),
+            ("096770", "SK이노베이션"),
+            ("003670", "포스코퓨처엠"),
+            ("005490", "POSCO홀딩스"),
+            ("000810", "삼성화재"),
+            ("011790", "SKC"),
+            ("047050", "포스코인터내셔널"),
+            ("003490", "대한항공"),
+            ("010140", "삼성중공업"),
+            ("042660", "한화오션"),
+            ("064350", "현대로템"),
+            ("012450", "한화에어로스페이스"),
+            ("079550", "LIG넥스원"),
+            ("034020", "두산에너빌리티"),
+            ("267250", "HD현대중공업"),
+            # 코스닥 대형주
+            ("035720", "카카오"),
+            ("247540", "에코프로비엠"),
+            ("086520", "에코프로"),
+            ("373220", "LG에너지솔루션"),
+            ("196170", "알테오젠"),
+            ("091990", "셀트리온헬스케어"),
+            ("263750", "펄어비스"),
+            ("293490", "카카오게임즈"),
+            ("112040", "위메이드"),
+            ("060310", "3S"),
+        ]
 
-        # 코스피 외국인 순매수
-        url = "https://finance.naver.com/sise/sise_quant.naver?sosok=0"
-        resp = requests.get(url, headers=headers, timeout=15)
-        resp.encoding = "euc-kr"
+        results = []
+        for ticker, name in candidates:
+            try:
+                df = get_ohlcv(ticker, ppd_str, date_str)
+                if df is None or len(df) < 2:
+                    continue
 
-        # 외국인 순매수 페이지
-        url_foreign = "https://finance.naver.com/sise/sise_netbuy.naver?sosok=0"
-        resp_f = requests.get(url_foreign, headers=headers, timeout=15)
-        resp_f.encoding = "euc-kr"
+                close_col = next((c for c in df.columns if c.lower() in ["close", "종가"]), None)
+                vol_col = next((c for c in df.columns if c.lower() in ["volume", "거래량"]), None)
 
-        # 테이블 파싱
-        tables = pd.read_html(resp_f.text, header=0)
+                if not close_col or not vol_col:
+                    continue
 
-        df = None
-        for t in tables:
-            if len(t.columns) >= 3 and len(t) > 5:
-                df = t
-                break
+                today_close = float(df.iloc[-1][close_col])
+                prev_close = float(df.iloc[-2][close_col])
+                today_vol = float(df.iloc[-1][vol_col])
+                avg_vol = float(df[vol_col].mean())
 
-        if df is None:
-            print("외국인 순매수 테이블 파싱 실패")
-            return get_top_foreign_buy_fallback(date_str)
+                if prev_close <= 0 or avg_vol <= 0:
+                    continue
 
-        print(f"외국인 테이블 컬럼: {list(df.columns)}")
+                change_rate = (today_close - prev_close) / prev_close * 100
+                vol_ratio = today_vol / avg_vol  # 거래량 비율 (외국인 활동 proxy)
 
-        # 첫 번째 유효한 종목 찾기
-        name_col = df.columns[1] if len(df.columns) > 1 else df.columns[0]
-        df = df.dropna(subset=[name_col])
-        df = df[df[name_col].astype(str).str.len() > 1]
+                results.append({
+                    "ticker": ticker,
+                    "name": name,
+                    "close": int(today_close),
+                    "change_rate": round(change_rate, 2),
+                    "net_buy_amount": 0,
+                    "net_buy_volume": 0,
+                    "volume": int(today_vol),
+                    "trading_value": int(today_close * today_vol),
+                    "vol_ratio": vol_ratio,
+                })
+                time.sleep(0.03)
 
-        if df.empty:
-            return get_top_foreign_buy_fallback(date_str)
+            except Exception as e:
+                print(f"  {name} 오류: {e}")
+                continue
 
-        top_name = str(df.iloc[0][name_col]).strip()
-        print(f"외국인 순매수 1위: {top_name}")
+        if not results:
+            print("대형주 데이터 수집 실패")
+            return None
 
-        # FDR로 해당 종목 코드 및 가격 검색
-        df_krx = fdr.StockListing('KRX')
-        code_col = next((c for c in ["Code", "Symbol"] if c in df_krx.columns), None)
-        name_col_krx = next((c for c in ["Name", "종목명"] if c in df_krx.columns), None)
+        # 거래량 급증 기준 정렬 (외국인 순매수 proxy)
+        results.sort(key=lambda x: x["vol_ratio"], reverse=True)
+        top = results[0]
 
-        if code_col and name_col_krx:
-            match = df_krx[df_krx[name_col_krx].str.contains(top_name[:3], na=False)]
-            if not match.empty:
-                ticker = match.iloc[0][code_col]
-                company_name = match.iloc[0][name_col_krx]
+        # vol_ratio 제거 (HTML 표시용 아님)
+        top.pop("vol_ratio", None)
 
-                date_fmt = date_to_str(date_str)
-                prev_date = (datetime.strptime(date_str, "%Y%m%d") - timedelta(days=3)).strftime("%Y-%m-%d")
-                df_price = fdr.DataReader(ticker, prev_date, date_fmt)
-
-                if df_price is not None and len(df_price) >= 2:
-                    today_row = df_price.iloc[-1]
-                    prev_row = df_price.iloc[-2]
-                    close = int(today_row.get("Close", 0))
-                    prev_close = int(prev_row.get("Close", 0))
-                    change_rate = round((close - prev_close) / prev_close * 100, 2) if prev_close > 0 else 0
-                    volume = int(today_row.get("Volume", 0))
-
-                    result = {
-                        "ticker": ticker,
-                        "name": company_name,
-                        "close": close,
-                        "change_rate": change_rate,
-                        "net_buy_amount": 0,
-                        "net_buy_volume": 0,
-                        "volume": volume,
-                        "trading_value": close * volume,
-                    }
-                    print(f"특징주 2: {company_name} ({ticker})")
-                    return result
-
-        return get_top_foreign_buy_fallback(date_str)
+        print(f"특징주 2: {top['name']} ({top['ticker']}) 거래량 급증")
+        return top
 
     except Exception as e:
         print(f"특징주 2 수집 오류: {e}")
         import traceback
         traceback.print_exc()
-        return get_top_foreign_buy_fallback(date_str)
-
-def get_top_foreign_buy_fallback(date_str):
-    """외국인 순매수 데이터 수집 실패 시 삼성전자로 대체"""
-    try:
-        print("삼성전자 데이터로 대체...")
-        date_fmt = date_to_str(date_str)
-        prev_date = (datetime.strptime(date_str, "%Y%m%d") - timedelta(days=5)).strftime("%Y-%m-%d")
-        df = fdr.DataReader("005930", prev_date, date_fmt)
-
-        if df is not None and len(df) >= 2:
-            today_row = df.iloc[-1]
-            prev_row = df.iloc[-2]
-            close = int(today_row.get("Close", 0))
-            prev_close = int(prev_row.get("Close", 0))
-            change_rate = round((close - prev_close) / prev_close * 100, 2) if prev_close > 0 else 0
-            volume = int(today_row.get("Volume", 0))
-
-            return {
-                "ticker": "005930",
-                "name": "삼성전자",
-                "close": close,
-                "change_rate": change_rate,
-                "net_buy_amount": 0,
-                "net_buy_volume": 0,
-                "volume": volume,
-                "trading_value": close * volume,
-                "note": "외국인 순매수 데이터 수집 실패 — 삼성전자로 대체"
-            }
-    except Exception as e:
-        print(f"대체 데이터 수집 오류: {e}")
-    return None
+        return None
 
 # =====================
 # 관련 뉴스
@@ -341,7 +380,7 @@ def generate_stock_analysis(stock_info, stock_type="surge"):
 전일 종가: {stock_info['close']:,}원
 전일 대비 상승률: +{stock_info['change_rate']}%
 거래량: {stock_info.get('volume', 0):,}주
-거래대금 추정: {stock_info.get('trading_value', 0) / 100000000:.0f}억원
+거래대금 추정: {stock_info.get('trading_value', 0) / 100000000:.1f}억원
 시가: {stock_info.get('open', 0):,}원 / 고가: {stock_info.get('high', 0):,}원 / 저가: {stock_info.get('low', 0):,}원
 관련 최신 뉴스:
 {news_text}
@@ -349,19 +388,17 @@ def generate_stock_analysis(stock_info, stock_type="surge"):
         prompt_type = "주가 급등 종목"
         analysis_focus = "급등 원인, 지속 가능성, 단기 투자 시사점"
     else:
-        net_buy = stock_info.get('net_buy_amount', 0)
-        net_buy_str = f"{net_buy / 100000000:.0f}억원" if net_buy > 0 else "데이터 수집 중"
         context = f"""
 종목명: {stock_info['name']} ({stock_info['ticker']})
 전일 종가: {stock_info['close']:,}원
 전일 대비 등락률: {'+' if stock_info['change_rate'] >= 0 else ''}{stock_info['change_rate']}%
-외국인 순매수금액: {net_buy_str}
 거래량: {stock_info.get('volume', 0):,}주
+거래대금 추정: {stock_info.get('trading_value', 0) / 100000000:.1f}억원
 관련 최신 뉴스:
 {news_text}
 """
-        prompt_type = "외국인 순매수 상위 종목"
-        analysis_focus = "외국인 매수 배경, 기업 펀더멘털, 중기 투자 관점"
+        prompt_type = "외국인 순매수 유력 종목 (거래량 급증 기준 선정)"
+        analysis_focus = "외국인 매수 배경 추정, 기업 펀더멘털, 중기 투자 관점"
 
     prompt = f"""
 당신은 15년 경력의 한국 주식시장 전문 애널리스트입니다.
@@ -375,7 +412,7 @@ def generate_stock_analysis(stock_info, stock_type="surge"):
 - {analysis_focus} 중심으로 분석
 - 구체적인 수치와 근거 포함
 - 리스크 요인 반드시 포함
-- 반드시 아래 JSON 형식으로만 응답
+- 반드시 아래 JSON 형식으로만 응답 (다른 텍스트 없이)
 
 {{
   "company_overview": "기업 개요 및 주요 사업 2-3문장",
@@ -423,7 +460,7 @@ def get_stock_picks():
 
     time.sleep(2)
 
-    # 특징주 2: 외국인 순매수 1위
+    # 특징주 2: 거래량 급증 대형주 (외국인 순매수 proxy)
     foreign = get_top_foreign_buy_stock(date_str)
     if foreign:
         result["foreign_stock"] = foreign
