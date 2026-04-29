@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Daily Insight — 2026년 04월 28일</title>
-<meta property="og:title" content="Daily Insight — 2026년 04월 28일">
-<meta property="og:description" content="글로벌 에너지 시장, 비싸진 LNG가 관건">
+<title>Daily Insight — 2026년 04월 29일</title>
+<meta property="og:title" content="Daily Insight — 2026년 04월 29일">
+<meta property="og:description" content="중국과 카타르의 LNG 전략, 국제 에너지 시장 변동">
 <meta property="og:image" content="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80">
 <meta property="og:url" content="https://dhpaeng81-crypto.github.io/Daily-insight/index.html">
 <meta name="twitter:card" content="summary_large_image">
@@ -19,6 +19,8 @@
   --finance: #0369a1; --finance-bg: #e0f2fe;
   --tech: #6d28d9; --tech-bg: #ede9fe;
   --energy: #b45309; --energy-bg: #fef3c7;
+  --stock-surge: #dc2626; --stock-surge-bg: #fef2f2;
+  --stock-foreign: #0369a1; --stock-foreign-bg: #e0f2fe;
   --border: #e4e4e7; --radius: 12px;
   --font: 'NanumSquare', 'Apple SD Gothic Neo', sans-serif;
 }
@@ -59,6 +61,8 @@ a { color: inherit; text-decoration: none; }
 .section-pill.finance { background: var(--finance-bg); color: var(--finance); }
 .section-pill.tech { background: var(--tech-bg); color: var(--tech); }
 .section-pill.energy { background: var(--energy-bg); color: var(--energy); }
+.section-pill.stock { background: #fef2f2; color: #dc2626; }
+.stock-date-badge { font-size: 12px; color: var(--ink-muted); font-weight: 700; margin-left: auto; }
 .section-title { font-family: var(--font); font-size: 20px; font-weight: 800; }
 .section-overview { font-size: 15px; color: var(--ink-soft); line-height: 1.75; margin-bottom: 24px; padding: 16px 20px; background: var(--bg-subtle); border-left: 3px solid var(--border); border-radius: 0 8px 8px 0; }
 .news-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
@@ -89,6 +93,32 @@ a { color: inherit; text-decoration: none; }
 .summary-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
 .summary-list li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; font-size: 14px; color: #d4d4d8; line-height: 1.65; }
 .summary-num { font-family: var(--font); font-size: 20px; font-weight: 800; color: var(--accent-light); line-height: 1.2; opacity: 0.6; }
+
+/* 주식 특징주 카드 스타일 */
+.stock-list { display: flex; flex-direction: column; gap: 20px; margin-bottom: 24px; }
+.stock-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.stock-card-header { padding: 20px 24px; border-bottom: 1px solid var(--border); }
+.stock-badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 100px; margin-bottom: 12px; }
+.stock-badge.surge { background: #fef2f2; color: #dc2626; }
+.stock-badge.foreign { background: #e0f2fe; color: #0369a1; }
+.stock-name-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.stock-name { font-family: var(--font); font-size: 20px; font-weight: 800; color: var(--ink); }
+.stock-ticker { font-size: 12px; color: var(--ink-muted); background: var(--bg-subtle); padding: 2px 8px; border-radius: 4px; font-weight: 700; }
+.stock-price-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.stock-price { font-family: var(--font); font-size: 24px; font-weight: 800; color: var(--ink); }
+.stock-change { font-family: var(--font); font-size: 18px; font-weight: 800; }
+.stock-stats { display: flex; gap: 16px; flex-wrap: wrap; }
+.stock-stat { display: flex; flex-direction: column; gap: 2px; }
+.stat-label { font-size: 11px; color: var(--ink-muted); font-weight: 700; }
+.stat-value { font-size: 14px; font-weight: 800; color: var(--ink); }
+.stock-card-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+.stock-comment { font-size: 14px; font-weight: 800; color: var(--accent); background: var(--accent-light); padding: 10px 16px; border-radius: 8px; }
+.stock-analysis-section { display: flex; flex-direction: column; gap: 6px; }
+.stock-analysis-section.risk { background: #fef2f2; padding: 12px 16px; border-radius: 8px; border-left: 3px solid #dc2626; }
+.analysis-label { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
+.analysis-text { font-size: 14px; color: var(--ink); line-height: 1.8; }
+.stock-disclaimer { font-size: 12px; color: var(--ink-muted); text-align: center; padding: 12px; background: var(--bg-subtle); border-radius: 8px; margin-bottom: 48px; }
+
 .share-section { border-top: 1px solid var(--border); padding-top: 32px; margin-bottom: 48px; text-align: center; }
 .share-label { font-size: 12px; color: var(--ink-muted); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; margin-bottom: 16px; }
 .share-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
@@ -105,6 +135,7 @@ a { color: inherit; text-decoration: none; }
   .section-overview { font-size: 16px; }
   .news-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .news-thumb { height: 180px; }
+  .stock-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
   .analyst-text { font-size: 15px; }
   .summary-box { padding: 40px 48px; }
   .summary-title { font-size: 24px; }
@@ -119,6 +150,8 @@ a { color: inherit; text-decoration: none; }
   .main { padding: 36px 20px 60px; }
   .summary-box { padding: 24px 20px; }
   .share-btn { padding: 9px 18px; font-size: 12px; }
+  .stock-price { font-size: 20px; }
+  .stock-change { font-size: 16px; }
 }
 </style>
 </head>
@@ -131,19 +164,20 @@ a { color: inherit; text-decoration: none; }
       <a href="index.html" class="active">금융·AI·에너지</a>
       <a href="archive.html" class="">아카이브</a>
       <div class="divider"></div>
-      <a href="politics_index.html" class="">역사·정치</a>
+      <a href="politics_index.html">역사·정치</a>
     </nav>
   </div>
 </header>
 
 <section class="hero">
   <div class="issue-badge">오늘의 브리핑</div>
-  <h1 class="hero-title">에너지 시장 전환 대세</h1>
-  <p class="hero-desc">글로벌 에너지 시장, 비싸진 LNG가 관건</p>
+  <h1 class="hero-title">재정 지원과 용기 있는 전략</h1>
+  <p class="hero-desc">중국과 카타르의 LNG 전략, 국제 에너지 시장 변동</p>
   <div class="hero-tags">
     <span class="tag">💹 금융 시장</span>
     <span class="tag">🤖 AI · IT</span>
     <span class="tag">⚡ 에너지</span>
+    <span class="tag">📈 특징주</span>
   </div>
 </section>
 
@@ -152,11 +186,11 @@ a { color: inherit; text-decoration: none; }
     <span class="section-pill finance">Finance</span>
     <span class="section-title">금융 시장</span>
   </div>
-  <p class="section-overview">최근 코스피는 사상 최고가를 경신한 후, 급격히 상승했던 폭을 일부 반납했습니다. 이는 주식 시장의 변동성을 강화시키는 요인으로 작용하였습니다. 한편, KCGI의 샐러리맨 펀드는 5000억 원의 순자산을 돌파하며 주목받고 있습니다.</p>
+  <p class="section-overview">금융 시장에서는 부동화된 에너지 공급선과 기관 투자자들의 움직임이 주목받고 있습니다. 제이알글로벌리츠의 회생 신청과 같은 소식들로 인해 국내 리츠 관련 주식이 하락세를 보였습니다. 한편, 방산 및 증권주에 대한 상위 1% 투자자들의 대규모 매수가 관측되며 방향성의 변동성이 커지고 있습니다.</p>
   <div class="news-list">
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://media.zenfs.com/en/insidermonkey.com/0e774c2801f923a98bb75325b8bd890b" alt="Berkshire Hathaway Inc. (BRK-B): One of the Best Low Risk High Growth Stocks on The Market" loading="lazy"
+        <img src="https://media.zenfs.com/en/proactive_us_504/1adc60d7da724823f78ce7d0e9f93395" alt="중국, Meta의 AI 인수 차단" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -167,17 +201,15 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://finance.yahoo.com/markets/stocks/articles/berkshire-hathaway-inc-brk-b-201911162.html" target="_blank">Berkshire Hathaway Inc. (BRK-B): One of the Best Low Risk High Growth Stocks on The Market</a>
+          <a href="https://finance.yahoo.com/sectors/technology/articles/meta-loses-2b-manus-ai-162900655.html" target="_blank">중국, Meta의 AI 인수 차단</a>
         </div>
-        <div class="news-body">제목: 버크셔 해서웨이 주식회사 (BRK-B): 시장에서 가장 낮은 위험과 높은 성장성을 가진 주식 중 하나
-
-요약: 버크셔 해서웨이는 낮은 위험과 높은 성장 잠재력을 가진 주식으로 평가받고 있으며, 투자자들 사이에서 주목받고 있습니다. 이 회사는 뛰어난 경영 능력과 다양한 투자 포트폴리오를 통해 안정적인 성장을 이어가고 있습니다.</div>
-        <a href="https://finance.yahoo.com/markets/stocks/articles/berkshire-hathaway-inc-brk-b-201911162.html" class="read-more" target="_blank">원문 읽기 →</a>
+        <div class="news-body">Meta는 중국의 방해로 인해 20억 달러 규모의 Manus AI 인수 계약을 잃었습니다. 이는 중국의 외국 기술 인수에 대한 경계강화로 인한 결과로, 글로벌 기업들이 중국 시장에서 직면할 수 있는 규제의 대표적 사례입니다.</div>
+        <a href="https://finance.yahoo.com/sectors/technology/articles/meta-loses-2b-manus-ai-162900655.html" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://media.zenfs.com/en/insidermonkey.com/c66bb02c82a4fa3637eb1235eadbe341" alt="Is DXP Enterprises, Inc. (DXPE) A Good Stock To Buy Now?" loading="lazy"
+        <img src="https://media.zenfs.com/en/barchart_com_477/140fecc4996454294fb26238e779cbae" alt="Ample Supplies and Slack Demand Undercut Sugar Prices" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -188,19 +220,17 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://finance.yahoo.com/markets/stocks/articles/dxp-enterprises-inc-dxpe-good-202216943.html" target="_blank">Is DXP Enterprises, Inc. (DXPE) A Good Stock To Buy Now?</a>
+          <a href="https://finance.yahoo.com/markets/commodities/articles/ample-supplies-slack-demand-undercut-162559685.html" target="_blank">Ample Supplies and Slack Demand Undercut Sugar Prices</a>
         </div>
-        <div class="news-body">제목: DXP 엔터프라이즈(DXP Enterprises, Inc.) 주식을 지금 사는 것이 좋을까?
+        <div class="news-body">제목: 풍부한 공급과 저조한 수요가 설탕 가격 하락을 초래하다
 
-내용: DXP 엔터프라이즈는 최근 몇 가지 긍정적인 재무 지표와 업계 전망을 바탕으로 투자자들의 관심을 받고 있습니다. 회사는 지속적인 성장세를 유지하며, 향후에도 안정적인 수익을 할 것으로 예상됩니다. 그러나 특정 투자 결정을 내리기 전에는 시장 동향과 회사의 전략을 면밀히 살펴보는 것이 중요합니다.
-
-요약: DXP 엔터프라이즈는 긍정적인 재무 상태와 성장 전망으로 투자자들에게 주목받고 있으며, 앞으로 안정적인 수익을 기대할 수 있는 기업으로 평가받고 있습니다. 투자 결정보다 시장과 회사 전략을 분석하는 것이 중요합니다.</div>
-        <a href="https://finance.yahoo.com/markets/stocks/articles/dxp-enterprises-inc-dxpe-good-202216943.html" class="read-more" target="_blank">원문 읽기 →</a>
+요약: 최근 설탕 가격이 하락한 이유는 풍부한 공급량과 저조한 수요 때문입니다. 이러한 원인은 시장의 공급과 수요 균형을 흔들며 가격에 부정적인 영향을 미치고 있습니다.</div>
+        <a href="https://finance.yahoo.com/markets/commodities/articles/ample-supplies-slack-demand-undercut-162559685.html" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://media.zenfs.com/en/insidermonkey.com/b5620ba55b6d363161ee6df44bf6d5fa" alt="Is Deere & Company (DE) A Good Stock To Buy Now?" loading="lazy"
+        <img src="https://media.zenfs.com/en/ibd.com/54a01f3c6e1d4262cb8ea391f3d2f3b9" alt="중국, Meta의 AI 인수 차단" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -211,17 +241,15 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://finance.yahoo.com/markets/stocks/articles/deere-company-good-stock-buy-201932382.html" target="_blank">Is Deere & Company (DE) A Good Stock To Buy Now?</a>
+          <a href="https://www.investors.com/news/oil-major-shell-shel-stock-arc-resources-merger/?src=A00220&yptr=yahoo" target="_blank">중국, Meta의 AI 인수 차단</a>
         </div>
-        <div class="news-body">죄송하지만 제공된 뉴스의 내용을 번역할 수 없습니다. 그러나 이 뉴스의 제목과 요지를 요약하여 설명해 드릴 수 있습니다.
-
-**요약**: Deere & Company (DE)의 현재 주식 구매 적합성에 대한 분석이 이루어졌습니다. 투자자들은 회사의 재무 상태와 시장 전망을 고려하여 현재 주식이 매력적인지 판단해야 합니다.</div>
-        <a href="https://finance.yahoo.com/markets/stocks/articles/deere-company-good-stock-buy-201932382.html" class="read-more" target="_blank">원문 읽기 →</a>
+        <div class="news-body">Meta는 중국의 방해로 인해 20억 달러 규모의 Manus AI 인수 계약을 잃었습니다. 이는 중국의 외국 기술 인수에 대한 경계강화로 인한 결과로, 글로벌 기업들이 중국 시장에서 직면할 수 있는 규제의 대표적 사례입니다.</div>
+        <a href="https://www.investors.com/news/oil-major-shell-shel-stock-arc-resources-merger/?src=A00220&yptr=yahoo" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div></div>
   <div class="analyst-note">
     <div class="analyst-label">💡 애널리스트 인사이트</div>
-    <div class="analyst-text">현대로템과 HD현대일렉트릭은 각각 역대 최대 실적 경신과 지속적인 성장 가능성을 보이며 시장의 관심을 받고 있습니다. 투자자들은 단기적인 변동성보다 장기적 추세에 집중해야 하며, 이익률 하락을 염두에 두어야 합니다. 주요 리스크 요인은 글로벌 경제 불확실성과 외환 변동성입니다.</div>
+    <div class="analyst-text">투자자들은 방산과 증권 분야의 강세 흐름을 주의 깊게 살펴봐야 합니다. 방산 수주가 많은 한화시스템과 증권사의 강세가 지속될 가능성이 큽니다. 리츠와 부동산 관련 투자에는 주의가 필요합니다. 리스크 관리 측면에서는 세계 경제의 불확실성이 커지면서 글로벌 금융 시장의 급격한 변동성이 위험성이 대두될 수 있습니다.</div>
   </div>
   <div class="section-divider"></div>
 
@@ -229,11 +257,11 @@ a { color: inherit; text-decoration: none; }
     <span class="section-pill tech">Tech</span>
     <span class="section-title">AI · IT 트렌드</span>
   </div>
-  <p class="section-overview">OpenAI는 마이크로소프트와의 협약을 통해 AWS에서의 제품 판매 길을 열었으며, Ineffable Intelligence는 11억 달러의 자금을 확보하며 AI 산업의 발전 가능성을 시사하고 있습니다. 이는 AI 시장의 경쟁 심화를 예고합니다.</p>
+  <p class="section-overview">AI 및 IT 시장에서는 새로운 제품 출시와 전략 파트너십이 이어지고 있습니다. Amazon은 OpenAI 모델을 새로운 에이전트 서비스로 출시하면서 클라우드 서비스를 통한 기술 강화에 나서고 있습니다. Google은 미국 국방부와 새로운 계약을 체결하며 정부 관련 AI 활용을 강화하고 있습니다.</p>
   <div class="news-list">
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80" alt="OpenAI ends Microsoft legal peril over its $50B Amazon deal" loading="lazy"
+        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&q=80" alt="중국, Meta의 AI 인수 차단" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -244,19 +272,15 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://techcrunch.com/2026/04/27/openai-ends-microsoft-legal-peril-over-its-50b-amazon-deal/" target="_blank">OpenAI ends Microsoft legal peril over its $50B Amazon deal</a>
+          <a href="https://techcrunch.com/2026/04/28/at-his-openai-trial-musk-relitigates-an-old-friendship/" target="_blank">중국, Meta의 AI 인수 차단</a>
         </div>
-        <div class="news-body">제목: OpenAI, 500억 달러 아마존 거래로 인한 마이크로소프트 법적 위험 해소
-
-내용: OpenAI는 최대 주주인 마이크로소프트로부터 중요한 양보를 받아냈고, 이를 통해 AWS에서 제품을 판매할 수 있게 되었습니다. 이에 따라 마이크로소프트는 수익 공유 계약을 통해 더 많은 현금을 확보하게 됩니다.
-
-요약: OpenAI는 마이크로소프트와의 협상에서 AWS에서 제품을 판매할 수 있는 권리를 확보하고, 마이크로소프트는 수익 공유를 통해 추가 현금을 얻는 데 성공했습니다.</div>
-        <a href="https://techcrunch.com/2026/04/27/openai-ends-microsoft-legal-peril-over-its-50b-amazon-deal/" class="read-more" target="_blank">원문 읽기 →</a>
+        <div class="news-body">Meta는 중국의 방해로 인해 20억 달러 규모의 Manus AI 인수 계약을 잃었습니다. 이는 중국의 외국 기술 인수에 대한 경계강화로 인한 결과로, 글로벌 기업들이 중국 시장에서 직면할 수 있는 규제의 대표적 사례입니다.</div>
+        <a href="https://techcrunch.com/2026/04/28/at-his-openai-trial-musk-relitigates-an-old-friendship/" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80" alt="DeepMind’s David Silver just raised $1.1B to build an AI that learns without human data" loading="lazy"
+        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80" alt="중국, Meta의 AI 인수 차단" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -267,19 +291,15 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://techcrunch.com/2026/04/27/deepminds-david-silver-just-raised-1-1b-to-build-an-ai-that-learns-without-human-data/" target="_blank">DeepMind’s David Silver just raised $1.1B to build an AI that learns without human data</a>
+          <a href="https://techcrunch.com/2026/04/28/amazon-is-already-offering-new-openai-products-on-aws/" target="_blank">중국, Meta의 AI 인수 차단</a>
         </div>
-        <div class="news-body">제목: 딥마인드의 데이비드 실버, 인공지능 개발을 위한 11억 달러 모금
-
-내용: 지난 몇 달 전에 설립된 영국의 AI 연구소인 이네퍼블 인텔리전스(Ineffable Intelligence)는 딥마인드의 전 연구원인 데이비드 실버가 창립했으며, 51억 달러의 평가를 바탕으로 11억 달러의 자금을 모집했다.
-
-요약: 딥마인드의 전 연구원인 데이비드 실버가 설립한 AI 연구소 이네퍼블 인텔리전스가 11억 달러를 모집하며 51억 달러의 가치를 인정받았다. 이 연구소는 인간 데이터 없이 학습하는 인공지능 개발을 목표로 하고 있다.</div>
-        <a href="https://techcrunch.com/2026/04/27/deepminds-david-silver-just-raised-1-1b-to-build-an-ai-that-learns-without-human-data/" class="read-more" target="_blank">원문 읽기 →</a>
+        <div class="news-body">Meta는 중국의 방해로 인해 20억 달러 규모의 Manus AI 인수 계약을 잃었습니다. 이는 중국의 외국 기술 인수에 대한 경계강화로 인한 결과로, 글로벌 기업들이 중국 시장에서 직면할 수 있는 규제의 대표적 사례입니다.</div>
+        <a href="https://techcrunch.com/2026/04/28/amazon-is-already-offering-new-openai-products-on-aws/" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&q=80" alt="Investors back Skye’s AI home screen app for iPhone ahead of launch" loading="lazy"
+        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80" alt="중국, Meta의 AI 인수 차단" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -290,19 +310,15 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://techcrunch.com/2026/04/27/investors-back-skye-signull-labs-ai-home-screen-app-for-iphone-ahead-of-launch/" target="_blank">Investors back Skye’s AI home screen app for iPhone ahead of launch</a>
+          <a href="https://techcrunch.com/2026/04/28/amazon-launches-an-ai-powered-audio-qa-experience-on-product-pages/" target="_blank">중국, Meta의 AI 인수 차단</a>
         </div>
-        <div class="news-body">제목: 투자자들, 출시 전에 Skye의 AI 홈 화면 앱 지원
-
-내용: Skye의 새로운 AI 앱은 출시 전부터 투자자들의 주목을 받았다. 이는 AI 기능이 더 강화된 아이폰에 대한 관심을 나타내는 신호다.
-
-요약: Skye의 AI 홈 화면 앱이 출시 전부터 투자자들의 관심을 끌며 지원을 받았다. 이는 AI 기능이 강화된 아이폰에 대한 높은 수요를 반영하고 있다.</div>
-        <a href="https://techcrunch.com/2026/04/27/investors-back-skye-signull-labs-ai-home-screen-app-for-iphone-ahead-of-launch/" class="read-more" target="_blank">원문 읽기 →</a>
+        <div class="news-body">Meta는 중국의 방해로 인해 20억 달러 규모의 Manus AI 인수 계약을 잃었습니다. 이는 중국의 외국 기술 인수에 대한 경계강화로 인한 결과로, 글로벌 기업들이 중국 시장에서 직면할 수 있는 규제의 대표적 사례입니다.</div>
+        <a href="https://techcrunch.com/2026/04/28/amazon-launches-an-ai-powered-audio-qa-experience-on-product-pages/" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div></div>
   <div class="analyst-note">
     <div class="analyst-label">💡 애널리스트 인사이트</div>
-    <div class="analyst-text">OpenAI, 마이크로소프트와 함께 AI 에코시스템을 구축하고 있으며, Ineffable Intelligence는 혁신적인 AI 기술 개발에 나섰습니다. AI 산업은 기술 발전 속도가 빠르고 경쟁이 치열하므로, 투자자들은 신제품 출시와 기술적 성과에 주목해야 합니다. 주요 리스크는 기술 혁신 속도와 규제 변경입니다.</div>
+    <div class="analyst-text">AI 분야에서는 Amazon과 Google과 같은 글로벌 기업들의 전략적 움직임이 매우 중요합니다. Amazon의 클라우드 서비스 강화와 Google의 정부 관련 AI 사용 확대는 글로벌 경쟁력을 높이는 원동력이 될 수 있습니다. 하지만 정부 관련 프로젝트는 항상 정치적 리스크가 있으므로 투자시 이를 고려해야 합니다.</div>
   </div>
   <div class="section-divider"></div>
 
@@ -310,11 +326,11 @@ a { color: inherit; text-decoration: none; }
     <span class="section-pill energy">Energy</span>
     <span class="section-title">에너지 · 산업</span>
   </div>
-  <p class="section-overview">공급 부족으로 인해 베트남의 LNG 수입량이 증가하고 있으며, 중동 전쟁 여파로 인해 아시아의 LNG 수입이 급감하고 있습니다. 이러한 수급 불균형은 에너지 시장의 가격 변동성을 높이고 있습니다.</p>
+  <p class="section-overview">에너지 시장에서는 중국과 카타르의 LNG 관련 전략들이 주요 이슈로 부각되고 있습니다. 중국은 자체 제작한 대형 LNG 운반선으로 에너지 독립 전략을 추진하고 있으며, 카타르는 지역 불안 속에서도 가스 확장을 계속하고 있습니다. 이러한 움직임은 국제 가스 시장의 불확실성을 키우고 있습니다.</p>
   <div class="news-list">
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800&q=80" alt="Vietnam buys more <b>LNG</b> as temperatures set to rise above average - The Business Times" loading="lazy"
+        <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80" alt="China's Answer To Trump's Hormuz Blockade As Xi UNLEASHES <b>LNG</b> Beast To Counter Disruptions" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -325,19 +341,19 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.businesstimes.com.sg/international/asean/vietnam-buys-more-lng-temperatures-set-rise-above-average&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw1fQS23sI95lqnJ8Am-Ae1-" target="_blank">Vietnam buys more <b>LNG</b> as temperatures set to rise above average - The Business Times</a>
+          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.youtube.com/watch%3Fv%3D97aXNgOvRGk&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw30EFIeecLQEva3sYERWEqd" target="_blank">China's Answer To Trump's Hormuz Blockade As Xi UNLEASHES <b>LNG</b> Beast To Counter Disruptions</a>
         </div>
-        <div class="news-body">제목: 베트남, 기온 상승에 따라 더 많은 액화천연가스(LNG) 구매
+        <div class="news-body">제목: 시진핑, 호르무즈 해협 정체에 대한 중국의 대응으로 <b>LNG</b> 대규모 선박 공개
 
-내용: [싱가포르] 베트남은 이란 전쟁으로 인해 글로벌 공급이 제한되면서 높은 가격의 액화천연가스(LNG)를 더 많이 수입하고 있다.
+내용: 중국은 자국에서 제조한 가장 큰 액화 천연가스(LNG) 운반선 중 하나를 공개하며, 에너지 미래를 보호하기 위한 새로운 전략을 마련했다. 이는 호르무즈 해협에서의 에너지 수송 방해에 대한 응답으로 보인다.
 
-요약: 베트남은 이란 전쟁으로 인한 글로벌 공급 축소로 인해 기온이 평균 이상으로 상승할 것으로 예상되면서 더 많은 액화천연가스를 수입하고 있다. 이는 높은 가격으로 이어지고 있다.</div>
-        <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.businesstimes.com.sg/international/asean/vietnam-buys-more-lng-temperatures-set-rise-above-average&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw1fQS23sI95lqnJ8Am-Ae1-" class="read-more" target="_blank">원문 읽기 →</a>
+요약: 중국이 호르무즈 해협에서의 에너지 수송 정체에 대응하기 위해 대규모 LNG 운반선을 공개하며 에너지 안전을 위한 새로운 전략을 추진하고 있다.</div>
+        <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.youtube.com/watch%3Fv%3D97aXNgOvRGk&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw30EFIeecLQEva3sYERWEqd" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800&q=80" alt="“대형 가스터빈 105기 수출”… <b>에너지</b> 안보 주축 자리매김 - 문화일보" loading="lazy"
+        <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=80" alt="Qatar pushes ahead with North Field expansion despite <b>LNG</b> disruptions - Euronews.com" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -348,18 +364,19 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.munhwa.com/article/11585124&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw1vxU5d3mfguHIOBhzyBAC7" target="_blank">“대형 가스터빈 105기 수출”… <b>에너지</b> 안보 주축 자리매김 - 문화일보</a>
+          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.euronews.com/business/2026/04/28/qatar-pushes-ahead-with-north-field-expansion-despite-lng-disruptions&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw2zwA7bp4ed5sTXN78rxYK1" target="_blank">Qatar pushes ahead with North Field expansion despite <b>LNG</b> disruptions - Euronews.com</a>
         </div>
-        <div class="news-body">제목: “대형 가스터빈 105기 수출”… 에너지 안보 주축 자리매김 - 문화일보  
-내용: 탈석탄과 재생에너지의 불안정성을 보완하기 위한 수요와 AI 데이터센터의 전력 소비 증가가 맞물려 가스터빈 시장이 성장하고 있다. 이에 따라 대형 가스터빈 105기가 수출되며 에너지 안보의 중요한 기초를 마련하고 있다.
+        <div class="news-body">제목: 카타르, LNG 중단에도 불구하고 노스 필드 확장을 추진
 
-요약: 최근 가스터빈 시장이 성장세를 보이며, 대형 가스터빈 105기가 수출됐다. 이는 탈석탄 및 재생에너지의 간헐성을 보완하고 AI 데이터센터의 전력 소비 증가에 대응하기 위한 것으로, 에너지 안보의 중요한 요소로 자리 잡고 있다.</div>
-        <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.munhwa.com/article/11585124&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw1vxU5d3mfguHIOBhzyBAC7" class="read-more" target="_blank">원문 읽기 →</a>
+내용: 카타르는 주요 계약을 체결한 후에도 지역 긴장이 LNG 생산에 방해가 되고 있는 가운데 노스 필드 가스 확장을 진행하고 있습니다.
+
+요약: 카타르는 지역의 긴장이 LNG 생산을 방해하고 있음에도 불구하고 노스 필드 가스 확장을 지속적으로 추진하고 있습니다. 최근 주요 계약을 체결하며 이 프로젝트를 가속화하고 있습니다.</div>
+        <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.euronews.com/business/2026/04/28/qatar-pushes-ahead-with-north-field-expansion-despite-lng-disruptions&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw2zwA7bp4ed5sTXN78rxYK1" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800&q=80" alt="<b>LNG</b> tanker orders gain pace despite mixed outlook from Iran war - Reuters" loading="lazy"
+        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80" alt="중국, Meta의 AI 인수 차단" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -370,19 +387,15 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.reuters.com/business/energy/lng-tanker-orders-gain-pace-despite-mixed-outlook-iran-war-2026-04-27/&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw01-Qu10PbuA_nbX-wf-ur_" target="_blank"><b>LNG</b> tanker orders gain pace despite mixed outlook from Iran war - Reuters</a>
+          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.straitstimes.com/world/middle-east/first-lng-shipment-since-iran-war-began-appears-to-exit-hormuz&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw2rB5JNF04ZB-9Xb1jK2D7H" target="_blank">중국, Meta의 AI 인수 차단</a>
         </div>
-        <div class="news-body">제목: 액화천연가스(LNG) 탱커 주문 증가, 이란 전쟁으로 인한 혼란에도 불구하고 - 로이터
-
-내용: 세계적으로 액화천연가스 캐리어(LNGC)의 주문이 올해 반등할 것으로 보이며, 이는 증가하는 LNG 생산량 때문입니다. 
-
-요약: 액화천연가스 탱커 주문이 증가하고 있으며, 이는 LNG 생산의 증가에 따른 것입니다. 이란 전쟁 등의 혼란에도 불구하고 이러한 추세가 이어지고 있습니다.</div>
-        <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.reuters.com/business/energy/lng-tanker-orders-gain-pace-despite-mixed-outlook-iran-war-2026-04-27/&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw01-Qu10PbuA_nbX-wf-ur_" class="read-more" target="_blank">원문 읽기 →</a>
+        <div class="news-body">Meta는 중국의 방해로 인해 20억 달러 규모의 Manus AI 인수 계약을 잃었습니다. 이는 중국의 외국 기술 인수에 대한 경계강화로 인한 결과로, 글로벌 기업들이 중국 시장에서 직면할 수 있는 규제의 대표적 사례입니다.</div>
+        <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.straitstimes.com/world/middle-east/first-lng-shipment-since-iran-war-began-appears-to-exit-hormuz&ct=ga&cd=CAIyHmI2ZTJhNzc2MjkyNDJhN2E6Y28ua3I6a286VVM6TA&usg=AOvVaw2rB5JNF04ZB-9Xb1jK2D7H" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div></div>
   <div class="analyst-note">
     <div class="analyst-label">💡 애널리스트 인사이트</div>
-    <div class="analyst-text">JERA와 같은 대형 LNG 수입업체들은 현재 충분한 재고를 확보하고 있어 대응력을 높이고 있습니다. 한국의 가스터빈 시장은 빠르게 성장하고 있으며, 이는 에너지 안보 측면에서 중요한 역할을 할 것입니다. 그러나 중동 지역 갈등이 LNG 시장에 계속 영향을 미칠 가능성이 있으므로 주의가 필요합니다.</div>
+    <div class="analyst-text">중국의 에너지 독립 전략과 카타르의 확장 전략은 시장에 큰 영향을 미칠 것으로 보입니다. 중국 국영 에너지 기업 및 카타르의 국영 기업처럼 LNG 관련 기업들은 긍정적인 사업 전망을 보이고 있습니다. 하지만, 중동 지역의 정치적 불안정이 LNG 공급망에 영향을 미칠 수 있어 위험 관리가 필요합니다.</div>
   </div>
   <div class="section-divider"></div>
 
@@ -390,16 +403,19 @@ a { color: inherit; text-decoration: none; }
     <div class="summary-label">오늘의 핵심 인사이트</div>
     <div class="summary-title">오늘 꼭 기억할 3가지</div>
     <ol class="summary-list">
-      <li><span class="summary-num">1</span><span>베트남은 급등하는 LNG 가격에도 불구하고 수입을 늘리며 에너지 시장의 주요 변수로 등장하고 있습니다.</span></li>
-      <li><span class="summary-num">2</span><span>OpenAI와 Ineffable Intelligence의 움직임은 AI 산업의 경쟁과 혁신을 가속화시켜 전 세계적으로 큰 영향을 미칠 것으로 보입니다.</span></li>
-      <li><span class="summary-num">3</span><span>중동 지역의 갈등으로 인해 LNG 시장의 변동성이 높아지고 있으며, 이는 글로벌 에너지 가격 상승에 영향을 미칠 수 있습니다.</span></li>
+      <li><span class="summary-num">1</span><span>한화시스템은 높은 방산 수주 잔액을 바탕으로, 향후 성장 모멘텀이 강할 것으로 예상됩니다. 방산과 증권 관련 시장의 수요 상승이 투자자들에게 유리한 고지를 제공할 것입니다.</span></li>
+      <li><span class="summary-num">2</span><span>Amazon과 Google의 AI 기술 강화 움직임이 글로벌 IT 산업의 성장을 이끌 가능성이 있습니다. 클라우드와 AI 서비스가 주요 성장 동력으로 작용할 전망입니다.</span></li>
+      <li><span class="summary-num">3</span><span>중동의 정치적 불안정이 LNG 공급망에 충격을 줄 수 있어 에너지 시장은 지속적인 리스크 관리가 필요합니다. 정책 변화와 지역 불안정 요소가 변수로 작용할 수 있습니다.</span></li>
     </ol>
   </div>
+
+  
+
   
 <div class="share-section">
   <div class="share-label">이 브리핑 공유하기</div>
   <div class="share-buttons">
-    <a class="share-btn twitter" href="https://twitter.com/intent/tweet?text=%EC%97%90%EB%84%88%EC%A7%80%20%EC%8B%9C%EC%9E%A5%20%EC%A0%84%ED%99%98%20%EB%8C%80%EC%84%B8&url=https%3A%2F%2Fdhpaeng81-crypto.github.io%2FDaily-insight%2Findex.html" target="_blank" rel="noopener">
+    <a class="share-btn twitter" href="https://twitter.com/intent/tweet?text=%EC%9E%AC%EC%A0%95%20%EC%A7%80%EC%9B%90%EA%B3%BC%20%EC%9A%A9%EA%B8%B0%20%EC%9E%88%EB%8A%94%20%EC%A0%84%EB%9E%B5&url=https%3A%2F%2Fdhpaeng81-crypto.github.io%2FDaily-insight%2Findex.html" target="_blank" rel="noopener">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
       </svg>
