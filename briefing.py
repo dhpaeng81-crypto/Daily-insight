@@ -1,7 +1,7 @@
 import feedparser
 import requests
 from openai import OpenAI
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import re
 import os
 import json
@@ -26,6 +26,14 @@ TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 UNSPLASH_ACCESS_KEY = os.environ.get("UNSPLASH_ACCESS_KEY")
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 GITHUB_REPO = os.environ.get("GITHUB_REPO")
+
+# =====================
+# 한국시간 (KST = UTC+9)
+# =====================
+KST = timezone(timedelta(hours=9))
+
+def now_kst():
+    return datetime.now(KST)
 
 # =====================
 # 기본 이미지 풀
@@ -426,8 +434,8 @@ def get_footer_html():
 </footer>'''
 
 def build_html(news_list, content, stock_data=None):
-    today = datetime.now().strftime("%Y년 %m월 %d일")
-    today_num = datetime.now().strftime("%Y%m%d")
+    today = now_kst().strftime("%Y년 %m월 %d일")
+    today_num = now_kst().strftime("%Y%m%d")
     site_url = "https://dhpaeng81-crypto.github.io/Daily-insight"
     page_url = f"{site_url}/index.html"
 
@@ -713,7 +721,7 @@ def build_archive():
                 html_content = fp.read()
             title_match = re.search(r'<h1 class="hero-title">(.*?)</h1>', html_content, re.DOTALL)
             hero_title = title_match.group(1).strip() if title_match else "Daily Insight 브리핑"
-            is_today = date_str == datetime.now().strftime("%Y%m%d")
+            is_today = date_str == now_kst().strftime("%Y%m%d")
             today_badge = '<span class="today-badge">오늘</span>' if is_today else ''
             archive_items += f'''
       <a href="{f}" class="archive-card">
@@ -799,7 +807,7 @@ def push_to_github(files_to_push):
             check = requests.get(f"{base_url}/{filepath}", headers=headers)
             sha = check.json().get("sha") if check.status_code == 200 else None
             payload = {
-                "message": f"Update {filepath} - {datetime.now().strftime('%Y%m%d %H:%M')}",
+                "message": f"Update {filepath} - {now_kst().strftime('%Y%m%d %H:%M')}",
                 "content": encoded
             }
             if sha:
@@ -839,8 +847,8 @@ if __name__ == "__main__":
             print(f"Stock picks error: {e}")
 
     print("Step 4: Building HTML...")
-    today = datetime.now().strftime("%Y년 %m월 %d일")
-    today_num = datetime.now().strftime("%Y%m%d")
+    today = now_kst().strftime("%Y년 %m월 %d일")
+    today_num = now_kst().strftime("%Y%m%d")
     filename = build_html(news_list, content, stock_data)
 
     print("Step 5: Building archive...")
