@@ -85,11 +85,15 @@ def extract_image(entry):
 # =====================
 RSS_FEEDS = [
     ("Politics", "https://www.chosun.com/arc/outboundfeeds/rss/category/politics/"),
-    ("Politics", "http://rss.donga.com/politics.xml"),
+    ("Politics", "https://www.newdaily.co.kr/site/data/rss/rss.xml"),        # 뉴데일리
+    ("Politics", "https://www.pennmike.com/rss/allArticle.xml"),              # 펜앤드마이크
     ("Politics", "http://rss.donga.com/editorials.xml"),
     ("Politics", "https://www.munhwa.com/rss/politics.xml"),
     ("International", "https://www.rfa.org/korean/rss2.xml"),
     ("International", "https://www.voakorea.com/api/z_mpetyitop"),
+    ("International", "https://thediplomat.com/feed/"),                       # The Diplomat
+    ("International", "https://warontherocks.com/feed/"),                     # War on the Rocks
+    ("International", "https://www.38north.org/feed/"),  
 ]
 
 def collect_news():
