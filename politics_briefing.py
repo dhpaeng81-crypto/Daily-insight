@@ -95,6 +95,11 @@ RSS_FEEDS = [
     ("Politics", "https://www.munhwa.com/rss/politics.xml"),
     ("International", "https://www.rfa.org/korean/rss2.xml"),
     ("International", "https://www.voakorea.com/api/z_mpetyitop"),
+    ("Politics", "https://www.newdaily.co.kr/site/data/rss/rss.xml"),        # 뉴데일리
+    ("Politics", "https://www.pennmike.com/rss/allArticle.xml"),              # 펜앤드마이크
+    ("International", "https://thediplomat.com/feed/"),                       # The Diplomat
+    ("International", "https://warontherocks.com/feed/"),                     # War on the Rocks
+    ("International", "https://www.38north.org/feed/"),                       # 38North (북한)
 ]
 
 def collect_news():
