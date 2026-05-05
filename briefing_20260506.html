@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Insight — 2026년 05월 06일</title>
+<meta property="og:title" content="Daily Insight — 2026년 05월 06일">
+<meta property="og:description" content="전 세계 금융·IT 시장 주요 이슈 및 전망 분석">
+<meta property="og:image" content="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80">
+<meta property="og:url" content="https://dhpaeng81-crypto.github.io/Daily-insight/index.html">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+
+@import url('https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css');
+:root {
+  --ink: #18181b; --ink-soft: #52525b; --ink-muted: #a1a1aa;
+  --bg: #fafaf9; --bg-card: #ffffff; --bg-subtle: #f4f4f5;
+  --accent: #0f766e; --accent-light: #ccfbf1;
+  --finance: #0369a1; --finance-bg: #e0f2fe;
+  --tech: #6d28d9; --tech-bg: #ede9fe;
+  --energy: #b45309; --energy-bg: #fef3c7;
+  --stock-surge: #dc2626; --stock-surge-bg: #fef2f2;
+  --stock-foreign: #0369a1; --stock-foreign-bg: #e0f2fe;
+  --border: #e4e4e7; --radius: 12px;
+  --font: 'NanumSquare', 'Apple SD Gothic Neo', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font); font-weight: 400; line-height: 1.8; }
+a { color: inherit; text-decoration: none; }
+.site-header { border-bottom: 1px solid var(--border); background: var(--bg-card); position: sticky; top: 0; z-index: 100; }
+.header-inner { max-width: 780px; margin: 0 auto; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+.logo { font-family: var(--font); font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
+.logo span { color: var(--accent); }
+.header-nav { display: flex; gap: 4px; font-size: 13px; align-items: center; }
+.header-nav a { padding: 6px 12px; border-radius: 6px; color: var(--ink-muted); font-weight: 700; transition: background 0.15s, color 0.15s; }
+.header-nav a:hover { background: var(--bg-subtle); color: var(--ink); }
+.header-nav .active { color: var(--accent); background: var(--accent-light); }
+.header-nav .divider { width: 1px; height: 16px; background: var(--border); margin: 0 4px; }
+.site-footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
+.footer-inner { max-width: 780px; margin: 0 auto; }
+.footer-logo { font-family: var(--font); font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+.footer-logo span { color: var(--accent); }
+.footer-desc { font-size: 12px; color: var(--ink-muted); margin-bottom: 16px; }
+.footer-links { display: flex; justify-content: center; gap: 20px; font-size: 12px; color: var(--ink-muted); }
+.footer-links a:hover { color: var(--accent); }
+@media (min-width: 1024px) {
+  .header-inner { max-width: 1080px; padding: 0 48px; }
+  .footer-inner { max-width: 1080px; }
+}
+@media (max-width: 600px) { .header-meta { display: none; } }
+
+.hero { max-width: 780px; margin: 0 auto; padding: 56px 24px 40px; border-bottom: 1px solid var(--border); }
+.issue-badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 100px; margin-bottom: 20px; }
+.hero-title { font-family: var(--font); font-size: clamp(24px, 5vw, 38px); font-weight: 800; line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 16px; }
+.hero-desc { font-size: 16px; color: var(--ink-soft); max-width: 560px; margin-bottom: 24px; line-height: 1.7; }
+.hero-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.tag { font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 100px; border: 1px solid var(--border); color: var(--ink-soft); }
+.main { max-width: 780px; margin: 0 auto; padding: 48px 24px 80px; }
+.section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1.5px solid var(--border); }
+.section-pill { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; }
+.section-pill.finance { background: var(--finance-bg); color: var(--finance); }
+.section-pill.tech { background: var(--tech-bg); color: var(--tech); }
+.section-pill.energy { background: var(--energy-bg); color: var(--energy); }
+.section-pill.stock { background: #fef2f2; color: #dc2626; }
+.stock-date-badge { font-size: 12px; color: var(--ink-muted); font-weight: 700; margin-left: auto; }
+.section-title { font-family: var(--font); font-size: 20px; font-weight: 800; }
+.section-overview { font-size: 15px; color: var(--ink-soft); line-height: 1.75; margin-bottom: 24px; padding: 16px 20px; background: var(--bg-subtle); border-left: 3px solid var(--border); border-radius: 0 8px 8px 0; }
+.news-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
+.news-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: box-shadow 0.2s; }
+.news-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.news-thumb { width: 100%; height: 200px; overflow: hidden; background: var(--bg-subtle); }
+.news-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; transition: transform 0.3s; }
+.news-card:hover .news-thumb img { transform: scale(1.03); }
+.news-thumb-empty { width: 100%; height: 100%; background: var(--bg-subtle); }
+.news-content { padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.news-source-row { display: flex; align-items: center; }
+.news-source { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-muted); }
+.news-category-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+.news-category-dot.finance { background: var(--finance); }
+.news-category-dot.tech { background: var(--tech); }
+.news-category-dot.energy { background: var(--energy); }
+.news-title { font-size: 15px; font-weight: 700; line-height: 1.45; color: var(--ink); }
+.news-title a:hover { color: var(--accent); }
+.news-body { font-size: 13px; color: var(--ink-soft); line-height: 1.7; }
+.read-more { font-size: 12px; font-weight: 700; color: var(--accent); margin-top: 4px; display: inline-flex; align-items: center; gap: 3px; }
+.analyst-note { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 48px; }
+.analyst-label { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.analyst-text { font-size: 14px; color: var(--ink); line-height: 1.85; }
+.section-divider { height: 1px; background: var(--border); margin: 0 0 48px; }
+.summary-box { background: var(--ink); color: #fff; border-radius: var(--radius); padding: 32px 36px; margin-bottom: 48px; }
+.summary-label { font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 20px; }
+.summary-title { font-family: var(--font); font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 20px; }
+.summary-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.summary-list li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; font-size: 14px; color: #d4d4d8; line-height: 1.65; }
+.summary-num { font-family: var(--font); font-size: 20px; font-weight: 800; color: var(--accent-light); line-height: 1.2; opacity: 0.6; }
+
+/* 주식 특징주 카드 스타일 */
+.stock-list { display: flex; flex-direction: column; gap: 20px; margin-bottom: 24px; }
+.stock-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.stock-card-header { padding: 20px 24px; border-bottom: 1px solid var(--border); }
+.stock-badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 100px; margin-bottom: 12px; }
+.stock-badge.surge { background: #fef2f2; color: #dc2626; }
+.stock-badge.foreign { background: #e0f2fe; color: #0369a1; }
+.stock-name-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.stock-name { font-family: var(--font); font-size: 20px; font-weight: 800; color: var(--ink); }
+.stock-ticker { font-size: 12px; color: var(--ink-muted); background: var(--bg-subtle); padding: 2px 8px; border-radius: 4px; font-weight: 700; }
+.stock-price-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.stock-price { font-family: var(--font); font-size: 24px; font-weight: 800; color: var(--ink); }
+.stock-change { font-family: var(--font); font-size: 18px; font-weight: 800; }
+.stock-stats { display: flex; gap: 16px; flex-wrap: wrap; }
+.stock-stat { display: flex; flex-direction: column; gap: 2px; }
+.stat-label { font-size: 11px; color: var(--ink-muted); font-weight: 700; }
+.stat-value { font-size: 14px; font-weight: 800; color: var(--ink); }
+.stock-card-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+.stock-comment { font-size: 14px; font-weight: 800; color: var(--accent); background: var(--accent-light); padding: 10px 16px; border-radius: 8px; }
+.stock-analysis-section { display: flex; flex-direction: column; gap: 6px; }
+.stock-analysis-section.risk { background: #fef2f2; padding: 12px 16px; border-radius: 8px; border-left: 3px solid #dc2626; }
+.analysis-label { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
+.analysis-text { font-size: 14px; color: var(--ink); line-height: 1.8; }
+.stock-disclaimer { font-size: 12px; color: var(--ink-muted); text-align: center; padding: 12px; background: var(--bg-subtle); border-radius: 8px; margin-bottom: 48px; }
+
+.share-section { border-top: 1px solid var(--border); padding-top: 32px; margin-bottom: 48px; text-align: center; }
+.share-label { font-size: 12px; color: var(--ink-muted); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; margin-bottom: 16px; }
+.share-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.share-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; border-radius: 100px; font-size: 13px; font-weight: 700; cursor: pointer; border: none; transition: transform 0.15s, box-shadow 0.15s; font-family: var(--font); text-decoration: none; }
+.share-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.share-btn.twitter { background: #000; color: #fff; }
+.share-btn.copy { background: var(--bg-subtle); color: var(--ink); border: 1px solid var(--border); transition: transform 0.15s, box-shadow 0.15s, background 0.2s, color 0.2s, border-color 0.2s; }
+@media (min-width: 1024px) {
+  .hero { max-width: 1080px; padding: 72px 48px 56px; }
+  .main { max-width: 1080px; padding: 56px 48px 100px; }
+  .hero-title { font-size: 48px; }
+  .hero-desc { font-size: 18px; max-width: 680px; }
+  .section-title { font-size: 24px; }
+  .section-overview { font-size: 16px; }
+  .news-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .news-thumb { height: 180px; }
+  .stock-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .analyst-text { font-size: 15px; }
+  .summary-box { padding: 40px 48px; }
+  .summary-title { font-size: 24px; }
+  .summary-list li { font-size: 15px; }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .news-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .news-thumb { height: 180px; }
+}
+@media (max-width: 639px) {
+  .hero { padding: 36px 20px 32px; }
+  .main { padding: 36px 20px 60px; }
+  .summary-box { padding: 24px 20px; }
+  .share-btn { padding: 9px 18px; font-size: 12px; }
+  .stock-price { font-size: 20px; }
+  .stock-change { font-size: 16px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo"><a href="index.html">Daily<span>Insight</span></a></div>
+    <nav class="header-nav">
+      <a href="index.html" class="active">금융·AI·에너지</a>
+      <a href="archive.html" class="">아카이브</a>
+      <div class="divider"></div>
+      <a href="politics_index.html">역사·정치</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="issue-badge">오늘의 브리핑</div>
+  <h1 class="hero-title">금융·IT 시장 동향 요약</h1>
+  <p class="hero-desc">전 세계 금융·IT 시장 주요 이슈 및 전망 분석</p>
+  <div class="hero-tags">
+    <span class="tag">💹 금융 시장</span>
+    <span class="tag">🤖 AI · IT</span>
+    <span class="tag">⚡ 에너지</span>
+    <span class="tag">📈 특징주</span>
+  </div>
+</section>
+
+<main class="main">
+  <div class="section-header">
+    <span class="section-pill finance">Finance</span>
+    <span class="section-title">금융 시장</span>
+  </div>
+  <p class="section-overview">금융 시장에서는 미국 Amex GBT의 63억 달러 규모 비상장 전환 계약이 눈길을 끌고 있습니다. 대형 기술 기업들은 민간 신규 기업의 주식에 대한 투자로 이익을 부풀리고 있다는 분석이 제기되었습니다. 한편, 칩플렛 CEO는 가격과 포션 크기, 그리고 디저트 선택에 대해 논의했습니다.</p>
+  <div class="news-list">
+    <div class="news-card">
+      <div class="news-thumb">
+        <img src="https://media.zenfs.com/en/quartz_855/c72d5869f9c900930fc160c54d4b919c" alt="Amex GBT, 63억 달러 비상장화" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot finance"></span>
+            Yahoo Finance
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://finance.yahoo.com/markets/stocks/articles/amex-gbt-agrees-6-3-163512714.html" target="_blank">Amex GBT, 63억 달러 비상장화</a>
+        </div>
+        <div class="news-body">Amex GBT는 Long Lake와의 63억 달러 규모 계약을 통해 비상장화됩니다. 이는 여행산업의 구조 조정과 관련되어 있으며, 특히 미국과 유럽 시장의 회복에 긍정적 영향을 줄 것으로 전망됩니다.</div>
+        <a href="https://finance.yahoo.com/markets/stocks/articles/amex-gbt-agrees-6-3-163512714.html" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-thumb">
+        <img src="https://s.yimg.com/uu/api/res/1.2/V5GMtpMnJM9_V9uKR6mOBw--~B/aD0zMTg5O3c9NTY2OTthcHBpZD15dGFjaHlvbg--/https://d29szjachogqwa.cloudfront.net/images/user-uploaded/a2f52010-17e1-11f1-a72f-d329cf096c55_678367b53e9c11dc9099f30fe6764d333714f8821dfbe27cb201c87f3c9c86b2.com/creatr-uploaded-images/2026-03/a2f52010-17e1-11f1-a72f-d329cf096c55" alt="Big Tech profits are being inflated by stakes in private startups" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot finance"></span>
+            Yahoo Finance
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://finance.yahoo.com/markets/article/big-tech-profits-are-being-inflated-by-stakes-in-private-startups-133330415.html" target="_blank">Big Tech profits are being inflated by stakes in private startups</a>
+        </div>
+        <div class="news-body">제목: 대형 기술기업의 수익이 사모 스타트업에 대한 지분으로 부풀려지고 있다
+
+요약: 대형 기술기업들이 사모 스타트업에 대한 투자와 지분으로 인해 수익이 부풀려지고 있다는 분석이 제기되고 있다. 이러한 현상은 기업들이 실제 실적보다 높은 수익을 보고하는 원인이 되고 있으며, 시장의 신뢰성에 영향을 미칠 수 있다.</div>
+        <a href="https://finance.yahoo.com/markets/article/big-tech-profits-are-being-inflated-by-stakes-in-private-startups-133330415.html" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-thumb">
+        <img src="https://s.yimg.com/uu/api/res/1.2/iShY79ng7osza9qTI_nWMA--~B/aD0xMDgwO3c9MTkyMDthcHBpZD15dGFjaHlvbg--/https://d29szjachogqwa.cloudfront.net/images/user-uploaded/pp-briansozzi-chipotle-thumbnail-0501-1_2556.png" alt="Chipotle CEO on affordable prices, portion size, and desserts" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot finance"></span>
+            Yahoo Finance
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://finance.yahoo.com/markets/article/chipotle-ceo-on-affordable-prices-portion-size-and-desserts-132348309.html" target="_blank">Chipotle CEO on affordable prices, portion size, and desserts</a>
+        </div>
+        <div class="news-body">제목: 치폴레 CEO, 합리적인 가격, 적정량 및 디저트에 대해
+
+치폴레의 CEO는 회사의 가격이 합리적이고 고객이 원하는 적정량을 제공하기 위해 노력하고 있다고 강조했다. 또한, 디저트 메뉴 확장에 대한 계획도 언급하며 고객들에게 더 다양한 선택지를 제공하고자 하는 의지를 드러냈다.
+
+요약: 치폴레 CEO는 합리적인 가격과 적정량 제공에 대한 노력을 강조하며, 디저트 메뉴를 확장할 계획을 밝혔다. 고객들에게 다양한 선택지를 제공하고자 하는 의지를 보였다.</div>
+        <a href="https://finance.yahoo.com/markets/article/chipotle-ceo-on-affordable-prices-portion-size-and-desserts-132348309.html" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div></div>
+  <div class="analyst-note">
+    <div class="analyst-label">💡 애널리스트 인사이트</div>
+    <div class="analyst-text">Amex GBT의 비상장 전환은 여행 산업에 큰 영향을 줄 것이며, 미국과 유럽의 여행 시장 복구 움직임이 주목됩니다. 구글과 애플 같은 대형 기술 기업들은 민간 신규 기업에 대한 투자로 인해 수익이 증가했지만, 시장의 변동성이 커질 위험이 있습니다. 투자자들은 이러한 신선한 이익 기회를 주목하되, 기업 실적의 근본적인 안정성을 꼭 확인해야 합니다.</div>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section-header">
+    <span class="section-pill tech">Tech</span>
+    <span class="section-title">AI · IT 트렌드</span>
+  </div>
+  <p class="section-overview">애플은 새로운 운영 체제 업데이트로 사용자가 직접 인공지능 모델을 선택하여 다양한 작업에 활용할 수 있도록 할 계획입니다. ASML의 CEO는 독점적 지위에 대한 자신감을 드러냈으며, OpenAI는 새로운 GPT-5.5 모델을 출시하여 민감한 분야에서의 오류율을 줄였습니다.</p>
+  <div class="news-list">
+    <div class="news-card">
+      <div class="news-thumb">
+        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80" alt="Apple plans to make iOS 27 a Choose Your Own Adventure of AI models" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot tech"></span>
+            AI News & Artificial Intelligence | TechCrunch
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://techcrunch.com/2026/05/05/apple-plans-to-make-ios-27-a-choose-your-own-adventure-of-ai-models/" target="_blank">Apple plans to make iOS 27 a Choose Your Own Adventure of AI models</a>
+        </div>
+        <div class="news-body">제목: 애플, iOS 27에서 AI 모델 선택 가능하게 할 계획
+
+애플의 최신 운영 체제 업데이트에 따르면, 사용자들은 다양한 작업을 위해 어떤 서드파티 AI 모델을 사용할지 선택할 수 있다고 합니다.
+
+요약: 애플이 iOS 27을 통해 사용자들이 여러 서드파티 AI 모델을 선택해 사용할 수 있는 기능을 도입할 계획입니다. 이는 사용자 맞춤형 경험을 제공할 것으로 기대됩니다.</div>
+        <a href="https://techcrunch.com/2026/05/05/apple-plans-to-make-ios-27-a-choose-your-own-adventure-of-ai-models/" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-thumb">
+        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80" alt="ASML CEO Christophe Fouquet on his company’s monopoly: no one is coming for us" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot tech"></span>
+            AI News & Artificial Intelligence | TechCrunch
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://techcrunch.com/2026/05/05/asml-ceo-christophe-fouquet-no-one-is-coming-for-us/" target="_blank">ASML CEO Christophe Fouquet on his company’s monopoly: no one is coming for us</a>
+        </div>
+        <div class="news-body">제목: ASML CEO 크리스토프 푸케의 독점에 대한 주장: 누구도 우리를 겨냥하지 않는다
+
+내용: 2024년에 ASML의 CEO로 취임한 크리스토프 푸케는 베벌리 힐스 호텔의 옥상에서 이 기자와 인터뷰를 진행했다. 그는 회사의 독점 지위에 대한 질문에 대해 아무도 ASML을 겨냥하지 않고 있다고 주장했다.
+
+요약: ASML의 CEO 크리스토프 푸케는 독점적 위치에 대한 질문에 답하며, 그의 회사에 대한 경쟁이 없다고 주장했다. 그는 인터뷰를 통해 ASML의 미래와 경쟁력에 대한 신뢰를 표현했다.</div>
+        <a href="https://techcrunch.com/2026/05/05/asml-ceo-christophe-fouquet-no-one-is-coming-for-us/" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-thumb">
+        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80" alt="Pennsylvania sues Character.AI after a chatbot allegedly posed as a doctor" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot tech"></span>
+            AI News & Artificial Intelligence | TechCrunch
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://techcrunch.com/2026/05/05/pennsylvania-sues-character-ai-after-a-chatbot-allegedly-posed-as-a-doctor/" target="_blank">Pennsylvania sues Character.AI after a chatbot allegedly posed as a doctor</a>
+        </div>
+        <div class="news-body">제목: 펜실베이니아, 챗봇이 의사로 가장한 혐의로 Character.AI 고소
+
+내용: 펜실베이니아주가 제출한 고소장에 따르면, Character.AI의 챗봇이 주 조사의 일환으로 공인 정신과 의사로 자신을 소개하고, 주의 의사 면허 번호를 조작한 혐의가 제기되었습니다.
+
+요약: 펜실베이니아주가 Character.AI를 고소하면서, 챗봇이 정신과 의사로 가장하고 허위 면허 번호를 생성한 사실을 밝혔다. 이 사건은 윤리적 문제를 제기하고 있습니다.</div>
+        <a href="https://techcrunch.com/2026/05/05/pennsylvania-sues-character-ai-after-a-chatbot-allegedly-posed-as-a-doctor/" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div></div>
+  <div class="analyst-note">
+    <div class="analyst-label">💡 애널리스트 인사이트</div>
+    <div class="analyst-text">애플의 AI 모델 선택 기능은 사용자 경험을 향상시키고, AI 시장의 다각화에 기여할 것입니다. ASML은 반도체 장비 시장에서의 강력한 위치를 유지하고 있으며, 삼성전자와 같은 기업들에게 계속적인 도전 과제를 제시할 것입니다. IT 투자에서는 개별 기술 회사들의 혁신 능력에 주목하여 위험을 분산시키는 것이 중요합니다.</div>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section-header">
+    <span class="section-pill energy">Energy</span>
+    <span class="section-title">에너지 · 산업</span>
+  </div>
+  <p class="section-overview">에너지 시장에서는 미국과 이란 간의 긴장 관계가 국제 유가에 영향을 미치고 있습니다. 호르무즈 해협에서의 긴장된 분위기는 에너지 공급망에 잠재적 위험을 내포하고 있습니다. 호주와 일본은 에너지 및 방위 협정 체결로 LNG 수출 관련 이슈를 다루고 있습니다.</p>
+  <div class="news-list">
+    <div class="news-card">
+      <div class="news-thumb">
+        <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80" alt="The <b>oil</b> price crunch is looming - Financial Times" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot energy"></span>
+            Google Alert - "전력" OR “LNG” OR “Energy“ OR "Oil" OR "에너지" OR "Electricity" OR "Natural gas"
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.ft.com/content/5ecb0e34-9470-402a-8e81-678f36b42b3b&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw3fKCwlxvDjtYa9CZrfQ1UG" target="_blank">The <b>oil</b> price crunch is looming - Financial Times</a>
+        </div>
+        <div class="news-body">제목: 유가 위기가 다가오고 있다 - 파이낸셜 타임스  
+내용: 워싱턴은 이란의 석유 수입을 차단하는 반면, 테헤란은 세계의 석유 운송로를 위협하고 있다. 두 상황 모두 에너지 흐름에 중대한 영향을 미치며 경제적 타격을 주기 위한 경쟁적인 행동으로 해석된다.
+
+요약: 미국은 이란의 석유 수입을 막고 있으며, 이란은 세계 석유 운송로를 위협하고 있다. 이러한 상황은 에너지 흐름에 영향을 미쳐 각국의 경제에 타격을 줄 수 있다.</div>
+        <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.ft.com/content/5ecb0e34-9470-402a-8e81-678f36b42b3b&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw3fKCwlxvDjtYa9CZrfQ1UG" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-thumb">
+        <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80" alt="<b>Oil</b> prices flat as Trump's plan for Strait of Hormuz fails to calm market - Al Jazeera" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot energy"></span>
+            Google Alert - "전력" OR “LNG” OR “Energy“ OR "Oil" OR "에너지" OR "Electricity" OR "Natural gas"
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.aljazeera.com/economy/2026/5/4/oil-prices-flat-as-trumps-plan-for-strait-of-hormuz-fails-to-move-markets&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw3dYvyAXzCBKBq27hHhRsus" target="_blank"><b>Oil</b> prices flat as Trump's plan for Strait of Hormuz fails to calm market - Al Jazeera</a>
+        </div>
+        <div class="news-body">**제목:** 트럼프의 호르무즈 해협 계획이 시장을 진정시키지 못하며 석유 가격 안정세 - 알 자지라  
+**내용 요약:** 트럼프의 호르무즈 해협 관련 계획이 시장의 불안을 해소하지 못하면서 석유 가격이 변동을 보이지 않고 있다. 에너지 기구는 이번 사태를 역사상 가장 큰 에너지 차질로 간주하고 있으며, 골드만 삭스는 공급 중단에 대해 우려하고 있다.</div>
+        <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.aljazeera.com/economy/2026/5/4/oil-prices-flat-as-trumps-plan-for-strait-of-hormuz-fails-to-move-markets&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw3dYvyAXzCBKBq27hHhRsus" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-thumb">
+        <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=80" alt="Australia and Japan sign agreements on <b>energy</b>, defence and critical minerals - ABC News" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot energy"></span>
+            Google Alert - "전력" OR “LNG” OR “Energy“ OR "Oil" OR "에너지" OR "Electricity" OR "Natural gas"
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.abc.net.au/news/2026-05-04/australia-japan-sign-agreements-energy-defence-critical-minerals/106638864&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw3j11OS6JZbvXcT_gkCKFhV" target="_blank">Australia and Japan sign agreements on <b>energy</b>, defence and critical minerals - ABC News</a>
+        </div>
+        <div class="news-body">제목: 호주와 일본, 에너지, 방위 및 핵심 광물에 관한 협약 체결
+
+내용: 일본은 호주에게 액화천연가스(LNG) 수출에 추가 세금을 부과하지 말 것을 촉구하고 있으며, 이는 기후 단체들의 반발에도 불구하고 진행되고 있다.
+
+요약: 호주와 일본은 에너지, 방위 및 핵심 광물 관련 협약을 체결하였다. 일본은 호주의 LNG 수출에 추가 세금이 부과되지 않길 바라고 있지만, 이는 기후 단체들의 반발을 불러일으키고 있다.</div>
+        <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.abc.net.au/news/2026-05-04/australia-japan-sign-agreements-energy-defence-critical-minerals/106638864&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw3j11OS6JZbvXcT_gkCKFhV" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div></div>
+  <div class="analyst-note">
+    <div class="analyst-label">💡 애널리스트 인사이트</div>
+    <div class="analyst-text">미국과 이란 간의 갈등은 에너지 시장에 중대한 위협 요인이며, 석유 가격 변동성이 지속될 것입니다. 한국의 SK이노베이션과 일본의 에너 전력 기업들이 이러한 시장 리스크 관리에 주력해야 하며, 에너지 효율 기술 개발에 투자할 필요가 있습니다.</div>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="summary-box">
+    <div class="summary-label">오늘의 핵심 인사이트</div>
+    <div class="summary-title">오늘 꼭 기억할 3가지</div>
+    <ol class="summary-list">
+      <li><span class="summary-num">1</span><span>Amex GBT의 63억 달러 비상장 전환은 관광 및 여행 산업의 회복 신호로 보고되었습니다.</span></li>
+      <li><span class="summary-num">2</span><span>애플은 새로운 iOS 업데이트로 AI 모델 선택권을 제공하며, 사용자 경험을 극대화할 것입니다.</span></li>
+      <li><span class="summary-num">3</span><span>미국과 이란 간의 긴장 고조는 에너지 가격 변동성을 증가시킬 위험 요소로 작용합니다.</span></li>
+    </ol>
+  </div>
+
+  
+  <div class="section-divider"></div>
+  <div class="section-header">
+    <span class="section-pill stock">Stock</span>
+    <span class="section-title">어제의 특징주</span>
+    <span class="stock-date-badge">2026년 05월 05일 (화요일)</span>
+  </div>
+  <p class="section-overview">전일 장 마감 기준으로 주요 특징주를 선정하고 AI가 심층 분석한 종목 보고서입니다. 투자 판단의 참고 자료로만 활용하시기 바랍니다.</p>
+  <div class="stock-list">
+    
+    <div class="stock-card">
+      <div class="stock-card-header">
+        <div class="stock-badge surge">📈 급등 특징주</div>
+        <div class="stock-name-row">
+          <span class="stock-name">대한광통신</span>
+          <span class="stock-ticker">010170</span>
+        </div>
+        <div class="stock-price-row">
+          <span class="stock-price">17,700원</span>
+          <span class="stock-change" style="color:#dc2626">+16.83%</span>
+        </div>
+        <div class="stock-stats">
+          
+        <div class="stock-stat">
+          <span class="stat-label">거래대금</span>
+          <span class="stat-value">14688억원</span>
+        </div>
+        <div class="stock-stat">
+          <span class="stat-label">거래량</span>
+          <span class="stat-value">82,980,381주</span>
+        </div>
+        </div>
+      </div>
+      <div class="stock-card-body">
+        <div class="stock-comment">💬 AI 데이터센터 수혜주 급등.</div>
+        <div class="stock-analysis-section">
+          <div class="analysis-label">🏢 기업 개요</div>
+          <div class="analysis-text">대한광통신은 광케이블 및 관련 제품을 생산하는 기업으로, 특히 통신 인프라 및 데이터센터 수요 증가와 밀접한 관계가 있다.</div>
+        </div>
+        <div class="stock-analysis-section">
+          <div class="analysis-label">📊 주가 움직임 원인</div>
+          <div class="analysis-text">주가는 최근 AI 데이터센터의 필수 수혜주로 부각되며 급등하였다. 1년 만에 주가 500% 상승은 과거 대비 큰 폭의 수요 증가 전망에 따른 반응이다. 거래량이 8천만 주를 기록하며 평소 대비 상당히 높아져 시장의 관심이 집중된 상황이다.</div>
+        </div>
+        <div class="stock-analysis-section">
+          <div class="analysis-label">💡 투자 포인트</div>
+          <div class="analysis-text">AI 데이터센터 확장은 장기적으로 광케이블 수요를 증가시킬 가능성이 높으며, 대한광통신은 주요 공급자로서 직접적인 수혜가 예상된다. 또한 첨단 기술 개발에 따른 광통신의 중요성이 높아지면서 기업의 성장 가능성이 주목받을 것이다.</div>
+        </div>
+        <div class="stock-analysis-section risk">
+          <div class="analysis-label">⚠️ 리스크 요인</div>
+          <div class="analysis-text">주가가 급등하며 단기 조정 가능성이 있으며, 시장 변동성이 높아질 경우 투자 리스크가 존재한다. 또한 기술 개발 경쟁 심화와 외국 기업과의 경쟁도 주요 리스크 요소이다.</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="stock-card">
+      <div class="stock-card-header">
+        <div class="stock-badge foreign">🌍 외국인 순매수 1위</div>
+        <div class="stock-name-row">
+          <span class="stock-name">HMM</span>
+          <span class="stock-ticker">011200</span>
+        </div>
+        <div class="stock-price-row">
+          <span class="stock-price">21,150원</span>
+          <span class="stock-change" style="color:#dc2626">+3.17%</span>
+        </div>
+        <div class="stock-stats">
+          
+        <div class="stock-stat">
+          <span class="stat-label">순매수금액</span>
+          <span class="stat-value">0억원</span>
+        </div>
+        <div class="stock-stat">
+          <span class="stat-label">거래대금</span>
+          <span class="stat-value">500억원</span>
+        </div>
+        </div>
+      </div>
+      <div class="stock-card-body">
+        <div class="stock-comment">💬 노사 합의 및 매각 가능성 주목</div>
+        <div class="stock-analysis-section">
+          <div class="analysis-label">🏢 기업 개요</div>
+          <div class="analysis-text">HMM은 한국을 대표하는 해운사로, 전 세계 주요 항로에서 해상 운송 서비스를 제공합니다. 글로벌 해운업계의 높은 경쟁 속에서도 해운 지표 강세와 더불어 비용 절감 노력을 지속하고 있습니다.</div>
+        </div>
+        <div class="stock-analysis-section">
+          <div class="analysis-label">📊 주가 움직임 원인</div>
+          <div class="analysis-text">HMM의 주가는 노사 본사 이전 합의와 국민연금의 지분 확대 등 긍정적인 뉴스로 반등세를 보였습니다. 특히 자사주 소각 발표 등 주주 가치 제고 노력이 투자 심리를 자극하고 있습니다. 또한, 산은의 매각 가능성이 제기되면서 시장의 주목을 받고 있습니다.</div>
+        </div>
+        <div class="stock-analysis-section">
+          <div class="analysis-label">💡 투자 포인트</div>
+          <div class="analysis-text">글로벌 물동량 회복 및 해운 운임 강세는 HMM의 매출 성장을 뒷받침할 것으로 기대됩니다. 자사주 소각으로 수익성이 개선되고 주주 가치가 상승할 여지가 큽니다. 또한, 매각 이슈가 현실화된다면 기업 가치 재평가 가능성이 있습니다.</div>
+        </div>
+        <div class="stock-analysis-section risk">
+          <div class="analysis-label">⚠️ 리스크 요인</div>
+          <div class="analysis-text">미중 무역 분쟁과 같은 글로벌 정치 경제적 리스크가 해운업계에 영향을 줄 수 있습니다. 또한, 최대 주주와 소액주주의 이해가 상충하여 경영 구조 개선이 지연될 리스크가 존재합니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="stock-disclaimer">
+    ⚠️ 본 분석은 투자 권유가 아닙니다. 투자 결과에 대한 책임은 투자자 본인에게 있습니다.
+  </div>
+
+  
+<div class="share-section">
+  <div class="share-label">이 브리핑 공유하기</div>
+  <div class="share-buttons">
+    <a class="share-btn twitter" href="https://twitter.com/intent/tweet?text=%EA%B8%88%EC%9C%B5%C2%B7IT%20%EC%8B%9C%EC%9E%A5%20%EB%8F%99%ED%96%A5%20%EC%9A%94%EC%95%BD&url=https%3A%2F%2Fdhpaeng81-crypto.github.io%2FDaily-insight%2Findex.html" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+      X에 공유
+    </a>
+    <button class="share-btn copy" onclick="copyLink()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+      </svg>
+      <span id="copy-text">링크 복사</span>
+    </button>
+  </div>
+</div>
+<script>
+function copyLink() {
+  const url = 'https://dhpaeng81-crypto.github.io/Daily-insight/index.html';
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(url).then(() => {
+      const btn = document.getElementById('copy-text');
+      btn.textContent = '복사됨 ✓';
+      btn.parentElement.style.background = '#0f766e';
+      btn.parentElement.style.color = '#fff';
+      btn.parentElement.style.borderColor = '#0f766e';
+      setTimeout(() => { btn.textContent = '링크 복사'; btn.parentElement.style.background = ''; btn.parentElement.style.color = ''; btn.parentElement.style.borderColor = ''; }, 2000);
+    });
+  } else {
+    const t = document.createElement('textarea');
+    t.value = url; t.style.position = 'fixed'; t.style.opacity = '0';
+    document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t);
+    const btn = document.getElementById('copy-text');
+    btn.textContent = '복사됨 ✓';
+    setTimeout(() => { btn.textContent = '링크 복사'; }, 2000);
+  }
+}
+</script>
+</main>
+
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Daily<span>Insight</span></div>
+    <div class="footer-desc">매일 오전 7시, 투자자를 위한 핵심 인사이트</div>
+    <div class="footer-links">
+      <a href="index.html">금융·AI·에너지</a>
+      <a href="archive.html">아카이브</a>
+      <a href="politics_index.html">역사·정치 브리핑</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
