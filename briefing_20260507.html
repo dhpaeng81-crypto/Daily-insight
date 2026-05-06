@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Insight — 2026년 05월 07일</title>
+<meta property="og:title" content="Daily Insight — 2026년 05월 07일">
+<meta property="og:description" content="금융 시장의 변동성과 AI 분야의 중요한 상품 발표">
+<meta property="og:image" content="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80">
+<meta property="og:url" content="https://dhpaeng81-crypto.github.io/Daily-insight/index.html">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+
+@import url('https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css');
+:root {
+  --ink: #18181b; --ink-soft: #52525b; --ink-muted: #a1a1aa;
+  --bg: #fafaf9; --bg-card: #ffffff; --bg-subtle: #f4f4f5;
+  --accent: #0f766e; --accent-light: #ccfbf1;
+  --finance: #0369a1; --finance-bg: #e0f2fe;
+  --tech: #6d28d9; --tech-bg: #ede9fe;
+  --energy: #b45309; --energy-bg: #fef3c7;
+  --stock-surge: #dc2626; --stock-surge-bg: #fef2f2;
+  --stock-foreign: #0369a1; --stock-foreign-bg: #e0f2fe;
+  --border: #e4e4e7; --radius: 12px;
+  --font: 'NanumSquare', 'Apple SD Gothic Neo', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font); font-weight: 400; line-height: 1.8; }
+a { color: inherit; text-decoration: none; }
+.site-header { border-bottom: 1px solid var(--border); background: var(--bg-card); position: sticky; top: 0; z-index: 100; }
+.header-inner { max-width: 780px; margin: 0 auto; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+.logo { font-family: var(--font); font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
+.logo span { color: var(--accent); }
+.header-nav { display: flex; gap: 4px; font-size: 13px; align-items: center; }
+.header-nav a { padding: 6px 12px; border-radius: 6px; color: var(--ink-muted); font-weight: 700; transition: background 0.15s, color 0.15s; }
+.header-nav a:hover { background: var(--bg-subtle); color: var(--ink); }
+.header-nav .active { color: var(--accent); background: var(--accent-light); }
+.header-nav .divider { width: 1px; height: 16px; background: var(--border); margin: 0 4px; }
+.site-footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
+.footer-inner { max-width: 780px; margin: 0 auto; }
+.footer-logo { font-family: var(--font); font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+.footer-logo span { color: var(--accent); }
+.footer-desc { font-size: 12px; color: var(--ink-muted); margin-bottom: 16px; }
+.footer-links { display: flex; justify-content: center; gap: 20px; font-size: 12px; color: var(--ink-muted); }
+.footer-links a:hover { color: var(--accent); }
+@media (min-width: 1024px) {
+  .header-inner { max-width: 1080px; padding: 0 48px; }
+  .footer-inner { max-width: 1080px; }
+}
+@media (max-width: 600px) { .header-meta { display: none; } }
+
+.hero { max-width: 780px; margin: 0 auto; padding: 56px 24px 40px; border-bottom: 1px solid var(--border); }
+.issue-badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 100px; margin-bottom: 20px; }
+.hero-title { font-family: var(--font); font-size: clamp(24px, 5vw, 38px); font-weight: 800; line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 16px; }
+.hero-desc { font-size: 16px; color: var(--ink-soft); max-width: 560px; margin-bottom: 24px; line-height: 1.7; }
+.hero-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.tag { font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 100px; border: 1px solid var(--border); color: var(--ink-soft); }
+.main { max-width: 780px; margin: 0 auto; padding: 48px 24px 80px; }
+.section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1.5px solid var(--border); }
+.section-pill { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; }
+.section-pill.finance { background: var(--finance-bg); color: var(--finance); }
+.section-pill.tech { background: var(--tech-bg); color: var(--tech); }
+.section-pill.energy { background: var(--energy-bg); color: var(--energy); }
+.section-pill.stock { background: #fef2f2; color: #dc2626; }
+.stock-date-badge { font-size: 12px; color: var(--ink-muted); font-weight: 700; margin-left: auto; }
+.section-title { font-family: var(--font); font-size: 20px; font-weight: 800; }
+.section-overview { font-size: 15px; color: var(--ink-soft); line-height: 1.75; margin-bottom: 24px; padding: 16px 20px; background: var(--bg-subtle); border-left: 3px solid var(--border); border-radius: 0 8px 8px 0; }
+.news-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
+.news-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: box-shadow 0.2s; }
+.news-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.news-thumb { width: 100%; height: 200px; overflow: hidden; background: var(--bg-subtle); }
+.news-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; transition: transform 0.3s; }
+.news-card:hover .news-thumb img { transform: scale(1.03); }
+.news-thumb-empty { width: 100%; height: 100%; background: var(--bg-subtle); }
+.news-content { padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.news-source-row { display: flex; align-items: center; }
+.news-source { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-muted); }
+.news-category-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+.news-category-dot.finance { background: var(--finance); }
+.news-category-dot.tech { background: var(--tech); }
+.news-category-dot.energy { background: var(--energy); }
+.news-title { font-size: 15px; font-weight: 700; line-height: 1.45; color: var(--ink); }
+.news-title a:hover { color: var(--accent); }
+.news-body { font-size: 13px; color: var(--ink-soft); line-height: 1.7; }
+.read-more { font-size: 12px; font-weight: 700; color: var(--accent); margin-top: 4px; display: inline-flex; align-items: center; gap: 3px; }
+.analyst-note { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 48px; }
+.analyst-label { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.analyst-text { font-size: 14px; color: var(--ink); line-height: 1.85; }
+.section-divider { height: 1px; background: var(--border); margin: 0 0 48px; }
+.summary-box { background: var(--ink); color: #fff; border-radius: var(--radius); padding: 32px 36px; margin-bottom: 48px; }
+.summary-label { font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 20px; }
+.summary-title { font-family: var(--font); font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 20px; }
+.summary-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.summary-list li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; font-size: 14px; color: #d4d4d8; line-height: 1.65; }
+.summary-num { font-family: var(--font); font-size: 20px; font-weight: 800; color: var(--accent-light); line-height: 1.2; opacity: 0.6; }
+
+/* 주식 특징주 카드 스타일 */
+.stock-list { display: flex; flex-direction: column; gap: 20px; margin-bottom: 24px; }
+.stock-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.stock-card-header { padding: 20px 24px; border-bottom: 1px solid var(--border); }
+.stock-badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 100px; margin-bottom: 12px; }
+.stock-badge.surge { background: #fef2f2; color: #dc2626; }
+.stock-badge.foreign { background: #e0f2fe; color: #0369a1; }
+.stock-name-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.stock-name { font-family: var(--font); font-size: 20px; font-weight: 800; color: var(--ink); }
+.stock-ticker { font-size: 12px; color: var(--ink-muted); background: var(--bg-subtle); padding: 2px 8px; border-radius: 4px; font-weight: 700; }
+.stock-price-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.stock-price { font-family: var(--font); font-size: 24px; font-weight: 800; color: var(--ink); }
+.stock-change { font-family: var(--font); font-size: 18px; font-weight: 800; }
+.stock-stats { display: flex; gap: 16px; flex-wrap: wrap; }
+.stock-stat { display: flex; flex-direction: column; gap: 2px; }
+.stat-label { font-size: 11px; color: var(--ink-muted); font-weight: 700; }
+.stat-value { font-size: 14px; font-weight: 800; color: var(--ink); }
+.stock-card-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+.stock-comment { font-size: 14px; font-weight: 800; color: var(--accent); background: var(--accent-light); padding: 10px 16px; border-radius: 8px; }
+.stock-analysis-section { display: flex; flex-direction: column; gap: 6px; }
+.stock-analysis-section.risk { background: #fef2f2; padding: 12px 16px; border-radius: 8px; border-left: 3px solid #dc2626; }
+.analysis-label { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
+.analysis-text { font-size: 14px; color: var(--ink); line-height: 1.8; }
+.stock-disclaimer { font-size: 12px; color: var(--ink-muted); text-align: center; padding: 12px; background: var(--bg-subtle); border-radius: 8px; margin-bottom: 48px; }
+
+.share-section { border-top: 1px solid var(--border); padding-top: 32px; margin-bottom: 48px; text-align: center; }
+.share-label { font-size: 12px; color: var(--ink-muted); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; margin-bottom: 16px; }
+.share-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.share-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; border-radius: 100px; font-size: 13px; font-weight: 700; cursor: pointer; border: none; transition: transform 0.15s, box-shadow 0.15s; font-family: var(--font); text-decoration: none; }
+.share-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.share-btn.twitter { background: #000; color: #fff; }
+.share-btn.copy { background: var(--bg-subtle); color: var(--ink); border: 1px solid var(--border); transition: transform 0.15s, box-shadow 0.15s, background 0.2s, color 0.2s, border-color 0.2s; }
+@media (min-width: 1024px) {
+  .hero { max-width: 1080px; padding: 72px 48px 56px; }
+  .main { max-width: 1080px; padding: 56px 48px 100px; }
+  .hero-title { font-size: 48px; }
+  .hero-desc { font-size: 18px; max-width: 680px; }
+  .section-title { font-size: 24px; }
+  .section-overview { font-size: 16px; }
+  .news-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .news-thumb { height: 180px; }
+  .stock-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .analyst-text { font-size: 15px; }
+  .summary-box { padding: 40px 48px; }
+  .summary-title { font-size: 24px; }
+  .summary-list li { font-size: 15px; }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .news-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .news-thumb { height: 180px; }
+}
+@media (max-width: 639px) {
+  .hero { padding: 36px 20px 32px; }
+  .main { padding: 36px 20px 60px; }
+  .summary-box { padding: 24px 20px; }
+  .share-btn { padding: 9px 18px; font-size: 12px; }
+  .stock-price { font-size: 20px; }
+  .stock-change { font-size: 16px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo"><a href="index.html">Daily<span>Insight</span></a></div>
+    <nav class="header-nav">
+      <a href="index.html" class="active">금융·AI·에너지</a>
+      <a href="archive.html" class="">아카이브</a>
+      <div class="divider"></div>
+      <a href="politics_index.html">역사·정치</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="issue-badge">오늘의 브리핑</div>
+  <h1 class="hero-title">금융 및 기술 시장의 주요 동향</h1>
+  <p class="hero-desc">금융 시장의 변동성과 AI 분야의 중요한 상품 발표</p>
+  <div class="hero-tags">
+    <span class="tag">💹 금융 시장</span>
+    <span class="tag">🤖 AI · IT</span>
+    <span class="tag">⚡ 에너지</span>
+    <span class="tag">📈 특징주</span>
+  </div>
+</section>
+
+<main class="main">
+  <div class="section-header">
+    <span class="section-pill finance">Finance</span>
+    <span class="section-title">금융 시장</span>
+  </div>
+  <p class="section-overview">금융 시장은 최근 몇 가지 중요한 발표에 따라 상승과 하락을 반복하고 있습니다. Coinbase의 CEO는 실적 발표 전에 전략적인 움직임을 보였고, Ferrari는 중동 전쟁에도 불구하고 연간 지침을 확정했습니다. 이는 전체 시장에서 일시적 안정감을 주었으나, Utz Brands와 Proficient Auto Logistics의 낮은 실적은 부정적인 영향을 미쳤습니다.</p>
+  <div class="news-list">
+    <div class="news-card">
+      <div class="news-thumb">
+        <img src="https://media.zenfs.com/en/thestreet_881/094507b7847f70e99547115d41cd3548" alt="Coinbase CEO, 실적 발표 전 중요 행보" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot finance"></span>
+            Yahoo Finance
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://finance.yahoo.com/markets/crypto/articles/coinbase-ceo-makes-critical-move-052101559.html" target="_blank">Coinbase CEO, 실적 발표 전 중요 행보</a>
+        </div>
+        <div class="news-body">Coinbase의 CEO가 실적 발표를 앞두고 주요한 전략적 변경을 단행했습니다. 이는 투자자들에게 긍정적인 신호로 작용할 수 있어 주목할 필요가 있습니다. Coinbase는 암호화폐 시장에서 중요한 위치를 차지하고 있어, 이러한 행보는 시장 전체에도 영향을 줄 수 있습니다.</div>
+        <a href="https://finance.yahoo.com/markets/crypto/articles/coinbase-ceo-makes-critical-move-052101559.html" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-thumb">
+        <img src="https://media.zenfs.com/en/insidermonkey.com/6ac8f481572d30f9d1ed1a9e0ad30daa" alt="Here’s What Weighed on Proficient Auto Logistics’ (PAL) Performance" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot finance"></span>
+            Yahoo Finance
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://finance.yahoo.com/markets/stocks/articles/weighed-proficient-auto-logistics-pal-133959446.html" target="_blank">Here’s What Weighed on Proficient Auto Logistics’ (PAL) Performance</a>
+        </div>
+        <div class="news-body">제목: 프로피션트 오토 로지스틱스(PAL)의 성과에 영향을 미친 요인
+
+내용: 프로피셔넌트 오토 로지스틱스(PAL)의 성과에는 여러 가지 요인이 영향을 미쳤습니다. 공급망 문제와 운송 비용 상승 등이 주요 요인으로 작용하여 회사의 운영에 부정적인 영향을 미쳤습니다.
+
+요약: 프로피셔넌트 오토 로지스틱스(PAL)의 성과는 공급망 문제와 운송 비용 상승 등의 요인으로 인해 부정적인 영향을 받았습니다. 이러한 요소들은 회사의 운영에 실패를 가져오고 있습니다.</div>
+        <a href="https://finance.yahoo.com/markets/stocks/articles/weighed-proficient-auto-logistics-pal-133959446.html" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-thumb">
+        <img src="https://media.zenfs.com/en/insidermonkey.com/38009317c7595cd66995afdee703c02b" alt="Significant Growth in the End Market Lifted RBC Bearings Incorporated (RBC) in Q1" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot finance"></span>
+            Yahoo Finance
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://finance.yahoo.com/markets/stocks/articles/significant-growth-end-market-lifted-134441622.html" target="_blank">Significant Growth in the End Market Lifted RBC Bearings Incorporated (RBC) in Q1</a>
+        </div>
+        <div class="news-body">제목: RBC 베어링스(RBC)의 1분기 실적, 최종 시장의 유의미한 성장에 힘입다
+
+내용: RBC 베어링스는 2023년 1분기 동안 최종 시장의 유의미한 성장 덕분에 실적이 개선되었다. 회사는 지속적인 수요 증가와 함께 시장 점유율을 확대하며 긍정적인 성장을 이어가고 있다.
+
+요약: RBC 베어링스는 최종 시장의 성장으로 2023년 1분기 실적이 개선되었으며, 수요 증가와 시장 점유율 확대가 주요 요인으로 작용했다.</div>
+        <a href="https://finance.yahoo.com/markets/stocks/articles/significant-growth-end-market-lifted-134441622.html" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div></div>
+  <div class="analyst-note">
+    <div class="analyst-label">💡 애널리스트 인사이트</div>
+    <div class="analyst-text">Coinbase와 Ferrari는 최근의 움직임을 통해 주목을 받았습니다. 투자자에게는 이러한 전략적 움직임을 예의 주시하면서도, Utz Brands와 Proficient Auto Logistics의 실적 부진을 염두에 두어야 합니다. 전반적인 시장 변동성에 대비하여 포트폴리오를 다양화하는 것이 중요합니다. 고유 리스크로는 중동 지역의 긴장이 증가할 가능성이 있습니다.</div>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section-header">
+    <span class="section-pill tech">Tech</span>
+    <span class="section-title">AI · IT 트렌드</span>
+  </div>
+  <p class="section-overview">AI 및 IT 시장에서는 OpenAI의 CEO에 대한 신뢰 문제와 AGI에 대한 경고가 주요 이슈로 떠오르고 있습니다. 또한 Snap은 Perplexity와의 대규모 계약을 소멸하면서 기술 통합 전략을 조정했습니다. Elon Musk와 OpenAI 간의 협상 역시 주목을 받고 있으며, SpaceX의 반도체 공장 계획은 큰 투자 유치로 이어질 공산이 큽니다.</p>
+  <div class="news-list">
+    <div class="news-card">
+      <div class="news-thumb">
+        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80" alt="Barry Diller trusts Sam Altman. But ‘trust is irrelevant’ as AGI nears, he says." loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot tech"></span>
+            AI News & Artificial Intelligence | TechCrunch
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://techcrunch.com/2026/05/06/barry-diller-trusts-sam-altman-but-trust-is-irrelevant-as-agi-nears-he-says/" target="_blank">Barry Diller trusts Sam Altman. But ‘trust is irrelevant’ as AGI nears, he says.</a>
+        </div>
+        <div class="news-body">제목: 배리 딜러는 샘 올트먼을 신뢰하지만 "신뢰는 무의미하다"고 말하다.
+
+내용: 배리 딜러는 OpenAI CEO인 샘 올트먼을 옹호하면서, AGI(인공지능 일반) 개발이 다가오고 있지만 여전히 예측 불가능한 힘임을 경고하며 규제의 필요성을 강조했다. 
+
+요약: 배리 딜러는 샘 올트먼을 지지하지만, AGI의 예측 불가능성 때문에 이를 관리할 수 있는 규제가 필요하다고 경고했다.</div>
+        <a href="https://techcrunch.com/2026/05/06/barry-diller-trusts-sam-altman-but-trust-is-irrelevant-as-agi-nears-he-says/" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-thumb">
+        <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80" alt="Snap says its $400M deal with Perplexity ‘amicably ended’" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot tech"></span>
+            AI News & Artificial Intelligence | TechCrunch
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://techcrunch.com/2026/05/06/snap-says-its-400m-deal-with-perplexity-amicably-ended/" target="_blank">Snap says its $400M deal with Perplexity ‘amicably ended’</a>
+        </div>
+        <div class="news-body">제목: 스냅, 퍼플렉시티와의 4억 달러 거래가 '원만하게 종료됐다'고 발표
+
+내용: 지난해 11월 발표된 이 거래는 퍼플렉시티의 AI 검색 엔진이 스냅챗에 직접 통합되는 내용을 담고 있었다.
+
+요약: 스냅은 퍼플렉시티와의 4억 달러 거래가 원만하게 종료되었다고 발표했다. 이 거래는 퍼플렉시티의 AI 검색 엔진을 스냅챗에 통합하는 것이었으나 성사되지 않았다.</div>
+        <a href="https://techcrunch.com/2026/05/06/snap-says-its-400m-deal-with-perplexity-amicably-ended/" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-thumb">
+        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80" alt="Is xAI a neocloud now?" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot tech"></span>
+            AI News & Artificial Intelligence | TechCrunch
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="https://techcrunch.com/2026/05/06/is-xai-a-neocloud-now/" target="_blank">Is xAI a neocloud now?</a>
+        </div>
+        <div class="news-body">제목: xAI가 이제는 네오클라우드인가?
+내용: xAI의 실제 사업은 인공지능 모델을 훈련하는 것보다 데이터 센터를 구축하는 데 더 많은 관련이 있을 수 있다.
+
+요약: xAI의 주요 사업이 AI 모델 훈련보다는 데이터 센터 건설에 더 중점을 두고 있는 것으로 보인다. 이는 xAI가 새로운 형태의 클라우드 서비스를 제공하려는 방향일 수 있다.</div>
+        <a href="https://techcrunch.com/2026/05/06/is-xai-a-neocloud-now/" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div></div>
+  <div class="analyst-note">
+    <div class="analyst-label">💡 애널리스트 인사이트</div>
+    <div class="analyst-text">OpenAI와 SpaceX는 각각 AI 안전성 및 반도체 제조 측면에서 주목할 만한 기업입니다. 투자자라면 xAI의 클라우드 전략 변화와 OpenAI의 성장 지속성에 주목해야 하며, AI 기술의 윤리적 문제와 잠재적 위험에도 대비할 필요가 있습니다. 기술 혁신의 빠른 전개는 기회와 동시에 리스크를 포함하고 있습니다.</div>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section-header">
+    <span class="section-pill energy">Energy</span>
+    <span class="section-title">에너지 · 산업</span>
+  </div>
+  <p class="section-overview">에너지 시장에서는 중동 지역의 불안정성에 따른 공급망 리스크와 함께, 탄소 중립을 향한 글로벌 정책이 주목받고 있습니다. 이러한 요인은 원유와 천연가스 가격에 큰 영향을 미치고 있으며, 지속적인 가격 변동성이 예상됩니다.</p>
+  <div class="news-list"></div>
+  <div class="analyst-note">
+    <div class="analyst-label">💡 애널리스트 인사이트</div>
+    <div class="analyst-text">Chevron과 Shell 같은 주요 에너지 기업들은 해당 지역에서의 수익성 변화에 민감하게 반응할 것으로 보입니다. 투자자는 장기적으로 재생에너지 부문에 대한 관심을 가질 필요가 있으며, 시장 불안정성으로 인한 단기적 리스크도 고려해야 합니다.</div>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="summary-box">
+    <div class="summary-label">오늘의 핵심 인사이트</div>
+    <div class="summary-title">오늘 꼭 기억할 3가지</div>
+    <ol class="summary-list">
+      <li><span class="summary-num">1</span><span>Coinbase는 실적 발표 전 CEO의 전략적 조정으로 투자자들에게 긍정적 신호를 보냈습니다. 향후 10% 이상의 주가 변동이 예상됩니다.</span></li>
+      <li><span class="summary-num">2</span><span>SpaceX의 1190억 원 규모 반도체 공장 계획은 미국 내 산업 강화와 일자리 창출에 긍정적 영향을 미칠 것으로 보입니다.</span></li>
+      <li><span class="summary-num">3</span><span>AGI 관련 기술 발전이 빠르게 진행되면서, 높은 수준의 윤리적 논의가 필요하며, 규제기관의 개입이 시장 변동성을 유발할 수 있습니다.</span></li>
+    </ol>
+  </div>
+
+  
+  <div class="section-divider"></div>
+  <div class="section-header">
+    <span class="section-pill stock">Stock</span>
+    <span class="section-title">어제의 특징주</span>
+    <span class="stock-date-badge">2026년 05월 06일 (수요일)</span>
+  </div>
+  <p class="section-overview">전일 장 마감 기준으로 주요 특징주를 선정하고 AI가 심층 분석한 종목 보고서입니다. 투자 판단의 참고 자료로만 활용하시기 바랍니다.</p>
+  <div class="stock-list">
+    
+    <div class="stock-card">
+      <div class="stock-card-header">
+        <div class="stock-badge surge">📈 급등 특징주</div>
+        <div class="stock-name-row">
+          <span class="stock-name">미래에셋증권</span>
+          <span class="stock-ticker">006800</span>
+        </div>
+        <div class="stock-price-row">
+          <span class="stock-price">83,800원</span>
+          <span class="stock-change" style="color:#dc2626">+19.2%</span>
+        </div>
+        <div class="stock-stats">
+          
+        <div class="stock-stat">
+          <span class="stat-label">거래대금</span>
+          <span class="stat-value">17312억원</span>
+        </div>
+        <div class="stock-stat">
+          <span class="stat-label">거래량</span>
+          <span class="stat-value">20,658,260주</span>
+        </div>
+        </div>
+      </div>
+      <div class="stock-card-body">
+        <div class="stock-comment">💬 코스피 상승과 증권사 기대감</div>
+        <div class="stock-analysis-section">
+          <div class="analysis-label">🏢 기업 개요</div>
+          <div class="analysis-text">미래에셋증권은 대한민국의 대표적인 종합 금융투자 회사로 주식 중개, 재무 자문, 자산 관리 등 다양한 서비스를 제공한다. 특히, 글로벌 네트워크를 통해 해외 주식 중개 및 투자에서도 두각을 나타내고 있다.</div>
+        </div>
+        <div class="stock-analysis-section">
+          <div class="analysis-label">📊 주가 움직임 원인</div>
+          <div class="analysis-text">최근 코스피 지수 상승과 함께 증권주의 투자 매력이 부각되며 미래에셋증권의 주가가 급등했다. 특히 외국인 투자 환경 개선과 RIA 잔고 증가가 투자 심리를 긍정적으로 이끌고 있으며, 이는 거래대금의 급격한 증가로 이어졌다. 그리고 삼성전자 및 반도체주의 강세로 인해 증권주의 동반 강세도 영향을 미쳤다.</div>
+        </div>
+        <div class="stock-analysis-section">
+          <div class="analysis-label">💡 투자 포인트</div>
+          <div class="analysis-text">코스피 지수 상승에 따른 증권사 수혜가 예상되며, 특히 통합계좌 도입으로 외국인 투자자 유입 확대가 기대된다. 미래에셋증권은 해외시장에서도 강력한 입지를 확보하고 있어 글로벌 경제 회복세에 따른 이익 증가 가능성이 높다. RIA 잔고 증가와 해외주식 중개에서의 성과도 긍정적인 요소로 작용한다.</div>
+        </div>
+        <div class="stock-analysis-section risk">
+          <div class="analysis-label">⚠️ 리스크 요인</div>
+          <div class="analysis-text">글로벌 경제 불확실성 및 금리 변동성이 증권사 실적에 부정적 영향을 미칠 수 있다. 또한, 국내외 규제 변화가 증권업계 전반에 부담으로 작용할 가능성이 있다.</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="stock-card">
+      <div class="stock-card-header">
+        <div class="stock-badge foreign">🌍 외국인 순매수 1위</div>
+        <div class="stock-name-row">
+          <span class="stock-name">3S</span>
+          <span class="stock-ticker">060310</span>
+        </div>
+        <div class="stock-price-row">
+          <span class="stock-price">1,709원</span>
+          <span class="stock-change" style="color:#dc2626">+12.07%</span>
+        </div>
+        <div class="stock-stats">
+          
+        <div class="stock-stat">
+          <span class="stat-label">순매수금액</span>
+          <span class="stat-value">0억원</span>
+        </div>
+        <div class="stock-stat">
+          <span class="stat-label">거래대금</span>
+          <span class="stat-value">181억원</span>
+        </div>
+        </div>
+      </div>
+      <div class="stock-card-body">
+        <div class="stock-comment">💬 경영권 안정으로 반등 기대</div>
+        <div class="stock-analysis-section">
+          <div class="analysis-label">🏢 기업 개요</div>
+          <div class="analysis-text">3S는 반도체 및 디스플레이 관련 정밀 온·습도 제어 장비를 생산하는 기업으로, 특히 반도체 웨이퍼 검사 장비와 관련된 기술력을 보유하고 있습니다.</div>
+        </div>
+        <div class="stock-analysis-section">
+          <div class="analysis-label">📊 주가 움직임 원인</div>
+          <div class="analysis-text">최근 경영권 분쟁이 종결됨에 따라, 외국인은 안정된 경영 환경을 긍정적으로 평가, 매수를 강화하고 있습니다. 또한, 전환사채(CB)의 전환가액이 1646원으로 하향 조정되면서 주주 가치 보호의 신호로 받아들여졌습니다.</div>
+        </div>
+        <div class="stock-analysis-section">
+          <div class="analysis-label">💡 투자 포인트</div>
+          <div class="analysis-text">반도체 업종의 회복 조짐과 더불어, 3S의 웨이퍼홀딩스와의 협업을 통해 기술 경쟁력을 강화하고 있습니다. 특히 웨이퍼 검사 분야에서의 기술력 향상은 중장기 성장을 기대하게 합니다.</div>
+        </div>
+        <div class="stock-analysis-section risk">
+          <div class="analysis-label">⚠️ 리스크 요인</div>
+          <div class="analysis-text">경영권 변동 과정에서의 불확실성은 완전히 해소되지 않았으며, 반도체 업종의 경기 변동성이 여전히 존재합니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="stock-disclaimer">
+    ⚠️ 본 분석은 투자 권유가 아닙니다. 투자 결과에 대한 책임은 투자자 본인에게 있습니다.
+  </div>
+
+  
+<div class="share-section">
+  <div class="share-label">이 브리핑 공유하기</div>
+  <div class="share-buttons">
+    <a class="share-btn twitter" href="https://twitter.com/intent/tweet?text=%EA%B8%88%EC%9C%B5%20%EB%B0%8F%20%EA%B8%B0%EC%88%A0%20%EC%8B%9C%EC%9E%A5%EC%9D%98%20%EC%A3%BC%EC%9A%94%20%EB%8F%99%ED%96%A5&url=https%3A%2F%2Fdhpaeng81-crypto.github.io%2FDaily-insight%2Findex.html" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+      X에 공유
+    </a>
+    <button class="share-btn copy" onclick="copyLink()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+      </svg>
+      <span id="copy-text">링크 복사</span>
+    </button>
+  </div>
+</div>
+<script>
+function copyLink() {
+  const url = 'https://dhpaeng81-crypto.github.io/Daily-insight/index.html';
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(url).then(() => {
+      const btn = document.getElementById('copy-text');
+      btn.textContent = '복사됨 ✓';
+      btn.parentElement.style.background = '#0f766e';
+      btn.parentElement.style.color = '#fff';
+      btn.parentElement.style.borderColor = '#0f766e';
+      setTimeout(() => { btn.textContent = '링크 복사'; btn.parentElement.style.background = ''; btn.parentElement.style.color = ''; btn.parentElement.style.borderColor = ''; }, 2000);
+    });
+  } else {
+    const t = document.createElement('textarea');
+    t.value = url; t.style.position = 'fixed'; t.style.opacity = '0';
+    document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t);
+    const btn = document.getElementById('copy-text');
+    btn.textContent = '복사됨 ✓';
+    setTimeout(() => { btn.textContent = '링크 복사'; }, 2000);
+  }
+}
+</script>
+</main>
+
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Daily<span>Insight</span></div>
+    <div class="footer-desc">매일 오전 7시, 투자자를 위한 핵심 인사이트</div>
+    <div class="footer-links">
+      <a href="index.html">금융·AI·에너지</a>
+      <a href="archive.html">아카이브</a>
+      <a href="politics_index.html">역사·정치 브리핑</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
