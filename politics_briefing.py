@@ -442,6 +442,7 @@ def build_html(news_list, content):
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="google-site-verification" content="4z1YG668VEajfm1MyEU5V9KCZIb9AYbS5C3dQJ99FdM">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KoreaInsight — {today}</title>
 <meta property="og:title" content="KoreaInsight — {today}">
