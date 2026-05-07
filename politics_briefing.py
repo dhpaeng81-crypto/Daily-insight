@@ -93,10 +93,10 @@ RSS_FEEDS = [
     ("Politics", "http://rss.donga.com/politics.xml"),
     ("Politics", "http://rss.donga.com/editorials.xml"),
     ("Politics", "https://www.munhwa.com/rss/politics.xml"),
-    ("International", "https://www.rfa.org/korean/rss2.xml"),
-    ("International", "https://www.voakorea.com/api/z_mpetyitop"),
     ("Politics", "https://www.newdaily.co.kr/site/data/rss/rss.xml"),        # 뉴데일리
     ("Politics", "https://www.pennmike.com/rss/allArticle.xml"),              # 펜앤드마이크
+    ("International", "https://www.rfa.org/korean/rss2.xml"),
+    ("International", "https://www.voakorea.com/api/z_mpetyitop"),
     ("International", "https://thediplomat.com/feed/"),                       # The Diplomat
     ("International", "https://warontherocks.com/feed/"),                     # War on the Rocks
     ("International", "https://www.38north.org/feed/"),                       # 38North (북한)
@@ -189,12 +189,12 @@ def generate_content(news_list):
 {{
   "hero_title": "오늘의 핵심 헤드라인 25자 이내",
   "hero_desc": "오늘 브리핑의 핵심 메시지 60자 이내",
-  "today_summary": "오늘의 정치 지형 전반 요약 3-4문장. 헌법적 가치 관점에서의 현 상황 진단",
-  "politics_overview": "국내 정치 현안 흐름 3-4문장. 주요 이슈의 본질과 헌법적 의미 분석",
-  "politics_comment": "보수 관점 핵심 인사이트 4-5문장. 역사적 선례, 팩트 근거, 진보 주장에 대한 반론, 자유민주주의 관점의 평가 포함",
-  "international_overview": "국제 정세 흐름 3-4문장. 한미동맹·자유진영 관점에서의 분석",
-  "international_comment": "지정학적 인사이트 4-5문장. 한국의 국익 관점, 역사적 맥락, 안보 리스크 포함",
-  "history_insight": "오늘 이슈와 연결되는 역사적 교훈 4-5문장. 구체적인 역사적 사례와 날짜, 인물 반드시 포함",
+  "today_summary": "오늘의 정치 지형 전반 요약 2-3문장. 헌법적 가치 관점에서의 현 상황 진단",
+  "politics_overview": "국내 정치 현안 흐름 2-3문장. 주요 이슈의 본질과 헌법적 의미 분석",
+  "politics_comment": "보수 관점 핵심 인사이트 3-4문장. 역사적 선례, 팩트 근거, 진보 주장에 대한 반론, 자유민주주의 관점의 평가 포함",
+  "international_overview": "국제 정세 흐름 2-3문장. 한미동맹·자유진영 관점에서의 분석",
+  "international_comment": "지정학적 인사이트 3-4문장. 한국의 국익 관점, 역사적 맥락, 안보 리스크 포함",
+  "history_insight": "오늘 이슈와 연결되는 역사적 교훈 3-4문장. 구체적인 역사적 사례와 날짜, 인물 반드시 포함",
   "key_insight_1": "핵심 인사이트 1: 오늘의 가장 중요한 정치적 함의 (구체적 근거 포함)",
   "key_insight_2": "핵심 인사이트 2: 국제 관계나 안보 관점의 핵심 메시지",
   "key_insight_3": "핵심 인사이트 3: 역사적 교훈이나 향후 주목해야 할 포인트",
