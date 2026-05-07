@@ -115,8 +115,28 @@ RSS_FEEDS = [
     ("Energy", "https://www.google.com/alerts/feeds/05107057229753784254/4810996089673190473")
 ]
 
+# =====================
+# 뉴스 중복 제거 (제목 유사도 기반)
+# =====================
+def is_duplicate(title, existing_titles, threshold=0.7):
+    """제목 단어 겹침 비율이 threshold 이상이면 중복으로 판단"""
+    words_new = set(re.findall(r"[가-힣a-zA-Z0-9]+", title.lower()))
+    if len(words_new) == 0:
+        return False
+    for existing in existing_titles:
+        words_exist = set(re.findall(r"[가-힣a-zA-Z0-9]+", existing.lower()))
+        if len(words_exist) == 0:
+            continue
+        overlap = len(words_new & words_exist)
+        similarity = overlap / max(len(words_new), len(words_exist))
+        if similarity >= threshold:
+            return True
+    return False
+
 def collect_news():
     all_news = []
+    seen_titles = []  # 중복 체크용
+
     for category, url in RSS_FEEDS:
         try:
             feed = feedparser.parse(url)
@@ -128,11 +148,18 @@ def collect_news():
                 title = entry.get("title", "").strip()
                 if not title:
                     continue
+
+                # 중복 뉴스 건너뜀
+                if is_duplicate(title, seen_titles):
+                    print(f"  중복 제거: {title[:30]}...")
+                    continue
+
                 summary = re.sub('<[^>]+>', '', entry.get("summary", ""))[:200]
                 link = entry.get("link", "")
                 image = extract_image(entry)
                 if not image:
                     image = get_unsplash_image(category, " ".join(title.split()[:3]))
+
                 all_news.append({
                     "category": category,
                     "title": title,
@@ -141,17 +168,18 @@ def collect_news():
                     "image": image,
                     "source": source_name
                 })
+                seen_titles.append(title)
                 count += 1
             print(f"OK: {category} ({source_name}) - {count}개 수집")
         except Exception as e:
             print(f"Error ({url}): {e}")
-    print(f"총 수집: {len(all_news)}개")
+    print(f"총 수집: {len(all_news)}개 (중복 제거 후)")
     return all_news
 
 def translate_single(news_item):
     client = OpenAI(api_key=OPENAI_API_KEY)
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gpt-4.1-mini",
         messages=[
             {"role": "system", "content": "한국어 번역가입니다. 반드시 한국어로만 답하세요."},
             {"role": "user", "content": f"아래 뉴스를 한국어로 번역하고 2-3문장으로 요약해주세요.\n\n제목: {news_item['title']}\n내용: {news_item['summary']}"}
@@ -167,42 +195,44 @@ def generate_content(news_list):
         news_text += f"[index:{i}][{n['category']}] {n['title']}\n{n['summary']}\n\n"
 
     prompt = f"""
-당신은 15년 경력의 한국인 금융·IT 시장 전문 애널리스트이자 뉴스레터 에디터입니다.
-아래 뉴스를 바탕으로 Daily Insight 웹진 콘텐츠를 작성해주세요.
+당신은 20년 경력의 한국인 금융·IT·에너지 시장 전문 수석 애널리스트이자 투자 뉴스레터 에디터입니다.
+아래 뉴스를 바탕으로 Daily Insight 웹진의 고품질 콘텐츠를 작성해주세요.
+독자는 주식·채권·부동산 등 다양한 자산을 운용하는 한국인 개인투자자와 금융 전문가입니다.
 
 [절대 규칙]
 - 모든 출력은 반드시 한국어로만 작성
-- 영어 단어 사용 금지 (고유명사 제외)
-- 전문용어는 쉬운 한국어로 풀어서 설명
+- 영어 단어 사용 금지 (회사명·지표명·고유명사 제외)
+- 전문용어는 반드시 쉬운 한국어로 풀어서 설명
 - news_summaries는 수집된 모든 뉴스 포함
 - original_index는 [index:숫자] 값과 정확히 일치
 - 반드시 아래 JSON 형식으로만 응답 (다른 텍스트 없이)
 
-[인사이트 기준]
-1. 시장 방향성: 상승/하락/보합 방향과 이유 명확히
-2. 수치 근거: 구체적인 % 변화, 금액, 기간 포함
-3. 산업 파급효과: 영향받는 산업군 명시
-4. 관련 기업: 국내외 기업 최소 2개 이상 언급
-5. 투자 시사점: 구체적 대응 방향
-6. 리스크 요인: 반대 시나리오 포함
+[인사이트 품질 기준 — 반드시 준수]
+1. 방향성 명확화: 단순 사실 나열 금지. 상승/하락/보합/전환 방향과 이유를 한 문장으로 선언
+2. 수치 필수 포함: % 변화, 금액(억원/조원), 기간(단기·중기·장기), 목표가 등 구체적 수치
+3. 산업 연결고리: 해당 이슈가 상위산업·하위산업·공급망에 미치는 파급 경로를 명시
+4. 기업 실명 언급: 국내 수혜기업 2개 이상 + 해외 관련기업 1개 이상 반드시 실명으로 언급
+5. 투자 액션: "매수/매도/관망/비중확대/축소" 중 하나를 명시하고 그 근거 제시
+6. 리스크 시나리오: 반대 시나리오(하락 원인, 정책 리스크, 지정학 리스크 등) 반드시 1개 이상 포함
+7. 뉴스 해설: 단순 번역이 아닌 "왜 지금 이 뉴스가 중요한가" 맥락 설명 필수
 
 {{
-  "hero_title": "오늘의 핵심 헤드라인 20자 이내",
-  "hero_desc": "오늘 시장 핵심 흐름 한 줄 요약 50자 이내",
-  "finance_overview": "금융 시장 전반 흐름 3-4문장",
-  "finance_comment": "투자자 핵심 인사이트 3-4문장. 국내외 기업 2개 이상, 대응 방향, 리스크 포함",
-  "tech_overview": "AI·IT 시장 전반 흐름 3-4문장",
-  "tech_comment": "IT·투자 관점 인사이트 3-4문장. 국내외 기업 2개 이상, 주목 포인트와 리스크 포함",
-  "energy_overview": "에너지 시장 전반 흐름 3-4문장",
-  "energy_comment": "에너지·투자 인사이트 3-4문장. 국내외 기업 2개 이상, 대응 방향과 리스크 포함",
-  "key_insight_1": "핵심 인사이트 1: 구체적 수치·기업·방향성 포함",
-  "key_insight_2": "핵심 인사이트 2: 구체적 수치·기업·방향성 포함",
-  "key_insight_3": "핵심 인사이트 3: 리스크 또는 주의사항 포함",
+  "hero_title": "오늘의 핵심 헤드라인 20자 이내 (수치 또는 기업명 포함)",
+  "hero_desc": "오늘 시장 전체를 관통하는 핵심 흐름 한 줄 요약 60자 이내 (방향성 + 핵심 키워드)",
+  "finance_overview": "금융 시장 전반 흐름 4-5문장. 주요 지수 방향성과 등락폭, 섹터별 강약, 글로벌 매크로 환경 변화를 수치와 함께 구체적으로 서술",
+  "finance_comment": "금융 투자 심층 인사이트 5-6문장. ①수혜 섹터와 구체적 이유 ②국내 수혜기업 2개 이상 실명+근거 ③해외 관련기업 1개 이상 ④단기/중기 투자 액션(매수·관망·축소 명시) ⑤반드시 포함해야 할 리스크 시나리오 1개",
+  "tech_overview": "AI·IT 시장 전반 흐름 4-5문장. 기술 트렌드 변화, 주요 기업 동향, 시장 규모·성장률 수치, 국내 산업 영향 포함",
+  "tech_comment": "AI·IT 투자 심층 인사이트 5-6문장. ①기술 변화로 수혜받는 국내 산업군 ②국내 수혜기업 2개 이상 실명+근거 ③해외 선도기업 1개 이상 ④투자 액션 명시 ⑤리스크 시나리오(기술 실패, 규제, 경쟁 심화 등) 1개",
+  "energy_overview": "에너지 시장 전반 흐름 4-5문장. 유가·가스·전력 가격 방향성과 수치, 재생에너지 동향, 글로벌 수급 변화 포함",
+  "energy_comment": "에너지·산업 투자 심층 인사이트 5-6문장. ①에너지 가격 변화의 산업 파급 경로 ②국내 수혜/피해기업 2개 이상 실명+근거 ③해외 관련기업 1개 이상 ④투자 액션 명시 ⑤리스크 시나리오(지정학, 수요 감소, 정책 변화 등) 1개",
+  "key_insight_1": "핵심 인사이트 1 (40자 이내): 오늘 가장 중요한 투자 시그널. 예시: 'AI 전력 수요 급증→한국전력·LS일렉트릭 비중확대 시점'",
+  "key_insight_2": "핵심 인사이트 2 (40자 이내): 섹터 로테이션 또는 글로벌 자금흐름 관점의 핵심 메시지",
+  "key_insight_3": "핵심 인사이트 3 (40자 이내): 반드시 리스크 또는 주의사항. 예시: '미 연준 매파 발언 리스크→방어주 비중 유지 권고'",
   "news_summaries": [
     {{
       "category": "Finance 또는 AI/IT 또는 Energy",
-      "title": "뉴스 제목 한국어로",
-      "body": "3문장: 사실 요약, 왜 중요한지, 관련 기업이나 파급효과",
+      "title": "뉴스 제목 한국어로 (구체적이고 명확하게)",
+      "body": "4문장 해설: ①핵심 사실 요약(수치 포함) ②왜 지금 이 뉴스가 중요한지 맥락 ③국내 산업·기업에 미치는 영향 ④투자자가 주목해야 할 포인트",
       "original_index": 0
     }}
   ]
@@ -212,12 +242,19 @@ def generate_content(news_list):
 {news_text}
 """
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model="gpt-4.1",
         messages=[
-            {"role": "system", "content": "당신은 15년 경력의 한국인 금융·IT 시장 전문 애널리스트입니다. 모든 출력은 반드시 한국어로만 작성하세요."},
+            {
+                "role": "system",
+                "content": """당신은 20년 경력의 한국인 금융·IT·에너지 시장 수석 애널리스트입니다.
+모든 출력은 반드시 한국어로만 작성하세요.
+인사이트는 반드시 구체적인 수치, 기업명, 투자 액션을 포함해야 합니다.
+'전망이다', '주목된다' 같은 모호한 표현 대신 명확한 방향과 근거를 제시하세요.
+독자가 이 브리핑만 읽어도 오늘 투자 결정을 내릴 수 있을 만큼 구체적으로 작성하세요."""
+            },
             {"role": "user", "content": prompt}
         ],
-        max_tokens=5000
+        max_tokens=6000
     )
     text = response.choices[0].message.content
     text = re.sub(r'```json|```', '', text).strip()
@@ -464,9 +501,9 @@ def build_html(news_list, content, stock_data=None):
                 return s
         return translate_single(news_list[idx])
 
-    finance_cards = "".join([make_news_card(n, get_summary(news_list.index(n)), "finance") for n in finance_news[:3]])
-    tech_cards = "".join([make_news_card(n, get_summary(news_list.index(n)), "tech") for n in tech_news[:3]])
-    energy_cards = "".join([make_news_card(n, get_summary(news_list.index(n)), "energy") for n in energy_news[:3]])
+    finance_cards = "".join([make_news_card(n, get_summary(news_list.index(n)), "finance") for n in finance_news[:2]])
+    tech_cards = "".join([make_news_card(n, get_summary(news_list.index(n)), "tech") for n in tech_news[:2]])
+    energy_cards = "".join([make_news_card(n, get_summary(news_list.index(n)), "energy") for n in energy_news[:2]])
 
     # 주식 섹션 HTML
     stock_section_html = ""
