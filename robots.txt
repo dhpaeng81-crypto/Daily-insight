@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dhpaeng81-crypto.github.io/Daily-insight/sitemap.xml
