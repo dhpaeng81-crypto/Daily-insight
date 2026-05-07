@@ -110,6 +110,7 @@ RSS_FEEDS = [
     ("Finance", "https://finance.yahoo.com/news/rssindex"),
     ("Finance", "https://www.hankyung.com/feed/finance"),
     ("AI/IT", "https://techcrunch.com/category/artificial-intelligence/feed/"),
+    ("AI/IT", "https://www.google.com/alerts/feeds/05107057229753784254/3732380721941349610"),
     ("Energy", "https://feeds.reuters.com/reuters/businessNews"),
     ("Energy", "https://www.google.com/alerts/feeds/05107057229753784254/4810996089673190473")
 ]
