@@ -550,7 +550,7 @@ def build_html(news_list, content, stock_data=None):
     html = f'''<!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8"> 
 <meta name="google-site-verification" content="4z1YG668VEajfm1MyEU5V9KCZIb9AYbS5C3dQJ99FdM">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Daily Insight — {today}</title>
@@ -827,6 +827,106 @@ def build_archive():
         f.write(archive_html)
     print("archive.html updated")
 
+# =====================
+# 사이트맵 생성
+# =====================
+def build_sitemap():
+    site_url = "https://dhpaeng81-crypto.github.io/Daily-insight"
+    today = now_kst().strftime("%Y-%m-%d")
+
+    # 모든 브리핑 파일 목록
+    import glob
+    briefing_files = sorted(glob.glob("briefing_*.html"), reverse=True)
+    politics_files = sorted(glob.glob("politics_*.html"), reverse=True)
+
+    urls = []
+
+    # 메인 페이지
+    urls.append(f"""  <url>
+    <loc>{site_url}/index.html</loc>
+    <lastmod>{today}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>""")
+
+    # 아카이브 페이지
+    urls.append(f"""  <url>
+    <loc>{site_url}/archive.html</loc>
+    <lastmod>{today}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>""")
+
+    # 역사·정치 메인
+    urls.append(f"""  <url>
+    <loc>{site_url}/politics_index.html</loc>
+    <lastmod>{today}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>""")
+
+    # 역사·정치 아카이브
+    urls.append(f"""  <url>
+    <loc>{site_url}/politics_archive.html</loc>
+    <lastmod>{today}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>""")
+
+    # 개별 브리핑 페이지
+    for f in briefing_files:
+        date_str = f.replace("briefing_", "").replace(".html", "")
+        try:
+            from datetime import datetime as dt
+            date_obj = dt.strptime(date_str, "%Y%m%d")
+            lastmod = date_obj.strftime("%Y-%m-%d")
+            priority = "0.9" if f == briefing_files[0] else "0.6"
+            urls.append(f"""  <url>
+    <loc>{site_url}/{f}</loc>
+    <lastmod>{lastmod}</lastmod>
+    <changefreq>never</changefreq>
+    <priority>{priority}</priority>
+  </url>""")
+        except:
+            continue
+
+    # 개별 역사·정치 브리핑
+    for f in politics_files:
+        date_str = f.replace("politics_", "").replace(".html", "")
+        try:
+            from datetime import datetime as dt
+            date_obj = dt.strptime(date_str, "%Y%m%d")
+            lastmod = date_obj.strftime("%Y-%m-%d")
+            priority = "0.9" if f == politics_files[0] else "0.6"
+            urls.append(f"""  <url>
+    <loc>{site_url}/{f}</loc>
+    <lastmod>{lastmod}</lastmod>
+    <changefreq>never</changefreq>
+    <priority>{priority}</priority>
+  </url>""")
+        except:
+            continue
+
+    sitemap = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{chr(10).join(urls)}
+</urlset>"""
+
+    with open("sitemap.xml", "w", encoding="utf-8") as f:
+        f.write(sitemap)
+    print(f"sitemap.xml 생성 완료 ({len(urls)}개 URL)")
+
+    # robots.txt도 함께 생성
+    robots = f"""User-agent: *
+Allow: /
+
+Sitemap: {site_url}/sitemap.xml
+"""
+    with open("robots.txt", "w", encoding="utf-8") as f:
+        f.write(robots)
+    print("robots.txt 생성 완료")
+
+
 def push_to_github(files_to_push):
     if not GITHUB_TOKEN or not GITHUB_REPO:
         print("GitHub token or repo not set, skipping push")
@@ -893,14 +993,19 @@ if __name__ == "__main__":
     print("Step 5: Building archive...")
     build_archive()
 
-    print("Step 6: Pushing to GitHub...")
+    print("Step 6: Building sitemap...")
+    build_sitemap()
+
+    print("Step 7: Pushing to GitHub...")
     push_to_github([
         "index.html",
         "archive.html",
-        f"briefing_{today_num}.html"
+        f"briefing_{today_num}.html",
+        "sitemap.xml",
+        "robots.txt"
     ])
 
-    print("Step 7: Sending Telegram...")
+    print("Step 8: Sending Telegram...")
     send_telegram(today, filename)
 
     print("All done!")
