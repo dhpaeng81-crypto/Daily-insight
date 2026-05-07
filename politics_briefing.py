@@ -102,8 +102,27 @@ RSS_FEEDS = [
     ("International", "https://www.38north.org/feed/"),                       # 38North (북한)
 ]
 
+# =====================
+# 뉴스 중복 제거
+# =====================
+def is_duplicate(title, existing_titles, threshold=0.7):
+    words_new = set(re.findall(r"[가-힣a-zA-Z0-9]+", title.lower()))
+    if len(words_new) == 0:
+        return False
+    for existing in existing_titles:
+        words_exist = set(re.findall(r"[가-힣a-zA-Z0-9]+", existing.lower()))
+        if len(words_exist) == 0:
+            continue
+        overlap = len(words_new & words_exist)
+        similarity = overlap / max(len(words_new), len(words_exist))
+        if similarity >= threshold:
+            return True
+    return False
+
 def collect_news():
     all_news = []
+    seen_titles = []
+
     for category, url in RSS_FEEDS:
         try:
             feed = feedparser.parse(url)
@@ -114,6 +133,9 @@ def collect_news():
                     break
                 title = entry.get("title", "").strip()
                 if not title:
+                    continue
+                if is_duplicate(title, seen_titles):
+                    print(f"  중복 제거: {title[:30]}...")
                     continue
                 summary = re.sub('<[^>]+>', '', entry.get("summary", ""))[:200]
                 link = entry.get("link", "")
@@ -128,17 +150,18 @@ def collect_news():
                     "image": image,
                     "source": source_name
                 })
+                seen_titles.append(title)
                 count += 1
             print(f"OK: {category} ({source_name}) - {count}개 수집")
         except Exception as e:
             print(f"Error ({url}): {e}")
-    print(f"총 수집: {len(all_news)}개")
+    print(f"총 수집: {len(all_news)}개 (중복 제거 후)")
     return all_news
 
 def translate_single(news_item):
     client = OpenAI(api_key=OPENAI_API_KEY)
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gpt-4.1-mini",
         messages=[
             {"role": "system", "content": "한국어 번역가입니다. 반드시 한국어로만 답하세요."},
             {"role": "user", "content": f"아래 뉴스를 한국어로 번역하고 2-3문장으로 요약해주세요.\n\n제목: {news_item['title']}\n내용: {news_item['summary']}"}
@@ -168,41 +191,49 @@ def generate_content(news_list):
 """
 
     prompt = f"""
-당신은 대한민국 헌법적 가치와 자유민주주의를 수호하는 20년 경력의 역사학자이자 정치 평론가입니다.
-아래 뉴스를 바탕으로 역사·정치 브리핑 콘텐츠를 작성해주세요.
+당신은 대한민국 헌법적 가치와 자유민주주의를 수호하는 25년 경력의 역사학자이자 정치 평론가입니다.
+아래 뉴스를 바탕으로 KoreaInsight 역사·정치 브리핑의 고품질 콘텐츠를 작성해주세요.
+독자는 대한민국의 자유민주주의와 건국 정통성에 관심 있는 보수 성향의 지식인과 일반 시민입니다.
 
 {depth_instruction}
 
-[편집 원칙]
-1. 대한민국 건국 정통성(1948년 건국)과 자유민주주의 헌법 가치를 기준으로 분석
-2. 역사적 사실과 1차 사료, 통계, 공식 기록에 근거한 객관적 서술
-3. 좌파·진보 진영의 주장도 소개하되, 팩트에 근거한 명확한 반론 제시
+[편집 원칙 — 반드시 준수]
+1. 대한민국 건국 정통성(1948년 건국)과 자유민주주의 헌법 가치를 분석의 절대 기준으로 삼기
+2. 역사적 사실과 1차 사료, 통계, 공식 기록, 법원 판결에 근거한 객관적 서술
+3. 좌파·진보 진영의 주장도 소개하되, 팩트와 역사적 근거에 기반한 명확한 반론 제시
 4. 한미동맹 강화와 자유진영 연대 관점에서 국제 정세 해석
-5. 선동적·감정적 표현 배제, 논리와 근거 중심
-6. 주류 진보 언론의 프레임과 다른 보수적 시각 제시
-7. 역사적 선례: 현재 사건과 유사한 과거 사례 구체적으로 언급
+5. 선동적·감정적 표현 배제, 논리·근거·사료 중심
+6. 주류 진보 언론의 프레임과 다른 보수적 시각 제시 (단, 근거 없는 음모론 배제)
+7. 역사적 선례: 현재 사건과 유사한 과거 사례를 구체적 연도·인물·사건과 함께 언급
 8. 모든 출력은 반드시 한국어로만 작성
 9. news_summaries는 수집된 모든 뉴스 포함
 10. original_index는 [index:숫자] 값과 정확히 일치
 11. 반드시 아래 JSON 형식으로만 응답 (다른 텍스트 없이)
 
+[인사이트 품질 기준]
+- 사실 선언: "~이다/~였다" 형식으로 명확하게 단정 (모호한 "~로 보인다" 금지)
+- 역사 연결: 현재 사건을 반드시 과거 역사적 사례와 연결하여 해석
+- 반론 제시: 좌파 주장 인용 후 팩트 기반 반론 최소 1개 포함
+- 국제 시각: 한미동맹·자유진영 관점에서 국제 이슈 해석 필수
+- 헌법 기준: 헌법 조항이나 대법원·헌법재판소 판례 언급으로 법적 근거 제시
+
 {{
-  "hero_title": "오늘의 핵심 헤드라인 25자 이내",
-  "hero_desc": "오늘 브리핑의 핵심 메시지 60자 이내",
-  "today_summary": "오늘의 정치 지형 전반 요약 2-3문장. 헌법적 가치 관점에서의 현 상황 진단",
-  "politics_overview": "국내 정치 현안 흐름 2-3문장. 주요 이슈의 본질과 헌법적 의미 분석",
-  "politics_comment": "보수 관점 핵심 인사이트 3-4문장. 역사적 선례, 팩트 근거, 진보 주장에 대한 반론, 자유민주주의 관점의 평가 포함",
-  "international_overview": "국제 정세 흐름 2-3문장. 한미동맹·자유진영 관점에서의 분석",
-  "international_comment": "지정학적 인사이트 3-4문장. 한국의 국익 관점, 역사적 맥락, 안보 리스크 포함",
-  "history_insight": "오늘 이슈와 연결되는 역사적 교훈 3-4문장. 구체적인 역사적 사례와 날짜, 인물 반드시 포함",
-  "key_insight_1": "핵심 인사이트 1: 오늘의 가장 중요한 정치적 함의 (구체적 근거 포함)",
-  "key_insight_2": "핵심 인사이트 2: 국제 관계나 안보 관점의 핵심 메시지",
-  "key_insight_3": "핵심 인사이트 3: 역사적 교훈이나 향후 주목해야 할 포인트",
+  "hero_title": "오늘의 핵심 헤드라인 25자 이내 (구체적 사안·인물·사건명 포함)",
+  "hero_desc": "오늘 정치·역사 브리핑의 핵심 메시지 60자 이내 (헌법적 가치 관점 포함)",
+  "today_summary": "오늘의 정치 지형 전반 요약 4-5문장. 헌법적 가치 관점에서의 현 상황 진단과 역사적 위치 평가",
+  "politics_overview": "국내 정치 현안 흐름 4-5문장. 주요 이슈의 본질, 헌법적 의미, 관련 법령·판례 포함",
+  "politics_comment": "보수 관점 심층 인사이트 6-7문장. ①역사적 선례(구체적 연도·사건) ②팩트 근거 ③진보 주장 인용 후 반론 ④자유민주주의 헌법 가치 관점의 평가 ⑤향후 정치 전망",
+  "international_overview": "국제 정세 흐름 4-5문장. 한미동맹·자유진영 관점, 지정학적 변화, 한반도 안보 영향 포함",
+  "international_comment": "지정학적 심층 인사이트 6-7문장. ①한국의 국익 관점 ②역사적 맥락(냉전사·한국전쟁 등 연결) ③자유진영 연대의 필요성 ④안보 리스크 시나리오 ⑤대응 방향",
+  "history_insight": "오늘 이슈와 연결되는 역사적 교훈 5-6문장. ①구체적 역사 사례(연도·인물·사건 필수) ②당시 상황과 현재의 유사성 분석 ③역사가 주는 교훈 ④대한민국 자유민주주의 발전사와의 연결",
+  "key_insight_1": "핵심 인사이트 1 (40자 이내): 오늘의 가장 중요한 정치적 함의. 구체적 근거와 역사적 선례 포함",
+  "key_insight_2": "핵심 인사이트 2 (40자 이내): 국제 관계·한미동맹·안보 관점의 핵심 메시지",
+  "key_insight_3": "핵심 인사이트 3 (40자 이내): 역사적 교훈 또는 향후 주목해야 할 위험 신호",
   "news_summaries": [
     {{
       "category": "Politics 또는 International",
-      "title": "뉴스 제목 한국어로",
-      "body": "3문장: 사실 요약, 헌법적/역사적 의미, 자유민주주의 관점 평가",
+      "title": "뉴스 제목 한국어로 (구체적이고 명확하게)",
+      "body": "4문장 해설: ①핵심 사실 요약 ②헌법적·역사적 의미와 맥락 ③자유민주주의 관점의 평가 ④독자가 주목해야 할 포인트",
       "original_index": 0
     }}
   ]
@@ -212,15 +243,19 @@ def generate_content(news_list):
 {news_text}
 """
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model="gpt-4.1",
         messages=[
             {
                 "role": "system",
-                "content": "당신은 대한민국 헌법적 가치와 자유민주주의를 수호하는 역사학자이자 정치 평론가입니다. 모든 분석은 반드시 한국어로 작성하세요."
+                "content": """당신은 대한민국 헌법적 가치와 자유민주주의를 수호하는 25년 경력의 역사학자이자 정치 평론가입니다.
+모든 분석은 반드시 한국어로 작성하세요.
+사실에 근거한 보수적 관점의 깊이 있는 분석을 제공하되, 근거 없는 주장은 배제하세요.
+역사적 선례와 헌법적 가치를 중심으로 논리적으로 서술하세요.
+독자가 이 브리핑 하나로 오늘의 정치 지형을 명확히 이해할 수 있도록 구체적으로 작성하세요."""
             },
             {"role": "user", "content": prompt}
         ],
-        max_tokens=5000
+        max_tokens=6000
     )
     text = response.choices[0].message.content
     text = re.sub(r'```json|```', '', text).strip()
@@ -395,8 +430,8 @@ def build_html(news_list, content):
                 return s
         return translate_single(news_list[idx])
 
-    politics_cards = "".join([make_news_card(n, get_summary(news_list.index(n)), "politics") for n in politics_news[:3]])
-    international_cards = "".join([make_news_card(n, get_summary(news_list.index(n)), "international") for n in international_news[:3]])
+    politics_cards = "".join([make_news_card(n, get_summary(news_list.index(n)), "politics") for n in politics_news[:2]])
+    international_cards = "".join([make_news_card(n, get_summary(news_list.index(n)), "international") for n in international_news[:2]])
 
     hero_title = content.get("hero_title", "오늘의 KoreaInsight")
     hero_desc = content.get("hero_desc", "자유민주주의 관점의 역사·정치 브리핑")
