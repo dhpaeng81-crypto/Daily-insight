@@ -119,7 +119,6 @@ RSS_FEEDS = [
 # 뉴스 중복 제거 (제목 유사도 기반)
 # =====================
 def is_duplicate(title, existing_titles, threshold=0.7):
-    """제목 단어 겹침 비율이 threshold 이상이면 중복으로 판단"""
     words_new = set(re.findall(r"[가-힣a-zA-Z0-9]+", title.lower()))
     if len(words_new) == 0:
         return False
@@ -135,7 +134,7 @@ def is_duplicate(title, existing_titles, threshold=0.7):
 
 def collect_news():
     all_news = []
-    seen_titles = []  # 중복 체크용
+    seen_titles = []
 
     for category, url in RSS_FEEDS:
         try:
@@ -148,18 +147,14 @@ def collect_news():
                 title = entry.get("title", "").strip()
                 if not title:
                     continue
-
-                # 중복 뉴스 건너뜀
                 if is_duplicate(title, seen_titles):
                     print(f"  중복 제거: {title[:30]}...")
                     continue
-
                 summary = re.sub('<[^>]+>', '', entry.get("summary", ""))[:200]
                 link = entry.get("link", "")
                 image = extract_image(entry)
                 if not image:
                     image = get_unsplash_image(category, " ".join(title.split()[:3]))
-
                 all_news.append({
                     "category": category,
                     "title": title,
@@ -188,6 +183,9 @@ def translate_single(news_item):
     )
     return {"title": news_item["title"], "body": response.choices[0].message.content}
 
+# =====================
+# 한국어 콘텐츠 생성
+# =====================
 def generate_content(news_list):
     client = OpenAI(api_key=OPENAI_API_KEY)
     news_text = ""
@@ -225,9 +223,9 @@ def generate_content(news_list):
   "tech_comment": "AI·IT 투자 심층 인사이트 5-6문장. ①기술 변화로 수혜받는 국내 산업군 ②국내 수혜기업 2개 이상 실명+근거 ③해외 선도기업 1개 이상 ④투자 액션 명시 ⑤리스크 시나리오(기술 실패, 규제, 경쟁 심화 등) 1개",
   "energy_overview": "에너지 시장 전반 흐름 4-5문장. 유가·가스·전력 가격 방향성과 수치, 재생에너지 동향, 글로벌 수급 변화 포함",
   "energy_comment": "에너지·산업 투자 심층 인사이트 5-6문장. ①에너지 가격 변화의 산업 파급 경로 ②국내 수혜/피해기업 2개 이상 실명+근거 ③해외 관련기업 1개 이상 ④투자 액션 명시 ⑤리스크 시나리오(지정학, 수요 감소, 정책 변화 등) 1개",
-  "key_insight_1": "핵심 인사이트 1 (40자 이내): 오늘 가장 중요한 투자 시그널. 예시: 'AI 전력 수요 급증→한국전력·LS일렉트릭 비중확대 시점'",
+  "key_insight_1": "핵심 인사이트 1 (40자 이내): 오늘 가장 중요한 투자 시그널",
   "key_insight_2": "핵심 인사이트 2 (40자 이내): 섹터 로테이션 또는 글로벌 자금흐름 관점의 핵심 메시지",
-  "key_insight_3": "핵심 인사이트 3 (40자 이내): 반드시 리스크 또는 주의사항. 예시: '미 연준 매파 발언 리스크→방어주 비중 유지 권고'",
+  "key_insight_3": "핵심 인사이트 3 (40자 이내): 반드시 리스크 또는 주의사항",
   "news_summaries": [
     {{
       "category": "Finance 또는 AI/IT 또는 Energy",
@@ -260,6 +258,86 @@ def generate_content(news_list):
     text = re.sub(r'```json|```', '', text).strip()
     return json.loads(text)
 
+# =====================
+# 영문 콘텐츠 생성
+# =====================
+def generate_content_en(news_list, ko_content):
+    client = OpenAI(api_key=OPENAI_API_KEY)
+    news_text = ""
+    for i, n in enumerate(news_list):
+        news_text += f"[index:{i}][{n['category']}] {n['title']}\n{n['summary']}\n\n"
+
+    ko_ref = f"""
+Korean version reference (translate and adapt naturally into English):
+- Hero title: {ko_content.get('hero_title', '')}
+- Hero desc: {ko_content.get('hero_desc', '')}
+- Finance overview: {ko_content.get('finance_overview', '')}
+- Finance comment: {ko_content.get('finance_comment', '')}
+- Tech overview: {ko_content.get('tech_overview', '')}
+- Tech comment: {ko_content.get('tech_comment', '')}
+- Energy overview: {ko_content.get('energy_overview', '')}
+- Energy comment: {ko_content.get('energy_comment', '')}
+- Key insight 1: {ko_content.get('key_insight_1', '')}
+- Key insight 2: {ko_content.get('key_insight_2', '')}
+- Key insight 3: {ko_content.get('key_insight_3', '')}
+"""
+
+    prompt = f"""
+You are a senior financial analyst and investment newsletter editor with 20 years of experience in Korean and global markets.
+Based on the Korean version reference and news data below, create the English version of Daily Insight briefing.
+Adapt Korean market context for international readers (briefly explain Korean companies/indices when needed).
+
+[Rules]
+- Write everything in natural, professional English
+- Keep the same analytical depth as the Korean version
+- Include specific figures, company names, and investment actions
+- Respond ONLY in JSON format (no other text)
+
+{ko_ref}
+
+{{
+  "hero_title": "Today's headline under 15 words (include figures or company names)",
+  "hero_desc": "One-line summary of today's key market theme under 20 words",
+  "finance_overview": "4-5 sentences on financial market overview with specific index movements, sector performance, and macro environment",
+  "finance_comment": "5-6 sentences of financial investment insights: ①benefiting sectors ②2+ Korean companies with rationale ③1+ global company ④investment action (buy/hold/reduce) ⑤risk scenario",
+  "tech_overview": "4-5 sentences on AI/IT market trends with tech developments, key companies, growth figures, and impact on Korean industry",
+  "tech_comment": "5-6 sentences of AI/IT investment insights: ①Korean industries benefiting ②2+ Korean companies ③1+ global leader ④investment action ⑤risk scenario",
+  "energy_overview": "4-5 sentences on energy market trends with oil/gas/power price direction and global supply-demand",
+  "energy_comment": "5-6 sentences of energy investment insights: ①industry impact chain ②2+ Korean companies ③1+ global company ④investment action ⑤risk scenario",
+  "key_insight_1": "Key insight 1 (under 20 words): Most important investment signal today",
+  "key_insight_2": "Key insight 2 (under 20 words): Sector rotation or global capital flow message",
+  "key_insight_3": "Key insight 3 (under 20 words): Risk warning or caution point",
+  "news_summaries": [
+    {{
+      "category": "Finance or AI/IT or Energy",
+      "title": "News title in clear English",
+      "body": "4 sentences: ①key facts with figures ②why this matters now ③impact on Korean industry/companies ④what investors should watch",
+      "original_index": 0
+    }}
+  ]
+}}
+
+News data:
+{news_text}
+"""
+    response = client.chat.completions.create(
+        model="gpt-4.1-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a senior financial analyst specializing in Korean and Asian markets. Write in professional, clear English. Include specific figures, company names, and actionable investment insights."
+            },
+            {"role": "user", "content": prompt}
+        ],
+        max_tokens=5000
+    )
+    text = response.choices[0].message.content
+    text = re.sub(r'```json|```', '', text).strip()
+    return json.loads(text)
+
+# =====================
+# 뉴스 카드 (한국어)
+# =====================
 def make_news_card(news_item, summary, category_class):
     return f'''
     <div class="news-card">
@@ -279,6 +357,31 @@ def make_news_card(news_item, summary, category_class):
         </div>
         <div class="news-body">{summary['body']}</div>
         <a href="{news_item['link']}" class="read-more" target="_blank">원문 읽기 →</a>
+      </div>
+    </div>'''
+
+# =====================
+# 뉴스 카드 (영문)
+# =====================
+def make_news_card_en(news_item, summary, category_class):
+    return f'''
+    <div class="news-card">
+      <div class="news-thumb">
+        <img src="{news_item['image']}" alt="{summary['title']}" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
+      </div>
+      <div class="news-content">
+        <div class="news-source-row">
+          <span class="news-source">
+            <span class="news-category-dot {category_class}"></span>
+            {news_item['source']}
+          </span>
+        </div>
+        <div class="news-title">
+          <a href="{news_item['link']}" target="_blank">{summary['title']}</a>
+        </div>
+        <div class="news-body">{summary['body']}</div>
+        <a href="{news_item['link']}" class="read-more" target="_blank">Read original →</a>
       </div>
     </div>'''
 
@@ -354,52 +457,64 @@ def make_stock_card(stock_info, analysis, card_type="surge"):
       </div>
     </div>'''
 
-def get_share_buttons_html(title, url):
+# =====================
+# 공유 버튼
+# =====================
+def get_share_buttons_html(title, url, lang="ko"):
     eu = requests.utils.quote(url, safe='')
     et = requests.utils.quote(title, safe='')
     twitter_url = f"https://twitter.com/intent/tweet?text={et}&url={eu}"
+    share_label = "이 브리핑 공유하기" if lang == "ko" else "Share This Briefing"
+    share_x = "X에 공유" if lang == "ko" else "Share on X"
+    copy_label = "링크 복사" if lang == "ko" else "Copy Link"
+    copied_label = "복사됨 ✓" if lang == "ko" else "Copied ✓"
+    fn_name = f"copyLink_{lang}"
+    btn_id = f"copy-text-{lang}"
     return f'''
 <div class="share-section">
-  <div class="share-label">이 브리핑 공유하기</div>
+  <div class="share-label">{share_label}</div>
   <div class="share-buttons">
     <a class="share-btn twitter" href="{twitter_url}" target="_blank" rel="noopener">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
       </svg>
-      X에 공유
+      {share_x}
     </a>
-    <button class="share-btn copy" onclick="copyLink()">
+    <button class="share-btn copy" onclick="{fn_name}()">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
         <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
       </svg>
-      <span id="copy-text">링크 복사</span>
+      <span id="{btn_id}">{copy_label}</span>
     </button>
   </div>
 </div>
 <script>
-function copyLink() {{
+function {fn_name}() {{
   const url = '{url}';
   if (navigator.clipboard && window.isSecureContext) {{
     navigator.clipboard.writeText(url).then(() => {{
-      const btn = document.getElementById('copy-text');
-      btn.textContent = '복사됨 ✓';
+      const btn = document.getElementById('{btn_id}');
+      btn.textContent = '{copied_label}';
       btn.parentElement.style.background = '#0f766e';
       btn.parentElement.style.color = '#fff';
       btn.parentElement.style.borderColor = '#0f766e';
-      setTimeout(() => {{ btn.textContent = '링크 복사'; btn.parentElement.style.background = ''; btn.parentElement.style.color = ''; btn.parentElement.style.borderColor = ''; }}, 2000);
+      setTimeout(() => {{ btn.textContent = '{copy_label}'; btn.parentElement.style.background = ''; btn.parentElement.style.color = ''; btn.parentElement.style.borderColor = ''; }}, 2000);
     }});
   }} else {{
     const t = document.createElement('textarea');
     t.value = url; t.style.position = 'fixed'; t.style.opacity = '0';
     document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t);
-    const btn = document.getElementById('copy-text');
-    btn.textContent = '복사됨 ✓';
-    setTimeout(() => {{ btn.textContent = '링크 복사'; }}, 2000);
+    const btn = document.getElementById('{btn_id}');
+    btn.textContent = '{copied_label}';
+    setTimeout(() => {{ btn.textContent = '{copy_label}'; }}, 2000);
   }}
 }}
 </script>'''
 
+# =====================
+# 공통 CSS
+# =====================
 def get_common_css():
     return '''
 @import url('https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css');
@@ -427,6 +542,9 @@ a { color: inherit; text-decoration: none; }
 .header-nav a:hover { background: var(--bg-subtle); color: var(--ink); }
 .header-nav .active { color: var(--accent); background: var(--accent-light); }
 .header-nav .divider { width: 1px; height: 16px; background: var(--border); margin: 0 4px; }
+.lang-btn { padding: 5px 10px !important; font-size: 12px !important; font-weight: 800 !important; border: 1.5px solid var(--border) !important; border-radius: 6px !important; color: var(--ink-soft) !important; }
+.lang-btn:hover { border-color: var(--accent) !important; color: var(--accent) !important; background: var(--accent-light) !important; }
+.lang-btn.active { border-color: var(--accent) !important; color: var(--accent) !important; background: var(--accent-light) !important; }
 .site-footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
 .footer-inner { max-width: 780px; margin: 0 auto; }
 .footer-logo { font-family: var(--font); font-size: 16px; font-weight: 800; margin-bottom: 8px; }
@@ -441,24 +559,48 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 600px) { .header-meta { display: none; } }
 '''
 
-def get_header_html(active="briefing"):
+# =====================
+# 헤더/푸터 — KO/EN 버튼 포함
+# =====================
+def get_header_html(active="briefing", lang="ko"):
     d_class = "active" if active == "briefing" else ""
     a_class = "active" if active == "archive" else ""
+    if lang == "ko":
+        logo_href = "index.html"
+        briefing_href = "index.html"
+        archive_href = "archive.html"
+        briefing_label = "금융·AI·에너지"
+        archive_label = "아카이브"
+        ko_class = "lang-btn active"
+        en_class = "lang-btn"
+    else:
+        logo_href = "index_en.html"
+        briefing_href = "index_en.html"
+        archive_href = "archive_en.html"
+        briefing_label = "Finance·AI·Energy"
+        archive_label = "Archive"
+        ko_class = "lang-btn"
+        en_class = "lang-btn active"
+
     return f'''
 <header class="site-header">
   <div class="header-inner">
-    <div class="logo"><a href="index.html">Daily<span>Insight</span></a></div>
+    <div class="logo"><a href="{logo_href}">Daily<span>Insight</span></a></div>
     <nav class="header-nav">
-      <a href="index.html" class="{d_class}">금융·AI·에너지</a>
-      <a href="archive.html" class="{a_class}">아카이브</a>
+      <a href="{briefing_href}" class="{d_class}">{briefing_label}</a>
+      <a href="{archive_href}" class="{a_class}">{archive_label}</a>
       <div class="divider"></div>
-      <a href="politics_index.html">역사·정치</a>
+      <a href="politics_index.html">{"역사·정치" if lang == "ko" else "History·Politics"}</a>
+      <div class="divider"></div>
+      <a href="index.html" class="{ko_class}">KO</a>
+      <a href="index_en.html" class="{en_class}">EN</a>
     </nav>
   </div>
 </header>'''
 
-def get_footer_html():
-    return '''
+def get_footer_html(lang="ko"):
+    if lang == "ko":
+        return '''
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-logo">Daily<span>Insight</span></div>
@@ -467,19 +609,49 @@ def get_footer_html():
       <a href="index.html">금융·AI·에너지</a>
       <a href="archive.html">아카이브</a>
       <a href="politics_index.html">역사·정치 브리핑</a>
+      <a href="index_en.html">English</a>
+    </div>
+  </div>
+</footer>'''
+    else:
+        return '''
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Daily<span>Insight</span></div>
+    <div class="footer-desc">Daily briefing for investors — Published every morning at 7AM KST</div>
+    <div class="footer-links">
+      <a href="index_en.html">Finance·AI·Energy</a>
+      <a href="archive_en.html">Archive</a>
+      <a href="politics_index.html">History·Politics</a>
+      <a href="index.html">한국어</a>
     </div>
   </div>
 </footer>'''
 
-def build_html(news_list, content, stock_data=None):
-    today = now_kst().strftime("%Y년 %m월 %d일")
+# =====================
+# HTML 생성 (한국어 / 영문 공통)
+# =====================
+def build_html(news_list, content, stock_data=None, lang="ko"):
+    today_ko = now_kst().strftime("%Y년 %m월 %d일")
+    today_en = now_kst().strftime("%B %d, %Y")
     today_num = now_kst().strftime("%Y%m%d")
     site_url = "https://dhpaeng81-crypto.github.io/Daily-insight"
-    page_url = f"{site_url}/index.html"
 
+    if lang == "ko":
+        page_url = f"{site_url}/index.html"
+        alt_url  = f"{site_url}/index_en.html"
+        title    = f"Daily Insight — {today_ko}"
+        html_lang = "ko"
+    else:
+        page_url = f"{site_url}/index_en.html"
+        alt_url  = f"{site_url}/index.html"
+        title    = f"Daily Insight — {today_en}"
+        html_lang = "en"
+
+    # 뉴스 분류
     finance_news = [n for n in news_list if n["category"] == "Finance"]
-    tech_news = [n for n in news_list if n["category"] == "AI/IT"]
-    energy_news = [n for n in news_list if n["category"] == "Energy"]
+    tech_news    = [n for n in news_list if n["category"] == "AI/IT"]
+    energy_news  = [n for n in news_list if n["category"] == "Energy"]
 
     summaries = content.get("news_summaries", [])
     summaries_by_index = {}
@@ -495,35 +667,28 @@ def build_html(news_list, content, stock_data=None):
         if idx in summaries_by_index:
             return summaries_by_index[idx]
         orig_title = news_list[idx]["title"].lower()
-        for title, s in summaries_by_title.items():
-            words = title.split()[:3]
-            if words and any(word in orig_title for word in words):
+        for t, s in summaries_by_title.items():
+            words = t.split()[:3]
+            if words and any(w in orig_title for w in words):
                 return s
         return translate_single(news_list[idx])
 
-    finance_cards = "".join([make_news_card(n, get_summary(news_list.index(n)), "finance") for n in finance_news[:2]])
-    tech_cards = "".join([make_news_card(n, get_summary(news_list.index(n)), "tech") for n in tech_news[:2]])
-    energy_cards = "".join([make_news_card(n, get_summary(news_list.index(n)), "energy") for n in energy_news[:2]])
+    card_fn = make_news_card_en if lang == "en" else make_news_card
+    finance_cards = "".join([card_fn(n, get_summary(news_list.index(n)), "finance") for n in finance_news[:2]])
+    tech_cards    = "".join([card_fn(n, get_summary(news_list.index(n)), "tech")    for n in tech_news[:2]])
+    energy_cards  = "".join([card_fn(n, get_summary(news_list.index(n)), "energy")  for n in energy_news[:2]])
 
-    # 주식 섹션 HTML
+    # 주식 섹션 (한국어 전용)
     stock_section_html = ""
-    if stock_data:
-        surge_card = make_stock_card(
-            stock_data.get("surge_stock"),
-            stock_data.get("surge_analysis"),
-            "surge"
-        )
-        foreign_card = make_stock_card(
-            stock_data.get("foreign_stock"),
-            stock_data.get("foreign_analysis"),
-            "foreign"
-        )
+    if stock_data and lang == "ko":
+        surge_card   = make_stock_card(stock_data.get("surge_stock"),   stock_data.get("surge_analysis"),   "surge")
+        foreign_card = make_stock_card(stock_data.get("foreign_stock"), stock_data.get("foreign_analysis"), "foreign")
         if surge_card or foreign_card:
             date_str = stock_data.get("date", "")
             stock_date_display = ""
             if date_str:
                 from datetime import datetime as dt2
-                d = dt2.strptime(date_str, "%Y%m%d")
+                d  = dt2.strptime(date_str, "%Y%m%d")
                 wd = ["월","화","수","목","금","토","일"][d.weekday()]
                 stock_date_display = f"{d.strftime('%Y년 %m월 %d일')} ({wd}요일)"
             stock_section_html = f'''
@@ -542,23 +707,45 @@ def build_html(news_list, content, stock_data=None):
     ⚠️ 본 분석은 투자 권유가 아닙니다. 투자 결과에 대한 책임은 투자자 본인에게 있습니다.
   </div>'''
 
-    hero_title = content.get("hero_title", "오늘의 Daily Insight")
-    hero_desc = content.get("hero_desc", "")
-    share_buttons = get_share_buttons_html(hero_title, page_url)
+    hero_title = content.get("hero_title", "Daily Insight")
+    hero_desc  = content.get("hero_desc", "")
+    share_buttons = get_share_buttons_html(hero_title, page_url, lang)
     common_css = get_common_css()
 
+    # 언어별 텍스트
+    if lang == "ko":
+        badge_text   = "오늘의 브리핑"
+        tag1,tag2,tag3,tag4 = "💹 금융 시장","🤖 AI · IT","⚡ 에너지","📈 특징주"
+        s_finance    = ("Finance","금융 시장")
+        s_tech       = ("Tech","AI · IT 트렌드")
+        s_energy     = ("Energy","에너지 · 산업")
+        insight_lbl  = "💡 애널리스트 인사이트"
+        summary_lbl  = "오늘의 핵심 인사이트"
+        summary_ttl  = "오늘 꼭 기억할 3가지"
+    else:
+        badge_text   = "Today's Briefing"
+        tag1,tag2,tag3,tag4 = "💹 Finance","🤖 AI · Tech","⚡ Energy","📈 Stocks"
+        s_finance    = ("Finance","Financial Markets")
+        s_tech       = ("Tech","AI · Tech Trends")
+        s_energy     = ("Energy","Energy · Industry")
+        insight_lbl  = "💡 Analyst Insights"
+        summary_lbl  = "Today's Key Insights"
+        summary_ttl  = "3 Things to Remember Today"
+
     html = f'''<!DOCTYPE html>
-<html lang="ko">
+<html lang="{html_lang}">
 <head>
-<meta charset="UTF-8"> 
+<meta charset="UTF-8">
 <meta name="google-site-verification" content="4z1YG668VEajfm1MyEU5V9KCZIb9AYbS5C3dQJ99FdM">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Daily Insight — {today}</title>
-<meta property="og:title" content="Daily Insight — {today}">
+<title>{title}</title>
+<meta property="og:title" content="{title}">
 <meta property="og:description" content="{hero_desc}">
 <meta property="og:image" content="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80">
 <meta property="og:url" content="{page_url}">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" hreflang="{html_lang}" href="{page_url}">
+<link rel="alternate" hreflang="{'en' if html_lang=='ko' else 'ko'}" href="{alt_url}">
 <style>
 {common_css}
 .hero {{ max-width: 780px; margin: 0 auto; padding: 56px 24px 40px; border-bottom: 1px solid var(--border); }}
@@ -605,8 +792,6 @@ def build_html(news_list, content, stock_data=None):
 .summary-list {{ list-style: none; display: flex; flex-direction: column; gap: 14px; }}
 .summary-list li {{ display: grid; grid-template-columns: 28px 1fr; gap: 12px; font-size: 14px; color: #d4d4d8; line-height: 1.65; }}
 .summary-num {{ font-family: var(--font); font-size: 20px; font-weight: 800; color: var(--accent-light); line-height: 1.2; opacity: 0.6; }}
-
-/* 주식 특징주 카드 스타일 */
 .stock-list {{ display: flex; flex-direction: column; gap: 20px; margin-bottom: 24px; }}
 .stock-card {{ background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }}
 .stock-card-header {{ padding: 20px 24px; border-bottom: 1px solid var(--border); }}
@@ -630,7 +815,6 @@ def build_html(news_list, content, stock_data=None):
 .analysis-label {{ font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }}
 .analysis-text {{ font-size: 14px; color: var(--ink); line-height: 1.8; }}
 .stock-disclaimer {{ font-size: 12px; color: var(--ink-muted); text-align: center; padding: 12px; background: var(--bg-subtle); border-radius: 8px; margin-bottom: 48px; }}
-
 .share-section {{ border-top: 1px solid var(--border); padding-top: 32px; margin-bottom: 48px; text-align: center; }}
 .share-label {{ font-size: 12px; color: var(--ink-muted); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; margin-bottom: 16px; }}
 .share-buttons {{ display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }}
@@ -668,60 +852,60 @@ def build_html(news_list, content, stock_data=None):
 </style>
 </head>
 <body>
-{get_header_html("briefing")}
+{get_header_html("briefing", lang)}
 
 <section class="hero">
-  <div class="issue-badge">오늘의 브리핑</div>
+  <div class="issue-badge">{badge_text}</div>
   <h1 class="hero-title">{hero_title}</h1>
   <p class="hero-desc">{hero_desc}</p>
   <div class="hero-tags">
-    <span class="tag">💹 금융 시장</span>
-    <span class="tag">🤖 AI · IT</span>
-    <span class="tag">⚡ 에너지</span>
-    <span class="tag">📈 특징주</span>
+    <span class="tag">{tag1}</span>
+    <span class="tag">{tag2}</span>
+    <span class="tag">{tag3}</span>
+    <span class="tag">{tag4}</span>
   </div>
 </section>
 
 <main class="main">
   <div class="section-header">
-    <span class="section-pill finance">Finance</span>
-    <span class="section-title">금융 시장</span>
+    <span class="section-pill finance">{s_finance[0]}</span>
+    <span class="section-title">{s_finance[1]}</span>
   </div>
   <p class="section-overview">{content.get("finance_overview", "")}</p>
   <div class="news-list">{finance_cards}</div>
   <div class="analyst-note">
-    <div class="analyst-label">💡 애널리스트 인사이트</div>
+    <div class="analyst-label">{insight_lbl}</div>
     <div class="analyst-text">{content.get("finance_comment", "")}</div>
   </div>
   <div class="section-divider"></div>
 
   <div class="section-header">
-    <span class="section-pill tech">Tech</span>
-    <span class="section-title">AI · IT 트렌드</span>
+    <span class="section-pill tech">{s_tech[0]}</span>
+    <span class="section-title">{s_tech[1]}</span>
   </div>
   <p class="section-overview">{content.get("tech_overview", "")}</p>
   <div class="news-list">{tech_cards}</div>
   <div class="analyst-note">
-    <div class="analyst-label">💡 애널리스트 인사이트</div>
+    <div class="analyst-label">{insight_lbl}</div>
     <div class="analyst-text">{content.get("tech_comment", "")}</div>
   </div>
   <div class="section-divider"></div>
 
   <div class="section-header">
-    <span class="section-pill energy">Energy</span>
-    <span class="section-title">에너지 · 산업</span>
+    <span class="section-pill energy">{s_energy[0]}</span>
+    <span class="section-title">{s_energy[1]}</span>
   </div>
   <p class="section-overview">{content.get("energy_overview", "")}</p>
   <div class="news-list">{energy_cards}</div>
   <div class="analyst-note">
-    <div class="analyst-label">💡 애널리스트 인사이트</div>
+    <div class="analyst-label">{insight_lbl}</div>
     <div class="analyst-text">{content.get("energy_comment", "")}</div>
   </div>
   <div class="section-divider"></div>
 
   <div class="summary-box">
-    <div class="summary-label">오늘의 핵심 인사이트</div>
-    <div class="summary-title">오늘 꼭 기억할 3가지</div>
+    <div class="summary-label">{summary_lbl}</div>
+    <div class="summary-title">{summary_ttl}</div>
     <ol class="summary-list">
       <li><span class="summary-num">1</span><span>{content.get("key_insight_1", "")}</span></li>
       <li><span class="summary-num">2</span><span>{content.get("key_insight_2", "")}</span></li>
@@ -730,43 +914,75 @@ def build_html(news_list, content, stock_data=None):
   </div>
 
   {stock_section_html}
-
   {share_buttons}
 </main>
 
-{get_footer_html()}
+{get_footer_html(lang)}
 </body>
 </html>'''
 
-    filename = f"briefing_{today_num}.html"
-    with open(filename, "w", encoding="utf-8") as f:
-        f.write(html)
-    print(f"HTML saved: {filename}")
-    with open("index.html", "w", encoding="utf-8") as f:
-        f.write(html)
-    print("index.html updated")
-    return filename
+    # 파일 저장
+    if lang == "ko":
+        filename = f"briefing_{today_num}.html"
+        with open(filename, "w", encoding="utf-8") as f:
+            f.write(html)
+        with open("index.html", "w", encoding="utf-8") as f:
+            f.write(html)
+        print(f"KO saved: {filename}, index.html")
+        return filename
+    else:
+        filename_en = f"briefing_en_{today_num}.html"
+        with open(filename_en, "w", encoding="utf-8") as f:
+            f.write(html)
+        with open("index_en.html", "w", encoding="utf-8") as f:
+            f.write(html)
+        print(f"EN saved: {filename_en}, index_en.html")
+        return filename_en
 
-def build_archive():
-    files = sorted(glob.glob("briefing_*.html"), reverse=True)
+# =====================
+# 아카이브 생성 (한국어 / 영문)
+# =====================
+def build_archive(lang="ko"):
+    if lang == "ko":
+        files        = sorted(glob.glob("briefing_[0-9]*.html"), reverse=True)
+        archive_file = "archive.html"
+        archive_lbl  = "아카이브"
+        archive_ttl  = "지난 브리핑 모아보기"
+        archive_dsc  = "매일 오전 7시 발행된 Daily Insight 브리핑을 날짜별로 확인하세요."
+        count_lbl    = f"총 {len(files)}개의 브리핑"
+        today_lbl    = "오늘"
+    else:
+        files        = sorted(glob.glob("briefing_en_[0-9]*.html"), reverse=True)
+        archive_file = "archive_en.html"
+        archive_lbl  = "Archive"
+        archive_ttl  = "Past Briefings"
+        archive_dsc  = "Browse all Daily Insight briefings published every morning at 7AM KST."
+        count_lbl    = f"{len(files)} briefings total"
+        today_lbl    = "Today"
+
     archive_items = ""
     for f in files:
-        date_str = f.replace("briefing_", "").replace(".html", "")
+        prefix   = "briefing_en_" if lang == "en" else "briefing_"
+        date_str = f.replace(prefix, "").replace(".html", "")
         try:
             date_obj = datetime.strptime(date_str, "%Y%m%d")
-            date_display = date_obj.strftime("%Y년 %m월 %d일")
-            weekday = ["월", "화", "수", "목", "금", "토", "일"][date_obj.weekday()]
+            if lang == "ko":
+                date_display = date_obj.strftime("%Y년 %m월 %d일")
+                wd_str = ["월","화","수","목","금","토","일"][date_obj.weekday()] + "요일"
+            else:
+                date_display = date_obj.strftime("%B %d, %Y")
+                wd_str = date_obj.strftime("%a")
             with open(f, "r", encoding="utf-8") as fp:
                 html_content = fp.read()
             title_match = re.search(r'<h1 class="hero-title">(.*?)</h1>', html_content, re.DOTALL)
-            hero_title = title_match.group(1).strip() if title_match else "Daily Insight 브리핑"
-            is_today = date_str == now_kst().strftime("%Y%m%d")
-            today_badge = '<span class="today-badge">오늘</span>' if is_today else ''
+            hero_title  = title_match.group(1).strip() if title_match else "Daily Insight"
+            is_today    = date_str == now_kst().strftime("%Y%m%d")
+            today_badge = f'<span class="today-badge">{today_lbl}</span>' if is_today else ''
             archive_items += f'''
       <a href="{f}" class="archive-card">
         <div class="archive-date">
           <span class="archive-date-num">{date_obj.strftime("%m.%d")}</span>
-          <span class="archive-weekday">{weekday}요일</span>
+          <span class="archive-weekday">{wd_str}</span>
         </div>
         <div class="archive-info">
           <div class="archive-title">{hero_title} {today_badge}</div>
@@ -777,13 +993,14 @@ def build_archive():
         except Exception as e:
             print(f"Archive item error ({f}): {e}")
 
-    common_css = get_common_css()
+    common_css   = get_common_css()
+    html_lang_attr = "ko" if lang == "ko" else "en"
     archive_html = f'''<!DOCTYPE html>
-<html lang="ko">
+<html lang="{html_lang_attr}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Daily Insight — 아카이브</title>
+<title>Daily Insight — {archive_lbl}</title>
 <style>
 {common_css}
 .archive-hero {{ max-width: 780px; margin: 0 auto; padding: 56px 24px 40px; border-bottom: 1px solid var(--border); }}
@@ -809,114 +1026,79 @@ def build_archive():
 </style>
 </head>
 <body>
-{get_header_html("archive")}
+{get_header_html("archive", lang)}
 <section class="archive-hero">
-  <div class="archive-hero-label">아카이브</div>
-  <h1 class="archive-hero-title">지난 브리핑 모아보기</h1>
-  <p class="archive-hero-desc">매일 오전 7시 발행된 Daily Insight 브리핑을 날짜별로 확인하세요.</p>
+  <div class="archive-hero-label">{archive_lbl}</div>
+  <h1 class="archive-hero-title">{archive_ttl}</h1>
+  <p class="archive-hero-desc">{archive_dsc}</p>
 </section>
 <main class="archive-main">
-  <div class="archive-count">총 {len(files)}개의 브리핑</div>
+  <div class="archive-count">{count_lbl}</div>
   <div class="archive-list">{archive_items}</div>
 </main>
-{get_footer_html()}
+{get_footer_html(lang)}
 </body>
 </html>'''
 
-    with open("archive.html", "w", encoding="utf-8") as f:
+    with open(archive_file, "w", encoding="utf-8") as f:
         f.write(archive_html)
-    print("archive.html updated")
+    print(f"{archive_file} updated")
 
 # =====================
-# 사이트맵 생성
+# 사이트맵 생성 (영문 페이지 포함)
 # =====================
 def build_sitemap():
     site_url = "https://dhpaeng81-crypto.github.io/Daily-insight"
-    today = now_kst().strftime("%Y-%m-%d")
+    today    = now_kst().strftime("%Y-%m-%d")
 
-    # 모든 브리핑 파일 목록
-    import glob
-    briefing_files = sorted(glob.glob("briefing_*.html"), reverse=True)
-    politics_files = sorted(glob.glob("politics_*.html"), reverse=True)
+    briefing_files    = sorted(glob.glob("briefing_[0-9]*.html"), reverse=True)
+    briefing_en_files = sorted(glob.glob("briefing_en_[0-9]*.html"), reverse=True)
+    politics_files    = sorted(glob.glob("politics_[0-9]*.html"), reverse=True)
 
     urls = []
-
-    # 메인 페이지
-    urls.append(f"""  <url>
-    <loc>{site_url}/index.html</loc>
+    for loc, freq, pri in [
+        (f"{site_url}/index.html",           "daily", "1.0"),
+        (f"{site_url}/index_en.html",         "daily", "1.0"),
+        (f"{site_url}/archive.html",          "daily", "0.8"),
+        (f"{site_url}/archive_en.html",       "daily", "0.8"),
+        (f"{site_url}/politics_index.html",   "daily", "0.9"),
+        (f"{site_url}/politics_archive.html", "daily", "0.7"),
+    ]:
+        urls.append(f"""  <url>
+    <loc>{loc}</loc>
     <lastmod>{today}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
+    <changefreq>{freq}</changefreq>
+    <priority>{pri}</priority>
   </url>""")
 
-    # 아카이브 페이지
-    urls.append(f"""  <url>
-    <loc>{site_url}/archive.html</loc>
-    <lastmod>{today}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>""")
-
-    # 역사·정치 메인
-    urls.append(f"""  <url>
-    <loc>{site_url}/politics_index.html</loc>
-    <lastmod>{today}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>""")
-
-    # 역사·정치 아카이브
-    urls.append(f"""  <url>
-    <loc>{site_url}/politics_archive.html</loc>
-    <lastmod>{today}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>""")
-
-    # 개별 브리핑 페이지
-    for f in briefing_files:
-        date_str = f.replace("briefing_", "").replace(".html", "")
-        try:
-            from datetime import datetime as dt
-            date_obj = dt.strptime(date_str, "%Y%m%d")
-            lastmod = date_obj.strftime("%Y-%m-%d")
-            priority = "0.9" if f == briefing_files[0] else "0.6"
-            urls.append(f"""  <url>
+    for files, prefix in [
+        (briefing_files,    "briefing_"),
+        (briefing_en_files, "briefing_en_"),
+        (politics_files,    "politics_"),
+    ]:
+        for i, f in enumerate(files):
+            date_str = f.replace(prefix, "").replace(".html", "")
+            try:
+                date_obj = datetime.strptime(date_str, "%Y%m%d")
+                lastmod  = date_obj.strftime("%Y-%m-%d")
+                priority = "0.9" if i == 0 else "0.6"
+                urls.append(f"""  <url>
     <loc>{site_url}/{f}</loc>
     <lastmod>{lastmod}</lastmod>
     <changefreq>never</changefreq>
     <priority>{priority}</priority>
   </url>""")
-        except:
-            continue
-
-    # 개별 역사·정치 브리핑
-    for f in politics_files:
-        date_str = f.replace("politics_", "").replace(".html", "")
-        try:
-            from datetime import datetime as dt
-            date_obj = dt.strptime(date_str, "%Y%m%d")
-            lastmod = date_obj.strftime("%Y-%m-%d")
-            priority = "0.9" if f == politics_files[0] else "0.6"
-            urls.append(f"""  <url>
-    <loc>{site_url}/{f}</loc>
-    <lastmod>{lastmod}</lastmod>
-    <changefreq>never</changefreq>
-    <priority>{priority}</priority>
-  </url>""")
-        except:
-            continue
+            except:
+                continue
 
     sitemap = f"""<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {chr(10).join(urls)}
 </urlset>"""
-
     with open("sitemap.xml", "w", encoding="utf-8") as f:
         f.write(sitemap)
     print(f"sitemap.xml 생성 완료 ({len(urls)}개 URL)")
 
-    # robots.txt도 함께 생성
     robots = f"""User-agent: *
 Allow: /
 
@@ -926,57 +1108,61 @@ Sitemap: {site_url}/sitemap.xml
         f.write(robots)
     print("robots.txt 생성 완료")
 
-
+# =====================
+# GitHub 업로드
+# =====================
 def push_to_github(files_to_push):
     if not GITHUB_TOKEN or not GITHUB_REPO:
         print("GitHub token or repo not set, skipping push")
         return
-
-    headers = {
-        "Authorization": f"token {GITHUB_TOKEN}",
-        "Accept": "application/vnd.github.v3+json"
-    }
+    headers  = {"Authorization": f"token {GITHUB_TOKEN}", "Accept": "application/vnd.github.v3+json"}
     base_url = f"https://api.github.com/repos/{GITHUB_REPO}/contents"
-
     for filepath in files_to_push:
         try:
             with open(filepath, "r", encoding="utf-8") as f:
                 content = f.read()
             encoded = base64.b64encode(content.encode("utf-8")).decode("utf-8")
-            check = requests.get(f"{base_url}/{filepath}", headers=headers)
-            sha = check.json().get("sha") if check.status_code == 200 else None
-            payload = {
-                "message": f"Update {filepath} - {now_kst().strftime('%Y%m%d %H:%M')}",
-                "content": encoded
-            }
+            check   = requests.get(f"{base_url}/{filepath}", headers=headers)
+            sha     = check.json().get("sha") if check.status_code == 200 else None
+            payload = {"message": f"Update {filepath} - {now_kst().strftime('%Y%m%d %H:%M')}", "content": encoded}
             if sha:
                 payload["sha"] = sha
-            response = requests.put(f"{base_url}/{filepath}", headers=headers, json=payload)
-            if response.status_code in [200, 201]:
+            resp = requests.put(f"{base_url}/{filepath}", headers=headers, json=payload)
+            if resp.status_code in [200, 201]:
                 print(f"GitHub push OK: {filepath}")
             else:
-                print(f"GitHub push failed: {filepath} - {response.status_code}")
+                print(f"GitHub push failed: {filepath} - {resp.status_code}")
         except Exception as e:
             print(f"GitHub push error ({filepath}): {e}")
 
+# =====================
+# 텔레그램 발송
+# =====================
 def send_telegram(today, filename):
     site_url = "https://dhpaeng81-crypto.github.io/Daily-insight"
-    message = f"*Daily Insight* 발행 완료\n{today}\n\n👉 [오늘의 브리핑 보기]({site_url})"
+    message  = f"*Daily Insight* 발행 완료\n{today}\n\n👉 [한국어 브리핑]({site_url})\n🇺🇸 [English Version]({site_url}/index_en.html)"
     requests.post(
         f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
         json={"chat_id": TELEGRAM_CHAT_ID, "text": message, "parse_mode": "Markdown"}
     )
     print("Telegram: OK")
 
+# =====================
+# 실행
+# =====================
 if __name__ == "__main__":
     print("Step 1: Collecting news...")
     news_list = collect_news()
 
-    print("Step 2: Generating content...")
-    content = generate_content(news_list)
-    print("Content generated")
+    print("Step 2: Generating KO content...")
+    content_ko = generate_content(news_list)
+    print("KO content generated")
 
-    print("Step 3: Collecting stock picks...")
+    print("Step 3: Generating EN content...")
+    content_en = generate_content_en(news_list, content_ko)
+    print("EN content generated")
+
+    print("Step 4: Collecting stock picks...")
     stock_data = None
     if STOCK_ENABLED:
         try:
@@ -985,27 +1171,32 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"Stock picks error: {e}")
 
-    print("Step 4: Building HTML...")
-    today = now_kst().strftime("%Y년 %m월 %d일")
+    print("Step 5: Building HTML...")
+    today     = now_kst().strftime("%Y년 %m월 %d일")
     today_num = now_kst().strftime("%Y%m%d")
-    filename = build_html(news_list, content, stock_data)
+    filename_ko = build_html(news_list, content_ko, stock_data, lang="ko")
+    filename_en = build_html(news_list, content_en, stock_data, lang="en")
 
-    print("Step 5: Building archive...")
-    build_archive()
+    print("Step 6: Building archives...")
+    build_archive(lang="ko")
+    build_archive(lang="en")
 
-    print("Step 6: Building sitemap...")
+    print("Step 7: Building sitemap...")
     build_sitemap()
 
-    print("Step 7: Pushing to GitHub...")
+    print("Step 8: Pushing to GitHub...")
     push_to_github([
         "index.html",
+        "index_en.html",
         "archive.html",
+        "archive_en.html",
         f"briefing_{today_num}.html",
+        f"briefing_en_{today_num}.html",
         "sitemap.xml",
         "robots.txt"
     ])
 
-    print("Step 8: Sending Telegram...")
-    send_telegram(today, filename)
+    print("Step 9: Sending Telegram...")
+    send_telegram(today, filename_ko)
 
     print("All done!")
