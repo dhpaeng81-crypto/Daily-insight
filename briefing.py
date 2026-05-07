@@ -552,6 +552,7 @@ def build_html(news_list, content, stock_data=None):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="4z1YG668VEajfm1MyEU5V9KCZIb9AYbS5C3dQJ99FdM">
 <title>Daily Insight — {today}</title>
 <meta property="og:title" content="Daily Insight — {today}">
 <meta property="og:description" content="{hero_desc}">
