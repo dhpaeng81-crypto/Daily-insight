@@ -183,6 +183,19 @@ def translate_single(news_item):
     )
     return {"title": news_item["title"], "body": response.choices[0].message.content}
 
+def translate_single_en(news_item):
+    """영문 뉴스 요약 — summary 매칭 실패 시 fallback"""
+    client = OpenAI(api_key=OPENAI_API_KEY)
+    response = client.chat.completions.create(
+        model="gpt-4.1-mini",
+        messages=[
+            {"role": "system", "content": "You are a financial news summarizer. Respond in English only."},
+            {"role": "user", "content": f"Summarize the following news in 3-4 sentences in English. Include key facts, market impact, and what investors should watch.\n\nTitle: {news_item['title']}\nContent: {news_item['summary']}"}
+        ],
+        max_tokens=300
+    )
+    return {"title": news_item["title"], "body": response.choices[0].message.content}
+
 # =====================
 # 한국어 콘텐츠 생성
 # =====================
@@ -671,6 +684,9 @@ def build_html(news_list, content, stock_data=None, lang="ko"):
             words = t.split()[:3]
             if words and any(w in orig_title for w in words):
                 return s
+        # 언어에 따라 올바른 번역 함수 사용
+        if lang == "en":
+            return translate_single_en(news_list[idx])
         return translate_single(news_list[idx])
 
     card_fn = make_news_card_en if lang == "en" else make_news_card
@@ -1159,8 +1175,27 @@ if __name__ == "__main__":
     print("KO content generated")
 
     print("Step 3: Generating EN content...")
-    content_en = generate_content_en(news_list, content_ko)
-    print("EN content generated")
+    try:
+        content_en = generate_content_en(news_list, content_ko)
+        print("EN content generated")
+    except Exception as e:
+        print(f"EN content generation failed: {e}")
+        # 한국어 콘텐츠 기반으로 기본 영문 콘텐츠 생성
+        content_en = {
+            "hero_title": content_ko.get("hero_title", "Daily Insight"),
+            "hero_desc": content_ko.get("hero_desc", "Today's market briefing"),
+            "finance_overview": content_ko.get("finance_overview", ""),
+            "finance_comment": content_ko.get("finance_comment", ""),
+            "tech_overview": content_ko.get("tech_overview", ""),
+            "tech_comment": content_ko.get("tech_comment", ""),
+            "energy_overview": content_ko.get("energy_overview", ""),
+            "energy_comment": content_ko.get("energy_comment", ""),
+            "key_insight_1": content_ko.get("key_insight_1", ""),
+            "key_insight_2": content_ko.get("key_insight_2", ""),
+            "key_insight_3": content_ko.get("key_insight_3", ""),
+            "news_summaries": content_ko.get("news_summaries", [])
+        }
+        print("EN content fallback applied")
 
     print("Step 4: Collecting stock picks...")
     stock_data = None
@@ -1174,27 +1209,43 @@ if __name__ == "__main__":
     print("Step 5: Building HTML...")
     today     = now_kst().strftime("%Y년 %m월 %d일")
     today_num = now_kst().strftime("%Y%m%d")
+
     filename_ko = build_html(news_list, content_ko, stock_data, lang="ko")
-    filename_en = build_html(news_list, content_en, stock_data, lang="en")
+
+    try:
+        filename_en = build_html(news_list, content_en, stock_data, lang="en")
+    except Exception as e:
+        print(f"EN HTML build failed: {e}")
+        filename_en = None
 
     print("Step 6: Building archives...")
     build_archive(lang="ko")
-    build_archive(lang="en")
+    try:
+        build_archive(lang="en")
+    except Exception as e:
+        print(f"EN archive build failed: {e}")
 
     print("Step 7: Building sitemap...")
     build_sitemap()
 
     print("Step 8: Pushing to GitHub...")
-    push_to_github([
+    import os as _os
+    files_to_push = [
         "index.html",
-        "index_en.html",
         "archive.html",
-        "archive_en.html",
         f"briefing_{today_num}.html",
-        f"briefing_en_{today_num}.html",
         "sitemap.xml",
         "robots.txt"
-    ])
+    ]
+    # EN 파일이 실제로 생성된 경우에만 push
+    if _os.path.exists("index_en.html"):
+        files_to_push.append("index_en.html")
+    if _os.path.exists("archive_en.html"):
+        files_to_push.append("archive_en.html")
+    en_briefing = f"briefing_en_{today_num}.html"
+    if _os.path.exists(en_briefing):
+        files_to_push.append(en_briefing)
+    push_to_github(files_to_push)
 
     print("Step 9: Sending Telegram...")
     send_telegram(today, filename_ko)
