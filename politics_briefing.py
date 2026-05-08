@@ -18,6 +18,7 @@ OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 KST = timezone(timedelta(hours=9))
 def now_kst():
     return datetime.now(KST)
+
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 UNSPLASH_ACCESS_KEY = os.environ.get("UNSPLASH_ACCESS_KEY")
@@ -93,13 +94,13 @@ RSS_FEEDS = [
     ("Politics", "http://rss.donga.com/politics.xml"),
     ("Politics", "http://rss.donga.com/editorials.xml"),
     ("Politics", "https://www.munhwa.com/rss/politics.xml"),
-    ("Politics", "https://www.newdaily.co.kr/site/data/rss/rss.xml"),        # 뉴데일리
-    ("Politics", "https://www.pennmike.com/rss/allArticle.xml"),              # 펜앤드마이크
+    ("Politics", "https://www.newdaily.co.kr/site/data/rss/rss.xml"),
+    ("Politics", "https://www.pennmike.com/rss/allArticle.xml"),
     ("International", "https://www.rfa.org/korean/rss2.xml"),
     ("International", "https://www.voakorea.com/api/z_mpetyitop"),
-    ("International", "https://thediplomat.com/feed/"),                       # The Diplomat
-    ("International", "https://warontherocks.com/feed/"),                     # War on the Rocks
-    ("International", "https://www.38north.org/feed/"),                       # 38North (북한)
+    ("International", "https://thediplomat.com/feed/"),
+    ("International", "https://warontherocks.com/feed/"),
+    ("International", "https://www.38north.org/feed/"),
 ]
 
 # =====================
@@ -297,21 +298,21 @@ def get_share_buttons_html(title, url):
       </svg>
       X에 공유
     </a>
-    <button class="share-btn copy" onclick="copyLink()">
+    <button class="share-btn copy" onclick="copyLinkPolitics()">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
         <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
       </svg>
-      <span id="copy-text">링크 복사</span>
+      <span id="copy-text-politics">링크 복사</span>
     </button>
   </div>
 </div>
 <script>
-function copyLink() {{
+function copyLinkPolitics() {{
   const url = '{url}';
   if (navigator.clipboard && window.isSecureContext) {{
     navigator.clipboard.writeText(url).then(() => {{
-      const btn = document.getElementById('copy-text');
+      const btn = document.getElementById('copy-text-politics');
       btn.textContent = '복사됨 ✓';
       btn.parentElement.style.background = '#7c3aed';
       btn.parentElement.style.color = '#fff';
@@ -322,7 +323,7 @@ function copyLink() {{
     const t = document.createElement('textarea');
     t.value = url; t.style.position = 'fixed'; t.style.opacity = '0';
     document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t);
-    const btn = document.getElementById('copy-text');
+    const btn = document.getElementById('copy-text-politics');
     btn.textContent = '복사됨 ✓';
     setTimeout(() => {{ btn.textContent = '링크 복사'; }}, 2000);
   }}
@@ -350,10 +351,17 @@ a { color: inherit; text-decoration: none; }
 .logo { font-family: var(--font); font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
 .logo span { color: var(--accent); }
 .header-nav { display: flex; gap: 4px; font-size: 13px; align-items: center; }
-.header-nav a { padding: 6px 12px; border-radius: 6px; color: var(--ink-muted); font-weight: 700; transition: background 0.15s, color 0.15s; }
+.header-nav a { padding: 6px 10px; border-radius: 6px; color: var(--ink-muted); font-weight: 700; transition: background 0.15s, color 0.15s; white-space: nowrap; }
 .header-nav a:hover { background: var(--bg-subtle); color: var(--ink); }
 .header-nav .active { color: var(--accent); background: var(--accent-light); }
-.header-nav .divider { width: 1px; height: 16px; background: var(--border); margin: 0 4px; }
+.header-nav .divider { width: 1px; height: 16px; background: var(--border); margin: 0 2px; flex-shrink: 0; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; border: none; background: none; }
+.hamburger span { width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: all 0.3s; display: block; }
+.mobile-menu { display: none; position: fixed; top: 56px; left: 0; right: 0; background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 12px 20px; flex-direction: column; gap: 4px; z-index: 99; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.mobile-menu a { padding: 10px 12px; border-radius: 8px; color: var(--ink-soft); font-weight: 700; font-size: 14px; display: block; }
+.mobile-menu a:hover { background: var(--bg-subtle); color: var(--ink); }
+.mobile-menu .active { color: var(--accent); background: var(--accent-light); }
+.mobile-menu.open { display: flex; }
 .site-footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
 .footer-inner { max-width: 780px; margin: 0 auto; }
 .footer-logo { font-family: var(--font); font-size: 16px; font-weight: 800; margin-bottom: 8px; }
@@ -368,6 +376,9 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 600px) { .header-meta { display: none; } }
 '''
 
+# =====================
+# 헤더/푸터 — Daily Insight 링크 + EN 버튼 연동
+# =====================
 def get_header_html(active="briefing"):
     b = "active" if active == "briefing" else ""
     a = "active" if active == "archive" else ""
@@ -375,14 +386,48 @@ def get_header_html(active="briefing"):
 <header class="site-header">
   <div class="header-inner">
     <div class="logo"><a href="politics_index.html">Korea<span>Insight</span></a></div>
-    <nav class="header-nav">
+    <nav class="header-nav desktop-nav">
       <a href="politics_index.html" class="{b}">역사·정치</a>
       <a href="politics_archive.html" class="{a}">아카이브</a>
       <div class="divider"></div>
       <a href="index.html">금융·AI·에너지</a>
+      <div class="divider"></div>
+      <a href="index_en.html">EN</a>
     </nav>
+    <button class="hamburger" onclick="toggleMenuPolitics()" aria-label="메뉴">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-</header>'''
+</header>
+<nav class="mobile-menu" id="mobile-menu-politics">
+  <a href="politics_index.html" class="{b}">역사·정치</a>
+  <a href="politics_archive.html" class="{a}">아카이브</a>
+  <a href="index.html">금융·AI·에너지</a>
+  <a href="index_en.html">English (Daily Insight)</a>
+</nav>
+<script>
+function toggleMenuPolitics() {{
+  const menu = document.getElementById('mobile-menu-politics');
+  menu.classList.toggle('open');
+  const spans = document.querySelectorAll('.hamburger span');
+  if (menu.classList.contains('open')) {{
+    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+    spans[1].style.opacity = '0';
+    spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+  }} else {{
+    spans[0].style.transform = ''; spans[1].style.opacity = ''; spans[2].style.transform = '';
+  }}
+}}
+document.addEventListener('click', function(e) {{
+  const menu = document.getElementById('mobile-menu-politics');
+  const btn = document.querySelector('.hamburger');
+  if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {{
+    menu.classList.remove('open');
+    const spans = document.querySelectorAll('.hamburger span');
+    spans[0].style.transform = ''; spans[1].style.opacity = ''; spans[2].style.transform = '';
+  }}
+}});
+</script>'''
 
 def get_footer_html():
     return '''
@@ -394,6 +439,7 @@ def get_footer_html():
       <a href="politics_index.html">역사·정치 브리핑</a>
       <a href="politics_archive.html">아카이브</a>
       <a href="index.html">Daily Insight (금융·AI·에너지)</a>
+      <a href="index_en.html">English</a>
     </div>
   </div>
 </footer>'''
@@ -526,6 +572,14 @@ def build_html(news_list, content):
 @media (min-width: 640px) and (max-width: 1023px) {{
   .news-list {{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }}
   .news-thumb {{ height: 180px; }}
+}}
+@media (max-width: 767px) {{
+  .desktop-nav {{ display: none; }}
+  .hamburger {{ display: flex; }}
+}}
+@media (min-width: 768px) {{
+  .hamburger {{ display: none; }}
+  .mobile-menu {{ display: none !important; }}
 }}
 @media (max-width: 639px) {{
   .hero {{ padding: 36px 20px 32px; }}
@@ -719,17 +773,14 @@ def push_to_github(files_to_push):
             with open(filepath, "r", encoding="utf-8") as f:
                 content = f.read()
             encoded = base64.b64encode(content.encode("utf-8")).decode("utf-8")
-
             check = requests.get(f"{base_url}/{filepath}", headers=headers)
             sha = check.json().get("sha") if check.status_code == 200 else None
-
             payload = {
                 "message": f"Update {filepath} - {now_kst().strftime('%Y%m%d %H:%M')}",
                 "content": encoded
             }
             if sha:
                 payload["sha"] = sha
-
             response = requests.put(f"{base_url}/{filepath}", headers=headers, json=payload)
             if response.status_code in [200, 201]:
                 print(f"GitHub push OK: {filepath}")
