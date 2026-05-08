@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KoreaInsight — 2026년 05월 08일</title>
 <meta property="og:title" content="KoreaInsight — 2026년 05월 08일">
-<meta property="og:description" content="자유민주주의 헌법질서 옹호와 국가안보 위협에 대한 경계 필요.">
+<meta property="og:description" content="북한 영토조항 신설과 핵무력권 명문화, 자유민주주의 수호의 도전 신호">
 <meta property="og:image" content="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=800&q=80">
 <meta property="og:url" content="https://dhpaeng81-crypto.github.io/Daily-insight/politics_index.html">
 <meta name="twitter:card" content="summary_large_image">
@@ -31,10 +31,17 @@ a { color: inherit; text-decoration: none; }
 .logo { font-family: var(--font); font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
 .logo span { color: var(--accent); }
 .header-nav { display: flex; gap: 4px; font-size: 13px; align-items: center; }
-.header-nav a { padding: 6px 12px; border-radius: 6px; color: var(--ink-muted); font-weight: 700; transition: background 0.15s, color 0.15s; }
+.header-nav a { padding: 6px 10px; border-radius: 6px; color: var(--ink-muted); font-weight: 700; transition: background 0.15s, color 0.15s; white-space: nowrap; }
 .header-nav a:hover { background: var(--bg-subtle); color: var(--ink); }
 .header-nav .active { color: var(--accent); background: var(--accent-light); }
-.header-nav .divider { width: 1px; height: 16px; background: var(--border); margin: 0 4px; }
+.header-nav .divider { width: 1px; height: 16px; background: var(--border); margin: 0 2px; flex-shrink: 0; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; border: none; background: none; }
+.hamburger span { width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: all 0.3s; display: block; }
+.mobile-menu { display: none; position: fixed; top: 56px; left: 0; right: 0; background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 12px 20px; flex-direction: column; gap: 4px; z-index: 99; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.mobile-menu a { padding: 10px 12px; border-radius: 8px; color: var(--ink-soft); font-weight: 700; font-size: 14px; display: block; }
+.mobile-menu a:hover { background: var(--bg-subtle); color: var(--ink); }
+.mobile-menu .active { color: var(--accent); background: var(--accent-light); }
+.mobile-menu.open { display: flex; }
 .site-footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
 .footer-inner { max-width: 780px; margin: 0 auto; }
 .footer-logo { font-family: var(--font); font-size: 16px; font-weight: 800; margin-bottom: 8px; }
@@ -123,6 +130,14 @@ a { color: inherit; text-decoration: none; }
   .news-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .news-thumb { height: 180px; }
 }
+@media (max-width: 767px) {
+  .desktop-nav { display: none; }
+  .hamburger { display: flex; }
+}
+@media (min-width: 768px) {
+  .hamburger { display: none; }
+  .mobile-menu { display: none !important; }
+}
 @media (max-width: 639px) {
   .hero { padding: 36px 20px 32px; }
   .today-summary { padding: 20px 20px 0; }
@@ -137,19 +152,53 @@ a { color: inherit; text-decoration: none; }
 <header class="site-header">
   <div class="header-inner">
     <div class="logo"><a href="politics_index.html">Korea<span>Insight</span></a></div>
-    <nav class="header-nav">
+    <nav class="header-nav desktop-nav">
       <a href="politics_index.html" class="active">역사·정치</a>
       <a href="politics_archive.html" class="">아카이브</a>
       <div class="divider"></div>
       <a href="index.html">금융·AI·에너지</a>
+      <div class="divider"></div>
+      <a href="index_en.html">EN</a>
     </nav>
+    <button class="hamburger" onclick="toggleMenuPolitics()" aria-label="메뉴">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
+<nav class="mobile-menu" id="mobile-menu-politics">
+  <a href="politics_index.html" class="active">역사·정치</a>
+  <a href="politics_archive.html" class="">아카이브</a>
+  <a href="index.html">금융·AI·에너지</a>
+  <a href="index_en.html">English (Daily Insight)</a>
+</nav>
+<script>
+function toggleMenuPolitics() {
+  const menu = document.getElementById('mobile-menu-politics');
+  menu.classList.toggle('open');
+  const spans = document.querySelectorAll('.hamburger span');
+  if (menu.classList.contains('open')) {
+    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+    spans[1].style.opacity = '0';
+    spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+  } else {
+    spans[0].style.transform = ''; spans[1].style.opacity = ''; spans[2].style.transform = '';
+  }
+}
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('mobile-menu-politics');
+  const btn = document.querySelector('.hamburger');
+  if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+    menu.classList.remove('open');
+    const spans = document.querySelectorAll('.hamburger span');
+    spans[0].style.transform = ''; spans[1].style.opacity = ''; spans[2].style.transform = '';
+  }
+});
+</script>
 
 <section class="hero">
   <div class="issue-badge">오늘의 브리핑</div>
-  <h1 class="hero-title">비상계엄 개헌안 무산과 北헌법 '핵무력권' 명문화</h1>
-  <p class="hero-desc">자유민주주의 헌법질서 옹호와 국가안보 위협에 대한 경계 필요.</p>
+  <h1 class="hero-title">북한 헌법 개정, ‘두 국가’ 기조·핵무력 명문화</h1>
+  <p class="hero-desc">북한 영토조항 신설과 핵무력권 명문화, 자유민주주의 수호의 도전 신호</p>
   <div class="hero-tags">
     <span class="tag">🏛️ 국내 정치</span>
     <span class="tag">🌐 국제 정세</span>
@@ -160,7 +209,7 @@ a { color: inherit; text-decoration: none; }
 <div class="today-summary">
   <div class="today-summary-box">
     <div class="today-summary-label">📋 오늘의 정치 지형</div>
-    <div class="today-summary-text">오늘 국내 정치권은 비상계엄 국회 통제권 강화를 골자로 한 개헌안이 여야의 이견 속 표결이 무산되는 등 헌법적 시스템 변경을 둘러싼 논란이 이어졌다. 이는 1948년 건국 이래 자유민주주의 의원내각제의 기본 원칙이 지속적으로 도전받고 있음을 보여준다. 대외적으로는 북한이 헌법상 '핵무력권'을 명문화하고 영토 규정에서 통일 의지를 사실상 삭제하면서 한반도 안보 질서가 심각히 흔들렸다. 이런 상황은 6·25전쟁 및 다양한 내란·쿠데타의 역사에서 알 수 있듯 국가 존립의 근간인 자유민주주의 시스템과 안보 연대 강화의 필요성을 재확인시킨다. 오늘의 정치는 헌법적 가치와 실질적 국가안보 위협 부상이라는 두 과제에 직면한 중대한 시기이다.</div>
+    <div class="today-summary-text">오늘의 대한민국 정치는 북한의 헌법 개정 및 무력 도발 의도의 노골화 속에서 국가 안전보장과 자유민주주의 헌법 질서 수호가 중대한 도전 국면에 진입했다. 북한은 헌법상 영토조항 신설과 동시에 핵무력 사용권을 명문화해 남북 통일관을 사실상 부정하는 ‘두 국가’ 기조를 공식화했다. 국내 정치권에서는 개헌안 본회의 표결 무산과 민생법안 처리 지연이 반복되며, 국가 기본질서 논의마저 정쟁에 휘둘리고 있다. 1948년 건국 이래 자유민주주의 정통성과 헌법 질서 수호의 중요성이 재조명되는 시점이다.</div>
   </div>
 </div>
 
@@ -169,11 +218,11 @@ a { color: inherit; text-decoration: none; }
     <span class="section-pill politics">Politics</span>
     <span class="section-title">국내 정치</span>
   </div>
-  <p class="section-overview">비상계엄 국회 통제권 강화 개헌안은 야6당이 주도했으나 국민의힘 불참으로 본회의 의결이 불발되었다. 이 개헌안은 계엄 선포 시 국회의 사후 승인을 의무화하고 민주화운동 정신을 명문에 포함해 헌법의 내용과 해석에 중대한 변화를 시도했다. 민주당 등 진보 진영은 '과거 불법계엄 방지'를 내세우나, 국민의힘 등 보수는 선거 앞둔 정략적 개헌 추진이라며 절차적 정당성, 국민적 합의 부재를 문제 삼았다. 대법원과 헌법재판소에서도 헌법 개정은 광범위한 국민 동의와 신중한 절차가 필수임을 지속적으로 밝혀왔다. 정치현안 다수는 건국 헌법(1948)과 현행 자유민주주의 체제의 근간을 변형하려는 시도여서 보수주의적 경계심이 요구된다.</p>
+  <p class="section-overview">국회는 여야 대립 속에 개헌안 표결이 무산되었고, 이에 따라 비쟁점 민생법안 50건의 처리도 중단됐다. 우원식 국회의장은 국민의힘의 필리버스터 방침에 반발하며 본회의 산회를 선언했고, 정치권 내 ‘졸업여행’ 비판과 이에 대한 반박이 오갔다. 대통령 부부의 남대문시장 방문은 경제위기 속 민생현장 행보로 주목받았으나, 시장정책의 실효성에 대한 근본 논의는 부각되지 못했다. 헌법 개정 논의는 주요 진보진영이 5·18정신 등 특정 이념적 가치를 헌법에 포함하려 했으나, 대립과 절차적 정당성 논란으로 보수진영의 저지가 작동했다. 대법원 판례 및 헌법정신에 비추어 볼 때, 실질적 합의 없는 일방적 개헌 시도는 헌정질서 수호 원칙에 위배될 수 있다.</p>
   <div class="news-list">
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://dimg.donga.com/wps/NEWS/IMAGE/2026/05/07/133882894.1.jpg" alt="‘계엄권한 제한’ 개헌안 야당 주도, 국민의힘 불참으로 표결 무산" loading="lazy"
+        <img src="https://dimg.donga.com/wps/NEWS/IMAGE/2026/05/08/133888350.2.jpg" alt="국힘, 우의장 외교 일정에 “졸업여행”…국회의장실 “저급한 인식”" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -184,15 +233,19 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://www.donga.com/news/Politics/article/all/20260508/133882945/2" target="_blank">‘계엄권한 제한’ 개헌안 야당 주도, 국민의힘 불참으로 표결 무산</a>
+          <a href="https://www.donga.com/news/Politics/article/all/20260508/133888343/2" target="_blank">국힘, 우의장 외교 일정에 “졸업여행”…국회의장실 “저급한 인식”</a>
         </div>
-        <div class="news-body">비상계엄 통제권 등 내용을 담은 개헌안이 여야 이견으로 본회의에서 통과되지 못했다. 본 안은 국회의 계엄 통제, 민주화정신 명문화를 핵심 골자로 하여, 기존 헌법의 체제 경계선을 넓히려는 시도였다. 자유민주주의적 관점에서는 개헌 절차의 신중성과 국민적 합의가 필수임을 다시 상기시킨다. 개헌은 체제 근간을 흔들 수 있어 정치적 정략 대신 대의 민주주의의 원칙 준수가 강조되어야 할 대목이다.</div>
-        <a href="https://www.donga.com/news/Politics/article/all/20260508/133882945/2" class="read-more" target="_blank">원문 읽기 →</a>
+        <div class="news-body">제목: 국힘, 우의장 외교 일정에 “졸업여행”…국회의장실 “저급한 인식”
+
+내용: 우원식 국회의장이 오는 10일부터 16일까지 네덜란드와 케냐를 방문해 외교 일정을 소화할 예정이라고 국회의장실이 밝혔다. 이에 국민의힘 일부 의원들은 임기 종료를 앞둔 우 의장의 이번 일정을 “졸업여행”이라고 비판했다. 국회의장실은 이러한 비판에 대해 “국회의장을 공격하기 위한 저급한 인식과 태도”라며 매우 유감스럽다는 입장을 전했다.
+
+요약: 우원식 국회의장이 네덜란드와 케냐로 외교 일정에 나서자 국민의힘 일부 의원들은 이를 ‘졸업여행’이라 비판했다. 이에 국회의장실은 비판을 저급한 인식으로 규정하며 강하게 반발했다.</div>
+        <a href="https://www.donga.com/news/Politics/article/all/20260508/133888343/2" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://dimg.donga.com/wps/NEWS/IMAGE/2026/05/07/133879141.1.jpg" alt="‘내란 중요임무’ 한덕수 2심 징역 15년… 8년 줄어" loading="lazy"
+        <img src="https://dimg.donga.com/wps/NEWS/IMAGE/2026/05/08/133888627.1.jpg" alt="“이게 더 맛있네” 李대통령 부부, 남대문시장서 1인 1호떡" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -203,19 +256,19 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://www.donga.com/news/Society/article/all/20260508/133882943/3" target="_blank">‘내란 중요임무’ 한덕수 2심 징역 15년… 8년 줄어</a>
+          <a href="https://www.donga.com/news/Politics/article/all/20260508/133888355/2" target="_blank">“이게 더 맛있네” 李대통령 부부, 남대문시장서 1인 1호떡</a>
         </div>
-        <div class="news-body">제목: ‘내란 중요임무’ 한덕수 2심 징역 15년… 8년 줄어
+        <div class="news-body">제목: “이게 더 맛있네” 이재명 대통령 부부, 남대문시장서 1인 1호떡
 
-내용: 12·3 비상계엄 관련 내란 가담 혐의로 1심에서 징역 23년을 선고받은 한덕수 전 국무총리가 항소심에서 징역 15년으로 감형 받았다. 일부 혐의가 무죄로 인정되고, 한 전 총리가 내란에 적극 가담하지 않았다는 판단에 따라 형량이 8년 줄었다. 7일 서울고법 형사12-1부는 내란 중요임무 종사 혐의로 재판 중인 한 전 총리 사건에서 이같이 판결했다.
+내용: 이재명 대통령 부부가 8일 서울 남대문시장을 깜짝 방문했다. 청와대 안귀령 부대변인은 이날 서면 브리핑을 통해 “이 대통령과 김혜경 여사가 어버이날 기념식 참석 후 서울 중구 남대문시장을 찾아 경기 상황과 민생 현장의 목소리를 청취했다”고 밝혔다. 이번 방문은 중동 사태 등으로 인한 경기 위축으로 어려움을 겪는 소상공인들을 격려하고 현장의 의견을 듣기 위해 이루어졌다.
 
-요약: 한덕수 전 국무총리가 12·3 비상계엄 내란 혐의로 1심에서 23년을 선고받았으나, 항소심에서 일부 혐의가 무죄로 인정돼 징역 15년으로 감형됐다. 법원은 한 전 총리가 내란에 적극적으로 가담하지 않았다고 판단했다.</div>
-        <a href="https://www.donga.com/news/Society/article/all/20260508/133882943/3" class="read-more" target="_blank">원문 읽기 →</a>
+요약: 이재명 대통령 부부가 어버이날 행사 후 남대문시장을 방문해 경기 상황을 점검하고 소상공인들을 격려했다. 이번 방문은 최근 경제 위축으로 어려움을 겪는 현장의 목소리를 청취하기 위한 자리였다.</div>
+        <a href="https://www.donga.com/news/Politics/article/all/20260508/133888355/2" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div></div>
   <div class="analyst-note">
     <div class="analyst-label">🔍 보수적 관점 분석</div>
-    <div class="analyst-text">1960년 4·19 직후의 급격한 개헌과 1987년 6월 항쟁 이후의 제5공화국 헌법 개정 등에서 보듯, 헌법 개정은 명백한 국민적 합의와 안보의식 하에서 신중하게 이뤄졌다. 야권은 계엄의 남용 방지, 5·18 정신 헌법 명문화를 주장하지만, 이는 특정 사건의 정치적 해석이 헌법에 과잉 반영되는 위험이 있다. 실제 판례와 사료에 따르면, 계엄권 등 국가비상권은 국가 존립과 자유 보장을 위한 최후적 수단이다. 진보진영은 국민의힘이 '불법계엄을 두둔한다'고 비판하나, 현행 헌법 체제에서는 이미 위헌적 계엄은 불가능하며, 기존의 비상권 남용은 대법원과 헌법재판소가 엄격히 판단해왔다. 자유민주주의의 핵심은 법 절차에 따라 국민 합의 아래 신중하게 시스템을 바꿔야 함에 있다. 향후 정국은 개헌파와 체제수호파 간 명확한 가치 대립이 심화될 전망이다.</div>
+    <div class="analyst-text">역사적으로 1987년 6월 항쟁 이후 개정된 현행 헌법은 자유민주주의의 경계와 사회적 합의를 기반으로 유지되어 왔다. 2024년 개헌 시도에서 진보진영은 5·18정신의 명문화를 주장하였으나, 이는 특정 지역·사건을 헌법에 편입시켜 보편적 기본질서에 균열을 초래할 수 있다. 실제로 1960년 제2공화국 헌법 당시 민주화 물결 속의 급진적 개정이 혼란의 단초가 되었으며, 탄탄한 사회적 합의 없는 개헌은 반복적으로 사회 분열을 심화시켰다. 진보진영은 개혁의 신속성을 강조하나, 법원과 헌법재판소는 ‘헌법개정의 절차적 정당성’(2014헌마191등)과 자유민주적 기본질서(헌법 제4조)의 우선성을 명확히 판시했다. 자유민주주의 헌정체제의 보호는 어떠한 상황에서도 우선되어야 하며, 개헌 논의는 국민적 합의와 명확한 법적 근거 위에 이뤄져야 한다. 향후 여야 갈등이 지속된다면, 민생입법 공백과 헌법 가치 왜곡이 심화될 우려가 있다.</div>
   </div>
   <div class="section-divider"></div>
 
@@ -223,11 +276,11 @@ a { color: inherit; text-decoration: none; }
     <span class="section-pill international">International</span>
     <span class="section-title">국제 정세</span>
   </div>
-  <p class="section-overview">국제정세는 북한이 헌법에 핵무력 보유를 명문화하고, 영토 규정에 남북통일 의지를 사실상 삭제해 실질적 '두 국가' 체제로 전환을 시도하면서 한반도 불안정성이 가중됐다. 미국은 대북 경계와 동맹 강화 메시지를 분명히 하며, 중국·러시아와 북한의 결속이 드러나는 국면이다. 이란 호르무즈 해협의 한 선박 화재 관련 외교적 혼선도 이어졌다. 프랑스 핵항모의 호르무즈 파견과 미중 정상회담 등 주요 강대국들의 움직임은 동북아 및 중동 안보 지형에 직접적 영향을 미치고 있다. 따라서 한미동맹을 주축으로 한 자유진영 연대의 전략적 결속이 그 어느 때보다 중요하다.</p>
+  <p class="section-overview">북한은 최근 헌법 개정을 통해 영토를 북측으로 한정하고 통일 관련 조항을 삭제, ‘두 국가’ 기조를 제도화했다. 새 헌법에서는 김정은 1인 체제와 더불어 핵무력 사용권, 핵포기 불가 등을 명문화함으로써, 사실상 대남적대정책 및 군사력 증강의 합법적 근거를 확보했다. 북한은 서울 사정권에 신형 ‘북한판 K9 자주포’ 배치를 예고하는 등 군사적 위협도 공공연히 과시하고 있다. 국가정보원과 군사전문가들은 이러한 흐름이 북한의 대내체제 강화, 대외협상력 제고, 한미동맹에 대한 군사적 도전의 신호임을 지적했다. 자유진영 내에서 한미동맹 재강화와 군사적 억지력 확보 논의가 절실하다.</p>
   <div class="news-list">
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://www.rfa.org/resizer/v2/HIDFB3RIDFAVLIWUYHXVIMAHDU.jpg?auth=988d9bc22c2d15fe611b6ef8c1ee3e279c3157a22e6d08772c5b1cea26f09884&smart=true&width=1500" alt="북한, 헌법 개정으로 '핵무력권' 명문화 및 통일지향 삭제" loading="lazy"
+        <img src="https://www.rfa.org/resizer/v2/QY5AHFTSYVC6XLFP46JO7Y7BFE.jpg?auth=fd0a286957bfd4c30216a405776bf4f465da6c504a19e4a18a1c8fb55d233f4f&smart=true&width=1500" alt="북 ‘신형 자주포’ 남측 배치...“‘두 국가’ 기조 힘 실어”" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -238,15 +291,19 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://rfa.org/korean/in-focus/2026/05/07/north-korea-nuclear-power-consolidation/" target="_blank">북한, 헌법 개정으로 '핵무력권' 명문화 및 통일지향 삭제</a>
+          <a href="https://rfa.org/korean/in-focus/2026/05/08/north-korea-artillery-border-deployment/" target="_blank">북 ‘신형 자주포’ 남측 배치...“‘두 국가’ 기조 힘 실어”</a>
         </div>
-        <div class="news-body">북한은 헌법에 핵무력 보유를 공식화하고, 영토 조항 신설과 함께 통일 의지는 삭제했다. 이는 한반도 내 사실상 두 국가 현실화 신호로 평가되며, 남북대화 가능성 약화와 한반도 안보 불안이 가중될 위험이 있다. 자유진영 연대와 확장억제 체계가 강화되어야할 지정학적 위기 징후다. 한국의 헌법적 정통성 유지는 역사적으로도 자유민주 체제와 대외 안보연대의 결과임을 명심할 필요 있다.</div>
-        <a href="https://rfa.org/korean/in-focus/2026/05/07/north-korea-nuclear-power-consolidation/" class="read-more" target="_blank">원문 읽기 →</a>
+        <div class="news-body">제목: 북한, ‘신형 자주포’ 남측 국경에 배치... “‘두 국가’ 기조 강화 의도”
+
+내용: 북한이 서울을 사정권에 둔 신형 자주포를 남쪽 국경 지역에 배치하겠다고 발표했습니다. 이는 대남 공격 수단을 다변화하는 동시에 남북 관계에서 ‘두 국가’ 체제 기조를 강화하려는 의도로 해석됩니다.
+
+요약: 북한이 서울을 겨냥한 신형 자주포를 남쪽 국경에 배치하기로 했습니다. 이는 군사적 위협을 강화하고 ‘두 국가’ 정책에 힘을 실으려는 의도라는 분석입니다.</div>
+        <a href="https://rfa.org/korean/in-focus/2026/05/08/north-korea-artillery-border-deployment/" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://www.rfa.org/resizer/v2/EXRFN2GOBVCTVAGNXMBO5TLI44.JPG?auth=488ee7759558337beebb9f64f00fd0162308e02c8e533ee01a9c8f62435d9037&smart=true&width=1500" alt="북 당국 “간석지 농장들 개변시키자!”" loading="lazy"
+        <img src="https://www.rfa.org/resizer/v2/3YGV7BUKONFB3LYRZBGX7SAVUA.jpg?auth=8ed127ee0f19eb6c2943b8523c5138f37afb0d369ce5512843fa03cf46bf5383&smart=true&width=1500" alt="북 간부들 “조용원 처세술 놀랍다”" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -257,19 +314,18 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://rfa.org/korean/in-focus/2026/05/07/north-korea-reclaimed-land-farms/" target="_blank">북 당국 “간석지 농장들 개변시키자!”</a>
+          <a href="https://rfa.org/korean/in-focus/2026/05/08/north-korea-jo-yong-won-chairman-standing-committee/" target="_blank">북 간부들 “조용원 처세술 놀랍다”</a>
         </div>
-        <div class="news-body">제목: 북 당국 “간석지 농장들 개변시키자!”
+        <div class="news-body">제목: 북 간부들 “조용원 처세술 놀랍다”  
+내용: 김정은 위원장 다음 가는 실세로 평가받던 조용원이 최고인민회의 상임위원장이라는 한직에 임명됐습니다. 내부 간부들은 이를 두고 매우 영리한 처세라고 평가하고 있습니다.
 
-내용: 최근 북한 당국은 각 도의 기관과 기업소에 간석지 농장을 개발하여 식량 문제를 해결하라는 지시를 내렸다고 알려졌습니다.
-
-요약: 북한 당국이 간석지 농장을 개발해 식량난을 해소하기 위한 조치를 지시했습니다. 각 도의 관련 기관과 기업소가 이에 따라 간석지 개발에 나설 예정입니다.</div>
-        <a href="https://rfa.org/korean/in-focus/2026/05/07/north-korea-reclaimed-land-farms/" class="read-more" target="_blank">원문 읽기 →</a>
+요약: 조용원이 최고인민회의 상임위원장이라는 한직에 임명되자 간부들 사이에서 그의 뛰어난 처세술로 평가받고 있다. 이는 김정은 위원장 다음가는 실세임에도 전략적인 역할 이동으로 해석된다.</div>
+        <a href="https://rfa.org/korean/in-focus/2026/05/08/north-korea-jo-yong-won-chairman-standing-committee/" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div></div>
   <div class="analyst-note">
     <div class="analyst-label">🔍 지정학적 분석</div>
-    <div class="analyst-text">한국의 국익은 자유진영 핵심 축인 한미동맹과 신뢰에 있다. 1953년 한미상호방위조약 체결과 6·25전쟁 이후 서방 연대 경험은, 북한과 중국, 러시아 등 전체주의 축이 일시적으로 공세적 입장을 강화할 때마다 민주주의 연대의 결속이 국익수호의 근본임을 입증했다. 냉전 이후 변화한 지정학 환경 속에서도 북한의 핵무력 명문화, 통일 조항 삭제는 명백한 남북 양립 국가 선언이나 다름없어, 1972년 7·4남북공동성명에서의 통일지향 원칙마저 파기하는 것이다. 이 같은 안보 리스크는 한미 간 군사정보 공유·확장억제공약 강화, 동맹국과의 전략적 안보대화 확대 등 복합 대응이 요구된다. 자유진영의 연합과 실질 방위력 강화 없이는 한반도 평화와 자유 수호가 근본적으로 위협받는다.</div>
+    <div class="analyst-text">대한민국의 국익은 한미동맹을 중심으로 한 자유진영 협력체제 유지와 군사안보 역량 강화에 있다. 과거 1953년 한미상호방위조약 체결, 1976년 판문점 도끼만행 직후 한·미 연합대응, 2016년 사드 배치 결정처럼, 북한의 체제 노선 변화 및 군사력 증강에 대응하기 위해서는 동맹 중심의 억지력과 정보공유, 선제적 방위체계 확립이 필수였다. 북한의 ‘핵보유 불가역 선언’이 2023년 러시아-북한 군사협력 강화, 2024년 중국-러시아-북한 삼각 공조와 맞물리며 한반도 안보 환경을 더욱 불확실하게 만들고 있다. 자유진영의 단결과 실효적 제재, 군사기술 협력 확대가 시급하며, 북한의 도발적 헌법 개정은 군사적 오판을 부를 수 있는 ‘전략적 위험 신호’임을 직시해야 한다.</div>
   </div>
   <div class="section-divider"></div>
 
@@ -279,7 +335,7 @@ a { color: inherit; text-decoration: none; }
   </div>
   <div class="history-box">
     <div class="history-label">📜 오늘의 이슈, 역사에서 배운다</div>
-    <div class="history-text">1961년 5·16 군사정변과 1980년 5·17 비상계엄 선포 등, 대한민국은 과거 반헌법적 비상권 남용의 위기를 경험했다. 당시 박정희-전두환 정권 모두 절차적 민주정 변칙 선언으로 비상권을 행사해, 결국 국민 저항과 체제 위기로 귀결됐다. 그러나 1987년 6월 항쟁을 거쳐 헌법이 제정(제9차 개정)됨으로써, 자유민주주의와 삼권분립, 비상권 남용 방지의 원칙이 명확히 확립됐다. 오늘의 개헌 시도는 위헌적 개헌이 반복될 수 있다는 역사의 경계심을 환기시킨다. 자유민주주의의 발전사는 건국 이래 반복된 위기 속에서도 헌법 원칙과 투명한 절차, 국민적 합의를 최우선 가치로 여겨야 함을 입증한다.</div>
+    <div class="history-text">1948년 대한민국 정부 수립 이후, 한반도 분단체제의 심화와 남북 양 체제의 헌법적 정통성 다툼은 반복되어 왔다(1948년 남북 단독정부 수립, 1972년 7·4 공동성명 등). 1991년 남북기본합의서 체결 당시 양측은 상호체제 인정 대신 ‘통일 추구’를 명문화했으나, 북한이 헌법상 체제를 명확히 분리하면서 실질적 통일 논의가 후퇴했다. 역사는 ‘국가정체성의 명확한 수호’와 ‘자유민주질서의 헌법적 지탱’이 대립상황에서 흔들림 없는 방파제 역할을 함을 보여준다. 1987년 헌법 개정도 사회적 대타협과 자유민주적 기본 질서 유지에 초점이 맞춰졌다. 오늘의 남북 헌법 대결은 대한민국이 건국 정통성과 헌법적 정체성 수호에 더욱 단호히 나서야 함을 시사한다.</div>
   </div>
   <div class="section-divider"></div>
 
@@ -287,36 +343,36 @@ a { color: inherit; text-decoration: none; }
     <div class="summary-label">오늘의 핵심 인사이트</div>
     <div class="summary-title">오늘 꼭 기억할 3가지</div>
     <ol class="summary-list">
-      <li><span class="summary-num">1</span><span>헌법개정은 절차적 합의와 국민 동의의 성숙이 전제되어야 한다.</span></li>
-      <li><span class="summary-num">2</span><span>북한의 '핵무력권' 명문화로 한미동맹과 자유진영 결속 절실.</span></li>
-      <li><span class="summary-num">3</span><span>역사상 비상권 남용이 체제 위기로 이어진 사례들을 상기해야 한다.</span></li>
+      <li><span class="summary-num">1</span><span>북한의 헌법 개정은 건국 이래 체제 경쟁의 본질을 노출시킨 중대한 경고다.</span></li>
+      <li><span class="summary-num">2</span><span>한미동맹 주도의 군사적 억지력 강화 없이 자유진영 안보는 위태롭다.</span></li>
+      <li><span class="summary-num">3</span><span>역사는 사회적 합의 없는 개헌의 위험성과 국가 정체성 방어의 중요성을 경고한다.</span></li>
     </ol>
   </div>
   
 <div class="share-section">
   <div class="share-label">이 브리핑 공유하기</div>
   <div class="share-buttons">
-    <a class="share-btn twitter" href="https://twitter.com/intent/tweet?text=%EB%B9%84%EC%83%81%EA%B3%84%EC%97%84%20%EA%B0%9C%ED%97%8C%EC%95%88%20%EB%AC%B4%EC%82%B0%EA%B3%BC%20%E5%8C%97%ED%97%8C%EB%B2%95%20%27%ED%95%B5%EB%AC%B4%EB%A0%A5%EA%B6%8C%27%20%EB%AA%85%EB%AC%B8%ED%99%94&url=https%3A%2F%2Fdhpaeng81-crypto.github.io%2FDaily-insight%2Fpolitics_index.html" target="_blank" rel="noopener">
+    <a class="share-btn twitter" href="https://twitter.com/intent/tweet?text=%EB%B6%81%ED%95%9C%20%ED%97%8C%EB%B2%95%20%EA%B0%9C%EC%A0%95%2C%20%E2%80%98%EB%91%90%20%EA%B5%AD%EA%B0%80%E2%80%99%20%EA%B8%B0%EC%A1%B0%C2%B7%ED%95%B5%EB%AC%B4%EB%A0%A5%20%EB%AA%85%EB%AC%B8%ED%99%94&url=https%3A%2F%2Fdhpaeng81-crypto.github.io%2FDaily-insight%2Fpolitics_index.html" target="_blank" rel="noopener">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
       </svg>
       X에 공유
     </a>
-    <button class="share-btn copy" onclick="copyLink()">
+    <button class="share-btn copy" onclick="copyLinkPolitics()">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
         <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
       </svg>
-      <span id="copy-text">링크 복사</span>
+      <span id="copy-text-politics">링크 복사</span>
     </button>
   </div>
 </div>
 <script>
-function copyLink() {
+function copyLinkPolitics() {
   const url = 'https://dhpaeng81-crypto.github.io/Daily-insight/politics_index.html';
   if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(url).then(() => {
-      const btn = document.getElementById('copy-text');
+      const btn = document.getElementById('copy-text-politics');
       btn.textContent = '복사됨 ✓';
       btn.parentElement.style.background = '#7c3aed';
       btn.parentElement.style.color = '#fff';
@@ -327,7 +383,7 @@ function copyLink() {
     const t = document.createElement('textarea');
     t.value = url; t.style.position = 'fixed'; t.style.opacity = '0';
     document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t);
-    const btn = document.getElementById('copy-text');
+    const btn = document.getElementById('copy-text-politics');
     btn.textContent = '복사됨 ✓';
     setTimeout(() => { btn.textContent = '링크 복사'; }, 2000);
   }
@@ -344,6 +400,7 @@ function copyLink() {
       <a href="politics_index.html">역사·정치 브리핑</a>
       <a href="politics_archive.html">아카이브</a>
       <a href="index.html">Daily Insight (금융·AI·에너지)</a>
+      <a href="index_en.html">English</a>
     </div>
   </div>
 </footer>
