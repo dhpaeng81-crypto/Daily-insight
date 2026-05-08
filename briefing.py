@@ -551,13 +551,23 @@ a { color: inherit; text-decoration: none; }
 .logo { font-family: var(--font); font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
 .logo span { color: var(--accent); }
 .header-nav { display: flex; gap: 4px; font-size: 13px; align-items: center; }
-.header-nav a { padding: 6px 12px; border-radius: 6px; color: var(--ink-muted); font-weight: 700; transition: background 0.15s, color 0.15s; }
+.header-nav a { padding: 6px 10px; border-radius: 6px; color: var(--ink-muted); font-weight: 700; transition: background 0.15s, color 0.15s; white-space: nowrap; }
 .header-nav a:hover { background: var(--bg-subtle); color: var(--ink); }
 .header-nav .active { color: var(--accent); background: var(--accent-light); }
-.header-nav .divider { width: 1px; height: 16px; background: var(--border); margin: 0 4px; }
-.lang-btn { padding: 5px 10px !important; font-size: 12px !important; font-weight: 800 !important; border: 1.5px solid var(--border) !important; border-radius: 6px !important; color: var(--ink-soft) !important; }
+.header-nav .divider { width: 1px; height: 16px; background: var(--border); margin: 0 2px; flex-shrink: 0; }
+.lang-btn { padding: 4px 8px !important; font-size: 11px !important; font-weight: 800 !important; border: 1.5px solid var(--border) !important; border-radius: 6px !important; color: var(--ink-soft) !important; flex-shrink: 0; }
 .lang-btn:hover { border-color: var(--accent) !important; color: var(--accent) !important; background: var(--accent-light) !important; }
 .lang-btn.active { border-color: var(--accent) !important; color: var(--accent) !important; background: var(--accent-light) !important; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; border: none; background: none; }
+.hamburger span { width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: all 0.3s; display: block; }
+.mobile-menu { display: none; position: fixed; top: 56px; left: 0; right: 0; background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 12px 20px; flex-direction: column; gap: 4px; z-index: 99; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.mobile-menu a { padding: 10px 12px; border-radius: 8px; color: var(--ink-soft); font-weight: 700; font-size: 14px; display: block; }
+.mobile-menu a:hover { background: var(--bg-subtle); color: var(--ink); }
+.mobile-menu .active { color: var(--accent); background: var(--accent-light); }
+.mobile-menu .lang-row { display: flex; gap: 8px; padding: 8px 12px; }
+.mobile-menu .lang-row a { padding: 6px 16px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 12px; font-weight: 800; }
+.mobile-menu .lang-row .active { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+.mobile-menu.open { display: flex; }
 .site-footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
 .footer-inner { max-width: 780px; margin: 0 auto; }
 .footer-logo { font-family: var(--font); font-size: 16px; font-weight: 800; margin-bottom: 8px; }
@@ -584,6 +594,7 @@ def get_header_html(active="briefing", lang="ko"):
         archive_href = "archive.html"
         briefing_label = "금융·AI·에너지"
         archive_label = "아카이브"
+        politics_label = "역사·정치"
         ko_class = "lang-btn active"
         en_class = "lang-btn"
     else:
@@ -592,6 +603,7 @@ def get_header_html(active="briefing", lang="ko"):
         archive_href = "archive_en.html"
         briefing_label = "Finance·AI·Energy"
         archive_label = "Archive"
+        politics_label = "History·Politics"
         ko_class = "lang-btn"
         en_class = "lang-btn active"
 
@@ -599,17 +611,52 @@ def get_header_html(active="briefing", lang="ko"):
 <header class="site-header">
   <div class="header-inner">
     <div class="logo"><a href="{logo_href}">Daily<span>Insight</span></a></div>
-    <nav class="header-nav">
+    <nav class="header-nav desktop-nav">
       <a href="{briefing_href}" class="{d_class}">{briefing_label}</a>
       <a href="{archive_href}" class="{a_class}">{archive_label}</a>
       <div class="divider"></div>
-      <a href="politics_index.html">{"역사·정치" if lang == "ko" else "History·Politics"}</a>
+      <a href="politics_index.html">{politics_label}</a>
       <div class="divider"></div>
       <a href="index.html" class="{ko_class}">KO</a>
       <a href="index_en.html" class="{en_class}">EN</a>
     </nav>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="메뉴">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-</header>'''
+</header>
+<nav class="mobile-menu" id="mobile-menu">
+  <a href="{briefing_href}" class="{d_class}">{briefing_label}</a>
+  <a href="{archive_href}" class="{a_class}">{archive_label}</a>
+  <a href="politics_index.html">{politics_label}</a>
+  <div class="lang-row">
+    <a href="index.html" class="{ko_class}">한국어</a>
+    <a href="index_en.html" class="{en_class}">English</a>
+  </div>
+</nav>
+<script>
+function toggleMenu() {{
+  const menu = document.getElementById('mobile-menu');
+  menu.classList.toggle('open');
+  const spans = document.querySelectorAll('.hamburger span');
+  if (menu.classList.contains('open')) {{
+    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+    spans[1].style.opacity = '0';
+    spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+  }} else {{
+    spans[0].style.transform = ''; spans[1].style.opacity = ''; spans[2].style.transform = '';
+  }}
+}}
+document.addEventListener('click', function(e) {{
+  const menu = document.getElementById('mobile-menu');
+  const btn = document.querySelector('.hamburger');
+  if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {{
+    menu.classList.remove('open');
+    const spans = document.querySelectorAll('.hamburger span');
+    spans[0].style.transform = ''; spans[1].style.opacity = ''; spans[2].style.transform = '';
+  }}
+}});
+</script>'''
 
 def get_footer_html(lang="ko"):
     if lang == "ko":
@@ -845,7 +892,7 @@ def build_html(news_list, content, stock_data=None, lang="ko"):
   .hero-desc {{ font-size: 18px; max-width: 680px; }}
   .section-title {{ font-size: 24px; }}
   .section-overview {{ font-size: 16px; }}
-  .news-list {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }}
+  .news-list {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; max-width: 900px; }}
   .news-thumb {{ height: 180px; }}
   .stock-list {{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }}
   .analyst-text {{ font-size: 15px; }}
@@ -854,8 +901,16 @@ def build_html(news_list, content, stock_data=None, lang="ko"):
   .summary-list li {{ font-size: 15px; }}
 }}
 @media (min-width: 640px) and (max-width: 1023px) {{
-  .news-list {{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }}
+  .news-list {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }}
   .news-thumb {{ height: 180px; }}
+}}
+@media (max-width: 767px) {{
+  .desktop-nav {{ display: none; }}
+  .hamburger {{ display: flex; }}
+}}
+@media (min-width: 768px) {{
+  .hamburger {{ display: none; }}
+  .mobile-menu {{ display: none !important; }}
 }}
 @media (max-width: 639px) {{
   .hero {{ padding: 36px 20px 32px; }}
