@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Daily Insight — 2026년 05월 08일</title>
 <meta property="og:title" content="Daily Insight — 2026년 05월 08일">
-<meta property="og:description" content="AI·에너지 대형 투자로 국내 IT·전력주 강세, 지정학적 리스크 여전">
+<meta property="og:description" content="비트코인, 금, 은 동반 상승…원자재 강세 주도, 자산배분 전환 가속">
 <meta property="og:image" content="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80">
 <meta property="og:url" content="https://dhpaeng81-crypto.github.io/Daily-insight/index.html">
 <meta name="twitter:card" content="summary_large_image">
@@ -35,13 +35,23 @@ a { color: inherit; text-decoration: none; }
 .logo { font-family: var(--font); font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
 .logo span { color: var(--accent); }
 .header-nav { display: flex; gap: 4px; font-size: 13px; align-items: center; }
-.header-nav a { padding: 6px 12px; border-radius: 6px; color: var(--ink-muted); font-weight: 700; transition: background 0.15s, color 0.15s; }
+.header-nav a { padding: 6px 10px; border-radius: 6px; color: var(--ink-muted); font-weight: 700; transition: background 0.15s, color 0.15s; white-space: nowrap; }
 .header-nav a:hover { background: var(--bg-subtle); color: var(--ink); }
 .header-nav .active { color: var(--accent); background: var(--accent-light); }
-.header-nav .divider { width: 1px; height: 16px; background: var(--border); margin: 0 4px; }
-.lang-btn { padding: 5px 10px !important; font-size: 12px !important; font-weight: 800 !important; border: 1.5px solid var(--border) !important; border-radius: 6px !important; color: var(--ink-soft) !important; }
+.header-nav .divider { width: 1px; height: 16px; background: var(--border); margin: 0 2px; flex-shrink: 0; }
+.lang-btn { padding: 4px 8px !important; font-size: 11px !important; font-weight: 800 !important; border: 1.5px solid var(--border) !important; border-radius: 6px !important; color: var(--ink-soft) !important; flex-shrink: 0; }
 .lang-btn:hover { border-color: var(--accent) !important; color: var(--accent) !important; background: var(--accent-light) !important; }
 .lang-btn.active { border-color: var(--accent) !important; color: var(--accent) !important; background: var(--accent-light) !important; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; border: none; background: none; }
+.hamburger span { width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: all 0.3s; display: block; }
+.mobile-menu { display: none; position: fixed; top: 56px; left: 0; right: 0; background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 12px 20px; flex-direction: column; gap: 4px; z-index: 99; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.mobile-menu a { padding: 10px 12px; border-radius: 8px; color: var(--ink-soft); font-weight: 700; font-size: 14px; display: block; }
+.mobile-menu a:hover { background: var(--bg-subtle); color: var(--ink); }
+.mobile-menu .active { color: var(--accent); background: var(--accent-light); }
+.mobile-menu .lang-row { display: flex; gap: 8px; padding: 8px 12px; }
+.mobile-menu .lang-row a { padding: 6px 16px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 12px; font-weight: 800; }
+.mobile-menu .lang-row .active { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+.mobile-menu.open { display: flex; }
 .site-footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
 .footer-inner { max-width: 780px; margin: 0 auto; }
 .footer-logo { font-family: var(--font); font-size: 16px; font-weight: 800; margin-bottom: 8px; }
@@ -136,7 +146,7 @@ a { color: inherit; text-decoration: none; }
   .hero-desc { font-size: 18px; max-width: 680px; }
   .section-title { font-size: 24px; }
   .section-overview { font-size: 16px; }
-  .news-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .news-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; max-width: 900px; }
   .news-thumb { height: 180px; }
   .stock-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
   .analyst-text { font-size: 15px; }
@@ -145,8 +155,16 @@ a { color: inherit; text-decoration: none; }
   .summary-list li { font-size: 15px; }
 }
 @media (min-width: 640px) and (max-width: 1023px) {
-  .news-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .news-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
   .news-thumb { height: 180px; }
+}
+@media (max-width: 767px) {
+  .desktop-nav { display: none; }
+  .hamburger { display: flex; }
+}
+@media (min-width: 768px) {
+  .hamburger { display: none; }
+  .mobile-menu { display: none !important; }
 }
 @media (max-width: 639px) {
   .hero { padding: 36px 20px 32px; }
@@ -163,7 +181,7 @@ a { color: inherit; text-decoration: none; }
 <header class="site-header">
   <div class="header-inner">
     <div class="logo"><a href="index.html">Daily<span>Insight</span></a></div>
-    <nav class="header-nav">
+    <nav class="header-nav desktop-nav">
       <a href="index.html" class="active">금융·AI·에너지</a>
       <a href="archive.html" class="">아카이브</a>
       <div class="divider"></div>
@@ -172,13 +190,48 @@ a { color: inherit; text-decoration: none; }
       <a href="index.html" class="lang-btn active">KO</a>
       <a href="index_en.html" class="lang-btn">EN</a>
     </nav>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="메뉴">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
+<nav class="mobile-menu" id="mobile-menu">
+  <a href="index.html" class="active">금융·AI·에너지</a>
+  <a href="archive.html" class="">아카이브</a>
+  <a href="politics_index.html">역사·정치</a>
+  <div class="lang-row">
+    <a href="index.html" class="lang-btn active">한국어</a>
+    <a href="index_en.html" class="lang-btn">English</a>
+  </div>
+</nav>
+<script>
+function toggleMenu() {
+  const menu = document.getElementById('mobile-menu');
+  menu.classList.toggle('open');
+  const spans = document.querySelectorAll('.hamburger span');
+  if (menu.classList.contains('open')) {
+    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+    spans[1].style.opacity = '0';
+    spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+  } else {
+    spans[0].style.transform = ''; spans[1].style.opacity = ''; spans[2].style.transform = '';
+  }
+}
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('mobile-menu');
+  const btn = document.querySelector('.hamburger');
+  if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+    menu.classList.remove('open');
+    const spans = document.querySelectorAll('.hamburger span');
+    spans[0].style.transform = ''; spans[1].style.opacity = ''; spans[2].style.transform = '';
+  }
+});
+</script>
 
 <section class="hero">
   <div class="issue-badge">오늘의 브리핑</div>
-  <h1 class="hero-title">Hut 8, 13조원 규모 AI센터 임대계약 급등</h1>
-  <p class="hero-desc">AI·에너지 대형 투자로 국내 IT·전력주 강세, 지정학적 리스크 여전</p>
+  <h1 class="hero-title">비트코인 1월 이후 최고치 경신</h1>
+  <p class="hero-desc">비트코인, 금, 은 동반 상승…원자재 강세 주도, 자산배분 전환 가속</p>
   <div class="hero-tags">
     <span class="tag">💹 금융 시장</span>
     <span class="tag">🤖 AI · IT</span>
@@ -192,11 +245,11 @@ a { color: inherit; text-decoration: none; }
     <span class="section-pill finance">Finance</span>
     <span class="section-title">금융 시장</span>
   </div>
-  <p class="section-overview">미국증시는 기술주 강세에 힘입어 상승 마감했다. 나스닥은 1.3% 오르며 AI 중심 수급이 집중됐다. Hut 8은 98억달러(약 13조원) AI 데이터센터 임대 소식에 장중 12% 급등했다. 반면 채권금리는 10년물 기준 4.25%로 소폭 상승, 인플레이션 우려가 여전히 잔존 중이다.</p>
+  <p class="section-overview">5월 6일 기준 비트코인은 6만8천달러선까지 오르며 1월 이후 최고가를 기록했고, 이더리움도 동반 강세를 보였습니다. 금은 전일 대비 2.1%, 은은 3.5% 급등해 각각 온스당 2,350달러, 29.9달러로 마감했습니다. 주식시장은 원자재 강세에 따라 경기방어주 및 자원 관련주가 상대적 강세, 성장주에서는 일부 차익실현이 포착됐습니다. 글로벌 채권금리는 원자재 인플레이션 우려로 소폭 상승(미 10년물 4.59%, +0.07%p)했습니다.</p>
   <div class="news-list">
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://media.zenfs.com/en/cryptoprowl_304/3d48ed2fb88bcb183b5845f3c3ce6176" alt="Hut 8, 13조원 규모 AI 데이터센터 임대계약 체결 급등" loading="lazy"
+        <img src="https://s.yimg.com/uu/api/res/1.2/ZpWX2Yzi4TnvhZyi00u31A--~B/aD0zNTA7dz02MTI7YXBwaWQ9eXRhY2h5b24-/https://d29szjachogqwa.cloudfront.net/images/user-uploaded/bitcoin_4_7197.jpg" alt="비트코인, 1월 이후 최고치 6만8천달러 돌파" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -207,15 +260,15 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://finance.yahoo.com/markets/stocks/articles/hut-8-stock-spikes-9-135600572.html" target="_blank">Hut 8, 13조원 규모 AI 데이터센터 임대계약 체결 급등</a>
+          <a href="https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-wednesday-may-6-2026-prices-up-bitcoin-at-highest-level-since-january-112112979.html" target="_blank">비트코인, 1월 이후 최고치 6만8천달러 돌파</a>
         </div>
-        <div class="news-body">Hut 8이 98억달러(약 13조원) 규모의 '비컨포인트 AI 데이터센터' 장기임대 계약 소식에 주가가 장중 12% 급등했다. AI 인프라 수요가 폭발적으로 늘면서, 대형 데이터센터 임대와 설비투자 기업이 시장 주목을 받고 있는 상황이다. 국내 SK하이닉스와 현대건설 등 반도체·인프라 시공 기업에 중기 수혜가 기대된다. 투자자는 IT·인프라 대형주 중심의 비중확대 및 분할매수를 고려해야 하며, 금리·정치 리스크에 따른 조정장 대비도 필요하다.</div>
-        <a href="https://finance.yahoo.com/markets/stocks/articles/hut-8-stock-spikes-9-135600572.html" class="read-more" target="_blank">원문 읽기 →</a>
+        <div class="news-body">비트코인이 6만8천달러 선까지 상승해 1월 이후 최고가를 기록했습니다. 위험자산 회피 심리와 인플레이션 우려가 비트코인 등 대체자산 강세로 이어진 상황입니다. 카카오(두나무 지분)와 위메이드 등 국내 가상자산 관련주가 단기적으로 탄력받을 전망입니다. 금리 정책 및 추가 규제 여부에 따라 가격 변동성이 높아질 수 있어 투자시 분할 매수 및 철저한 리스크 관리가 필요합니다.</div>
+        <a href="https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-wednesday-may-6-2026-prices-up-bitcoin-at-highest-level-since-january-112112979.html" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://media.zenfs.com/en/motleyfool.com/e48e86dda35543079ee2080fd9208b73" alt="Onity Group (ONIT) Q1 2026 Earnings Transcript" loading="lazy"
+        <img src="https://s.yimg.com/uu/api/res/1.2/iNkNeNnfLMn1MddfYh9KDQ--~B/aD00OTUwO3c9ODgwMDthcHBpZD15dGFjaHlvbg--/https://d29szjachogqwa.cloudfront.net/images/2026-03/edb7f57c-4e9c-418e-863a-3025d9486f77" alt="금·은 가격 동반 급등, 안전자산 선호 반영" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -226,15 +279,15 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://finance.yahoo.com/markets/stocks/articles/onity-group-onit-q1-2026-134902476.html" target="_blank">Onity Group (ONIT) Q1 2026 Earnings Transcript</a>
+          <a href="https://finance.yahoo.com/personal-finance/investing/article/gold-and-silver-prices-today-wednesday-may-6-gold-and-silver-prices-up-significantly-this-morning-104404711.html" target="_blank">금·은 가격 동반 급등, 안전자산 선호 반영</a>
         </div>
-        <div class="news-body">죄송하지만 제공해주신 뉴스 내용이 비어 있습니다. 내용을 입력해주시면 한국어로 번역해드리고 요약해드리겠습니다.</div>
-        <a href="https://finance.yahoo.com/markets/stocks/articles/onity-group-onit-q1-2026-134902476.html" class="read-more" target="_blank">원문 읽기 →</a>
+        <div class="news-body">금 가격이 온스당 2,350달러(+2.1%), 은도 29.9달러(+3.5%)로 급등했습니다. 미국 기준금리 인상 우려와 지정학 리스크가 안전자산 선호를 부추기는 요인입니다. 국내 금 ETF와 귀금속 유통 기업(한국금거래소, 풍산)이 대표 수혜주입니다. 장기적 자산배분 차원에서 일정 비중의 금·은 보유전략을 추천하며, 단기 가격 급등 후 조정에도 대비가 필요합니다.</div>
+        <a href="https://finance.yahoo.com/personal-finance/investing/article/gold-and-silver-prices-today-wednesday-may-6-gold-and-silver-prices-up-significantly-this-morning-104404711.html" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div></div>
   <div class="analyst-note">
     <div class="analyst-label">💡 애널리스트 인사이트</div>
-    <div class="analyst-text">AI 데이터센터 투자 확대로 IT 인프라 및 설비주가 두드러진 수혜를 누린다. 국내에서는 SK하이닉스(고대역폭 메모리 공급)와 현대건설(국내외 데이터센터 시공 경험)이 단기 수혜 기업이다. 해외에서는 마이크로소프트가 대형 AI 클라우드 수요로 매출 성장이 기대된다. 투자액션은 IT·인프라 중심 비중확대 제시, 단 2분기 견조한 금리와 지정학적 리스크(미국-중동 갈등 지속 시) 고려해 분할매수 권고. 반대 시나리오는 단기 금리상승 및 AI 설비 설계지연으로 인한 투자심리 악화 가능성이다.</div>
+    <div class="analyst-text">원자재(비트코인, 금, 은)의 가격이 동반 상승함에 따라 대체자산군으로 자금이 빠르게 이동하고 있습니다. 국내에서는 금 실물 ETF(삼성KODEX골드선물, KBSTAR금선물)와 가상자산 관련주(위메이드, 두나무 지분 보유 카카오)가 수혜 대상입니다. 해외에서는 마이크로스트래티지가 비트코인 보유량 확대, 뉴몬트는 금값 상승의 최대 수혜주입니다. 향후 1개월 내 금·비트코인 비중확대를 권고합니다. 단, 미국 기준금리 추가 인상 또는 당국의 가상자산 규제 강화가 단기 하락 리스크입니다.</div>
   </div>
   <div class="section-divider"></div>
 
@@ -242,11 +295,11 @@ a { color: inherit; text-decoration: none; }
     <span class="section-pill tech">Tech</span>
     <span class="section-title">AI · IT 트렌드</span>
   </div>
-  <p class="section-overview">글로벌 AI 기술 투자가 지속 늘어나면서, 신생기업부터 대형 제약사 인수까지 인공지능 시장의 몸집이 커지고 있다. 스웨덴 Pit은 1,600만달러(약 215억원) 투자유치, 로슈는 미국 PathAI를 최대 14,000억원에 인수했다. 국내 AI·데이터센터 시장 연평균 성장률 17%로, AI 인프라와 의료 AI 분야가 동반 성장 중이다. 급격한 투자 확대로 반도체, 전력 인프라 수요가 동반 확대되고 있다.</p>
+  <p class="section-overview">오픈AI가 출시한 신규 음성지능 API와 '신뢰 연락처' 보호 기능, 구글의 '제미나이 딥 리서치 에이전트' 등 대형 인공지능 기업의 기술 업데이트가 연이어 공개됐습니다. 사운드하운드AI는 올해 1분기 매출이 전년 대비 52% 증가한 4,420만달러로 집계되며 AI 플랫폼 시장 성장세를 입증했습니다. 국내에서는 AI 활용 고객센터, 음성 AI 서비스, 반도체 설계 기업이 투자자 주목을 받고 있습니다. AI 채택 확대 기대감으로 관련주 주가 단기 모멘텀 강화 중이나, 일각에서는 기술 도입에 따른 고용 불안 우려가 제기되고 있습니다.</p>
   <div class="news-list">
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80" alt="Voi founders’ new AI startup Pit has become the latest rising star out of Stockholm" loading="lazy"
+        <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80" alt="오픈AI, 목소리 인식 신기능과 사용자 보호 강화" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -257,18 +310,15 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://techcrunch.com/2026/05/07/voi-founders-new-ai-startup-pit-has-become-the-latest-rising-star-out-of-stockholm/" target="_blank">Voi founders’ new AI startup Pit has become the latest rising star out of Stockholm</a>
+          <a href="https://techcrunch.com/2026/05/07/openai-launches-new-voice-intelligence-features-in-its-api/" target="_blank">오픈AI, 목소리 인식 신기능과 사용자 보호 강화</a>
         </div>
-        <div class="news-body">제목: Voi 창업자들의 새로운 AI 스타트업 Pit가 스톡홀름에서 떠오르는 신성으로 떠올랐다  
-내용: AI 스타트업 Pit는 유럽 전동 킥보드 거물 Voi의 공동 창업자들이 이끌고 있으며, a16z가 주도하는 1,600만 달러 규모의 시드 투자 라운드를 받고 있다.
-
-요약: Voi의 공동 창업자들이 설립한 AI 스타트업 Pit가 스톡홀름에서 주목받고 있다. 해당 스타트업은 유명 벤처캐피털 a16z가 주도하는 1,600만 달러 시드 투자를 유치했다.</div>
-        <a href="https://techcrunch.com/2026/05/07/voi-founders-new-ai-startup-pit-has-become-the-latest-rising-star-out-of-stockholm/" class="read-more" target="_blank">원문 읽기 →</a>
+        <div class="news-body">오픈AI가 API용 신규 음성지능 기능과 '신뢰 연락처' 안전장치 기능을 동시 도입했습니다. 고객센터, 교육플랫폼, 크리에이터 등 다양한 산업에서 적용 확대가 예상됩니다. 국내 AI 콜센터(솔트룩스, 코난테크놀로지), 음성 AI 기업들이 직접적인 수혜가 가능합니다. 신기술 상용화 속도가 빨라질수록 AI서비스 수요와 관련 산업 매출 증가가 본격화될 전망입니다.</div>
+        <a href="https://techcrunch.com/2026/05/07/openai-launches-new-voice-intelligence-features-in-its-api/" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80" alt="OpenAI introduces new ‘Trusted Contact’ safeguard for cases of possible self-harm" loading="lazy"
+        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&q=80" alt="스웨덴 신생 AI업체 Pit, 1,600만달러 투자 유치" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -279,18 +329,15 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://techcrunch.com/2026/05/07/openai-introduces-new-trusted-contact-safeguard-for-cases-of-possible-self-harm/" target="_blank">OpenAI introduces new ‘Trusted Contact’ safeguard for cases of possible self-harm</a>
+          <a href="https://techcrunch.com/2026/05/07/voi-founders-new-ai-startup-pit-has-become-the-latest-rising-star-out-of-stockholm/" target="_blank">스웨덴 신생 AI업체 Pit, 1,600만달러 투자 유치</a>
         </div>
-        <div class="news-body">제목: OpenAI, 자해 가능성 있는 경우를 위한 ‘신뢰 연락처’ 안전장치 도입  
-내용: OpenAI는 대화 중 자해 관련 내용이 나타날 가능성이 있는 상황에서 ChatGPT 사용자를 보호하기 위한 노력을 확대하고 있다.  
-
-요약: OpenAI가 자해 위험이 감지되는 상황에서 사용자를 보호하기 위해 ‘신뢰 연락처’라는 새로운 안전장치를 도입했다. 이를 통해 보다 안전한 대화 환경을 제공하려는 노력이 강화되고 있다.</div>
-        <a href="https://techcrunch.com/2026/05/07/openai-introduces-new-trusted-contact-safeguard-for-cases-of-possible-self-harm/" class="read-more" target="_blank">원문 읽기 →</a>
+        <div class="news-body">유럽 전동스쿠터회사 Voi 창업자가 설립한 AI 신생기업 Pit이 1,600만달러(약 220억원) 시드 투자를 유치했습니다. 글로벌 대형 투자사 참여와 함께 위치인식, 데이터 관리 신기술의 혁신성이 주목받는 배경입니다. 네이버, 더존비즈온 등 국내 디지털융합/데이터 기반 스타트업에 긍정적 벤치마크입니다. 투자자 입장선 신흥 AI·데이터 유니콘 발굴에 적극적 관심 필요합니다.</div>
+        <a href="https://techcrunch.com/2026/05/07/voi-founders-new-ai-startup-pit-has-become-the-latest-rising-star-out-of-stockholm/" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div></div>
   <div class="analyst-note">
     <div class="analyst-label">💡 애널리스트 인사이트</div>
-    <div class="analyst-text">AI 데이터센터와 의료 AI에 대한 투자가 집중되면서, 반도체(삼성전자: HBM·파운드리), 전력설비(LG에너지솔루션: 배터리·전력저장장치) 기업이 실질적 수혜를 볼 것이다. 해외에서는 엔비디아가 인공지능 연산·데이터 센터용 칩 시장에서 압도적 점유율을 지키고 있다. 투자 액션은 반도체·전력인프라주 단기 매수 및 비중확대 추천, AI 의료 솔루션 기업(코난테크놀로지 등)도 관심 필요. 리스크는 데이터센터 개발 속도 지연 및 새로운 AI 규제 도입 가능성이며, 경쟁 격화 시 실적 변동성도 확대될 수 있다.</div>
+    <div class="analyst-text">음성지능, 에이전트형 AI 분야가 주목받으면서 AI 고객센터 솔루션(코난테크놀로지, 솔트룩스)와 시스템반도체(삼성전자, 네패스) 기업이 직접 수혜 압니다. 해외에서는 엔비디아가 AI 데이터센터용 반도체에서 확실한 선도자리를 유지하고 있습니다. 3개월 이내 AI/음성지능 관련 기업 비중 확대를 권고합니다. 그러나 규제 강화(개인정보보호·AI 안전성) 및 미국과 중국 간 기술패권 갈등 심화가 리스크 요인입니다.</div>
   </div>
   <div class="section-divider"></div>
 
@@ -298,11 +345,11 @@ a { color: inherit; text-decoration: none; }
     <span class="section-pill energy">Energy</span>
     <span class="section-title">에너지 · 산업</span>
   </div>
-  <p class="section-overview">중동지정학 갈등·원유수급 이슈로 국제유가는 강한 변동성을 보였다. 서부텍사스기준 배럴당 3일간 최대 8% 급락 후 부분 회복해 76달러를 기록했다. 영국 등 유럽은 전력·난방비 급등으로 소비자 부담 심화, 미국은 이란 제재 강화로 에너지업체들이 긴장하고 있다. 재생에너지·LNG 등 대체에너지 수요는 단기적으로 정체된 모습이다.</p>
+  <p class="section-overview">국제유가는 최근 1주일간 10% 가까이 하락하며 1배럴당 77달러선으로 내려왔습니다. 저유가는 고정금리 주택담보대출 금리 인하를 자극했고, 이에 미국 내 부동산 투자 분위기에 긍정적 영향이 발생할 전망입니다. 반면, 중국-중앙아시아 신재생 투자 및 유럽 천연가스(LNG) 생산증가가 그린수소·재생에너지 투자 모멘텀을 강화했습니다. 에너지 가격 하락과 주요 기업의 비용부담 완화효과가 하위산업(운송, 소재, 제조)에 순차적으로 반영되고 있습니다.</p>
   <div class="news-list">
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80" alt="Trump's Iran war may stymie climate gains with boost to big <b>oil</b>, experts say - The Guardian" loading="lazy"
+        <img src="https://images.unsplash.com/photo-1534224039826-c7a0eda0e6b3?w=800&q=80" alt="국제유가 10% 급락, 부동산·대출시장에 영향" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -313,19 +360,15 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.theguardian.com/us-news/2026/may/07/iran-war-big-oil-climate&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw2KgWH2KDmzkJDT-LNWP2l8" target="_blank">Trump's Iran war may stymie climate gains with boost to big <b>oil</b>, experts say - The Guardian</a>
+          <a href="https://www.google.com/url?rct=j&sa=t&url=https://financialpost.com/real-estate/mortgages/mortgage-rates/fixed-mortgage-rates-follow-falling-oil-prices&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw348MNtDF07dq-SJjRZAlhD" target="_blank">국제유가 10% 급락, 부동산·대출시장에 영향</a>
         </div>
-        <div class="news-body">제목: 트럼프의 이란 전쟁이 대형 석유산업에 힘을 실어 기후 변화 대응을 저해할 수 있다고 전문가들 지적 - 가디언
-
-내용: 혼란 속에서 에너지 가격과 석유 회사들의 수익이 급증했다. 예를 들어 트럼프는 바이든 행정부 시절 도입된 액화천연가스(LNG) 금지 조치를 종료했다.
-
-요약: 트럼프 전 대통령의 이란 관련 정책이 에너지 가격 상승과 대형 석유기업들의 이익 증대로 이어져, 기후 변화 대응 노력을 방해할 수 있다는 전문가들의 우려가 있다. 그의 조치는 바이든 행정부의 친환경 정책을 뒤집는 결과를 낳았다.</div>
-        <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.theguardian.com/us-news/2026/may/07/iran-war-big-oil-climate&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw2KgWH2KDmzkJDT-LNWP2l8" class="read-more" target="_blank">원문 읽기 →</a>
+        <div class="news-body">국제유가가 최근 1주일간 약 10% 하락, 77달러 선까지 내려오며 고정금리부 대출 금리 인하가 가속화되고 있습니다. 유가하락은 국내 부동산, 항공·운송, 석유화학 산업 마진 확대에 긍정적입니다. 아모레퍼시픽 등 원자재 민감 소비재, 대한항공, 현대글로비스가 직접적 수혜주입니다. 유가 변동성이 높아진 만큼 단기 트레이딩 전략과 리스크 분산이 중요합니다.</div>
+        <a href="https://www.google.com/url?rct=j&sa=t&url=https://financialpost.com/real-estate/mortgages/mortgage-rates/fixed-mortgage-rates-follow-falling-oil-prices&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw348MNtDF07dq-SJjRZAlhD" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://images.unsplash.com/photo-1534224039826-c7a0eda0e6b3?w=800&q=80" alt="The islanders bracing for the full force of Britain's coming <b>energy</b> price crisis - The Telegraph" loading="lazy"
+        <img src="https://images.unsplash.com/photo-1534224039826-c7a0eda0e6b3?w=800&q=80" alt="미국 듀크에너지 요금폭탄, 가계부담 확대 우려" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -336,19 +379,15 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.telegraph.co.uk/money/bills/energy/outer-hebrides-energy-crisis-iran-war/&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw2mj_zBqFWSlcS-OLUK4ToB" target="_blank">The islanders bracing for the full force of Britain's coming <b>energy</b> price crisis - The Telegraph</a>
+          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.wral.com/consumer/5onyourside/money-federal-reserve-credit-cards-mortgage-savings-personal-finance/&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw1uU0Ce073LNOi7Hn1g7Eqx" target="_blank">미국 듀크에너지 요금폭탄, 가계부담 확대 우려</a>
         </div>
-        <div class="news-body">제목: 영국 에너지 가격 위기의 전면적 충격에 대비하는 섬 주민들 - 텔레그래프  
-내용: 한 주민은 전기세로 매달 100파운드, 지방세로는 매달 200파운드를 지불하며, 여기에 매 두 달마다 난방유에 650파운드를 더 쓰고 있다고 추산한다. 이러한 비용 부담이 커지면서 섬 주민들은 다가오는 에너지 가격 위기의 완전한 충격에 대비하고 있다.
-
-요약:  
-섬 주민들은 전기요금, 지방세, 난방유 비용 등으로 많은 지출을 하고 있으며, 급등하는 에너지 가격에 따른 경제적 부담이 심각해지고 있다. 이에 이들은 다가오는 에너지 위기에 대비하고 있다.</div>
-        <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.telegraph.co.uk/money/bills/energy/outer-hebrides-energy-crisis-iran-war/&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw2mj_zBqFWSlcS-OLUK4ToB" class="read-more" target="_blank">원문 읽기 →</a>
+        <div class="news-body">미국 듀크에너지의 전기요금 청구서가 800달러까지 급격히 인상되면서 추가 요금 폭등 공포가 현실화되고 있습니다. 에너지 가격 변동성이 소비자 실물경제에도 큰 부담을 주고 있음을 시사합니다. 국내 한전, 한국가스공사는 전기·가스요금 인상 압력에 노출될 수 있습니다. 경기둔화나 정책 변화에 따른 생활물가 충격 리스크를 감안한 자산배분 전략이 필요합니다.</div>
+        <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.wral.com/consumer/5onyourside/money-federal-reserve-credit-cards-mortgage-savings-personal-finance/&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw1uU0Ce073LNOi7Hn1g7Eqx" class="read-more" target="_blank">원문 읽기 →</a>
       </div>
     </div></div>
   <div class="analyst-note">
     <div class="analyst-label">💡 애널리스트 인사이트</div>
-    <div class="analyst-text">에너지 가격 급등은 제조업 전반에 부담이지만, 발전(한국전력) 및 전력 기자재(한전KPS) 기업에는 단기 이익 확대 요인이다. 정유주(에쓰오일, GS칼텍스)는 지정학적 셧다운시 수혜, 단 석유수요 급락 시 단기 매도세 전환 가능성. 해외에서는 엑슨모빌, 쉘 등 메이저 석유사가 직접적 수혜 예상. 투자 액션은 에너지 섹터 단기 보유 및 관망, 단 중동정세 급변·에너지 과잉공급 시 가격 급락 리스크에 유의해야 한다.</div>
+    <div class="analyst-text">유가 하락으로 운송(대한항공, 현대글로비스), 정유·화학(에쓰오일, 롯데케미칼) 기업에 단기 영업이익 개선 효과가 확산되고 있습니다. 미국의 셰니어에너지는 LNG 생산증가로 2026년 영업이익 전망치를 상향조정했습니다. 운송·정유·LNG 관련주 단기 비중확대를 권고합니다. 단, 중동 지정학 리스크(전쟁재확산) 및 중국 경기둔화로 에너지 수요가 급감할 경우 유가 변동성이 다시 확대될 수 있습니다.</div>
   </div>
   <div class="section-divider"></div>
 
@@ -356,118 +395,18 @@ a { color: inherit; text-decoration: none; }
     <div class="summary-label">오늘의 핵심 인사이트</div>
     <div class="summary-title">오늘 꼭 기억할 3가지</div>
     <ol class="summary-list">
-      <li><span class="summary-num">1</span><span>AI 데이터센터 투자확대, 반도체·전력 대형주 비중확대</span></li>
-      <li><span class="summary-num">2</span><span>글로벌 자금, AI·에너지→인프라·설비주 적극 이동</span></li>
-      <li><span class="summary-num">3</span><span>중동지정학 리스크 및 단기 금리상승, 변동성 확대</span></li>
+      <li><span class="summary-num">1</span><span>비트코인·금 동반 급등, 대체자산 비중확대 기회</span></li>
+      <li><span class="summary-num">2</span><span>AI·에너지 전통주로 자금 이동, 섹터 교체 본격화</span></li>
+      <li><span class="summary-num">3</span><span>미국 금리·가상자산 규제→단기 급락 변동성 주의</span></li>
     </ol>
   </div>
 
   
-  <div class="section-divider"></div>
-  <div class="section-header">
-    <span class="section-pill stock">Stock</span>
-    <span class="section-title">어제의 특징주</span>
-    <span class="stock-date-badge">2026년 05월 07일 (목요일)</span>
-  </div>
-  <p class="section-overview">전일 장 마감 기준으로 주요 특징주를 선정하고 AI가 심층 분석한 종목 보고서입니다. 투자 판단의 참고 자료로만 활용하시기 바랍니다.</p>
-  <div class="stock-list">
-    
-    <div class="stock-card">
-      <div class="stock-card-header">
-        <div class="stock-badge surge">📈 급등 특징주</div>
-        <div class="stock-name-row">
-          <span class="stock-name">대한광통신</span>
-          <span class="stock-ticker">010170</span>
-        </div>
-        <div class="stock-price-row">
-          <span class="stock-price">21,800원</span>
-          <span class="stock-change" style="color:#dc2626">+19.32%</span>
-        </div>
-        <div class="stock-stats">
-          
-        <div class="stock-stat">
-          <span class="stat-label">거래대금</span>
-          <span class="stat-value">17779억원</span>
-        </div>
-        <div class="stock-stat">
-          <span class="stat-label">거래량</span>
-          <span class="stat-value">81,554,387주</span>
-        </div>
-        </div>
-      </div>
-      <div class="stock-card-body">
-        <div class="stock-comment">💬 AI 인프라 수요, 성장 가능성 확보</div>
-        <div class="stock-analysis-section">
-          <div class="analysis-label">🏢 기업 개요</div>
-          <div class="analysis-text">대한광통신은 광섬유 및 관련 장비를 제조하는 회사로, AI 데이터센터와 5G 인프라 구축에 핵심적인 역할을 하고 있습니다.</div>
-        </div>
-        <div class="stock-analysis-section">
-          <div class="analysis-label">📊 주가 움직임 원인</div>
-          <div class="analysis-text">주가 급등의 주된 원인은 AI 데이터센터 수요 증가에 따른 수익 증가 기대와 회사의 수직계열화 구조 덕분입니다. 특히, 한국투자증권에서 AI 인프라 공급망에 대한 진입을 긍정적으로 평가한 점도 영향을 미쳤습니다.</div>
-        </div>
-        <div class="stock-analysis-section">
-          <div class="analysis-label">💡 투자 포인트</div>
-          <div class="analysis-text">AI 데이터센터의 확대로 꾸준한 수요가 예상되어 장기적인 성장 가능성이 큽니다. 또한, 대한광통신은 국내 유일의 수직계열화 업체로써 원가 경쟁력을 보유하고 있습니다. 이러한 시장 지위는 안정적인 매출 확대에 기여할 것입니다.</div>
-        </div>
-        <div class="stock-analysis-section risk">
-          <div class="analysis-label">⚠️ 리스크 요인</div>
-          <div class="analysis-text">급등 후 조정 가능성 및 글로벌 반도체 경기 불안정성이 주가 변동성을 키울 수 있습니다. 게다가 경쟁사들의 기술 발전과 시장 점유율 확대 시 위기가 올 수 있습니다.</div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="stock-card">
-      <div class="stock-card-header">
-        <div class="stock-badge foreign">🌍 외국인 순매수 1위</div>
-        <div class="stock-name-row">
-          <span class="stock-name">대한항공</span>
-          <span class="stock-ticker">003490</span>
-        </div>
-        <div class="stock-price-row">
-          <span class="stock-price">26,350원</span>
-          <span class="stock-change" style="color:#dc2626">+7.33%</span>
-        </div>
-        <div class="stock-stats">
-          
-        <div class="stock-stat">
-          <span class="stat-label">순매수금액</span>
-          <span class="stat-value">0억원</span>
-        </div>
-        <div class="stock-stat">
-          <span class="stat-label">거래대금</span>
-          <span class="stat-value">1675억원</span>
-        </div>
-        </div>
-      </div>
-      <div class="stock-card-body">
-        <div class="stock-comment">💬 방산 부문 기대, 주가 상승세 지속</div>
-        <div class="stock-analysis-section">
-          <div class="analysis-label">🏢 기업 개요</div>
-          <div class="analysis-text">대한항공은 세계적인 항공사로 여객 운송, 화물 운송, 항공기 정비 등의 사업을 운영하고 있습니다. 아시아 최대 항공사 중 하나로, 국제선 운항 네트워크를 광범위하게 보유하고 있습니다.</div>
-        </div>
-        <div class="stock-analysis-section">
-          <div class="analysis-label">📊 주가 움직임 원인</div>
-          <div class="analysis-text">최근 대한항공의 주가 급등은 방산 부문 확대 가능성에 대한 기대감이 반영된 것입니다. 방위산업 관련 수익 증가 예상과 외교 안보 이슈로 인한 방산 수요 증가가 주가를 끌어올렸습니다. 거래량의 급증은 외국인 투자자들의 순매수세가 강하게 작용한 결과로 볼 수 있습니다.</div>
-        </div>
-        <div class="stock-analysis-section">
-          <div class="analysis-label">💡 투자 포인트</div>
-          <div class="analysis-text">대한항공은 국제선 수요 회복과 화물 운송 호조로 인해 수익성이 개선될 가능성이 있습니다. 특히 최근의 방산 부문 확대 가능성과 고유가 상황에서의 비용 절감 노력은 장기적으로 긍정적인 영향을 미칠 것으로 보입니다. 또한, 원화 약세는 외화 수익을 증가시켜 주주들에게 유리하게 작용할 수 있습니다.</div>
-        </div>
-        <div class="stock-analysis-section risk">
-          <div class="analysis-label">⚠️ 리스크 요인</div>
-          <div class="analysis-text">주요 리스크 요인은 고환율과 고유가로 인생비용 증가가 수익성에 부정적 영향을 미칠 수 있습니다. 더욱이 글로벌 경제 불확실성과 국제정세 변화는 항공 수요에 부정적 요소로 작용할 수 있습니다.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="stock-disclaimer">
-    ⚠️ 본 분석은 투자 권유가 아닙니다. 투자 결과에 대한 책임은 투자자 본인에게 있습니다.
-  </div>
   
 <div class="share-section">
   <div class="share-label">이 브리핑 공유하기</div>
   <div class="share-buttons">
-    <a class="share-btn twitter" href="https://twitter.com/intent/tweet?text=Hut%208%2C%2013%EC%A1%B0%EC%9B%90%20%EA%B7%9C%EB%AA%A8%20AI%EC%84%BC%ED%84%B0%20%EC%9E%84%EB%8C%80%EA%B3%84%EC%95%BD%20%EA%B8%89%EB%93%B1&url=https%3A%2F%2Fdhpaeng81-crypto.github.io%2FDaily-insight%2Findex.html" target="_blank" rel="noopener">
+    <a class="share-btn twitter" href="https://twitter.com/intent/tweet?text=%EB%B9%84%ED%8A%B8%EC%BD%94%EC%9D%B8%201%EC%9B%94%20%EC%9D%B4%ED%9B%84%20%EC%B5%9C%EA%B3%A0%EC%B9%98%20%EA%B2%BD%EC%8B%A0&url=https%3A%2F%2Fdhpaeng81-crypto.github.io%2FDaily-insight%2Findex.html" target="_blank" rel="noopener">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
       </svg>

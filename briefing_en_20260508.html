@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Daily Insight — May 08, 2026</title>
 <meta property="og:title" content="Daily Insight — May 08, 2026">
-<meta property="og:description" content="Major AI and energy investments boost Korean IT and power sectors amid ongoing geopolitics.">
+<meta property="og:description" content="Commodity rally drives asset rotation toward alternatives and defensive sectors">
 <meta property="og:image" content="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80">
 <meta property="og:url" content="https://dhpaeng81-crypto.github.io/Daily-insight/index_en.html">
 <meta name="twitter:card" content="summary_large_image">
@@ -35,13 +35,23 @@ a { color: inherit; text-decoration: none; }
 .logo { font-family: var(--font); font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
 .logo span { color: var(--accent); }
 .header-nav { display: flex; gap: 4px; font-size: 13px; align-items: center; }
-.header-nav a { padding: 6px 12px; border-radius: 6px; color: var(--ink-muted); font-weight: 700; transition: background 0.15s, color 0.15s; }
+.header-nav a { padding: 6px 10px; border-radius: 6px; color: var(--ink-muted); font-weight: 700; transition: background 0.15s, color 0.15s; white-space: nowrap; }
 .header-nav a:hover { background: var(--bg-subtle); color: var(--ink); }
 .header-nav .active { color: var(--accent); background: var(--accent-light); }
-.header-nav .divider { width: 1px; height: 16px; background: var(--border); margin: 0 4px; }
-.lang-btn { padding: 5px 10px !important; font-size: 12px !important; font-weight: 800 !important; border: 1.5px solid var(--border) !important; border-radius: 6px !important; color: var(--ink-soft) !important; }
+.header-nav .divider { width: 1px; height: 16px; background: var(--border); margin: 0 2px; flex-shrink: 0; }
+.lang-btn { padding: 4px 8px !important; font-size: 11px !important; font-weight: 800 !important; border: 1.5px solid var(--border) !important; border-radius: 6px !important; color: var(--ink-soft) !important; flex-shrink: 0; }
 .lang-btn:hover { border-color: var(--accent) !important; color: var(--accent) !important; background: var(--accent-light) !important; }
 .lang-btn.active { border-color: var(--accent) !important; color: var(--accent) !important; background: var(--accent-light) !important; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; border: none; background: none; }
+.hamburger span { width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: all 0.3s; display: block; }
+.mobile-menu { display: none; position: fixed; top: 56px; left: 0; right: 0; background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 12px 20px; flex-direction: column; gap: 4px; z-index: 99; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.mobile-menu a { padding: 10px 12px; border-radius: 8px; color: var(--ink-soft); font-weight: 700; font-size: 14px; display: block; }
+.mobile-menu a:hover { background: var(--bg-subtle); color: var(--ink); }
+.mobile-menu .active { color: var(--accent); background: var(--accent-light); }
+.mobile-menu .lang-row { display: flex; gap: 8px; padding: 8px 12px; }
+.mobile-menu .lang-row a { padding: 6px 16px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 12px; font-weight: 800; }
+.mobile-menu .lang-row .active { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+.mobile-menu.open { display: flex; }
 .site-footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
 .footer-inner { max-width: 780px; margin: 0 auto; }
 .footer-logo { font-family: var(--font); font-size: 16px; font-weight: 800; margin-bottom: 8px; }
@@ -136,7 +146,7 @@ a { color: inherit; text-decoration: none; }
   .hero-desc { font-size: 18px; max-width: 680px; }
   .section-title { font-size: 24px; }
   .section-overview { font-size: 16px; }
-  .news-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .news-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; max-width: 900px; }
   .news-thumb { height: 180px; }
   .stock-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
   .analyst-text { font-size: 15px; }
@@ -145,8 +155,16 @@ a { color: inherit; text-decoration: none; }
   .summary-list li { font-size: 15px; }
 }
 @media (min-width: 640px) and (max-width: 1023px) {
-  .news-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .news-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
   .news-thumb { height: 180px; }
+}
+@media (max-width: 767px) {
+  .desktop-nav { display: none; }
+  .hamburger { display: flex; }
+}
+@media (min-width: 768px) {
+  .hamburger { display: none; }
+  .mobile-menu { display: none !important; }
 }
 @media (max-width: 639px) {
   .hero { padding: 36px 20px 32px; }
@@ -163,7 +181,7 @@ a { color: inherit; text-decoration: none; }
 <header class="site-header">
   <div class="header-inner">
     <div class="logo"><a href="index_en.html">Daily<span>Insight</span></a></div>
-    <nav class="header-nav">
+    <nav class="header-nav desktop-nav">
       <a href="index_en.html" class="active">Finance·AI·Energy</a>
       <a href="archive_en.html" class="">Archive</a>
       <div class="divider"></div>
@@ -172,13 +190,48 @@ a { color: inherit; text-decoration: none; }
       <a href="index.html" class="lang-btn">KO</a>
       <a href="index_en.html" class="lang-btn active">EN</a>
     </nav>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="메뉴">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
+<nav class="mobile-menu" id="mobile-menu">
+  <a href="index_en.html" class="active">Finance·AI·Energy</a>
+  <a href="archive_en.html" class="">Archive</a>
+  <a href="politics_index.html">History·Politics</a>
+  <div class="lang-row">
+    <a href="index.html" class="lang-btn">한국어</a>
+    <a href="index_en.html" class="lang-btn active">English</a>
+  </div>
+</nav>
+<script>
+function toggleMenu() {
+  const menu = document.getElementById('mobile-menu');
+  menu.classList.toggle('open');
+  const spans = document.querySelectorAll('.hamburger span');
+  if (menu.classList.contains('open')) {
+    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+    spans[1].style.opacity = '0';
+    spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+  } else {
+    spans[0].style.transform = ''; spans[1].style.opacity = ''; spans[2].style.transform = '';
+  }
+}
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('mobile-menu');
+  const btn = document.querySelector('.hamburger');
+  if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+    menu.classList.remove('open');
+    const spans = document.querySelectorAll('.hamburger span');
+    spans[0].style.transform = ''; spans[1].style.opacity = ''; spans[2].style.transform = '';
+  }
+});
+</script>
 
 <section class="hero">
   <div class="issue-badge">Today's Briefing</div>
-  <h1 class="hero-title">Hut 8 Surges 12% on $9.8B AI Data Center Lease Deal</h1>
-  <p class="hero-desc">Major AI and energy investments boost Korean IT and power sectors amid ongoing geopolitics.</p>
+  <h1 class="hero-title">Bitcoin Hits $68,000, Highest Since January; Gold, Silver Surge</h1>
+  <p class="hero-desc">Commodity rally drives asset rotation toward alternatives and defensive sectors</p>
   <div class="hero-tags">
     <span class="tag">💹 Finance</span>
     <span class="tag">🤖 AI · Tech</span>
@@ -192,11 +245,11 @@ a { color: inherit; text-decoration: none; }
     <span class="section-pill finance">Finance</span>
     <span class="section-title">Financial Markets</span>
   </div>
-  <p class="section-overview">US stock markets closed higher supported by technology sector gains; Nasdaq climbed 1.3% driven by AI-related demand. Hut 8, a Canadian AI data center operator, jumped 12% intraday on news of a $9.8 billion (approx. 13 trillion KRW) lease agreement for AI data center space. Meanwhile, US 10-year Treasury yields edged up slightly to 4.25%, reflecting persistent inflation concerns. This has created a cautious macro backdrop despite strong interest in AI infrastructure sectors.</p>
+  <p class="section-overview">As of May 6, 2026, Bitcoin surged to $68,000, marking its highest level since January, alongside a strong rally in Ethereum. Precious metals also gained sharply, with gold rising 2.1% to $2,350 per ounce and silver advancing 3.5% to $29.90 per ounce. Korean stock markets saw strength in defensive and resource sectors due to rising commodity prices, while growth stocks experienced some profit-taking. Global bond yields edged up slightly, with the U.S. 10-year Treasury yield rising 7 basis points to 4.59%, reflecting inflation concerns tied to commodity prices.</p>
   <div class="news-list">
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://media.zenfs.com/en/cryptoprowl_304/3d48ed2fb88bcb183b5845f3c3ce6176" alt="Hut 8 Stock Spikes on $9.8 Billion Beacon Point AI Data Center Lease" loading="lazy"
+        <img src="https://s.yimg.com/uu/api/res/1.2/ZpWX2Yzi4TnvhZyi00u31A--~B/aD0zNTA7dz02MTI7YXBwaWQ9eXRhY2h5b24-/https://d29szjachogqwa.cloudfront.net/images/user-uploaded/bitcoin_4_7197.jpg" alt="Bitcoin and Ethereum Reach New Highs with Bitcoin at $68,000" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -207,15 +260,15 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://finance.yahoo.com/markets/stocks/articles/hut-8-stock-spikes-9-135600572.html" target="_blank">Hut 8 Stock Spikes on $9.8 Billion Beacon Point AI Data Center Lease</a>
+          <a href="https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-wednesday-may-6-2026-prices-up-bitcoin-at-highest-level-since-january-112112979.html" target="_blank">Bitcoin and Ethereum Reach New Highs with Bitcoin at $68,000</a>
         </div>
-        <div class="news-body">Hut 8, a Canadian crypto mining and AI infrastructure company, announced a $9.8 billion lease deal for a large AI data center known as Beacon Point. This leasing agreement marks one of the largest in the sector, signaling robust demand for AI computing space. The announcement led Hut 8’s shares to surge about 12% intraday, reflecting strong investor confidence. Korean IT and data center construction firms could see increased orders as the global AI infrastructure market expands, warranting attention for investment timing and sector allocation.</div>
-        <a href="https://finance.yahoo.com/markets/stocks/articles/hut-8-stock-spikes-9-135600572.html" class="read-more" target="_blank">Read original →</a>
+        <div class="news-body">On May 6, 2026, Bitcoin climbed to $68,000, the highest level since January, with Ethereum also gaining strongly. This price surge signals growing investor appetite for cryptocurrencies as alternative assets amid inflation concerns. South Korean companies engaged in virtual asset markets, including Kakao and Wemade, may benefit from renewed market enthusiasm. Investors should monitor regulatory developments and central bank policies closely, as these are key factors influencing short-term price fluctuations.</div>
+        <a href="https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-wednesday-may-6-2026-prices-up-bitcoin-at-highest-level-since-january-112112979.html" class="read-more" target="_blank">Read original →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://media.zenfs.com/en/motleyfool.com/e48e86dda35543079ee2080fd9208b73" alt="Onity Group (ONIT) Q1 2026 Earnings Transcript" loading="lazy"
+        <img src="https://s.yimg.com/uu/api/res/1.2/iNkNeNnfLMn1MddfYh9KDQ--~B/aD00OTUwO3c9ODgwMDthcHBpZD15dGFjaHlvbg--/https://d29szjachogqwa.cloudfront.net/images/2026-03/edb7f57c-4e9c-418e-863a-3025d9486f77" alt="Bitcoin and Ethereum Reach New Highs with Bitcoin at $68,000" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -226,19 +279,15 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://finance.yahoo.com/markets/stocks/articles/onity-group-onit-q1-2026-134902476.html" target="_blank">Onity Group (ONIT) Q1 2026 Earnings Transcript</a>
+          <a href="https://finance.yahoo.com/personal-finance/investing/article/gold-and-silver-prices-today-wednesday-may-6-gold-and-silver-prices-up-significantly-this-morning-104404711.html" target="_blank">Bitcoin and Ethereum Reach New Highs with Bitcoin at $68,000</a>
         </div>
-        <div class="news-body">제목: 오니티 그룹(ONIT) 2026년 1분기 실적 발표 내용
-
-내용: (내용이 제공되지 않아 번역할 수 없습니다.)
-
-요약: 해당 뉴스의 상세한 내용이 제공되지 않아 번역 및 요약이 불가능합니다. 실적 발표에 관한 자세한 내용이 추가로 필요합니다.</div>
-        <a href="https://finance.yahoo.com/markets/stocks/articles/onity-group-onit-q1-2026-134902476.html" class="read-more" target="_blank">Read original →</a>
+        <div class="news-body">On May 6, 2026, Bitcoin climbed to $68,000, the highest level since January, with Ethereum also gaining strongly. This price surge signals growing investor appetite for cryptocurrencies as alternative assets amid inflation concerns. South Korean companies engaged in virtual asset markets, including Kakao and Wemade, may benefit from renewed market enthusiasm. Investors should monitor regulatory developments and central bank policies closely, as these are key factors influencing short-term price fluctuations.</div>
+        <a href="https://finance.yahoo.com/personal-finance/investing/article/gold-and-silver-prices-today-wednesday-may-6-gold-and-silver-prices-up-significantly-this-morning-104404711.html" class="read-more" target="_blank">Read original →</a>
       </div>
     </div></div>
   <div class="analyst-note">
     <div class="analyst-label">💡 Analyst Insights</div>
-    <div class="analyst-text">The rapid expansion in AI data center investments is benefiting IT infrastructure and construction sectors. South Korean companies such as SK hynix, supplying high-bandwidth memory crucial for AI workloads, and Hyundai Engineering & Construction, experienced in domestic and international data center projects, stand to gain in the near-term. Globally, Microsoft is expected to see revenue growth driven by escalating demand for AI cloud services. As an investment strategy, increasing exposure to IT-related infrastructure and equipment stocks is recommended, with a focus on staged buying to mitigate risks from persistent geopolitical tensions, particularly US-Middle East conflicts, and stable but relatively high interest rates. Conversely, short-term risks include further interest rate hikes and project delays in AI equipment manufacturing that could dampen investor sentiment.</div>
+    <div class="analyst-text">The simultaneous rise in Bitcoin, gold, and silver is accelerating capital flows into alternative assets globally. In South Korea, ETFs focused on physical gold such as Samsung KODEX Gold Futures and KBSTAR Gold Futures stand to benefit, along with blockchain-related equities like Wemade and Kakao, which holds a stake in Dunamu. Internationally, MicroStrategy continues to expand its Bitcoin holdings, acting as a direct beneficiary, while Newmont gains from the gold price upswing. We recommend increasing portfolio allocations toward gold and Bitcoin over the next one month to capitalize on momentum. However, investors should remain cautious of potential downside risks from further interest rate hikes by the Federal Reserve and tightening regulations on virtual assets.</div>
   </div>
   <div class="section-divider"></div>
 
@@ -246,11 +295,11 @@ a { color: inherit; text-decoration: none; }
     <span class="section-pill tech">Tech</span>
     <span class="section-title">AI · Tech Trends</span>
   </div>
-  <p class="section-overview">Global AI technology investments continue to accelerate, expanding the market from startups to large pharmaceutical acquisitions. Notably, Stockholm-based AI startup Pit raised $16 million (approx. 21.5 billion KRW) in seed funding led by Andreessen Horowitz, while Swiss pharma giant Roche acquired US-based PathAI for up to $1.05 billion to enhance AI diagnostic capabilities. Korea's AI and data center market is expanding at an annual growth rate of 17%, with simultaneous advances in AI infrastructure and medical AI sectors. This rapid investment surge is driving increased demand for semiconductors and power infrastructure.</p>
+  <p class="section-overview">Major AI companies have rolled out significant updates, including OpenAI’s new voice intelligence API and a 'Trusted Contact' safety feature for ChatGPT users. Google introduced its 'Gemini Deep Research Agent,' enhancing AI developer tools. SoundHound AI reported a 52% year-over-year revenue increase to $44.2 million in Q1, showcasing strong momentum in AI-driven voice platforms. In South Korea, AI application is expanding into customer service centers, voice AI services, and semiconductor design firms, attracting considerable investor interest amid growing AI adoption.</p>
   <div class="news-list">
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80" alt="Hut 8 Stock Spikes on $9.8 Billion Beacon Point AI Data Center Lease" loading="lazy"
+        <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80" alt="OpenAI launches new voice intelligence features in its API" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -261,15 +310,15 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://techcrunch.com/2026/05/07/voi-founders-new-ai-startup-pit-has-become-the-latest-rising-star-out-of-stockholm/" target="_blank">Hut 8 Stock Spikes on $9.8 Billion Beacon Point AI Data Center Lease</a>
+          <a href="https://techcrunch.com/2026/05/07/openai-launches-new-voice-intelligence-features-in-its-api/" target="_blank">OpenAI launches new voice intelligence features in its API</a>
         </div>
-        <div class="news-body">Hut 8, a Canadian crypto mining and AI infrastructure company, announced a $9.8 billion lease deal for a large AI data center known as Beacon Point. This leasing agreement marks one of the largest in the sector, signaling robust demand for AI computing space. The announcement led Hut 8’s shares to surge about 12% intraday, reflecting strong investor confidence. Korean IT and data center construction firms could see increased orders as the global AI infrastructure market expands, warranting attention for investment timing and sector allocation.</div>
-        <a href="https://techcrunch.com/2026/05/07/voi-founders-new-ai-startup-pit-has-become-the-latest-rising-star-out-of-stockholm/" class="read-more" target="_blank">Read original →</a>
+        <div class="news-body">OpenAI has introduced new voice intelligence features in its API, enhancing capabilities for applications such as customer service systems. These advancements are expected to improve voice interactions across multiple sectors, including education and creator platforms. The update could drive increased adoption of OpenAI’s technology, potentially boosting demand for its API services. Investors should watch how these features impact OpenAI’s market position and user growth, as well as any partnerships leveraging the new voice capabilities.</div>
+        <a href="https://techcrunch.com/2026/05/07/openai-launches-new-voice-intelligence-features-in-its-api/" class="read-more" target="_blank">Read original →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80" alt="OpenAI introduces new ‘Trusted Contact’ safeguard for cases of possible self-harm" loading="lazy"
+        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&q=80" alt="Voi founders’ new AI startup Pit has become the latest rising star out of Stockholm" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -280,18 +329,15 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://techcrunch.com/2026/05/07/openai-introduces-new-trusted-contact-safeguard-for-cases-of-possible-self-harm/" target="_blank">OpenAI introduces new ‘Trusted Contact’ safeguard for cases of possible self-harm</a>
+          <a href="https://techcrunch.com/2026/05/07/voi-founders-new-ai-startup-pit-has-become-the-latest-rising-star-out-of-stockholm/" target="_blank">Voi founders’ new AI startup Pit has become the latest rising star out of Stockholm</a>
         </div>
-        <div class="news-body">제목: OpenAI, 자해 가능성 있는 경우를 위한 새로운 ‘신뢰 연락처’ 보호 장치 도입  
-내용: OpenAI가 대화에서 자해 가능성이 감지될 때 ChatGPT 사용자를 보호하기 위한 노력을 확대하고 있다.
-
-요약: OpenAI는 사용자가 자해를 암시하는 대화를 나눌 경우를 대비해 ‘신뢰 연락처’라는 새로운 보호 장치를 도입했다. 이를 통해 위험 상황 발생 시 신속한 대응과 지원이 가능하도록 하고 있다.</div>
-        <a href="https://techcrunch.com/2026/05/07/openai-introduces-new-trusted-contact-safeguard-for-cases-of-possible-self-harm/" class="read-more" target="_blank">Read original →</a>
+        <div class="news-body">Pit, a new AI startup founded by the co-founders of European scooter company Voi, has quickly emerged as a promising player in the Stockholm tech scene. The company recently secured $16 million in a seed funding round led by prominent venture firm a16z, highlighting strong investor confidence. This infusion of capital is expected to accelerate Pit’s growth and development of its AI technologies. Investors should watch Pit’s progress closely as it could become a significant innovator in AI and potentially disrupt related markets.</div>
+        <a href="https://techcrunch.com/2026/05/07/voi-founders-new-ai-startup-pit-has-become-the-latest-rising-star-out-of-stockholm/" class="read-more" target="_blank">Read original →</a>
       </div>
     </div></div>
   <div class="analyst-note">
     <div class="analyst-label">💡 Analyst Insights</div>
-    <div class="analyst-text">Investment focus is on semiconductor and power equipment makers benefiting from AI data center and healthcare AI growth. Korean companies like Samsung Electronics, which produces high-bandwidth memory (HBM) and foundry services critical for AI chips, and LG Energy Solution, specializing in batteries and power storage systems, are positioned to reap tangible benefits. Nvidia continues to dominate the global AI computing and data center chip market. Recommended investment actions include short-term buying and portfolio overweight on semiconductor and power infrastructure stocks, along with monitoring AI medical solution firms such as Konan Technology. Risks include delays in data center development, new AI regulatory frameworks, and intensifying competition that may increase profitability volatility.</div>
+    <div class="analyst-text">The voice intelligence and agent-based AI segments provide near-term upside for Korean players such as Konan Technology and Saltlux, which specialize in AI customer service solutions. Semiconductor companies Samsung Electronics and Nepes also stand to benefit from increased AI chip demand. Globally, Nvidia continues to dominate the AI data center semiconductor market, reinforcing its leadership position. We advise increasing exposure to AI and voice intelligence-related stocks over the next three months to capture growth opportunities. Regulatory risks remain, including data privacy concerns and escalating U.S.-China technological rivalry, which could impact market sentiment.</div>
   </div>
   <div class="section-divider"></div>
 
@@ -299,11 +345,11 @@ a { color: inherit; text-decoration: none; }
     <span class="section-pill energy">Energy</span>
     <span class="section-title">Energy · Industry</span>
   </div>
-  <p class="section-overview">Geopolitical tensions in the Middle East and global oil supply-demand dynamics have created high volatility in crude prices. West Texas Intermediate (WTI) crude fell by as much as 8% over three days before partially recovering to around $76 per barrel. European consumers face rising electricity and heating costs, while US energy companies grow cautious amid intensified sanctions on Iran. Meanwhile, demand for alternative energies like renewables and LNG appears subdued in the short term.</p>
+  <p class="section-overview">International oil prices declined by nearly 10% over the past week, retreating to approximately $77 per barrel. This drop has prompted lower fixed mortgage interest rates in the U.S., potentially stimulating domestic real estate investment. Meanwhile, renewable energy momentum grows due to increased investments in China-Central Asia and rising European LNG production, supporting green hydrogen and sustainable energy initiatives. Lower energy costs are gradually easing expenses in sectors like transportation, materials, and manufacturing.</p>
   <div class="news-list">
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80" alt="Trump's Iran war may stymie climate gains with boost to big <b>oil</b>, experts say - The Guardian" loading="lazy"
+        <img src="https://images.unsplash.com/photo-1534224039826-c7a0eda0e6b3?w=800&q=80" alt="Fixed mortgage rates follow falling <b>oil</b> prices - Financial Post" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -314,19 +360,15 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.theguardian.com/us-news/2026/may/07/iran-war-big-oil-climate&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw2KgWH2KDmzkJDT-LNWP2l8" target="_blank">Trump's Iran war may stymie climate gains with boost to big <b>oil</b>, experts say - The Guardian</a>
+          <a href="https://www.google.com/url?rct=j&sa=t&url=https://financialpost.com/real-estate/mortgages/mortgage-rates/fixed-mortgage-rates-follow-falling-oil-prices&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw348MNtDF07dq-SJjRZAlhD" target="_blank">Fixed mortgage rates follow falling <b>oil</b> prices - Financial Post</a>
         </div>
-        <div class="news-body">제목: 전문가들 "트럼프의 이란 전쟁 정책이 대형 석유산업 부흥으로 기후 개선에 걸림돌 될 수 있다" - 가디언
-
-내용: 혼란 속에서 에너지 가격과 석유 회사들의 수익이 급등하고 있다. 예를 들어, 트럼프는 바이든 행정부 시절 시행된 액화천연가스(LNG) 금지 조치를 철회했다.
-
-요약: 트럼프의 대이란 강경 정책으로 에너지 가격과 석유 기업 수익이 급증하며, 이는 기후 변화 대응 노력에 부정적인 영향을 줄 수 있다고 전문가들이 경고하고 있다. 특히, 트럼프가 LNG 금지 조치를 철회한 것이 큰 영향을 미쳤다.</div>
-        <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.theguardian.com/us-news/2026/may/07/iran-war-big-oil-climate&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw2KgWH2KDmzkJDT-LNWP2l8" class="read-more" target="_blank">Read original →</a>
+        <div class="news-body">Fixed mortgage rates have declined in response to a nearly 10% drop in oil prices over the past week, reflecting lower inflation expectations and easing borrowing costs. This trend benefits the real estate market by potentially boosting housing affordability and stimulating buyer activity. Investors should monitor oil price movements closely, as further declines could continue to pressure fixed mortgage rates downward, while any rebound in oil prices might reverse this trend. Additionally, watching central bank policy responses to energy-driven inflation shifts will be crucial for anticipating future rate movements.</div>
+        <a href="https://www.google.com/url?rct=j&sa=t&url=https://financialpost.com/real-estate/mortgages/mortgage-rates/fixed-mortgage-rates-follow-falling-oil-prices&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw348MNtDF07dq-SJjRZAlhD" class="read-more" target="_blank">Read original →</a>
       </div>
     </div>
     <div class="news-card">
       <div class="news-thumb">
-        <img src="https://images.unsplash.com/photo-1534224039826-c7a0eda0e6b3?w=800&q=80" alt="The islanders bracing for the full force of Britain's coming <b>energy</b> price crisis - The Telegraph" loading="lazy"
+        <img src="https://images.unsplash.com/photo-1534224039826-c7a0eda0e6b3?w=800&q=80" alt="Durham woman's $800 Duke <b>Energy</b> bill shows the risk of budget billing - WRAL" loading="lazy"
              onerror="this.parentElement.innerHTML='<div class=news-thumb-empty></div>'">
       </div>
       <div class="news-content">
@@ -337,19 +379,15 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
         <div class="news-title">
-          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.telegraph.co.uk/money/bills/energy/outer-hebrides-energy-crisis-iran-war/&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw2mj_zBqFWSlcS-OLUK4ToB" target="_blank">The islanders bracing for the full force of Britain's coming <b>energy</b> price crisis - The Telegraph</a>
+          <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.wral.com/consumer/5onyourside/money-federal-reserve-credit-cards-mortgage-savings-personal-finance/&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw1uU0Ce073LNOi7Hn1g7Eqx" target="_blank">Durham woman's $800 Duke <b>Energy</b> bill shows the risk of budget billing - WRAL</a>
         </div>
-        <div class="news-body">제목: 영국 에너지 가격 위기의 전면적 충격에 대비하는 섬 주민들 - 텔레그래프
-
-내용: 한 주민은 전기 요금으로 한 달에 100파운드, 지방세로는 200파운드를 지출하며, 매 두 달마다 난방유에 650파운드를 쓰고 있다고 추산한다. 이는 에너지 가격 급등으로 인해 생활비 부담이 크게 증가한 현실을 보여준다.
-
-요약: 영국의 에너지 가격 위기가 본격화되면서 섬 주민들이 커다란 경제적 부담에 직면하고 있다. 전기, 난방유, 지방세 비용이 크게 상승해 생활비가 빠르게 늘어나고 있다.</div>
-        <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.telegraph.co.uk/money/bills/energy/outer-hebrides-energy-crisis-iran-war/&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw2mj_zBqFWSlcS-OLUK4ToB" class="read-more" target="_blank">Read original →</a>
+        <div class="news-body">Durham retiree Sophia Blake faced a staggering Duke Energy bill exceeding $800, highlighting the risks associated with budget billing plans. Budget billing, which averages monthly payments to smooth out costs, can lead to unexpectedly large balances if actual usage surpasses estimates. This case underscores potential financial strain for consumers relying on such plans amid fluctuating energy prices. Investors should monitor regulatory responses and utility companies' credit management strategies as rising energy costs impact customer payment behaviors and revenue stability.</div>
+        <a href="https://www.google.com/url?rct=j&sa=t&url=https://www.wral.com/consumer/5onyourside/money-federal-reserve-credit-cards-mortgage-savings-personal-finance/&ct=ga&cd=CAIyHmZhMzk5MjQ0MTcxZTg3ZDk6Y28ua3I6a286VVM6TA&usg=AOvVaw1uU0Ce073LNOi7Hn1g7Eqx" class="read-more" target="_blank">Read original →</a>
       </div>
     </div></div>
   <div class="analyst-note">
     <div class="analyst-label">💡 Analyst Insights</div>
-    <div class="analyst-text">Rising energy prices are broadly challenging manufacturing sectors but presenting short-term profit opportunities for power generation companies like Korea Electric Power Corporation (KEPCO) and power equipment provider KEPCO KPS. Refineries such as S-Oil and GS Caltex could benefit from geopolitical shutdowns, though they risk sharp sell-offs if oil demand sharply contracts. Globally, majors including ExxonMobil and Shell are expected to see direct gains from current market conditions. Investment stance favors holding energy sector stocks cautiously while monitoring for sudden geopolitical shifts or oversupply that could trigger price collapses.</div>
+    <div class="analyst-text">The recent oil price correction is providing short-term earnings tailwinds for South Korean transportation companies such as Korean Air and Hyundai Glovis, as well as refining and chemical firms including S-Oil and Lotte Chemical. U.S.-based Cheniere Energy revised its 2026 earnings outlook upward, driven by increased LNG production. We recommend a modest overweight in transportation, refining, and LNG-related equities for tactical gains. However, geopolitical tensions in the Middle East and potential economic slowdowns in China pose key downside risks that could reintroduce volatility in energy prices.</div>
   </div>
   <div class="section-divider"></div>
 
@@ -357,9 +395,9 @@ a { color: inherit; text-decoration: none; }
     <div class="summary-label">Today's Key Insights</div>
     <div class="summary-title">3 Things to Remember Today</div>
     <ol class="summary-list">
-      <li><span class="summary-num">1</span><span>AI data center expansion drives overweight on semiconductors and power infrastructure stocks.</span></li>
-      <li><span class="summary-num">2</span><span>Global capital increasingly rotates from AI and energy into infrastructure and equipment sectors.</span></li>
-      <li><span class="summary-num">3</span><span>Heightened geopolitical risks and potential short-term rate hikes increase market volatility.</span></li>
+      <li><span class="summary-num">1</span><span>Sharp rally in Bitcoin and gold signals opportunity to increase alternative asset allocation.</span></li>
+      <li><span class="summary-num">2</span><span>Capital flows shifting into AI and traditional energy stocks indicate a broad sector rotation underway.</span></li>
+      <li><span class="summary-num">3</span><span>Watch for volatility risks from U.S. interest rate moves and tightening cryptocurrency regulations.</span></li>
     </ol>
   </div>
 
@@ -368,7 +406,7 @@ a { color: inherit; text-decoration: none; }
 <div class="share-section">
   <div class="share-label">Share This Briefing</div>
   <div class="share-buttons">
-    <a class="share-btn twitter" href="https://twitter.com/intent/tweet?text=Hut%208%20Surges%2012%25%20on%20%249.8B%20AI%20Data%20Center%20Lease%20Deal&url=https%3A%2F%2Fdhpaeng81-crypto.github.io%2FDaily-insight%2Findex_en.html" target="_blank" rel="noopener">
+    <a class="share-btn twitter" href="https://twitter.com/intent/tweet?text=Bitcoin%20Hits%20%2468%2C000%2C%20Highest%20Since%20January%3B%20Gold%2C%20Silver%20Surge&url=https%3A%2F%2Fdhpaeng81-crypto.github.io%2FDaily-insight%2Findex_en.html" target="_blank" rel="noopener">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
       </svg>
