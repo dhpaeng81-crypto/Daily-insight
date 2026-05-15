@@ -3,29 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#6B28A6">
+  <meta name="theme-color" content="#3b0e6e">
   <title>주니어솔로몬 | 지혜가 샘솟는 독서철학논술</title>
   <meta name="description" content="2022 한국브랜드소비자평가 대상 선정. 하브루타 교육으로 독서, 철학, 논술을 가르치는 주니어솔로몬 학원. 서울 용산구 이촌동.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ── OKLCH COLOR SYSTEM ──
-       Canvas tinted toward brand hue (chroma 0.005–0.01).
-       No pure #000 / #fff anywhere.                        */
     :root {
-      --purple:    oklch(43% 0.22 293);
-      --purple-h:  oklch(39% 0.20 293);
-      --teal:      oklch(74% 0.15 195);
-      --magenta:   oklch(68% 0.20 354);
-      --coral:     oklch(66% 0.20 28);
-      --ink:       oklch(24% 0.008 293);
-      --ink-muted: oklch(52% 0.008 293);
-      --canvas:    oklch(99% 0.005 293);
-      --surf-1:    oklch(96% 0.018 293);
-      --surf-2:    oklch(93% 0.030 293);
-      --border:    oklch(88% 0.025 293);
+      --purple:      oklch(43% 0.22 293);
+      --purple-h:    oklch(39% 0.20 293);
+      --purple-deep: oklch(22% 0.16 293);
+      --purple-mid:  oklch(30% 0.20 293);
+      --teal:        oklch(74% 0.15 195);
+      --magenta:     oklch(68% 0.20 354);
+      --coral:       oklch(66% 0.20 28);
+      --ink:         oklch(24% 0.008 293);
+      --ink-muted:   oklch(52% 0.008 293);
+      --canvas:      oklch(99% 0.005 293);
+      --surf-1:      oklch(96% 0.018 293);
+      --surf-2:      oklch(93% 0.030 293);
+      --border:      oklch(88% 0.025 293);
 
       --shadow-card:    0 2px 8px oklch(24% 0.008 293 / 0.08);
       --shadow-raised:  0 8px 24px oklch(24% 0.008 293 / 0.14);
@@ -35,11 +34,11 @@
 
       --r-sm: 6px; --r-md: 12px; --r-lg: 20px; --r-pill: 9999px;
 
-      /* Ease-out-expo: no bounce, no elastic */
       --ease: cubic-bezier(0.16, 1, 0.3, 1);
       --t-fast: 100ms; --t-base: 200ms;
 
-      --font: 'Noto Sans KR', -apple-system, sans-serif;
+      --font:         'Noto Sans KR', -apple-system, sans-serif;
+      --font-display: 'Nanum Myeongjo', 'Batang', serif;
       --header-h: 64px;
     }
 
@@ -69,10 +68,9 @@
     :focus-visible { outline: 3px solid var(--purple); outline-offset: 2px; border-radius: var(--r-sm); }
     .btn-primary:focus-visible, .btn-outline:focus-visible,
     .btn-white:focus-visible { border-radius: var(--r-pill); }
-    .car-dot:focus-visible, .car-btn:focus-visible,
-    .scroll-top:focus-visible { border-radius: 50%; }
+    .hero-dot:focus-visible, .scroll-top:focus-visible { border-radius: 50%; }
 
-    /* ── UTILS (mobile-first) ── */
+    /* ── UTILS ── */
     .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
     .section { padding: 64px 0; }
     .center { text-align: center; }
@@ -81,8 +79,18 @@
     #testimonials, #location { scroll-margin-top: var(--header-h); }
 
     /* ── TYPE ── */
-    .d1 { font-size: clamp(32px, 6vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); text-wrap: balance; }
-    .d2 { font-size: clamp(26px, 4vw, 40px); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); text-wrap: balance; }
+    .d1 {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 7vw, 72px);
+      font-weight: 800; line-height: 1.1; letter-spacing: -0.01em;
+      color: var(--ink); text-wrap: balance;
+    }
+    .d2 {
+      font-family: var(--font-display);
+      font-size: clamp(26px, 4vw, 42px);
+      font-weight: 700; line-height: 1.15; letter-spacing: -0.01em;
+      color: var(--ink); text-wrap: balance;
+    }
     .d3 { font-size: clamp(20px, 3vw, 30px); font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; color: var(--ink); text-wrap: balance; }
 
     /* ── SVG ICON ── */
@@ -117,6 +125,18 @@
       padding: 14px 28px; border-radius: var(--r-pill); box-shadow: var(--shadow-card);
     }
     .btn-white:hover { background: var(--surf-1); transform: translateY(-2px); box-shadow: var(--shadow-raised); }
+
+    .btn-ghost-white {
+      background: oklch(99% 0.005 293 / 0.12);
+      border: 1.5px solid oklch(99% 0.005 293 / 0.35);
+      color: oklch(99% 0.005 293 / 0.90); font-size: 16px;
+      padding: 13px 28px; border-radius: var(--r-pill);
+      backdrop-filter: blur(8px);
+    }
+    .btn-ghost-white:hover {
+      background: oklch(99% 0.005 293 / 0.20);
+      transform: translateY(-1px);
+    }
 
     .btn-sm { font-size: 14px; padding: 9px 20px; border-radius: var(--r-pill); }
 
@@ -182,72 +202,109 @@
     .m-sub-link { display: block; padding: 7px 0; font-size: 14px; color: var(--ink-muted); text-decoration: none; }
     .m-sub-link:hover { color: var(--purple); }
 
-    /* ── HERO ── */
-    .hero {
-      padding-top: calc(var(--header-h) + env(safe-area-inset-top));
-      min-height: 100svh; display: flex; align-items: center;
-      background: linear-gradient(160deg, var(--canvas) 0%, var(--surf-1) 55%, var(--surf-2) 100%);
-      position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: ''; position: absolute; width: 600px; height: 600px; border-radius: 50%;
-      background: radial-gradient(circle, oklch(43% 0.22 293 / 0.10), transparent 70%);
-      top: -150px; right: -100px; pointer-events: none;
-    }
-    .hero::after {
-      content: ''; position: absolute; width: 400px; height: 400px; border-radius: 50%;
-      background: radial-gradient(circle, oklch(74% 0.15 195 / 0.08), transparent 70%);
-      bottom: -100px; left: -80px; pointer-events: none;
+    /* ── HERO (Drenched purple — crossfade photo bg) ── */
+    @keyframes kenBurns {
+      from { transform: scale(1.0) translate(0, 0); }
+      to   { transform: scale(1.09) translate(-1.5%, 1%); }
     }
 
-    .hero-inner {
-      display: flex; flex-direction: column; gap: 40px;
-      width: 100%; padding: 60px 0 48px; position: relative; z-index: 1;
+    .hero {
+      position: relative; overflow: hidden;
+      min-height: 100svh;
+      display: flex; align-items: flex-end;
+      padding-top: var(--header-h);
     }
-    .hero-badge {
+
+    /* Crossfade background */
+    .hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .hero-bg-slide {
+      position: absolute; inset: 0;
+      opacity: 0; transition: opacity 1.4s ease-in-out;
+    }
+    .hero-bg-slide.active { opacity: 1; }
+    .hero-bg-slide img {
+      width: 100%; height: 100%; object-fit: cover;
+      transform-origin: 60% 50%;
+    }
+    .hero-bg-slide.active img { animation: kenBurns 7s ease-out forwards; }
+
+    /* Drenched purple overlay — heavy at bottom where text lives */
+    .hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(
+        to top,
+        oklch(22% 0.16 293 / 0.92) 0%,
+        oklch(22% 0.16 293 / 0.75) 35%,
+        oklch(22% 0.16 293 / 0.50) 65%,
+        oklch(22% 0.16 293 / 0.30) 100%
+      );
+    }
+
+    /* Content */
+    .hero-content {
+      position: relative; z-index: 2;
+      width: 100%; padding: 48px 0 64px;
+    }
+    .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
-      background: var(--surf-2); color: var(--purple); font-size: 13px; font-weight: 500;
-      padding: 6px 16px; border-radius: var(--r-pill); margin-bottom: 24px;
-      border: 1px solid var(--border);
+      background: oklch(99% 0.005 293 / 0.12);
+      border: 1px solid oklch(99% 0.005 293 / 0.22);
+      color: oklch(99% 0.005 293 / 0.80);
+      font-size: 12px; font-weight: 500; letter-spacing: 0.3px;
+      padding: 6px 16px; border-radius: var(--r-pill);
+      margin-bottom: 20px; backdrop-filter: blur(8px);
     }
-    .hero-badge .icon svg { width: 14px; height: 14px; }
+    .hero-eyebrow svg { width: 13px; height: 13px; }
+    .hero-h1 {
+      font-family: var(--font-display);
+      font-size: clamp(42px, 8.5vw, 82px);
+      font-weight: 800; line-height: 1.08;
+      color: oklch(99% 0.005 293);
+      letter-spacing: -0.01em;
+      text-wrap: balance;
+      margin-bottom: 14px;
+    }
+    .hero-tagline {
+      font-size: clamp(15px, 2vw, 19px);
+      font-weight: 700;
+      color: oklch(99% 0.005 293 / 0.70);
+      margin-bottom: 10px;
+      letter-spacing: 0.04em;
+    }
+    .hero-desc {
+      font-size: clamp(14px, 1.5vw, 16px);
+      color: oklch(99% 0.005 293 / 0.58);
+      line-height: 1.75; max-width: 440px;
+    }
     .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
 
-    /* ── CAROUSEL ── */
-    .hero-visual {
-      border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 4/3;
-      position: relative; box-shadow: var(--shadow-raised);
+    /* Dots — bottom right */
+    .hero-dots-wrap {
+      position: absolute; bottom: 24px; right: 24px; z-index: 3;
+      display: flex; gap: 6px; align-items: center;
     }
-    .car-track { display: flex; height: 100%; transition: transform 0.55s var(--ease); }
-    .car-slide { min-width: 100%; height: 100%; }
-    .car-slide img { width: 100%; height: 100%; object-fit: cover; }
-    .car-dots {
-      position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
-      display: flex; gap: 7px; z-index: 10;
+    .hero-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: oklch(99% 0.005 293 / 0.35); cursor: pointer;
+      border: none; transition: background var(--t-base) var(--ease), width var(--t-base) var(--ease);
     }
-    .car-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: oklch(99% 0.005 293 / 0.5); cursor: pointer;
-      transition: background var(--t-base), transform var(--t-base), width var(--t-base);
-      border: none;
-    }
-    .car-dot.on { background: var(--canvas); transform: scale(1.3); width: 24px; border-radius: var(--r-pill); }
-    .car-btn {
-      position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px;
-      border-radius: 50%; background: oklch(99% 0.005 293 / 0.9); border: none;
-      color: var(--ink); display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: background var(--t-fast), transform var(--t-base) var(--ease);
-      z-index: 10; box-shadow: var(--shadow-card);
-    }
-    .car-btn:hover { background: var(--canvas); transform: translateY(-50%) scale(1.1); }
-    .car-btn.prev { left: 14px; }
-    .car-btn.next { right: 14px; }
+    .hero-dot.on { background: oklch(99% 0.005 293 / 0.90); width: 22px; border-radius: var(--r-pill); }
 
-    /* ── CREDENTIALS (replaces stats metric strip) ── */
-    .creds { background: var(--surf-1); padding: 40px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .creds-list {
-      display: flex; flex-direction: column; gap: 20px;
+    /* Scroll hint */
+    .hero-scroll-hint {
+      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+      z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: oklch(99% 0.005 293 / 0.40); font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
     }
+    .hero-scroll-hint svg { animation: scrollBob 2s ease-in-out infinite; }
+    @keyframes scrollBob {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(5px); }
+    }
+
+    /* ── CREDENTIALS ── */
+    .creds { background: var(--surf-1); padding: 40px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .creds-list { display: flex; flex-direction: column; gap: 20px; }
     .cred { display: flex; align-items: center; gap: 14px; }
     .cred-icon {
       flex-shrink: 0; width: 40px; height: 40px; border-radius: var(--r-md);
@@ -295,7 +352,6 @@
     /* ── NOTICE ── */
     .notice-grid { display: flex; flex-direction: column; gap: 16px; margin-top: 48px; }
 
-    /* Featured card: horizontal layout */
     .ncard-featured {
       display: flex; flex-direction: column;
       background: var(--canvas); border-radius: var(--r-lg);
@@ -310,7 +366,6 @@
     .ncard-feat-body { padding: 24px; }
     .ncard-feat-body .ntitle { font-size: 18px; font-weight: 700; margin-bottom: 10px; line-height: 1.4; color: var(--ink); }
 
-    /* Standard cards */
     .notice-sub-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
     .ncard {
       background: var(--canvas); border-radius: var(--r-lg);
@@ -337,33 +392,61 @@
     .nmeta { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-muted); padding-top: 10px; border-top: 1px solid var(--border); }
     .more-row { display: flex; justify-content: center; margin-top: 36px; }
 
-    /* ── CURRICULUM ── */
-    .cur-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 48px; }
-    .cur-card {
-      border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-card);
-      transition: transform var(--t-base) var(--ease); cursor: pointer;
+    /* ── CURRICULUM: VERTICAL TIMELINE ── */
+    .tl-wrap {
+      margin-top: 56px; position: relative;
+      padding-left: 52px;
     }
-    .cur-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-raised); }
-    .cur-img { aspect-ratio: 3/4; position: relative; overflow: hidden; }
-    .cur-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
-    .cur-card:hover .cur-img img { transform: scale(1.06); }
-    .cur-overlay {
-      position: absolute; bottom: 0; left: 0; right: 0; padding: 28px 16px 18px;
-      background: linear-gradient(to top, oklch(24% 0.008 293 / 0.88) 0%, transparent 100%);
-      color: var(--canvas);
+    .tl-spine {
+      position: absolute; left: 18px; top: 8px; bottom: 8px;
+      width: 2px; background: var(--border); border-radius: 2px;
     }
-    .cur-age { font-size: 11px; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 4px; opacity: 0.75; }
-    .cur-level { font-size: 19px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 2px; }
-    .cur-grade { font-size: 12px; opacity: 0.7; }
-    .cur-badge {
-      position: absolute; top: 12px; left: 12px; width: 34px; height: 34px;
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      background: oklch(99% 0.005 293 / 0.9); box-shadow: var(--shadow-card);
+    .tl-spine-fill {
+      width: 100%; background: var(--purple); border-radius: 2px;
+      height: 0; transition: height 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .tl-item {
+      position: relative; margin-bottom: 40px;
+    }
+    .tl-item:last-child { margin-bottom: 0; }
+    .tl-node {
+      position: absolute; left: -50px; top: 16px;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--purple); color: var(--canvas);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 0 5px var(--surf-1), 0 0 0 7px oklch(43% 0.22 293 / 0.25);
+      z-index: 1;
+    }
+    .tl-node svg { width: 15px; height: 15px; }
+    .tl-card {
+      background: var(--canvas); border-radius: var(--r-lg);
+      border: 1px solid var(--border); overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: transform var(--t-base) var(--ease), box-shadow var(--t-base);
+    }
+    .tl-card:hover { transform: translateX(6px); box-shadow: var(--shadow-raised); }
+    .tl-media { aspect-ratio: 16/9; overflow: hidden; max-height: 260px; }
+    .tl-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
+    .tl-card:hover .tl-media img { transform: scale(1.04); }
+    .tl-body { padding: 20px 26px 24px; }
+    .tl-age {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
       color: var(--purple);
     }
-    .cur-badge svg { width: 16px; height: 16px; }
+    .tl-level {
+      font-family: var(--font-display);
+      font-size: clamp(20px, 3vw, 26px); font-weight: 700;
+      color: var(--ink); margin: 6px 0 10px; letter-spacing: -0.01em;
+    }
+    .tl-desc { font-size: 14px; color: var(--ink-muted); line-height: 1.7; max-width: 58ch; }
+    .tl-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 13px; font-weight: 700; color: var(--purple);
+      margin-top: 14px; text-decoration: none;
+    }
+    .tl-link:hover { text-decoration: underline; }
 
-    /* ── SERVICES (alternating rows) ── */
+    /* ── SERVICES ── */
     .svc-list { display: flex; flex-direction: column; gap: 0; margin-top: 48px; }
     .svc-row {
       display: flex; flex-direction: column; gap: 0;
@@ -382,7 +465,7 @@
     .svc-title { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); margin-bottom: 10px; }
     .svc-desc { font-size: 15px; color: var(--ink-muted); line-height: 1.65; }
 
-    /* ── TESTIMONIALS (asymmetric: 1 featured + 2 smaller) ── */
+    /* ── TESTIMONIALS ── */
     .test-grid { display: flex; flex-direction: column; gap: 16px; margin-top: 48px; }
     .tcard {
       background: var(--canvas); border-radius: var(--r-lg); padding: 28px;
@@ -421,16 +504,16 @@
 
     /* ── CTA BAND ── */
     .cta-band {
-      background: linear-gradient(135deg, var(--purple) 0%, oklch(53% 0.22 293) 50%, oklch(36% 0.20 293) 100%);
-      padding: 72px 0; text-align: center; position: relative; overflow: hidden;
+      background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple-mid) 50%, oklch(38% 0.20 293) 100%);
+      padding: 80px 0; text-align: center; position: relative; overflow: hidden;
     }
     .cta-band::before {
       content: ''; position: absolute; width: 500px; height: 500px; border-radius: 50%;
-      background: oklch(99% 0.005 293 / 0.05); top: -200px; right: -100px; pointer-events: none;
+      background: oklch(99% 0.005 293 / 0.04); top: -200px; right: -100px; pointer-events: none;
     }
     .cta-band::after {
       content: ''; position: absolute; width: 300px; height: 300px; border-radius: 50%;
-      background: oklch(74% 0.15 195 / 0.10); bottom: -100px; left: -60px; pointer-events: none;
+      background: oklch(74% 0.15 195 / 0.08); bottom: -100px; left: -60px; pointer-events: none;
     }
 
     /* ── FOOTER ── */
@@ -482,6 +565,10 @@
       *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
       html { scroll-behavior: auto; }
       .anim { opacity: 1; }
+      .hero-bg-slide { transition: none; }
+      .hero-bg-slide img { animation: none !important; }
+      .hero-scroll-hint { display: none; }
+      .tl-spine-fill { transition: none; }
     }
 
     /* ── TABLET (≥640px) ── */
@@ -492,6 +579,8 @@
       .creds-list { flex-direction: row; align-items: center; justify-content: center; gap: 0; }
       .cred { flex: 1; justify-content: center; padding: 8px 20px; }
       .cred-sep { display: block; width: 1px; height: 40px; background: var(--border); flex-shrink: 0; }
+
+      .tl-media { max-height: 320px; }
     }
 
     /* ── DESKTOP (≥1024px) ── */
@@ -504,9 +593,10 @@
       .mobile-menu { display: none !important; }
       .header .btn-primary { display: inline-flex; }
 
-      .hero-inner { flex-direction: row; gap: 72px; align-items: center; padding: 80px 0; }
-      .hero-inner > div:first-child { flex: 1; }
-      .hero-visual { flex: 1; border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 4/3; position: relative; box-shadow: var(--shadow-raised); }
+      /* Hero: text takes 55%, rest is image depth */
+      .hero-content { padding: 64px 0 80px; }
+      .hero-content > .container { max-width: 760px; }
+      .hero-scroll-hint { display: flex; }
 
       .about-grid { flex-direction: row; gap: 72px; align-items: center; }
       .about-grid > .img-mosaic { flex: 1; }
@@ -519,7 +609,11 @@
       .ncard-feat-body .ntitle { font-size: 20px; }
       .notice-sub-grid { flex: 1; display: grid; grid-template-columns: 1fr; gap: 16px; }
 
-      .cur-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+      /* Timeline desktop: wider content, side-by-side card+image */
+      .tl-wrap { max-width: 800px; }
+      .tl-card { display: flex; flex-direction: row; }
+      .tl-media { aspect-ratio: auto; width: 280px; flex-shrink: 0; max-height: none; min-height: 200px; }
+      .tl-body { padding: 28px 32px; display: flex; flex-direction: column; justify-content: center; }
 
       .svc-row { flex-direction: row; margin-bottom: 0; }
       .svc-row + .svc-row { margin-top: 24px; }
@@ -542,6 +636,64 @@
       .footer-cols { flex: 3; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
       .footer-bottom { flex-direction: row; justify-content: space-between; align-items: center; }
     }
+
+    /* ── PAGE HEADER (subpages) ── */
+    .page-hero {
+      padding-top: calc(var(--header-h) + env(safe-area-inset-top));
+      background: linear-gradient(160deg, var(--canvas) 0%, var(--surf-1) 55%, var(--surf-2) 100%);
+      padding-bottom: 48px;
+    }
+    .page-hero-inner { padding-top: 48px; }
+    .breadcrumb {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--ink-muted); margin-bottom: 20px;
+    }
+    .breadcrumb a { color: var(--ink-muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--purple); }
+    .breadcrumb-sep { opacity: 0.4; }
+
+    /* ── BOARD LINK CARD ── */
+    .board-link-card {
+      max-width: 600px; margin: 0 auto;
+      background: var(--surf-1); border-radius: var(--r-lg);
+      border: 1px solid var(--border); padding: 56px 48px;
+      text-align: center; box-shadow: var(--shadow-card);
+    }
+    .board-link-icon {
+      width: 64px; height: 64px; border-radius: var(--r-lg);
+      background: var(--surf-2); display: flex; align-items: center; justify-content: center;
+      color: var(--purple); margin: 0 auto 24px;
+    }
+    .board-link-icon svg { width: 28px; height: 28px; }
+    .board-link-title {
+      font-size: clamp(22px, 3vw, 28px); font-weight: 700;
+      letter-spacing: -0.01em; color: var(--ink); margin-bottom: 14px;
+    }
+    .board-link-desc {
+      font-size: 16px; color: var(--ink-muted); line-height: 1.7;
+      margin-bottom: 32px; max-width: 50ch; margin-left: auto; margin-right: auto;
+    }
+    .board-placeholder {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 400px; text-align: center; padding: 48px 24px;
+      background: var(--surf-1); border-radius: var(--r-lg);
+      border: 2px dashed var(--border);
+    }
+    .board-placeholder p { color: var(--ink-muted); margin-top: 12px; font-size: 15px; }
+    .board-placeholder code {
+      display: inline-block; margin-top: 16px; padding: 8px 16px;
+      background: var(--surf-2); border-radius: var(--r-md);
+      font-size: 13px; color: var(--purple); font-family: monospace;
+    }
+
+    /* ── CONTENT PAGE ── */
+    .page-content { padding: 48px 0 96px; }
+    .content-prose { max-width: 720px; }
+    .content-prose h2 { font-size: clamp(20px, 3vw, 28px); font-weight: 700; letter-spacing: -0.01em; color: var(--ink); margin: 40px 0 16px; }
+    .content-prose h3 { font-size: 18px; font-weight: 700; color: var(--ink); margin: 28px 0 10px; }
+    .content-prose p { font-size: 16px; color: var(--ink-muted); line-height: 1.75; margin-bottom: 16px; max-width: 65ch; }
+    .content-prose ul { padding-left: 20px; margin-bottom: 16px; }
+    .content-prose li { font-size: 16px; color: var(--ink-muted); line-height: 1.75; margin-bottom: 8px; }
   </style>
 </head>
 <body>
@@ -638,52 +790,69 @@
 
 <main id="main-content">
 
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="container">
-    <div class="hero-inner">
-      <div>
-        <div class="hero-badge">
-          <!-- Trophy icon -->
-          <span class="icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg></span>
-          2022 한국브랜드소비자평가 대상 선정
-        </div>
-        <h1 class="d1" style="margin-bottom:16px;">
-          지혜가 샘솟는<br><span style="color:var(--purple);">독서철학논술</span>
-        </h1>
-        <p style="font-size:20px;font-weight:700;color:var(--ink-muted);margin-bottom:12px;letter-spacing:-0.01em;">주니어솔로몬 학원</p>
-        <p style="font-size:17px;color:var(--ink-muted);line-height:1.65;max-width:460px;">
-          하브루타 교육으로 아이의 생각을 키우고, 책을 읽고 토론하고 글을 쓰는 사고력 수업을 합니다. 논술교육 부문 최우수 학원.
-        </p>
-        <div class="hero-btns">
-          <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" class="btn btn-primary" target="_blank" rel="noopener">상담문의 시작하기</a>
-          <a href="https://www.joongang.co.kr/article/25121798" class="btn btn-outline" target="_blank" rel="noopener">중앙일보 기사보기</a>
-        </div>
+<!-- HERO: full-bleed Drenched purple + crossfade photo background -->
+<section class="hero" id="home" aria-label="주니어솔로몬 메인">
+
+  <!-- Crossfade photo slideshow -->
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-bg-slide active">
+      <img src="https://juniorsolomon.com/wp-content/uploads/2022/12/main-pic1-1.jpg" alt="" width="1200" height="800" loading="eager">
+    </div>
+    <div class="hero-bg-slide">
+      <img src="https://juniorsolomon.com/wp-content/uploads/2022/12/main-pic2-1-2.jpg" alt="" width="1200" height="800" loading="lazy">
+    </div>
+    <div class="hero-bg-slide">
+      <img src="https://juniorsolomon.com/wp-content/uploads/2022/10/main-pic7.jpg" alt="" width="1200" height="800" loading="lazy">
+    </div>
+    <div class="hero-bg-slide">
+      <img src="https://juniorsolomon.com/wp-content/uploads/2022/10/main-pic6.jpg" alt="" width="1200" height="800" loading="lazy">
+    </div>
+    <div class="hero-bg-slide">
+      <img src="https://juniorsolomon.com/wp-content/uploads/2022/10/main-pic5.jpg" alt="" width="1200" height="800" loading="lazy">
+    </div>
+    <div class="hero-bg-slide">
+      <img src="https://juniorsolomon.com/wp-content/uploads/2022/10/main-pic1.jpg" alt="" width="1200" height="800" loading="lazy">
+    </div>
+    <div class="hero-bg-slide">
+      <img src="https://juniorsolomon.com/wp-content/uploads/2022/10/main-pic2.jpg" alt="" width="1200" height="800" loading="lazy">
+    </div>
+    <div class="hero-bg-slide">
+      <img src="https://juniorsolomon.com/wp-content/uploads/2022/10/main-pic4.jpg" alt="" width="1200" height="800" loading="lazy">
+    </div>
+  </div>
+
+  <!-- Drenched purple overlay -->
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  <!-- Text content -->
+  <div class="hero-content">
+    <div class="container">
+      <div class="hero-eyebrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M4 22h16"/></svg>
+        2022 한국브랜드소비자평가 논술교육 부문 대상
       </div>
-      <div class="hero-visual" role="region" aria-label="수업 사진 슬라이드쇼">
-        <div class="car-track" id="track">
-          <div class="car-slide"><img src="https://juniorsolomon.com/wp-content/uploads/2022/12/main-pic1-1.jpg" alt="주니어솔로몬 수업 장면 1" width="800" height="600" loading="eager"></div>
-          <div class="car-slide"><img src="https://juniorsolomon.com/wp-content/uploads/2022/12/main-pic2-1-2.jpg" alt="주니어솔로몬 수업 장면 2" width="800" height="600" loading="lazy"></div>
-          <div class="car-slide"><img src="https://juniorsolomon.com/wp-content/uploads/2022/10/main-pic7.jpg" alt="주니어솔로몬 수업 장면 3" width="800" height="600" loading="lazy"></div>
-          <div class="car-slide"><img src="https://juniorsolomon.com/wp-content/uploads/2022/10/main-pic6.jpg" alt="주니어솔로몬 수업 장면 4" width="800" height="600" loading="lazy"></div>
-          <div class="car-slide"><img src="https://juniorsolomon.com/wp-content/uploads/2022/10/main-pic5.jpg" alt="주니어솔로몬 수업 장면 5" width="800" height="600" loading="lazy"></div>
-          <div class="car-slide"><img src="https://juniorsolomon.com/wp-content/uploads/2022/10/main-pic1.jpg" alt="주니어솔로몬 수업 장면 6" width="800" height="600" loading="lazy"></div>
-          <div class="car-slide"><img src="https://juniorsolomon.com/wp-content/uploads/2022/10/main-pic2.jpg" alt="주니어솔로몬 수업 장면 7" width="800" height="600" loading="lazy"></div>
-          <div class="car-slide"><img src="https://juniorsolomon.com/wp-content/uploads/2022/10/main-pic4.jpg" alt="주니어솔로몬 수업 장면 8" width="800" height="600" loading="lazy"></div>
-        </div>
-        <button class="car-btn prev" id="cPrev" aria-label="이전 슬라이드">
-          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-        </button>
-        <button class="car-btn next" id="cNext" aria-label="다음 슬라이드">
-          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
-        </button>
-        <div class="car-dots" id="dots" role="tablist" aria-label="슬라이드 선택"></div>
+      <h1 class="hero-h1">
+        지혜가 샘솟는<br>독서·철학·논술
+      </h1>
+      <p class="hero-tagline">주니어솔로몬 학원</p>
+      <p class="hero-desc">하브루타 교육으로 아이의 생각을 키우고, 책을 읽고 토론하고 글을 쓰는 사고력 수업을 합니다.</p>
+      <div class="hero-btns">
+        <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" class="btn btn-primary" target="_blank" rel="noopener">상담문의 시작하기</a>
+        <a href="https://www.joongang.co.kr/article/25121798" class="btn btn-ghost-white" target="_blank" rel="noopener">중앙일보 기사보기</a>
       </div>
     </div>
   </div>
+
+  <!-- Slide dots -->
+  <div class="hero-dots-wrap" id="heroDots" role="tablist" aria-label="슬라이드 선택"></div>
+
+  <!-- Scroll hint -->
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+  </div>
 </section>
 
-<!-- CREDENTIALS (replaces hero-metric stats) -->
+<!-- CREDENTIALS -->
 <div class="creds">
   <div class="container">
     <div class="creds-list">
@@ -741,7 +910,6 @@
       </div>
       <div>
         <div class="pill-label">
-          <!-- Sparkle icon -->
           <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v1m0 16v1M4.22 4.22l.7.7m12.72 12.72l.7.7M3 12h1m16 0h1M4.22 19.78l.7-.7m12.72-12.72l.7-.7"/><circle cx="12" cy="12" r="4"/></svg></span>
           About Us
         </div>
@@ -750,21 +918,18 @@
 
         <div class="feature">
           <div class="feat-icon purple" aria-hidden="true">
-            <!-- Book icon -->
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
           </div>
           <div class="feat-body"><h4>하브루타 교육</h4><p>밥상머리 교육으로 알려진 하브루타 토론을 수업에 적용하여 책을 읽고 토론하고 글을 쓰는 사고력 수업을 합니다.</p></div>
         </div>
         <div class="feature">
           <div class="feat-icon teal" aria-hidden="true">
-            <!-- PenLine icon -->
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
           </div>
           <div class="feat-body"><h4>독서 · 철학 · 논술</h4><p>독서로 세상을 이해하고, 철학적 사고로 깊이를 더하고, 논술로 자신의 생각을 표현하는 능력을 키웁니다.</p></div>
         </div>
         <div class="feature">
           <div class="feat-icon magenta" aria-hidden="true">
-            <!-- Award icon -->
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
           </div>
           <div class="feat-body"><h4>2022 브랜드 대상 수상</h4><p>논술교육 부문 '2022 한국브랜드소비자평가 대상' 선정. 중앙일보에 소개된 신뢰받는 교육기관입니다.</p></div>
@@ -782,7 +947,6 @@
   <div class="container">
     <div class="center">
       <div class="pill-label" style="margin-bottom:16px;">
-        <!-- Clipboard icon -->
         <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/></svg></span>
         공지사항
       </div>
@@ -790,7 +954,6 @@
       <p style="font-size:17px;color:var(--ink-muted);max-width:440px;margin:0 auto;">특강, 수업안내, 선생님 칼럼을 확인해 보세요.</p>
     </div>
     <div class="notice-grid">
-      <!-- Featured notice -->
       <a href="https://juniorsolomon.com/?vid=27" class="ncard-featured anim">
         <div class="ncard-feat-img"><img src="https://juniorsolomon.com/wp-content/uploads/mangboard/2023/02/03/F52_2023_0203-6_small.jpg" alt="봄방학 특강 수업 현장" width="640" height="400" loading="lazy"></div>
         <div class="ncard-feat-body">
@@ -800,7 +963,6 @@
           <div class="nmeta"><span class="n-date" data-date="2023-02-03">2023-02-03</span><span class="n-views" data-views="486">486 views</span></div>
         </div>
       </a>
-      <!-- Sub-grid -->
       <div class="notice-sub-grid">
         <a href="https://juniorsolomon.com/?vid=25" class="ncard anim">
           <div class="ncard-img"><img src="https://juniorsolomon.com/wp-content/uploads/mangboard/2023/02/03/F49_2023_0203-5_small.jpg" alt="겨울방학 시쓰기 특강 마지막 날 수업" width="640" height="400" loading="lazy"></div>
@@ -826,70 +988,103 @@
 
 <div class="sect-divider"></div>
 
-<!-- CURRICULUM -->
+<!-- CURRICULUM: Vertical Timeline -->
 <section class="section" id="curriculum" style="background:var(--surf-1);">
   <div class="container">
     <div class="center">
       <div class="pill-label" style="margin-bottom:16px;">
-        <!-- Book stack icon -->
         <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></span>
         Curriculum
       </div>
       <h2 class="d2" style="margin-bottom:12px;">커리큘럼</h2>
       <p style="font-size:17px;color:var(--ink-muted);max-width:440px;margin:0 auto;">연령별 맞춤 교육으로 아이의 성장 단계에 맞는 수업을 제공합니다.</p>
     </div>
-    <div class="cur-grid">
-      <div class="cur-card anim">
-        <div class="cur-img">
-          <span class="cur-badge" aria-hidden="true">
-            <!-- Leaf icon -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 014 13c0-5 8-12 8-12s8 7 8 12a7 7 0 01-7 7z"/><path d="M11 20V9"/></svg>
-          </span>
-          <img src="https://juniorsolomon.com/wp-content/uploads/2022/06/contents-유치원.jpg" alt="유아 (5·6·7세) 창의적 사고 수업" width="400" height="533" loading="lazy">
-          <div class="cur-overlay"><div class="cur-age">5 · 6 · 7세</div><div class="cur-level">유아</div><div class="cur-grade">창의적 사고의 시작</div></div>
+
+    <div class="tl-wrap" id="tlWrap">
+      <div class="tl-spine"><div class="tl-spine-fill" id="tlSpineFill"></div></div>
+
+      <!-- 유아 -->
+      <div class="tl-item anim">
+        <div class="tl-node" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 014 13c0-5 8-12 8-12s8 7 8 12a7 7 0 01-7 7z"/><path d="M11 20V9"/></svg>
+        </div>
+        <div class="tl-card">
+          <div class="tl-media">
+            <img src="https://juniorsolomon.com/wp-content/uploads/2022/06/contents-유치원.jpg" alt="유아 수업 장면" width="600" height="400" loading="lazy">
+          </div>
+          <div class="tl-body">
+            <span class="tl-age">5 · 6 · 7세</span>
+            <h3 class="tl-level">유아</h3>
+            <p class="tl-desc">그림책 토론과 이야기 짓기로 창의적 사고의 씨앗을 심습니다. 소크라테스 문답법으로 스스로 생각하는 즐거움을 경험합니다.</p>
+            <a href="curriculum.html" class="tl-link">자세히 보기 →</a>
+          </div>
         </div>
       </div>
-      <div class="cur-card anim">
-        <div class="cur-img">
-          <span class="cur-badge" aria-hidden="true">
-            <!-- Book-open icon -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-          </span>
-          <img src="https://juniorsolomon.com/wp-content/uploads/2022/06/contents-초등학생.jpg" alt="초등 저학년 (1~3학년) 독서 습관 수업" width="400" height="533" loading="lazy">
-          <div class="cur-overlay"><div class="cur-age">1 ~ 3학년</div><div class="cur-level">초등 저학년</div><div class="cur-grade">독서 습관 형성</div></div>
+
+      <!-- 초등 저학년 -->
+      <div class="tl-item anim">
+        <div class="tl-node" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        </div>
+        <div class="tl-card">
+          <div class="tl-media">
+            <img src="https://juniorsolomon.com/wp-content/uploads/2022/06/contents-초등학생.jpg" alt="초등 저학년 수업 장면" width="600" height="400" loading="lazy">
+          </div>
+          <div class="tl-body">
+            <span class="tl-age">1 ~ 3학년</span>
+            <h3 class="tl-level">초등 저학년</h3>
+            <p class="tl-desc">독서 습관을 기르고, 하브루타 토론으로 책 속 이야기를 자신의 언어로 표현하는 연습을 합니다.</p>
+            <a href="curriculum.html" class="tl-link">자세히 보기 →</a>
+          </div>
         </div>
       </div>
-      <div class="cur-card anim">
-        <div class="cur-img">
-          <span class="cur-badge" aria-hidden="true">
-            <!-- Search icon -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          </span>
-          <img src="https://juniorsolomon.com/wp-content/uploads/2022/06/contents-초등학생.jpg" alt="초등 고학년 (4~6학년) 논리적 사고 수업" width="400" height="533" loading="lazy">
-          <div class="cur-overlay"><div class="cur-age">4 ~ 6학년</div><div class="cur-level">초등 고학년</div><div class="cur-grade">논리적 사고력 강화</div></div>
+
+      <!-- 초등 고학년 -->
+      <div class="tl-item anim">
+        <div class="tl-node" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <div class="tl-card">
+          <div class="tl-media">
+            <img src="https://juniorsolomon.com/wp-content/uploads/2022/12/main-pic1-1.jpg" alt="초등 고학년 수업 장면" width="600" height="400" loading="lazy">
+          </div>
+          <div class="tl-body">
+            <span class="tl-age">4 ~ 6학년</span>
+            <h3 class="tl-level">초등 고학년</h3>
+            <p class="tl-desc">논리적 사고력을 강화하고, 철학적 질문으로 생각의 깊이를 더합니다. 주제 토론과 단락 글쓰기를 통해 논술 기초를 완성합니다.</p>
+            <a href="curriculum.html" class="tl-link">자세히 보기 →</a>
+          </div>
         </div>
       </div>
-      <div class="cur-card anim">
-        <div class="cur-img">
-          <span class="cur-badge" aria-hidden="true">
-            <!-- PenLine icon -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          </span>
-          <img src="https://juniorsolomon.com/wp-content/uploads/2022/06/contents-중고등.jpg" alt="중등 (1~3학년) 심화 논술 수업" width="400" height="533" loading="lazy">
-          <div class="cur-overlay"><div class="cur-age">1 ~ 3학년</div><div class="cur-level">중등</div><div class="cur-grade">심화 논술 완성</div></div>
+
+      <!-- 중등 -->
+      <div class="tl-item anim">
+        <div class="tl-node" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <div class="tl-card">
+          <div class="tl-media">
+            <img src="https://juniorsolomon.com/wp-content/uploads/2022/06/contents-중고등.jpg" alt="중등 수업 장면" width="600" height="400" loading="lazy">
+          </div>
+          <div class="tl-body">
+            <span class="tl-age">중등 1 ~ 3학년</span>
+            <h3 class="tl-level">중등</h3>
+            <p class="tl-desc">심화 논술로 자신의 생각을 정확하고 설득력 있게 표현합니다. 입시 논술 준비와 사고력 확장을 동시에 이룹니다.</p>
+            <a href="curriculum.html" class="tl-link">자세히 보기 →</a>
+          </div>
         </div>
       </div>
     </div>
-    <div class="more-row" style="margin-top:32px;"><a href="curriculum.html" class="btn btn-primary">전체 커리큘럼 보기</a></div>
+
+    <div class="more-row" style="margin-top:48px;"><a href="curriculum.html" class="btn btn-primary">전체 커리큘럼 보기</a></div>
   </div>
 </section>
 
-<!-- SERVICES (alternating image–text rows) -->
+<!-- SERVICES -->
 <section class="section" id="services">
   <div class="container">
     <div class="center">
       <div class="pill-label" style="margin-bottom:16px;">
-        <!-- Grid icon -->
         <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>
         Services
       </div>
@@ -897,42 +1092,36 @@
       <p style="font-size:17px;color:var(--ink-muted);max-width:440px;margin:0 auto;">학생 개개인을 위한 맞춤 교육서비스를 제공합니다.</p>
     </div>
     <div class="svc-list">
-      <!-- Row 1: img left -->
       <div class="svc-row anim">
         <div class="svc-row-img">
           <img src="https://juniorsolomon.com/wp-content/uploads/2022/09/1대상담.jpg" alt="1:1 개별 상담 서비스" width="600" height="300" loading="lazy">
         </div>
         <div class="svc-row-body">
           <div class="svc-icon" aria-hidden="true">
-            <!-- User icon -->
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </div>
           <h3 class="svc-title">1:1 상담</h3>
           <p class="svc-desc">학생 개개인의 특성과 수준을 파악하여 맞춤 상담을 제공합니다. 예약제로 운영하여 충분한 시간을 드립니다.</p>
         </div>
       </div>
-      <!-- Row 2: img right (flipped on desktop via CSS) -->
       <div class="svc-row anim">
         <div class="svc-row-img">
           <img src="https://juniorsolomon.com/wp-content/uploads/2022/09/해외유학상담.jpg" alt="해외 유학 상담 서비스" width="600" height="300" loading="lazy">
         </div>
         <div class="svc-row-body">
           <div class="svc-icon" aria-hidden="true">
-            <!-- Globe icon -->
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
           </div>
           <h3 class="svc-title">해외 유학상담</h3>
           <p class="svc-desc">전문 컨설팅 소개를 통해 해외 유학을 준비하는 학생들에게 필요한 정보와 방향을 안내합니다.</p>
         </div>
       </div>
-      <!-- Row 3: img left -->
       <div class="svc-row anim">
         <div class="svc-row-img">
           <img src="https://juniorsolomon.com/wp-content/uploads/2022/09/원격교육지원.jpg" alt="원격 온라인 교육 지원 서비스" width="600" height="300" loading="lazy">
         </div>
         <div class="svc-row-body">
           <div class="svc-icon" aria-hidden="true">
-            <!-- Monitor icon -->
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
           </div>
           <h3 class="svc-title">원격 교육 지원</h3>
@@ -945,12 +1134,11 @@
 
 <div class="sect-divider"></div>
 
-<!-- TESTIMONIALS (asymmetric: featured large + 2 smaller) -->
+<!-- TESTIMONIALS -->
 <section class="section" id="testimonials">
   <div class="container">
     <div class="center">
       <div class="pill-label" style="margin-bottom:16px;">
-        <!-- Quote/chat icon -->
         <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span>
         Testimonials
       </div>
@@ -958,7 +1146,6 @@
       <p style="font-size:17px;color:var(--ink-muted);max-width:440px;margin:0 auto;">주니어솔로몬을 경험한 학부모님들의 이야기입니다.</p>
     </div>
     <div class="test-grid">
-      <!-- Featured testimonial -->
       <div class="tcard tcard-featured anim">
         <div class="t-stars" aria-label="별점 5점">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -973,7 +1160,6 @@
           <span class="t-name">신용산 2학년 김*연 엄마</span>
         </div>
       </div>
-      <!-- Pair of smaller testimonials -->
       <div class="test-pair">
         <div class="tcard anim">
           <div class="t-stars" aria-label="별점 5점">
@@ -1011,8 +1197,8 @@
 <!-- CTA BAND -->
 <div class="cta-band">
   <div class="container" style="position:relative;z-index:1;">
-    <h2 style="font-size:clamp(26px,4vw,42px);font-weight:700;color:var(--canvas);letter-spacing:-0.02em;margin-bottom:14px;text-wrap:balance;">지금 바로 상담해보세요</h2>
-    <p style="font-size:17px;color:oklch(99% 0.005 293 / 0.75);margin-bottom:32px;max-width:400px;margin-left:auto;margin-right:auto;">아이의 사고력과 표현력을 키워줄 주니어솔로몬 수업, 네이버 상담톡으로 빠르게 문의하세요.</p>
+    <h2 class="d2" style="color:var(--canvas);margin-bottom:14px;">지금 바로 상담해보세요</h2>
+    <p style="font-size:17px;color:oklch(99% 0.005 293 / 0.70);margin-bottom:32px;max-width:400px;margin-left:auto;margin-right:auto;">아이의 사고력과 표현력을 키워줄 주니어솔로몬 수업, 네이버 상담톡으로 빠르게 문의하세요.</p>
     <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" class="btn btn-white" target="_blank" rel="noopener">무료 상담 시작하기 →</a>
   </div>
 </div>
@@ -1023,7 +1209,6 @@
     <div class="loc-grid">
       <div>
         <div class="pill-label" style="margin-bottom:16px;">
-          <!-- MapPin icon -->
           <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
           Location
         </div>
@@ -1115,43 +1300,60 @@
 </button>
 
 <script>
-// ── CAROUSEL ──
-const track = document.getElementById('track');
-const dotsEl = document.getElementById('dots');
-const slides = document.querySelectorAll('.car-slide');
-const total = slides.length;
-let cur = 0, timer;
+// ── HERO CROSSFADE ──
+const bgSlides = document.querySelectorAll('.hero-bg-slide');
+const dotsWrap = document.getElementById('heroDots');
+let hCur = 0, hTimer;
 
-slides.forEach((_, i) => {
+bgSlides.forEach((_, i) => {
   const d = document.createElement('button');
-  d.className = 'car-dot' + (i === 0 ? ' on' : '');
+  d.className = 'hero-dot' + (i === 0 ? ' on' : '');
   d.setAttribute('aria-label', `슬라이드 ${i + 1}`);
   d.setAttribute('role', 'tab');
   d.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
-  d.addEventListener('click', () => { go(i); reset(); });
-  dotsEl.appendChild(d);
+  d.addEventListener('click', () => { heroGo(i); heroReset(); });
+  dotsWrap.appendChild(d);
 });
 
-function go(n) {
-  cur = (n + total) % total;
-  track.style.transform = `translateX(-${cur * 100}%)`;
-  document.querySelectorAll('.car-dot').forEach((d, i) => {
-    d.classList.toggle('on', i === cur);
-    d.setAttribute('aria-selected', i === cur ? 'true' : 'false');
-  });
+function heroGo(n) {
+  bgSlides[hCur].classList.remove('active');
+  document.querySelectorAll('.hero-dot')[hCur].classList.remove('on');
+  document.querySelectorAll('.hero-dot')[hCur].setAttribute('aria-selected', 'false');
+  hCur = (n + bgSlides.length) % bgSlides.length;
+  const slide = bgSlides[hCur];
+  const img = slide.querySelector('img');
+  img.style.animation = 'none';
+  void img.offsetWidth;
+  img.style.animation = '';
+  slide.classList.add('active');
+  const dot = document.querySelectorAll('.hero-dot')[hCur];
+  dot.classList.add('on');
+  dot.setAttribute('aria-selected', 'true');
 }
-function reset() { clearInterval(timer); timer = setInterval(() => go(cur + 1), 4500); }
-document.getElementById('cNext').addEventListener('click', () => { go(cur + 1); reset(); });
-document.getElementById('cPrev').addEventListener('click', () => { go(cur - 1); reset(); });
-reset();
+function heroReset() {
+  clearInterval(hTimer);
+  hTimer = setInterval(() => heroGo(hCur + 1), 5200);
+}
+heroReset();
 
-let tx = 0;
-const carEl = document.querySelector('.hero-visual');
-carEl.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
-carEl.addEventListener('touchend', e => {
-  const d = tx - e.changedTouches[0].clientX;
-  if (Math.abs(d) > 45) { go(cur + (d > 0 ? 1 : -1)); reset(); }
+// Touch swipe on hero
+const heroEl = document.querySelector('.hero');
+let hTx = 0;
+heroEl.addEventListener('touchstart', e => { hTx = e.touches[0].clientX; }, { passive: true });
+heroEl.addEventListener('touchend', e => {
+  const d = hTx - e.changedTouches[0].clientX;
+  if (Math.abs(d) > 48) { heroGo(hCur + (d > 0 ? 1 : -1)); heroReset(); }
 });
+
+// ── TIMELINE LINE ANIMATION ──
+const tlSpine = document.getElementById('tlSpineFill');
+const tlWrap  = document.getElementById('tlWrap');
+if (tlWrap && tlSpine) {
+  const tlObs = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { tlSpine.style.height = '100%'; tlObs.disconnect(); }
+  }, { threshold: 0.05 });
+  tlObs.observe(tlWrap);
+}
 
 // ── HEADER SCROLL ──
 window.addEventListener('scroll', () => {
