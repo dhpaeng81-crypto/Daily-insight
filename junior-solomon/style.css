@@ -551,8 +551,8 @@ button { touch-action: manipulation; }
   border: none; background: var(--canvas);
 }
 .notion-frame {
-  width: 100%; min-height: calc(100vh - var(--header-h) - 200px);
-  border: none; display: block;
+  width: 100%; height: calc(100vh - var(--header-h) - 120px);
+  min-height: 600px; border: none; display: block;
 }
 .board-placeholder {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
