@@ -545,14 +545,26 @@ button { touch-action: manipulation; }
 .breadcrumb a:hover { color: var(--purple); }
 .breadcrumb-sep { opacity: 0.4; }
 
-/* ── NOTION BOARD EMBED ── */
-.board-wrap {
-  width: 100%; min-height: calc(100vh - var(--header-h) - 200px);
-  border: none; background: var(--canvas);
+/* ── BOARD LINK CARD ── */
+.board-link-card {
+  max-width: 600px; margin: 0 auto;
+  background: var(--surf-1); border-radius: var(--r-lg);
+  border: 1px solid var(--border); padding: 56px 48px;
+  text-align: center; box-shadow: var(--shadow-card);
 }
-.notion-frame {
-  width: 100%; height: calc(100vh - var(--header-h) - 120px);
-  min-height: 600px; border: none; display: block;
+.board-link-icon {
+  width: 64px; height: 64px; border-radius: var(--r-lg);
+  background: var(--surf-2); display: flex; align-items: center; justify-content: center;
+  color: var(--purple); margin: 0 auto 24px;
+}
+.board-link-icon svg { width: 28px; height: 28px; }
+.board-link-title {
+  font-size: clamp(22px, 3vw, 28px); font-weight: 700;
+  letter-spacing: -0.01em; color: var(--ink); margin-bottom: 14px;
+}
+.board-link-desc {
+  font-size: 16px; color: var(--ink-muted); line-height: 1.7;
+  margin-bottom: 32px; max-width: 50ch; margin-left: auto; margin-right: auto;
 }
 .board-placeholder {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
