@@ -171,8 +171,10 @@
       width: 36px; height: 36px; border-radius: var(--r-md);
       background: var(--indigo);
       display: flex; align-items: center; justify-content: center;
+      overflow: hidden; flex-shrink: 0;
     }
     .logo-icon svg { width: 22px; height: 22px; fill: #fff; }
+    .logo-ci { width: 100%; height: 100%; object-fit: contain; }
     .logo-text {
       font-size: 18px; font-weight: 800; letter-spacing: -0.03em;
       color: #fff; line-height: 1;
@@ -899,7 +901,7 @@
     <a href="index.html" class="logo" aria-label="주니어솔로몬 홈으로">
       <div class="logo-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+          <path d="M11.25 4.533A9.707 9.707 0 0 0 6 3a9.735 9.735 0 0 0-3.25.555.75.75 0 0 0-.5.707v14.25a.75.75 0 0 0 1 .707A8.237 8.237 0 0 1 6 18.75c1.995 0 3.823.707 5.25 1.886V4.533ZM12.75 20.636A8.214 8.214 0 0 1 18 18.75c.966 0 1.89.166 2.75.47a.75.75 0 0 0 1-.707V4.262a.75.75 0 0 0-.5-.707A9.735 9.735 0 0 0 18 3a9.707 9.707 0 0 0-5.25 1.533v16.103Z"/>
         </svg>
       </div>
       <div>
@@ -917,12 +919,13 @@
         <div class="dropdown" role="menu">
           <a href="vision.html" role="menuitem">비전 &amp; 교육철학</a>
           <a href="mission.html" role="menuitem">교육방향</a>
-          <a href="introduction.html" role="menuitem">입학절차</a>
+          <a href="introduction.html" role="menuitem">선생님 소개</a>
+          <a href="facility.html" role="menuitem">시설 안내</a>
         </div>
       </div>
       <a href="curriculum.html" class="nav-link">커리큘럼</a>
-      <a href="#teachers" class="nav-link">선생님소개</a>
-      <a href="#sophos" class="nav-link">소포스에듀</a>
+      <a href="introduction.html" class="nav-link">선생님소개</a>
+      <a href="fee.html" class="nav-link">교습비</a>
       <a href="board-notice.html" class="nav-link">공지사항</a>
       <a href="contact.html" class="nav-link">오시는길</a>
     </nav>
@@ -940,11 +943,11 @@
 
 <!-- Mobile nav -->
 <nav class="mobile-nav" id="mobileNav" aria-label="모바일 메뉴" role="navigation">
-  <a href="#about">학원소개</a>
+  <a href="vision.html">학원소개</a>
   <a href="curriculum.html">커리큘럼</a>
-  <a href="#teachers">선생님소개</a>
-  <a href="#sophos">소포스에듀</a>
-  <a href="#summer">여름방학특강</a>
+  <a href="introduction.html">선생님소개</a>
+  <a href="edu-1.html">소포스에듀</a>
+  <a href="fee.html">교습비</a>
   <a href="board-notice.html">공지사항</a>
   <a href="contact.html">오시는길</a>
   <a href="tel:027948123" class="m-tel">☎ 02-794-8123</a>
@@ -1558,7 +1561,7 @@
     <div class="footer-brand">
       <div class="logo">
         <div class="logo-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.25 4.533A9.707 9.707 0 0 0 6 3a9.735 9.735 0 0 0-3.25.555.75.75 0 0 0-.5.707v14.25a.75.75 0 0 0 1 .707A8.237 8.237 0 0 1 6 18.75c1.995 0 3.823.707 5.25 1.886V4.533ZM12.75 20.636A8.214 8.214 0 0 1 18 18.75c.966 0 1.89.166 2.75.47a.75.75 0 0 0 1-.707V4.262a.75.75 0 0 0-.5-.707A9.735 9.735 0 0 0 18 3a9.707 9.707 0 0 0-5.25 1.533v16.103Z"/></svg>
         </div>
         <div>
           <div class="logo-text">주니어솔로몬</div>
@@ -1576,7 +1579,7 @@
       <ul>
         <li><a href="vision.html">비전 &amp; 교육철학</a></li>
         <li><a href="mission.html">교육방향</a></li>
-        <li><a href="introduction.html">입학절차</a></li>
+        <li><a href="introduction.html">선생님 소개</a></li>
         <li><a href="facility.html">시설안내</a></li>
       </ul>
     </div>
@@ -1585,8 +1588,8 @@
       <h4>프로그램</h4>
       <ul>
         <li><a href="curriculum.html">커리큘럼</a></li>
-        <li><a href="#sophos">소포스에듀</a></li>
-        <li><a href="#summer">여름방학특강</a></li>
+        <li><a href="edu-1.html">소포스에듀</a></li>
+        <li><a href="curriculum.html">여름방학특강</a></li>
         <li><a href="fee.html">교습비 안내</a></li>
       </ul>
     </div>
