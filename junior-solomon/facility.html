@@ -3,316 +3,166 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#6B28A6">
-  <title>시설안내 | 주니어솔로몬</title>
-  <meta name="description" content="주니어솔로몬 학원 시설을 소개합니다. 서울 용산구 이촌로 200, LG프라자 4층에 위치합니다.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#0d1b3e">
+  <title>시설 안내 | 주니어솔로몬</title>
+  <meta name="description" content="주니어솔로몬 학원 시설 안내. 쾌적한 강의실, 하브루타 토론실, 인문 전문 도서관을 갖춘 서울 용산구 이촌동 학원.">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="stylesheet" href="style.css">
   <style>
-    .facility-grid {
-      display: grid; grid-template-columns: 1fr; gap: 16px;
-      margin-top: 40px;
-    }
-    @media (min-width: 640px) { .facility-grid { grid-template-columns: 1fr 1fr; } }
-    @media (min-width: 1024px) { .facility-grid { grid-template-columns: repeat(3, 1fr); } }
-    .facility-card {
-      background: var(--surf-1); border-radius: var(--r-lg);
-      padding: 28px; border: 1px solid var(--border);
-      transition: transform var(--t-base) var(--ease);
-    }
-    .facility-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-raised); }
-    .facility-icon {
-      width: 48px; height: 48px; border-radius: var(--r-md);
-      background: var(--surf-2); display: flex; align-items: center;
-      justify-content: center; color: var(--purple); margin-bottom: 16px;
-    }
-    .facility-icon svg { width: 22px; height: 22px; }
-    .facility-card h3 { font-size: 17px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
-    .facility-card p { font-size: 14px; color: var(--ink-muted); line-height: 1.75; }
+    .facility-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px;}
+    @media(max-width:768px){.facility-grid{grid-template-columns:1fr 1fr;}}
+    @media(max-width:480px){.facility-grid{grid-template-columns:1fr;}}
+    .facility-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow var(--t-base),transform var(--t-base) var(--ease);}
+    .facility-card:hover{box-shadow:var(--shadow-md);transform:translateY(-4px);}
+    .facility-img{width:100%;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:52px;}
+    .facility-img.c1{background:linear-gradient(135deg,var(--indigo-light),oklch(88% 0.08 264));}
+    .facility-img.c2{background:linear-gradient(135deg,var(--orange-light),oklch(88% 0.08 55));}
+    .facility-img.c3{background:linear-gradient(135deg,oklch(93% 0.06 145),oklch(88% 0.08 145));}
+    .facility-img.c4{background:linear-gradient(135deg,oklch(93% 0.06 330),oklch(88% 0.08 330));}
+    .facility-img.c5{background:linear-gradient(135deg,oklch(93% 0.06 200),oklch(88% 0.08 200));}
+    .facility-img.c6{background:linear-gradient(135deg,var(--surf-2),var(--surf-1));}
+    .facility-body{padding:20px 22px;}
+    .facility-body h3{font-size:16px;font-weight:800;color:var(--ink);margin-bottom:6px;}
+    .facility-body p{font-size:13px;color:var(--ink-muted);line-height:1.65;}
   </style>
 </head>
 <body>
+<a href="#main" class="skip-link">본문 바로가기</a>
 
-<a href="#main-content" class="skip-link">본문으로 바로가기</a>
-
-<!-- HEADER -->
-<header class="header" id="hdr">
-  <div class="container">
-    <div class="header-inner">
-      <a href="index.html" class="logo">
-        <img src="https://juniorsolomon.com/wp-content/uploads/2022/06/cropped-logo_symbal2_png.png" alt="주니어솔로몬" width="120" height="36">
-      </a>
-      <nav class="nav" aria-label="주메뉴">
-        <div class="nav-item">
-          <a href="index.html#about" class="nav-link" aria-haspopup="true" aria-expanded="false">학원소개
-            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" width="12" height="12"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-          </a>
-          <div class="dropdown" role="menu">
-            <a href="introduction.html" role="menuitem">교사소개</a>
-            <a href="vision.html" role="menuitem">비전</a>
-            <a href="mission.html" role="menuitem">교육방향</a>
-            <a href="contact.html" role="menuitem">오시는길</a>
-          </div>
+<header class="header" id="header" role="banner">
+  <div class="header-inner">
+    <a href="index.html" class="logo" aria-label="주니어솔로몬 홈으로">
+      <div class="logo-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" fill="white"/></svg></div>
+      <div><div class="logo-text">주니어솔로몬</div><div class="logo-sub">Jr. Solomon Academy</div></div>
+    </a>
+    <nav class="nav" role="navigation" aria-label="주메뉴">
+      <div class="nav-item">
+        <button class="nav-link active" aria-haspopup="true" aria-expanded="false">학원소개 <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"/></svg></button>
+        <div class="dropdown" role="menu">
+          <a href="vision.html" role="menuitem">비전 &amp; 교육철학</a>
+          <a href="mission.html" role="menuitem">교육방향</a>
+          <a href="introduction.html" role="menuitem">선생님 소개</a>
+          <a href="facility.html" class="active" role="menuitem">시설 안내</a>
         </div>
-        <div class="nav-item">
-          <a href="index.html#curriculum" class="nav-link" aria-haspopup="true" aria-expanded="false">커리큘럼
-            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" width="12" height="12"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-          </a>
-          <div class="dropdown" role="menu">
-            <a href="curriculum.html" role="menuitem">커리큘럼</a>
-            <a href="fee.html" role="menuitem">교습비</a>
-          </div>
-        </div>
-        <div class="nav-item">
-          <a href="edu-1.html" class="nav-link" aria-haspopup="true" aria-expanded="false">입학안내
-            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" width="12" height="12"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-          </a>
-          <div class="dropdown" role="menu">
-            <a href="edu-1.html" role="menuitem">입학절차</a>
-          </div>
-        </div>
-        <a href="facility.html" class="nav-link">시설안내</a>
-        <div class="nav-item">
-          <a href="board-notice.html" class="nav-link" aria-haspopup="true" aria-expanded="false">게시판
-            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" width="12" height="12"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-          </a>
-          <div class="dropdown" role="menu">
-            <a href="board-notice.html" role="menuitem">공지사항</a>
-            <a href="board-gallery.html" role="menuitem">수업 갤러리</a>
-            <a href="board-review.html" role="menuitem">학부모 후기</a>
-            <a href="board-qna.html" role="menuitem">Q&amp;A 문의</a>
-          </div>
-        </div>
-      </nav>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" class="btn btn-primary btn-sm" target="_blank" rel="noopener">상담문의</a>
-        <button class="hamburger" id="ham" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mMenu">
-          <span></span><span></span><span></span>
-        </button>
       </div>
+      <a href="curriculum.html" class="nav-link">커리큘럼</a>
+      <a href="introduction.html" class="nav-link">선생님소개</a>
+      <a href="fee.html" class="nav-link">교습비</a>
+      <a href="board-notice.html" class="nav-link">공지사항</a>
+      <a href="contact.html" class="nav-link">오시는길</a>
+    </nav>
+    <div class="header-cta">
+      <a href="tel:027948123" class="header-tel">☎ 02-794-8123</a>
+      <a href="introduction.html" class="header-btn">입학상담</a>
     </div>
+    <button class="menu-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobileNav" id="menuToggle"><span></span><span></span><span></span></button>
   </div>
 </header>
+<nav class="mobile-nav" id="mobileNav" aria-label="모바일 메뉴">
+  <a href="vision.html">비전 &amp; 교육철학</a>
+  <a href="mission.html">교육방향</a>
+  <a href="curriculum.html">커리큘럼</a>
+  <a href="introduction.html">선생님 소개</a>
+  <a href="facility.html" class="active">시설안내</a>
+  <a href="fee.html">교습비 안내</a>
+  <a href="board-notice.html">공지사항</a>
+  <a href="contact.html">오시는길</a>
+  <a href="tel:027948123" class="m-tel">☎ 02-794-8123 전화상담</a>
+</nav>
 
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mMenu" aria-hidden="true">
-  <a href="index.html#about" class="m-nav-link">학원소개</a>
-  <div class="m-sub">
-    <a href="introduction.html" class="m-sub-link">교사소개</a>
-    <a href="vision.html" class="m-sub-link">비전</a>
-    <a href="mission.html" class="m-sub-link">교육방향</a>
-    <a href="contact.html" class="m-sub-link">오시는길</a>
-  </div>
-  <a href="index.html#curriculum" class="m-nav-link">커리큘럼</a>
-  <div class="m-sub">
-    <a href="curriculum.html" class="m-sub-link">커리큘럼</a>
-    <a href="fee.html" class="m-sub-link">교습비</a>
-  </div>
-  <a href="edu-1.html" class="m-nav-link">입학안내</a>
-  <div class="m-sub"><a href="edu-1.html" class="m-sub-link">입학절차</a></div>
-  <a href="facility.html" class="m-nav-link">시설안내</a>
-  <a href="board-notice.html" class="m-nav-link">게시판</a>
-  <div class="m-sub">
-    <a href="board-notice.html" class="m-sub-link">공지사항</a>
-    <a href="board-gallery.html" class="m-sub-link">수업 갤러리</a>
-    <a href="board-review.html" class="m-sub-link">학부모 후기</a>
-    <a href="board-qna.html" class="m-sub-link">Q&amp;A 문의</a>
-  </div>
-  <div style="margin-top:32px;">
-    <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" class="btn btn-primary" style="width:100%;justify-content:center;" target="_blank" rel="noopener">상담문의</a>
-  </div>
-</div>
-
-<main id="main-content">
-
-<!-- PAGE HERO -->
-<div class="page-hero">
-  <div class="container">
-    <div class="page-hero-inner">
-      <nav class="breadcrumb" aria-label="경로">
-        <a href="index.html">홈</a>
-        <span class="breadcrumb-sep" aria-hidden="true">›</span>
-        <span aria-current="page">시설안내</span>
-      </nav>
-      <div class="pill-label">
-        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
-        Facility
-      </div>
-      <h1 class="d2" style="margin-bottom:12px;">시설안내</h1>
-      <p style="font-size:17px;color:var(--ink-muted);max-width:560px;">주니어솔로몬은 아이들이 편안하고 즐겁게 배울 수 있는 환경을 만들기 위해 최선을 다합니다.</p>
-    </div>
-  </div>
-</div>
-
-<!-- CONTENT -->
-<section class="page-content">
-  <div class="container">
-
-    <div class="content-prose">
-      <h2>학원 소개</h2>
-      <p>주니어솔로몬 학원은 서울특별시 용산구 이촌로 200, LG프라자 4층 403호에 위치합니다. 깨끗하고 밝은 공간에서 아이들이 안전하게 수업을 받을 수 있도록 설계되었습니다.</p>
-      <p>학원 내부는 독서와 토론, 글쓰기에 최적화된 환경으로 꾸며져 있으며, 아이들이 자연스럽게 생각하고 표현할 수 있는 분위기를 조성하고 있습니다.</p>
-    </div>
-
-    <div class="facility-grid">
-      <div class="facility-card anim">
-        <div class="facility-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-        </div>
-        <h3>수업 강의실</h3>
-        <p>소규모 그룹 수업에 최적화된 밝고 쾌적한 강의실. 하브루타 토론을 위한 원형 배치가 가능하며, 칠판과 빔프로젝터가 구비되어 있습니다.</p>
-      </div>
-      <div class="facility-card anim">
-        <div class="facility-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-        </div>
-        <h3>독서 코너</h3>
-        <p>수업 전후로 자유롭게 책을 읽을 수 있는 아늑한 독서 공간. 다양한 장르의 도서가 구비되어 있어 아이들이 자연스럽게 독서 습관을 기를 수 있습니다.</p>
-      </div>
-      <div class="facility-card anim">
-        <div class="facility-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        </div>
-        <h3>상담실</h3>
-        <p>학부모님과 원장선생님이 편안하게 상담을 나눌 수 있는 독립된 상담 공간. 아이의 학습 상황과 성장에 대한 이야기를 조용히 나눌 수 있습니다.</p>
-      </div>
-      <div class="facility-card anim">
-        <div class="facility-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-        </div>
-        <h3>온라인 수업 지원</h3>
-        <p>원격 수업이 필요한 경우를 위한 온라인 수업 지원 시스템. 화상 수업 장비와 안정적인 인터넷 환경이 구비되어 있습니다.</p>
-      </div>
-      <div class="facility-card anim">
-        <div class="facility-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        </div>
-        <h3>편리한 위치</h3>
-        <p>지하철 이촌역 도보 5분, LG프라자 4층에 위치. 엘리베이터가 구비되어 있으며, 인근에 주차 공간도 있습니다.</p>
-      </div>
-      <div class="facility-card anim">
-        <div class="facility-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <h3>안전한 환경</h3>
-        <p>CCTV 설치, 출입 관리 시스템 운영으로 아이들이 안전하게 수업을 받을 수 있는 환경을 유지합니다. 학부모님께서 안심하실 수 있습니다.</p>
-      </div>
-    </div>
-
-    <div class="content-prose" style="margin-top:48px;">
-      <h2>위치 안내</h2>
-      <p>서울특별시 용산구 이촌로 200, LG프라자 4층 403호</p>
-    </div>
-
-    <div class="map-wrap" style="margin-top:24px;">
-      <iframe src="https://maps.google.com/maps?q=주니어솔로몬&t=m&z=16&output=embed&iwloc=near" title="주니어솔로몬 위치" allowfullscreen loading="lazy"></iframe>
-    </div>
-
-    <div style="margin-top:40px;display:flex;gap:12px;flex-wrap:wrap;">
-      <a href="contact.html" class="btn btn-outline">오시는길 자세히 보기</a>
-      <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" class="btn btn-primary" target="_blank" rel="noopener">방문 상담 신청하기</a>
-    </div>
-
+<section class="page-hero" aria-label="페이지 타이틀">
+  <div class="page-hero-inner">
+    <nav class="breadcrumb" aria-label="현재 위치">
+      <a href="index.html">홈</a>
+      <span class="breadcrumb-sep" aria-hidden="true">›</span>
+      <a href="#">학원소개</a>
+      <span class="breadcrumb-sep" aria-hidden="true">›</span>
+      <span class="breadcrumb-cur">시설 안내</span>
+    </nav>
+    <h1 class="page-hero-title">시설 안내</h1>
+    <p class="page-hero-sub">생각이 자라는 공간, 주니어솔로몬</p>
   </div>
 </section>
 
-</main>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-top">
-      <div>
-        <img src="https://juniorsolomon.com/wp-content/uploads/2022/06/cropped-logo_symbal2_png.png" alt="주니어솔로몬" width="120" height="30" style="filter:brightness(0) invert(1);opacity:0.5;margin-bottom:14px;">
-        <div class="f-brand-name" translate="no">주니어솔로몬 학원</div>
-        <p class="f-brand-desc">지혜가 샘솟는 독서철학논술. 하브루타 교육으로 아이의 사고력을 키웁니다.</p>
-        <ul class="f-info">
-          <li><span class="lbl">등록번호</span>중부교육지원청 제3336호</li>
-          <li><span class="lbl">사업자</span>511-96-33718</li>
-          <li><span class="lbl">대표</span>장화연</li>
-        </ul>
+<main id="main">
+  <section class="page-content">
+    <div class="container">
+      <div class="content-prose anim" style="margin-bottom:16px;">
+        <h2>배움에 집중할 수 있는 환경</h2>
+        <p>주니어솔로몬은 아이들이 편안하게 생각하고 표현할 수 있는 환경을 만들기 위해 시설을 지속적으로 정비합니다. 서울시 용산구 이촌로 200 LG프라자 4층 403호에 위치하며, 이촌역 4호선 1번 출구에서 도보 5분 거리입니다.</p>
       </div>
-      <div class="footer-cols">
-        <div>
-          <div class="f-nav-title">학원소개</div>
-          <ul class="f-nav">
-            <li><a href="introduction.html">교사소개</a></li>
-            <li><a href="vision.html">비전</a></li>
-            <li><a href="mission.html">교육방향</a></li>
-            <li><a href="contact.html">오시는길</a></li>
-          </ul>
+      <div class="facility-grid">
+        <div class="facility-card anim anim-d1">
+          <div class="facility-img c1" aria-hidden="true">🏫</div>
+          <div class="facility-body"><h3>쾌적한 강의실</h3><p>소수정예 수업에 최적화된 공간. 학생 간 충분한 거리와 채광으로 집중력을 높입니다.</p></div>
         </div>
-        <div>
-          <div class="f-nav-title">프로그램</div>
-          <ul class="f-nav">
-            <li><a href="curriculum.html">커리큘럼</a></li>
-            <li><a href="fee.html">교습비</a></li>
-            <li><a href="edu-1.html">입학절차</a></li>
-            <li><a href="facility.html">시설안내</a></li>
-          </ul>
+        <div class="facility-card anim anim-d2">
+          <div class="facility-img c2" aria-hidden="true">💬</div>
+          <div class="facility-body"><h3>하브루타 토론실</h3><p>원형 토론 테이블로 구성된 토론 전용 공간. 마주 보며 이야기하는 하브루타 수업에 최적화되었습니다.</p></div>
         </div>
-        <div>
-          <div class="f-nav-title">연락처</div>
-          <ul class="f-nav">
-            <li><a href="tel:0279448123">02-794-8123</a></li>
-            <li><a href="mailto:juniorsolomon@naver.com">juniorsolomon@naver.com</a></li>
-            <li><a href="board-notice.html">공지사항</a></li>
-            <li><a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener">상담문의</a></li>
-          </ul>
+        <div class="facility-card anim anim-d3">
+          <div class="facility-img c3" aria-hidden="true">📚</div>
+          <div class="facility-body"><h3>인문 전문 도서관</h3><p>철학·인문·문학 전문 서가 구비. 수업에 활용하는 책들을 언제든 열람할 수 있습니다.</p></div>
         </div>
+        <div class="facility-card anim anim-d4">
+          <div class="facility-img c4" aria-hidden="true">🤝</div>
+          <div class="facility-body"><h3>개별 상담실</h3><p>1:1 학부모 상담 전용 공간. 아이의 성장 상황을 선생님과 조용히 나눌 수 있습니다.</p></div>
+        </div>
+        <div class="facility-card anim anim-d5">
+          <div class="facility-img c5" aria-hidden="true">☕</div>
+          <div class="facility-body"><h3>대기실 &amp; 쉼터</h3><p>수업 전후로 편안하게 머물 수 있는 대기 공간. 학부모님도 편하게 기다리실 수 있습니다.</p></div>
+        </div>
+        <div class="facility-card anim anim-d6">
+          <div class="facility-img c6" aria-hidden="true">🔒</div>
+          <div class="facility-body"><h3>안전한 환경</h3><p>CCTV 설치 및 주기적인 방역·위생 관리. 학부모님이 안심할 수 있는 안전한 학습 환경을 유지합니다.</p></div>
+        </div>
+      </div>
+      <div class="content-prose anim" style="margin-top:48px;">
+        <h2>위치 안내</h2>
+        <p><strong>주소:</strong> 서울시 용산구 이촌로 200 LG프라자 4층 403호</p>
+        <p><strong>교통:</strong> 지하철 4호선 이촌역 1번 출구에서 도보 약 5분</p>
+        <p><strong>주차:</strong> LG프라자 건물 내 주차 가능 (유료, 수업 시간 중 할인 가능 — 상담 시 문의)</p>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p class="f-copy">COPYRIGHT &copy; 2017 주니어솔로몬. ALL RIGHTS RESERVED.</p>
-      <div style="display:flex;gap:8px;">
-        <span style="background:oklch(43% 0.22 293 / 0.2);color:oklch(99% 0.005 293 / 0.5);padding:4px 12px;border-radius:var(--r-pill);font-size:11px;">서울시 용산구</span>
-        <span style="background:oklch(43% 0.22 293 / 0.2);color:oklch(99% 0.005 293 / 0.5);padding:4px 12px;border-radius:var(--r-pill);font-size:11px;">2022 브랜드 대상</span>
+  </section>
+  <div class="cta-band">
+    <div class="container">
+      <h2>직접 방문해서 확인해보세요</h2>
+      <p>사전 예약 후 시설 투어 및 입학 상담을 받으실 수 있습니다</p>
+      <div class="cta-band-actions">
+        <a href="tel:027948123" class="btn btn-orange">☎ 02-794-8123 예약하기</a>
+        <a href="contact.html" class="btn btn-outline">오시는 길 보기</a>
       </div>
     </div>
   </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo"><div class="logo-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" fill="white"/></svg></div><div><div class="logo-text">주니어솔로몬</div><div class="logo-sub">Jr. Solomon Academy</div></div></div>
+      <p>서울시 용산구 이촌로 200 LG프라자 4층 403호<br>대표전화: 02-794-8123 | 상담: 010-3212-8123<br>이메일: juniorsolomon@naver.com<br>중부지원교육청 제3336호</p>
+    </div>
+    <div class="footer-col"><h4>학원소개</h4><ul><li><a href="vision.html">비전 &amp; 교육철학</a></li><li><a href="mission.html">교육방향</a></li><li><a href="introduction.html">선생님 소개</a></li><li><a href="facility.html">시설안내</a></li></ul></div>
+    <div class="footer-col"><h4>프로그램</h4><ul><li><a href="curriculum.html">커리큘럼</a></li><li><a href="edu-1.html">소포스에듀</a></li><li><a href="fee.html">교습비 안내</a></li></ul></div>
+    <div class="footer-col"><h4>커뮤니티</h4><ul><li><a href="board-notice.html">공지사항</a></li><li><a href="board-gallery.html">갤러리</a></li><li><a href="board-qna.html">Q&amp;A</a></li><li><a href="board-review.html">수강후기</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2024 주니어솔로몬. All rights reserved.</span><span>2022 한국브랜드소비자평가 대상</span></div>
 </footer>
-
-<button class="scroll-top" id="stBtn" aria-label="맨 위로 스크롤">
-  <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
-</button>
-
+<button class="scroll-top" id="scrollTop" aria-label="맨 위로"><svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04L10.75 5.612V16.25A.75.75 0 0 1 10 17Z"/></svg></button>
 <script>
-window.addEventListener('scroll', () => { document.getElementById('hdr').classList.toggle('scrolled', scrollY > 20); }, { passive: true });
-const ham = document.getElementById('ham');
-const mMenu = document.getElementById('mMenu');
-ham.addEventListener('click', () => {
-  const isOpen = mMenu.classList.toggle('open');
-  ham.classList.toggle('open', isOpen);
-  ham.setAttribute('aria-expanded', String(isOpen));
-  ham.setAttribute('aria-label', isOpen ? '메뉴 닫기' : '메뉴 열기');
-  mMenu.setAttribute('aria-hidden', String(!isOpen));
-  document.body.style.overflow = isOpen ? 'hidden' : '';
-});
-mMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  ham.classList.remove('open'); mMenu.classList.remove('open');
-  ham.setAttribute('aria-expanded', 'false'); ham.setAttribute('aria-label', '메뉴 열기');
-  mMenu.setAttribute('aria-hidden', 'true'); document.body.style.overflow = '';
-}));
-document.querySelectorAll('.nav-item').forEach(item => {
-  const trigger = item.querySelector('.nav-link');
-  const dropdown = item.querySelector('.dropdown');
-  if (!dropdown) return;
-  trigger.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
-      e.preventDefault(); item.classList.add('open'); trigger.setAttribute('aria-expanded', 'true');
-      const first = dropdown.querySelector('a'); if (first) first.focus();
-    }
-  });
-  item.addEventListener('keydown', e => { if (e.key === 'Escape') { item.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); trigger.focus(); } });
-  item.addEventListener('focusout', e => { if (!item.contains(e.relatedTarget)) { item.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); } });
-});
-const stBtn = document.getElementById('stBtn');
-window.addEventListener('scroll', () => stBtn.classList.toggle('show', scrollY > 400), { passive: true });
-stBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-const io = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.anim').forEach(el => io.observe(el));
+(function(){
+  var h=document.getElementById('header');
+  window.addEventListener('scroll',function(){h.classList.toggle('scrolled',window.scrollY>40);},{passive:true});
+  var st=document.getElementById('scrollTop');
+  window.addEventListener('scroll',function(){st.classList.toggle('visible',window.scrollY>400);},{passive:true});
+  st.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  var t=document.getElementById('menuToggle'),m=document.getElementById('mobileNav');
+  t.addEventListener('click',function(){var o=m.classList.toggle('open');t.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';});
+  m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){m.classList.remove('open');t.setAttribute('aria-expanded','false');document.body.style.overflow='';});});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.anim').forEach(function(el){io.observe(el);});
+})();
 </script>
 </body>
 </html>
