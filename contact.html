@@ -3,340 +3,628 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#6B28A6">
-  <title>오시는길 | 주니어솔로몬</title>
-  <meta name="description" content="주니어솔로몬 학원 오시는길. 서울특별시 용산구 이촌로 200, LG프라자 4층 403호. 전화 02-794-8123.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#0d1b3e">
+  <title>오시는 길 | 주니어솔로몬</title>
+  <meta name="description" content="주니어솔로몬 오시는 길 — 서울시 용산구 이촌로 200 LG프라자 4층 403호. 이촌역(4호선) 1번 출구 도보 5분. ☎ 02-794-8123">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
   <link rel="stylesheet" href="style.css">
   <style>
-    .transport-item {
-      display: flex; gap: 16px; align-items: flex-start;
-      padding: 16px 0; border-bottom: 1px solid var(--border);
+    :root {
+      --indigo:       oklch(55% 0.22 264);
+      --indigo-deep:  oklch(42% 0.22 264);
+      --indigo-light: oklch(93% 0.06 264);
+      --orange:       oklch(70% 0.20 55);
+      --orange-deep:  oklch(60% 0.18 50);
+      --ink:          oklch(20% 0.012 265);
+      --ink-muted:    oklch(48% 0.010 265);
+      --canvas:       oklch(99% 0.004 265);
+      --surf-1:       oklch(96% 0.008 265);
+      --surf-2:       oklch(92% 0.012 265);
+      --border:       oklch(88% 0.010 265);
+      --font: 'Pretendard Variable', 'Pretendard', -apple-system, sans-serif;
+      --header-h: 64px;
+      --r-sm: 6px; --r-md: 12px; --r-lg: 20px; --r-pill: 9999px;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --t-fast: 120ms; --t-base: 220ms;
+      --shadow-sm:  0 1px 4px oklch(20% 0.012 265 / 0.07);
+      --shadow-md:  0 4px 16px oklch(20% 0.012 265 / 0.10);
+      --shadow-lg:  0 8px 32px oklch(20% 0.012 265 / 0.14);
+      --shadow-btn: 0 4px 14px oklch(55% 0.22 264 / 0.35);
     }
-    .transport-item:last-child { border-bottom: none; }
-    .transport-icon {
-      flex-shrink: 0; width: 40px; height: 40px; border-radius: var(--r-md);
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font); background: var(--canvas); color: var(--ink);
+      font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+    .skip-link {
+      position: absolute; top: -100%; left: 16px; background: var(--indigo); color: #fff;
+      padding: 8px 16px; border-radius: var(--r-md); font-size: 14px; font-weight: 700;
+      text-decoration: none; z-index: 9999; transition: top var(--t-fast);
+    }
+    .skip-link:focus { top: 8px; }
+
+    /* ── HEADER ── */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(13,27,62,0.95); backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px); transition: box-shadow var(--t-base);
+    }
+    .header.scrolled { box-shadow: 0 2px 20px oklch(20% 0.012 265 / 0.20); }
+    .header-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 20px;
+      display: flex; align-items: center; justify-content: space-between; height: var(--header-h);
+    }
+    .logo { text-decoration: none; display: flex; align-items: center; gap: 10px; }
+    .logo-icon { width: 36px; height: 36px; background: var(--indigo); border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .logo-icon svg { width: 20px; height: 20px; }
+    .logo-text { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.2; }
+    .logo-sub  { font-size: 10px; color: rgba(255,255,255,0.55); letter-spacing: 0.5px; }
+    .nav { display: none; align-items: center; gap: 2px; }
+    .nav-item { position: relative; }
+    .nav-link {
+      display: flex; align-items: center; gap: 3px; padding: 7px 13px;
+      text-decoration: none; color: rgba(255,255,255,0.82); font-size: 14px; font-weight: 500;
+      border-radius: var(--r-md); transition: background var(--t-fast), color var(--t-fast);
+      background: none; border: none; cursor: pointer; font-family: var(--font);
+    }
+    .nav-link:hover { background: rgba(255,255,255,0.10); color: #fff; }
+    .nav-link[aria-current="page"] { color: var(--orange); background: rgba(255,255,255,0.08); }
+    .nav-link svg { width: 12px; height: 12px; opacity: 0.5; transition: transform var(--t-base) var(--ease); }
+    .nav-item:hover .nav-link svg { transform: rotate(180deg); }
+    .dropdown {
+      position: absolute; top: calc(100% + 6px); left: 0; min-width: 160px;
+      background: var(--canvas); border: 1px solid var(--border); border-radius: var(--r-md);
+      box-shadow: var(--shadow-lg); opacity: 0; visibility: hidden;
+      transform: translateY(-6px) scale(0.97);
+      transition: opacity var(--t-base) var(--ease), visibility var(--t-base), transform var(--t-base) var(--ease); z-index: 200;
+    }
+    .nav-item:hover .dropdown { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+    .dropdown a { display: block; padding: 10px 16px; font-size: 13px; color: var(--ink-muted); text-decoration: none; transition: background var(--t-fast); }
+    .dropdown a:hover { background: var(--surf-1); color: var(--indigo); }
+    .header-cta { display: none; align-items: center; gap: 10px; }
+    .header-tel { font-size: 13px; color: rgba(255,255,255,0.70); text-decoration: none; font-weight: 500; }
+    .header-tel:hover { color: #fff; }
+    .header-btn {
+      background: var(--orange); color: #fff; font-size: 13px; font-weight: 700;
+      padding: 8px 18px; border-radius: var(--r-pill); text-decoration: none;
+      transition: background var(--t-fast), transform var(--t-base) var(--ease);
+    }
+    .header-btn:hover { background: var(--orange-deep); transform: translateY(-1px); }
+    .menu-toggle {
+      display: flex; flex-direction: column; gap: 5px;
+      padding: 8px; border: none; background: none; border-radius: var(--r-md); cursor: pointer;
+    }
+    .menu-toggle span { display: block; width: 20px; height: 2px; background: rgba(255,255,255,0.85); border-radius: 2px; transition: transform var(--t-base), opacity var(--t-base); }
+    .mobile-nav {
+      display: block; position: fixed; top: var(--header-h); left: 0; right: 0; bottom: 0;
+      background: var(--canvas); z-index: 999; overflow-y: auto;
+      padding: 24px 20px 48px; transform: translateX(101%);
+      transition: transform 0.28s var(--ease); border-top: 1px solid var(--border);
+    }
+    .mobile-nav.open { transform: translateX(0); }
+    .mobile-nav a {
+      display: block; padding: 14px 0; font-size: 18px; font-weight: 600;
+      color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--border);
+      transition: color var(--t-fast);
+    }
+    .mobile-nav a:hover { color: var(--indigo); }
+    .mobile-nav a[aria-current="page"] { color: var(--indigo); }
+    .mobile-nav .m-tel { color: var(--indigo); font-size: 16px; border-bottom: none; margin-top: 8px; }
+    @media (min-width: 1024px) {
+      .nav { display: flex; } .header-cta { display: flex; } .menu-toggle { display: none; }
+      .header-inner { padding: 0 32px; }
+    }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    @media (min-width: 1024px) { .container { padding: 0 32px; } }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding-top: calc(var(--header-h) + 48px); padding-bottom: 56px;
+      background: linear-gradient(160deg, var(--canvas) 0%, var(--surf-1) 60%, var(--indigo-light) 100%);
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: ''; position: absolute; width: 480px; height: 480px; border-radius: 50%;
+      background: radial-gradient(circle, oklch(55% 0.22 264 / 0.09), transparent 70%);
+      top: -180px; right: -80px; pointer-events: none;
+    }
+    .breadcrumb {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--ink-muted); margin-bottom: 20px; flex-wrap: wrap;
+    }
+    .breadcrumb a { color: var(--ink-muted); text-decoration: none; transition: color var(--t-fast); }
+    .breadcrumb a:hover { color: var(--indigo); }
+    .breadcrumb-sep { opacity: 0.4; }
+    .page-title {
+      font-size: clamp(28px, 5vw, 46px); font-weight: 800;
+      letter-spacing: -0.02em; color: var(--ink); margin-bottom: 12px; line-height: 1.15;
+    }
+    .page-desc { font-size: 16px; color: var(--ink-muted); max-width: 50ch; line-height: 1.75; }
+
+    /* ── MAP ── */
+    .map-section { padding: 56px 0; background: var(--surf-1); }
+    .map-placeholder {
+      border-radius: var(--r-lg); overflow: hidden;
+      background: linear-gradient(145deg, var(--surf-2) 0%, oklch(90% 0.05 264) 100%);
+      height: 360px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 20px;
+      border: 2px dashed var(--border); position: relative;
+    }
+    .map-pin-icon { color: var(--indigo); }
+    .map-pin-icon svg { width: 52px; height: 52px; }
+    .map-addr-text { font-size: 17px; font-weight: 600; color: var(--ink); text-align: center; line-height: 1.65; }
+    .map-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--indigo); color: #fff; text-decoration: none;
+      padding: 12px 26px; border-radius: var(--r-pill); font-size: 14px; font-weight: 700;
+      transition: background var(--t-fast), transform var(--t-base) var(--ease);
+      box-shadow: var(--shadow-btn);
+    }
+    .map-link:hover { background: var(--indigo-deep); transform: translateY(-2px); }
+    .map-link svg { width: 16px; height: 16px; }
+
+    /* ── INFO CARDS ── */
+    .section-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--indigo-light); color: var(--indigo);
+      font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+      padding: 5px 14px; border-radius: var(--r-pill); margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: clamp(22px, 3.5vw, 34px); font-weight: 800;
+      letter-spacing: -0.02em; color: var(--ink); margin-bottom: 8px;
+    }
+    .section-desc { font-size: 16px; color: var(--ink-muted); max-width: 52ch; line-height: 1.75; margin-bottom: 40px; }
+
+    .info-section { padding: 72px 0; }
+    .info-grid {
+      display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 40px;
+    }
+    @media (min-width: 640px) { .info-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .info-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .info-card {
+      background: var(--canvas); border-radius: var(--r-lg);
+      border: 1px solid var(--border); padding: 28px;
+      box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 10px;
+      transition: transform var(--t-base) var(--ease), box-shadow var(--t-base);
+    }
+    .info-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .info-card-icon {
+      width: 44px; height: 44px; border-radius: var(--r-md);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .info-card-icon svg { width: 22px; height: 22px; }
+    .info-card-icon.indigo { background: var(--indigo-light); color: var(--indigo); }
+    .info-card-icon.orange { background: oklch(93% 0.07 55); color: oklch(52% 0.18 50); }
+    .info-card-label { font-size: 11px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--ink-muted); }
+    .info-card-value { font-size: 15px; color: var(--ink); font-weight: 500; line-height: 1.65; }
+    .info-card-value a { color: var(--indigo); text-decoration: none; font-weight: 600; }
+    .info-card-value a:hover { text-decoration: underline; }
+    .info-card-sub { font-size: 13px; color: var(--ink-muted); line-height: 1.6; }
+
+    /* ── HOURS ── */
+    .hours-section { padding: 56px 0; background: var(--surf-1); }
+    .hours-table-wrap { overflow-x: auto; border-radius: var(--r-lg); box-shadow: var(--shadow-md); margin-top: 40px; }
+    .hours-table { width: 100%; border-collapse: collapse; min-width: 480px; }
+    .hours-table thead { background: var(--indigo); color: #fff; }
+    .hours-table thead th { padding: 14px 20px; text-align: left; font-size: 14px; font-weight: 700; }
+    .hours-table tbody tr { border-bottom: 1px solid var(--border); transition: background var(--t-fast); }
+    .hours-table tbody tr:last-child { border-bottom: none; }
+    .hours-table tbody tr:hover { background: oklch(94% 0.010 265); }
+    .hours-table td { padding: 14px 20px; font-size: 15px; color: var(--ink); background: var(--canvas); }
+    .hours-table td:first-child { font-weight: 600; }
+    .hours-badge {
+      display: inline-block; padding: 3px 10px; border-radius: var(--r-pill);
+      font-size: 12px; font-weight: 700;
+    }
+    .hours-badge.open   { background: oklch(90% 0.10 145); color: oklch(32% 0.15 145); }
+    .hours-badge.closed { background: oklch(93% 0.02 30);  color: oklch(42% 0.10 30);  }
+
+    /* ── SNS ── */
+    .sns-section { padding: 72px 0; }
+    .sns-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 36px; }
+    .sns-card {
+      display: flex; align-items: center; gap: 16px;
+      background: var(--canvas); border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 22px 28px;
+      text-decoration: none; color: var(--ink); box-shadow: var(--shadow-sm);
+      flex: 1; min-width: 240px;
+      transition: transform var(--t-base) var(--ease), box-shadow var(--t-base);
+    }
+    .sns-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .sns-icon { width: 48px; height: 48px; border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .sns-icon svg { width: 24px; height: 24px; }
+    .sns-icon.insta { background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af); color: #fff; }
+    .sns-icon.naver { background: #03c75a; color: #fff; }
+    .sns-name   { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+    .sns-handle { font-size: 13px; color: var(--ink-muted); }
+
+    /* ── CTA BAND ── */
+    .cta-band {
+      padding: 80px 0; text-align: center;
+      background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-deep) 100%);
+      position: relative; overflow: hidden;
+    }
+    .cta-band::before {
+      content: ''; position: absolute; width: 420px; height: 420px; border-radius: 50%;
+      background: oklch(99% 0.004 265 / 0.06); top: -160px; right: -80px; pointer-events: none;
+    }
+    .cta-band::after {
+      content: ''; position: absolute; width: 280px; height: 280px; border-radius: 50%;
+      background: oklch(70% 0.20 55 / 0.12); bottom: -100px; left: -60px; pointer-events: none;
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-tag {
+      display: inline-block; background: oklch(70% 0.20 55 / 0.20); color: var(--orange);
+      font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+      padding: 5px 14px; border-radius: var(--r-pill); margin-bottom: 20px;
+    }
+    .cta-title {
+      font-size: clamp(24px, 4vw, 40px); font-weight: 800;
+      letter-spacing: -0.02em; color: #fff; margin-bottom: 14px; line-height: 1.2;
+    }
+    .cta-desc { font-size: 16px; color: rgba(255,255,255,0.75); max-width: 44ch; margin: 0 auto 36px; line-height: 1.75; }
+    .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-white {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #fff; color: var(--indigo); font-size: 15px; font-weight: 700;
+      padding: 14px 28px; border-radius: var(--r-pill); text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+      transition: background var(--t-fast), transform var(--t-base) var(--ease);
+    }
+    .btn-white:hover { background: var(--surf-1); transform: translateY(-2px); }
+    .btn-outline-white {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: #fff; font-size: 15px; font-weight: 700;
+      padding: 13px 28px; border-radius: var(--r-pill); text-decoration: none;
+      border: 2px solid rgba(255,255,255,0.50);
+      transition: border-color var(--t-fast), background var(--t-fast), transform var(--t-base) var(--ease);
+    }
+    .btn-outline-white:hover { border-color: #fff; background: rgba(255,255,255,0.10); transform: translateY(-1px); }
+
+    /* ── FOOTER ── */
+    .footer { background: oklch(14% 0.025 265); color: rgba(255,255,255,0.60); padding: 64px 0 32px; }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 20px 48px;
+      display: grid; grid-template-columns: 1fr; gap: 32px;
+    }
+    @media (min-width: 1024px) { .footer-inner { grid-template-columns: 2fr 1fr 1fr 1fr; padding: 0 32px 48px; gap: 48px; } }
+    .footer-brand p { font-size: 13px; line-height: 1.8; margin-top: 12px; }
+    .footer-col h4 { font-size: 11px; font-weight: 700; color: #fff; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 9px; }
+    .footer-col a { font-size: 14px; color: rgba(255,255,255,0.55); text-decoration: none; transition: color var(--t-fast); }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom {
+      max-width: 1200px; margin: 0 auto; padding: 24px 20px 0;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    @media (min-width: 1024px) { .footer-bottom { flex-direction: row; justify-content: space-between; align-items: center; padding: 24px 32px 0; } }
+    .footer-bottom span { font-size: 12px; color: rgba(255,255,255,0.30); }
+
+    /* ── SCROLL TOP ── */
+    .scroll-top {
+      position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px;
+      border-radius: 50%; background: var(--indigo); color: #fff;
       display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
+      cursor: pointer; border: none; box-shadow: var(--shadow-btn);
+      transition: opacity var(--t-base), visibility var(--t-base), transform var(--t-base) var(--ease);
+      opacity: 0; visibility: hidden; z-index: 500;
     }
-    .transport-label { font-size: 12px; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-    .transport-info { font-size: 15px; color: var(--ink); line-height: 1.65; }
-    .transport-info span { color: var(--ink-muted); font-size: 14px; }
+    .scroll-top.visible { opacity: 1; visibility: visible; }
+    .scroll-top:hover { transform: translateY(-3px) scale(1.1); }
+
+    /* ── ANIM ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .anim { opacity: 0; }
+    .anim.in { animation: fadeUp 0.45s var(--ease) forwards; }
+    .anim:nth-child(2) { animation-delay: 0.06s; }
+    .anim:nth-child(3) { animation-delay: 0.12s; }
+    .anim:nth-child(4) { animation-delay: 0.18s; }
+    .anim:nth-child(5) { animation-delay: 0.24s; }
+    .anim:nth-child(6) { animation-delay: 0.30s; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .anim { opacity: 1; }
+    }
   </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">본문 바로가기</a>
 
-<a href="#main-content" class="skip-link">본문으로 바로가기</a>
-
-<!-- HEADER -->
-<header class="header" id="hdr">
-  <div class="container">
+  <header class="header" id="header">
     <div class="header-inner">
-      <a href="index.html" class="logo">
-        <img src="https://juniorsolomon.com/wp-content/uploads/2022/06/cropped-logo_symbal2_png.png" alt="주니어솔로몬" width="120" height="36">
+      <a href="index.html" class="logo" aria-label="주니어솔로몬 홈으로">
+        <div class="logo-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="white"><path d="M11.25 4.533A9.707 9.707 0 0 0 6 3a9.735 9.735 0 0 0-3.25.555.75.75 0 0 0-.5.707v14.25a.75.75 0 0 0 1 .707A8.237 8.237 0 0 1 6 18.75c1.995 0 3.823.707 5.25 1.886V4.533ZM12.75 20.636A8.214 8.214 0 0 1 18 18.75c.966 0 1.89.166 2.75.47a.75.75 0 0 0 1-.707V4.262a.75.75 0 0 0-.5-.707A9.735 9.735 0 0 0 18 3a9.707 9.707 0 0 0-5.25 1.533v16.103Z"/></svg></div>
+        <div><div class="logo-text">주니어솔로몬</div><div class="logo-sub">Jr. Solomon Academy</div></div>
       </a>
       <nav class="nav" aria-label="주메뉴">
         <div class="nav-item">
-          <a href="index.html#about" class="nav-link" aria-haspopup="true" aria-expanded="false">학원소개
-            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" width="12" height="12"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-          </a>
-          <div class="dropdown" role="menu">
-            <a href="introduction.html" role="menuitem">교사소개</a>
-            <a href="vision.html" role="menuitem">비전</a>
-            <a href="mission.html" role="menuitem">교육방향</a>
-            <a href="contact.html" role="menuitem">오시는길</a>
+          <button class="nav-link" aria-haspopup="true">학원소개 <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"/></svg></button>
+          <div class="dropdown">
+            <a href="vision.html">비전 &amp; 교육철학</a>
+            <a href="mission.html">교육방향</a>
+            <a href="introduction.html">선생님 소개</a>
+            <a href="facility.html">시설 안내</a>
           </div>
         </div>
-        <div class="nav-item">
-          <a href="index.html#curriculum" class="nav-link" aria-haspopup="true" aria-expanded="false">커리큘럼
-            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" width="12" height="12"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-          </a>
-          <div class="dropdown" role="menu">
-            <a href="curriculum.html" role="menuitem">커리큘럼</a>
-            <a href="fee.html" role="menuitem">교습비</a>
-          </div>
-        </div>
-        <div class="nav-item">
-          <a href="edu-1.html" class="nav-link" aria-haspopup="true" aria-expanded="false">입학안내
-            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" width="12" height="12"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-          </a>
-          <div class="dropdown" role="menu">
-            <a href="edu-1.html" role="menuitem">입학절차</a>
-          </div>
-        </div>
-        <a href="facility.html" class="nav-link">시설안내</a>
-        <div class="nav-item">
-          <a href="board-notice.html" class="nav-link" aria-haspopup="true" aria-expanded="false">게시판
-            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" width="12" height="12"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-          </a>
-          <div class="dropdown" role="menu">
-            <a href="board-notice.html" role="menuitem">공지사항</a>
-            <a href="board-gallery.html" role="menuitem">수업 갤러리</a>
-            <a href="board-review.html" role="menuitem">학부모 후기</a>
-            <a href="board-qna.html" role="menuitem">Q&amp;A 문의</a>
-          </div>
-        </div>
+        <a href="curriculum.html" class="nav-link">커리큘럼</a>
+        <a href="introduction.html" class="nav-link">선생님소개</a>
+        <a href="fee.html" class="nav-link">교습비</a>
+        <a href="board-notice.html" class="nav-link">공지사항</a>
+        <a href="contact.html" class="nav-link" aria-current="page">오시는길</a>
       </nav>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" class="btn btn-primary btn-sm" target="_blank" rel="noopener">상담문의</a>
-        <button class="hamburger" id="ham" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mMenu">
-          <span></span><span></span><span></span>
-        </button>
+      <div class="header-cta">
+        <a href="tel:027948123" class="header-tel">☎ 02-794-8123</a>
+        <a href="introduction.html" class="header-btn">입학상담</a>
       </div>
+      <button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-  </div>
-</header>
+  </header>
+  <nav class="mobile-nav" id="mobileNav" aria-label="모바일 메뉴">
+    <a href="index.html">홈</a>
+    <a href="vision.html">학원소개</a>
+    <a href="curriculum.html">커리큘럼</a>
+    <a href="introduction.html">선생님소개</a>
+    <a href="fee.html">교습비</a>
+    <a href="board-notice.html">공지사항</a>
+    <a href="contact.html" aria-current="page">오시는길</a>
+    <a href="tel:027948123" class="m-tel">☎ 02-794-8123</a>
+  </nav>
 
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mMenu" aria-hidden="true">
-  <a href="index.html#about" class="m-nav-link">학원소개</a>
-  <div class="m-sub">
-    <a href="introduction.html" class="m-sub-link">교사소개</a>
-    <a href="vision.html" class="m-sub-link">비전</a>
-    <a href="mission.html" class="m-sub-link">교육방향</a>
-    <a href="contact.html" class="m-sub-link">오시는길</a>
-  </div>
-  <a href="index.html#curriculum" class="m-nav-link">커리큘럼</a>
-  <div class="m-sub">
-    <a href="curriculum.html" class="m-sub-link">커리큘럼</a>
-    <a href="fee.html" class="m-sub-link">교습비</a>
-  </div>
-  <a href="edu-1.html" class="m-nav-link">입학안내</a>
-  <div class="m-sub"><a href="edu-1.html" class="m-sub-link">입학절차</a></div>
-  <a href="facility.html" class="m-nav-link">시설안내</a>
-  <a href="board-notice.html" class="m-nav-link">게시판</a>
-  <div class="m-sub">
-    <a href="board-notice.html" class="m-sub-link">공지사항</a>
-    <a href="board-gallery.html" class="m-sub-link">수업 갤러리</a>
-    <a href="board-review.html" class="m-sub-link">학부모 후기</a>
-    <a href="board-qna.html" class="m-sub-link">Q&amp;A 문의</a>
-  </div>
-  <div style="margin-top:32px;">
-    <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" class="btn btn-primary" style="width:100%;justify-content:center;" target="_blank" rel="noopener">상담문의</a>
-  </div>
-</div>
+  <main id="main-content">
 
-<main id="main-content">
-
-<!-- PAGE HERO -->
-<div class="page-hero">
-  <div class="container">
-    <div class="page-hero-inner">
-      <nav class="breadcrumb" aria-label="경로">
-        <a href="index.html">홈</a>
-        <span class="breadcrumb-sep" aria-hidden="true">›</span>
-        <span>학원소개</span>
-        <span class="breadcrumb-sep" aria-hidden="true">›</span>
-        <span aria-current="page">오시는길</span>
-      </nav>
-      <div class="pill-label">
-        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
-        Location
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="현재 위치">
+          <a href="index.html">홈</a>
+          <span class="breadcrumb-sep" aria-hidden="true">›</span>
+          <span>오시는 길</span>
+        </nav>
+        <h1 class="page-title anim">오시는 길</h1>
+        <p class="page-desc anim">서울시 용산구 이촌로 200 LG프라자 4층 403호<br>이촌역(4호선) 1번 출구에서 도보 5분 거리에 있습니다.</p>
       </div>
-      <h1 class="d2" style="margin-bottom:12px;">오시는길</h1>
-      <p style="font-size:17px;color:var(--ink-muted);max-width:560px;">용산구 이촌동에 위치한 주니어솔로몬 학원을 방문해 주세요.</p>
-    </div>
-  </div>
-</div>
+    </section>
 
-<!-- CONTENT -->
-<section class="page-content">
-  <div class="container">
+    <!-- MAP -->
+    <section class="map-section">
+      <div class="container">
+        <div class="map-placeholder anim">
+          <div class="map-pin-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+              <circle cx="12" cy="9" r="2.5"/>
+            </svg>
+          </div>
+          <p class="map-addr-text">서울시 용산구 이촌로 200<br>LG프라자 4층 403호</p>
+          <a href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%EC%8B%9C+%EC%9A%A9%EC%82%B0%EA%B5%AC+%EC%9D%B4%EC%B4%8C%EB%A1%9C+200+LG%ED%94%84%EB%9D%BC%EC%9E%90"
+             target="_blank" rel="noopener noreferrer" class="map-link">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            네이버 지도로 보기
+          </a>
+        </div>
+      </div>
+    </section>
 
-    <div class="loc-grid">
-      <!-- Contact info -->
-      <div>
-        <div class="pill-label" style="margin-bottom:16px;">
-          <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
-          연락처
-        </div>
-        <h2 class="d3" style="margin-bottom:24px;">주니어솔로몬 학원</h2>
-
-        <div class="contact-row">
-          <div class="c-icon purple" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-          <div>
-            <div class="c-label">주소</div>
-            <div class="c-val">서울특별시 용산구 이촌로 200<br>LG프라자 4층, 403호</div>
-          </div>
-        </div>
-        <div class="contact-row">
-          <div class="c-icon teal" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .82h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.41 8.25a16 16 0 006.59 6.59l1.49-1.49a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.92l.01 1z"/></svg></div>
-          <div>
-            <div class="c-label">전화번호</div>
-            <div class="c-val"><a href="tel:0279448123">02-794-8123</a></div>
-          </div>
-        </div>
-        <div class="contact-row">
-          <div class="c-icon magenta" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-          <div>
-            <div class="c-label">이메일</div>
-            <div class="c-val"><a href="mailto:juniorsolomon@naver.com">juniorsolomon@naver.com</a></div>
-          </div>
-        </div>
-        <div class="contact-row">
-          <div class="c-icon coral" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
-          <div>
-            <div class="c-label">네이버 상담톡</div>
-            <div class="c-val"><a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener">온라인 상담문의 바로가기 →</a></div>
-          </div>
-        </div>
-
-        <div style="margin-top:32px;">
-          <div class="pill-label" style="margin-bottom:16px;">
-            <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></span>
-            교통편 안내
-          </div>
-
-          <div class="transport-item">
-            <div class="transport-icon" style="background:oklch(74% 0.15 195 / 0.15);color:oklch(55% 0.15 195);">🚇</div>
-            <div>
-              <div class="transport-label">지하철</div>
-              <div class="transport-info">
-                1호선 <strong>이촌역</strong> 1번 출구 도보 약 5분<br>
-                <span>중앙선 이촌역 이용 가능</span>
-              </div>
+    <!-- CONTACT INFO CARDS -->
+    <section class="info-section">
+      <div class="container">
+        <div class="section-eyebrow anim">연락처 &amp; 교통 안내</div>
+        <h2 class="section-title anim">주요 연락처 및 찾아오시는 방법</h2>
+        <p class="section-desc anim">궁금한 점은 언제든지 전화 또는 이메일로 문의해 주세요. 방문 전 사전 상담을 권장합니다.</p>
+        <div class="info-grid">
+          <div class="info-card anim">
+            <div class="info-card-icon indigo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+              </svg>
             </div>
+            <div class="info-card-label">주소</div>
+            <div class="info-card-value">서울시 용산구 이촌로 200<br>LG프라자 4층 403호</div>
+            <div class="info-card-sub">우편번호 04377</div>
           </div>
-          <div class="transport-item">
-            <div class="transport-icon" style="background:oklch(68% 0.20 354 / 0.12);color:oklch(52% 0.20 354);">🚌</div>
-            <div>
-              <div class="transport-label">버스</div>
-              <div class="transport-info">
-                이촌역 정류장 하차 후 도보<br>
-                <span>간선: 400, 501, 502, 504 / 지선: 6211</span>
-              </div>
+          <div class="info-card anim">
+            <div class="info-card-icon indigo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.42 9.79 19.79 19.79 0 01.35 1.15 2 2 0 012.53 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.5A16 16 0 0015.5 17.09l.87-.87a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+              </svg>
             </div>
-          </div>
-          <div class="transport-item">
-            <div class="transport-icon" style="background:oklch(66% 0.20 28 / 0.12);color:oklch(52% 0.20 28);">🚗</div>
-            <div>
-              <div class="transport-label">자가용</div>
-              <div class="transport-info">
-                LG프라자 건물 내 주차 가능<br>
-                <span>주차 요금 발생 / 상담 시 주차 확인증 발급 가능</span>
-              </div>
+            <div class="info-card-label">전화</div>
+            <div class="info-card-value">
+              <a href="tel:027948123">02-794-8123</a> (대표)<br>
+              <a href="tel:01032128123">010-3212-8123</a> (상담)
             </div>
+            <div class="info-card-sub">운영 시간 내 통화 가능</div>
           </div>
-
-        </div>
-
-        <div style="margin-top:28px;">
-          <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" class="btn btn-primary" target="_blank" rel="noopener">지금 상담문의하기</a>
+          <div class="info-card anim">
+            <div class="info-card-icon orange">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div class="info-card-label">이메일</div>
+            <div class="info-card-value"><a href="mailto:juniorsolomon@naver.com">juniorsolomon@naver.com</a></div>
+            <div class="info-card-sub">이메일로 입학 문의 가능합니다</div>
+          </div>
+          <div class="info-card anim">
+            <div class="info-card-icon indigo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="1" y="6" width="22" height="13" rx="2" ry="2"/>
+                <polyline points="5,6 12,13 19,6"/>
+              </svg>
+            </div>
+            <div class="info-card-label">교통</div>
+            <div class="info-card-value">이촌역 (4호선·경의중앙선)<br>1번 출구 도보 5분</div>
+            <div class="info-card-sub">버스: 용산구청 방면 이촌동 하차</div>
+          </div>
+          <div class="info-card anim">
+            <div class="info-card-icon orange">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <path d="M9 17V7h4a3 3 0 0 1 0 6H9"/>
+              </svg>
+            </div>
+            <div class="info-card-label">주차</div>
+            <div class="info-card-value">LG프라자 건물 내 주차장</div>
+            <div class="info-card-sub">수업 방문 시 1시간 무료 (원무실 확인 후 스티커 수령)</div>
+          </div>
+          <div class="info-card anim">
+            <div class="info-card-icon indigo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+            </div>
+            <div class="info-card-label">등록 정보</div>
+            <div class="info-card-value">중부지원교육청 제3336호</div>
+            <div class="info-card-sub">2022 한국브랜드소비자평가 대상 수상 학원</div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <!-- Map -->
-      <div class="map-wrap">
-        <iframe src="https://maps.google.com/maps?q=주니어솔로몬&t=m&z=16&output=embed&iwloc=near" title="주니어솔로몬 위치" allowfullscreen loading="lazy"></iframe>
+    <!-- OPERATING HOURS -->
+    <section class="hours-section">
+      <div class="container">
+        <div class="section-eyebrow anim">운영 시간</div>
+        <h2 class="section-title anim">운영 시간 안내</h2>
+        <p class="section-desc anim">방문 전 반드시 전화 또는 이메일로 사전 상담을 예약해 주시기 바랍니다. 방학 기간 운영 시간은 별도 공지됩니다.</p>
+        <div class="hours-table-wrap anim">
+          <table class="hours-table">
+            <thead>
+              <tr>
+                <th>요일</th>
+                <th>운영 시간</th>
+                <th>상태</th>
+                <th>비고</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>월요일 – 금요일</td>
+                <td>14:00 – 21:00</td>
+                <td><span class="hours-badge open">운영</span></td>
+                <td>수업 및 상담 가능</td>
+              </tr>
+              <tr>
+                <td>토요일</td>
+                <td>10:00 – 18:00</td>
+                <td><span class="hours-badge open">운영</span></td>
+                <td>오전 수업 및 상담 가능</td>
+              </tr>
+              <tr>
+                <td>일요일</td>
+                <td>–</td>
+                <td><span class="hours-badge closed">휴원</span></td>
+                <td>–</td>
+              </tr>
+              <tr>
+                <td>공휴일</td>
+                <td>–</td>
+                <td><span class="hours-badge closed">휴원</span></td>
+                <td>방학 특강 기간은 별도 안내</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
+    </section>
+
+    <!-- SNS -->
+    <section class="sns-section">
+      <div class="container">
+        <div class="section-eyebrow anim">SNS 채널</div>
+        <h2 class="section-title anim">소셜 미디어로 소식 받기</h2>
+        <p class="section-desc anim">인스타그램과 네이버 블로그에서 수업 현장, 공지사항, 이벤트 소식을 실시간으로 확인하세요.</p>
+        <div class="sns-grid">
+          <a href="https://www.instagram.com/juniorsolomon" target="_blank" rel="noopener noreferrer" class="sns-card anim">
+            <div class="sns-icon insta">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </div>
+            <div>
+              <div class="sns-name">Instagram</div>
+              <div class="sns-handle">@juniorsolomon</div>
+            </div>
+          </a>
+          <a href="https://blog.naver.com/juniorsolomon" target="_blank" rel="noopener noreferrer" class="sns-card anim">
+            <div class="sns-icon naver">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
+            </div>
+            <div>
+              <div class="sns-name">Naver Blog</div>
+              <div class="sns-handle">blog.naver.com/juniorsolomon</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-band">
+      <div class="container">
+        <div class="cta-inner">
+          <div class="cta-tag anim">입학 상담</div>
+          <h2 class="cta-title anim">지금 바로 상담 문의하세요</h2>
+          <p class="cta-desc anim">질문 하나가 아이의 생각을 바꿉니다. 주니어솔로몬에서 철학적 사고와 독서·글쓰기의 힘을 경험해 보세요.</p>
+          <div class="cta-btns">
+            <a href="tel:027948123" class="btn-white anim">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path fill-rule="evenodd" d="M2 3.5A1.5 1.5 0 013.5 2h1.148a1.5 1.5 0 011.465 1.175l.716 3.223a1.5 1.5 0 01-1.052 1.767l-.933.267c-.41.117-.643.555-.48.95a11.542 11.542 0 006.254 6.254c.395.163.833-.07.95-.48l.267-.933a1.5 1.5 0 011.767-1.052l3.223.716A1.5 1.5 0 0118 15.352V16.5a1.5 1.5 0 01-1.5 1.5H15c-1.149 0-2.263-.15-3.326-.43A13.022 13.022 0 012.43 8.326 13.019 13.019 0 012 5V3.5z" clip-rule="evenodd"/></svg>
+              02-794-8123
+            </a>
+            <a href="introduction.html" class="btn-outline-white anim">입학 상담 신청</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo" style="margin-bottom:12px;">
+          <div class="logo-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="white"><path d="M11.25 4.533A9.707 9.707 0 0 0 6 3a9.735 9.735 0 0 0-3.25.555.75.75 0 0 0-.5.707v14.25a.75.75 0 0 0 1 .707A8.237 8.237 0 0 1 6 18.75c1.995 0 3.823.707 5.25 1.886V4.533ZM12.75 20.636A8.214 8.214 0 0 1 18 18.75c.966 0 1.89.166 2.75.47a.75.75 0 0 0 1-.707V4.262a.75.75 0 0 0-.5-.707A9.735 9.735 0 0 0 18 3a9.707 9.707 0 0 0-5.25 1.533v16.103Z"/></svg></div>
+          <div><div class="logo-text">주니어솔로몬</div><div class="logo-sub">Jr. Solomon Academy</div></div>
+        </div>
+        <p>서울시 용산구 이촌로 200 LG프라자 4층 403호<br>대표전화: 02-794-8123 | 상담: 010-3212-8123<br>이메일: juniorsolomon@naver.com<br>중부지원교육청 제3336호</p>
+      </div>
+      <div class="footer-col"><h4>학원소개</h4><ul><li><a href="vision.html">비전 &amp; 교육철학</a></li><li><a href="mission.html">교육방향</a></li><li><a href="introduction.html">선생님 소개</a></li><li><a href="facility.html">시설안내</a></li></ul></div>
+      <div class="footer-col"><h4>프로그램</h4><ul><li><a href="curriculum.html">커리큘럼</a></li><li><a href="edu-1.html">소포스에듀</a></li><li><a href="fee.html">교습비 안내</a></li></ul></div>
+      <div class="footer-col"><h4>커뮤니티</h4><ul><li><a href="board-notice.html">공지사항</a></li><li><a href="board-gallery.html">갤러리</a></li><li><a href="board-qna.html">Q&amp;A</a></li><li><a href="board-review.html">수강후기</a></li></ul></div>
     </div>
+    <div class="footer-bottom"><span>© 2024 주니어솔로몬. All rights reserved.</span><span>2022 한국브랜드소비자평가 대상</span></div>
+  </footer>
 
-    <!-- Additional info -->
-    <div class="content-prose" style="margin-top:64px;">
-      <h2>운영 시간</h2>
-      <p>수업 시간은 아이의 학교 스케줄에 맞게 조율됩니다. 평일 방과 후 및 주말 수업이 가능하며, 정확한 수업 시간은 상담 후 배정됩니다. 방문 상담은 사전 예약 후 가능합니다.</p>
-      <h2>방문 전 연락 주세요</h2>
-      <p>원활한 상담을 위해 사전에 전화(<a href="tel:0279448123" style="color:var(--purple);">02-794-8123</a>) 또는 네이버 상담톡으로 방문 예약을 해주시면 감사하겠습니다. 예약 없이 방문하시면 대기 시간이 발생할 수 있습니다.</p>
-    </div>
+  <button class="scroll-top" id="scrollTop" aria-label="맨 위로">
+    <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04L10.75 5.612V16.25A.75.75 0 0 1 10 17Z"/></svg>
+  </button>
 
-  </div>
-</section>
-
-</main>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-top">
-      <div>
-        <img src="https://juniorsolomon.com/wp-content/uploads/2022/06/cropped-logo_symbal2_png.png" alt="주니어솔로몬" width="120" height="30" style="filter:brightness(0) invert(1);opacity:0.5;margin-bottom:14px;">
-        <div class="f-brand-name" translate="no">주니어솔로몬 학원</div>
-        <p class="f-brand-desc">지혜가 샘솟는 독서철학논술. 하브루타 교육으로 아이의 사고력을 키웁니다.</p>
-        <ul class="f-info">
-          <li><span class="lbl">등록번호</span>중부교육지원청 제3336호</li>
-          <li><span class="lbl">사업자</span>511-96-33718</li>
-          <li><span class="lbl">대표</span>장화연</li>
-        </ul>
-      </div>
-      <div class="footer-cols">
-        <div>
-          <div class="f-nav-title">학원소개</div>
-          <ul class="f-nav">
-            <li><a href="introduction.html">교사소개</a></li>
-            <li><a href="vision.html">비전</a></li>
-            <li><a href="mission.html">교육방향</a></li>
-            <li><a href="contact.html">오시는길</a></li>
-          </ul>
-        </div>
-        <div>
-          <div class="f-nav-title">프로그램</div>
-          <ul class="f-nav">
-            <li><a href="curriculum.html">커리큘럼</a></li>
-            <li><a href="fee.html">교습비</a></li>
-            <li><a href="edu-1.html">입학절차</a></li>
-            <li><a href="facility.html">시설안내</a></li>
-          </ul>
-        </div>
-        <div>
-          <div class="f-nav-title">연락처</div>
-          <ul class="f-nav">
-            <li><a href="tel:0279448123">02-794-8123</a></li>
-            <li><a href="mailto:juniorsolomon@naver.com">juniorsolomon@naver.com</a></li>
-            <li><a href="board-notice.html">공지사항</a></li>
-            <li><a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener">상담문의</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p class="f-copy">COPYRIGHT &copy; 2017 주니어솔로몬. ALL RIGHTS RESERVED.</p>
-      <div style="display:flex;gap:8px;">
-        <span style="background:oklch(43% 0.22 293 / 0.2);color:oklch(99% 0.005 293 / 0.5);padding:4px 12px;border-radius:var(--r-pill);font-size:11px;">서울시 용산구</span>
-        <span style="background:oklch(43% 0.22 293 / 0.2);color:oklch(99% 0.005 293 / 0.5);padding:4px 12px;border-radius:var(--r-pill);font-size:11px;">2022 브랜드 대상</span>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<button class="scroll-top" id="stBtn" aria-label="맨 위로 스크롤">
-  <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
-</button>
-
-<script>
-window.addEventListener('scroll', () => { document.getElementById('hdr').classList.toggle('scrolled', scrollY > 20); }, { passive: true });
-const ham = document.getElementById('ham');
-const mMenu = document.getElementById('mMenu');
-ham.addEventListener('click', () => {
-  const isOpen = mMenu.classList.toggle('open');
-  ham.classList.toggle('open', isOpen);
-  ham.setAttribute('aria-expanded', String(isOpen));
-  ham.setAttribute('aria-label', isOpen ? '메뉴 닫기' : '메뉴 열기');
-  mMenu.setAttribute('aria-hidden', String(!isOpen));
-  document.body.style.overflow = isOpen ? 'hidden' : '';
-});
-mMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  ham.classList.remove('open'); mMenu.classList.remove('open');
-  ham.setAttribute('aria-expanded', 'false'); ham.setAttribute('aria-label', '메뉴 열기');
-  mMenu.setAttribute('aria-hidden', 'true'); document.body.style.overflow = '';
-}));
-document.querySelectorAll('.nav-item').forEach(item => {
-  const trigger = item.querySelector('.nav-link');
-  const dropdown = item.querySelector('.dropdown');
-  if (!dropdown) return;
-  trigger.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
-      e.preventDefault(); item.classList.add('open'); trigger.setAttribute('aria-expanded', 'true');
-      const first = dropdown.querySelector('a'); if (first) first.focus();
-    }
-  });
-  item.addEventListener('keydown', e => { if (e.key === 'Escape') { item.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); trigger.focus(); } });
-  item.addEventListener('focusout', e => { if (!item.contains(e.relatedTarget)) { item.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); } });
-});
-const stBtn = document.getElementById('stBtn');
-window.addEventListener('scroll', () => stBtn.classList.toggle('show', scrollY > 400), { passive: true });
-stBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-</script>
+  <script>
+  (function(){
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', function(){ header.classList.toggle('scrolled', window.scrollY > 40); }, {passive:true});
+    document.getElementById('scrollTop').addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+    window.addEventListener('scroll', function(){ document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 400); }, {passive:true});
+    const toggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    toggle.addEventListener('click', function(){
+      const isOpen = mobileNav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    mobileNav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileNav.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }); });
+    const io = new IntersectionObserver(function(entries){ entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {threshold:0.1, rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.anim').forEach(function(el){ io.observe(el); });
+  })();
+  </script>
 </body>
 </html>
