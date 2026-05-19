@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#6B28A6">
+  <title>비전 | 주니어솔로몬</title>
+  <meta name="description" content="주니어솔로몬의 교육 비전. 아이들이 스스로 생각하고 세상에 기여하는 인재로 성장하도록 돕겠습니다.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .vision-banner {
+      background: linear-gradient(135deg, var(--purple) 0%, oklch(53% 0.22 293) 100%);
+      border-radius: var(--r-lg); padding: 48px 40px;
+      text-align: center; color: var(--canvas);
+      margin: 40px 0;
+    }
+    .vision-banner h2 { font-size: clamp(22px, 3vw, 34px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; color: var(--canvas); }
+    .vision-banner p { font-size: 17px; opacity: 0.85; line-height: 1.7; max-width: 520px; margin: 0 auto; }
+    .vision-grid {
+      display: grid; grid-template-columns: 1fr;
+      gap: 16px; margin-top: 40px;
+    }
+    @media (min-width: 640px) { .vision-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .vision-grid { grid-template-columns: repeat(3, 1fr); } }
+    .vision-card {
+      background: var(--surf-1); border-radius: var(--r-lg);
+      padding: 28px; border: 1px solid var(--border);
+      transition: transform var(--t-base) var(--ease);
+    }
+    .vision-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-raised); }
+    .vision-icon {
+      width: 48px; height: 48px; border-radius: var(--r-md);
+      background: var(--surf-2); display: flex; align-items: center;
+      justify-content: center; color: var(--purple); margin-bottom: 16px;
+    }
+    .vision-icon svg { width: 22px; height: 22px; }
+    .vision-card h3 { font-size: 17px; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+    .vision-card p { font-size: 14px; color: var(--ink-muted); line-height: 1.75; }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">본문으로 바로가기</a>
+
+<!-- HEADER -->
+<header class="header" id="hdr">
+  <div class="container">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="https://juniorsolomon.com/wp-content/uploads/2022/06/cropped-logo_symbal2_png.png" alt="주니어솔로몬" width="120" height="36">
+      </a>
+      <nav class="nav" aria-label="주메뉴">
+        <div class="nav-item">
+          <a href="index.html#about" class="nav-link" aria-haspopup="true" aria-expanded="false">학원소개
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" width="12" height="12"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </a>
+          <div class="dropdown" role="menu">
+            <a href="introduction.html" role="menuitem">교사소개</a>
+            <a href="vision.html" role="menuitem">비전</a>
+            <a href="mission.html" role="menuitem">교육방향</a>
+            <a href="contact.html" role="menuitem">오시는길</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="index.html#curriculum" class="nav-link" aria-haspopup="true" aria-expanded="false">커리큘럼
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" width="12" height="12"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </a>
+          <div class="dropdown" role="menu">
+            <a href="curriculum.html" role="menuitem">커리큘럼</a>
+            <a href="fee.html" role="menuitem">교습비</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="edu-1.html" class="nav-link" aria-haspopup="true" aria-expanded="false">입학안내
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" width="12" height="12"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </a>
+          <div class="dropdown" role="menu">
+            <a href="edu-1.html" role="menuitem">입학절차</a>
+          </div>
+        </div>
+        <a href="facility.html" class="nav-link">시설안내</a>
+        <div class="nav-item">
+          <a href="board-notice.html" class="nav-link" aria-haspopup="true" aria-expanded="false">게시판
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" width="12" height="12"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </a>
+          <div class="dropdown" role="menu">
+            <a href="board-notice.html" role="menuitem">공지사항</a>
+            <a href="board-gallery.html" role="menuitem">수업 갤러리</a>
+            <a href="board-review.html" role="menuitem">학부모 후기</a>
+            <a href="board-qna.html" role="menuitem">Q&amp;A 문의</a>
+          </div>
+        </div>
+      </nav>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" class="btn btn-primary btn-sm" target="_blank" rel="noopener">상담문의</a>
+        <button class="hamburger" id="ham" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mMenu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mMenu" aria-hidden="true">
+  <a href="index.html#about" class="m-nav-link">학원소개</a>
+  <div class="m-sub">
+    <a href="introduction.html" class="m-sub-link">교사소개</a>
+    <a href="vision.html" class="m-sub-link">비전</a>
+    <a href="mission.html" class="m-sub-link">교육방향</a>
+    <a href="contact.html" class="m-sub-link">오시는길</a>
+  </div>
+  <a href="index.html#curriculum" class="m-nav-link">커리큘럼</a>
+  <div class="m-sub">
+    <a href="curriculum.html" class="m-sub-link">커리큘럼</a>
+    <a href="fee.html" class="m-sub-link">교습비</a>
+  </div>
+  <a href="edu-1.html" class="m-nav-link">입학안내</a>
+  <div class="m-sub"><a href="edu-1.html" class="m-sub-link">입학절차</a></div>
+  <a href="facility.html" class="m-nav-link">시설안내</a>
+  <a href="board-notice.html" class="m-nav-link">게시판</a>
+  <div class="m-sub">
+    <a href="board-notice.html" class="m-sub-link">공지사항</a>
+    <a href="board-gallery.html" class="m-sub-link">수업 갤러리</a>
+    <a href="board-review.html" class="m-sub-link">학부모 후기</a>
+    <a href="board-qna.html" class="m-sub-link">Q&amp;A 문의</a>
+  </div>
+  <div style="margin-top:32px;">
+    <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" class="btn btn-primary" style="width:100%;justify-content:center;" target="_blank" rel="noopener">상담문의</a>
+  </div>
+</div>
+
+<main id="main-content">
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container">
+    <div class="page-hero-inner">
+      <nav class="breadcrumb" aria-label="경로">
+        <a href="index.html">홈</a>
+        <span class="breadcrumb-sep" aria-hidden="true">›</span>
+        <span>학원소개</span>
+        <span class="breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">비전</span>
+      </nav>
+      <div class="pill-label">
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></span>
+        Vision
+      </div>
+      <h1 class="d2" style="margin-bottom:12px;">비전</h1>
+      <p style="font-size:17px;color:var(--ink-muted);max-width:560px;">주니어솔로몬은 아이들이 솔로몬의 지혜처럼 세상을 깊이 이해하고, 자신의 생각으로 세상에 기여하는 인재로 성장하도록 돕겠습니다.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<section class="page-content">
+  <div class="container">
+
+    <div class="vision-banner anim">
+      <h2>우리의 비전 선언문</h2>
+      <p>모든 아이는 솔로몬의 지혜를 품을 수 있습니다.<br>주니어솔로몬은 그 씨앗을 발견하고, 키우고, 꽃피우는 곳입니다.</p>
+    </div>
+
+    <div class="content-prose">
+      <h2>주니어솔로몬이 꿈꾸는 미래</h2>
+      <p>우리는 단순히 시험 점수를 높이는 학원이 아닙니다. 아이들이 평생 배움을 사랑하고, 어떤 문제든 스스로 생각하여 해결할 수 있는 사람으로 성장하도록 돕는 교육 공동체입니다.</p>
+      <p>2017년 설립 이후, 저희는 단 하나의 질문에서 출발했습니다. "어떻게 하면 아이들이 배움을 즐기게 할 수 있을까?" 그 답이 바로 주니어솔로몬의 하브루타 독서철학논술 교육입니다.</p>
+    </div>
+
+    <div class="vision-grid">
+      <div class="vision-card anim">
+        <div class="vision-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        </div>
+        <h3>평생 독서인</h3>
+        <p>책을 가까이 하는 습관을 어릴 때부터 길러, 평생 스스로 배우고 성장하는 독서인이 되도록 합니다.</p>
+      </div>
+      <div class="vision-card anim">
+        <div class="vision-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <h3>논리적 표현자</h3>
+        <p>자신의 생각을 명확하고 논리적으로 글과 말로 표현하는 능력을 갖춰, 어떤 상황에서도 자신의 의견을 효과적으로 전달합니다.</p>
+      </div>
+      <div class="vision-card anim">
+        <div class="vision-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </div>
+        <h3>공감 능력자</h3>
+        <p>다양한 책과 토론을 통해 타인의 입장을 이해하고 공감하는 능력을 키워, 협력적이고 따뜻한 사회 구성원이 됩니다.</p>
+      </div>
+      <div class="vision-card anim">
+        <div class="vision-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <h3>탐구하는 질문자</h3>
+        <p>"왜?"라고 묻는 것을 두려워하지 않고, 끊임없이 탐구하며 세상의 진리를 찾아가는 지적 호기심을 품습니다.</p>
+      </div>
+      <div class="vision-card anim">
+        <div class="vision-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v1m0 16v1M4.22 4.22l.7.7m12.72 12.72l.7.7M3 12h1m16 0h1"/><circle cx="12" cy="12" r="4"/></svg>
+        </div>
+        <h3>창의적 사고자</h3>
+        <p>정해진 답을 찾는 것에서 벗어나, 다양한 관점에서 문제를 바라보고 새로운 해법을 찾아내는 창의성을 기릅니다.</p>
+      </div>
+      <div class="vision-card anim">
+        <div class="vision-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+        </div>
+        <h3>사회에 기여하는 인재</h3>
+        <p>개인의 성장을 넘어, 자신의 능력으로 가정과 사회, 나아가 세상에 선한 영향을 미치는 사람으로 성장합니다.</p>
+      </div>
+    </div>
+
+    <div class="content-prose" style="margin-top:48px;">
+      <h2>2017년부터 지금까지</h2>
+      <p>주니어솔로몬은 2017년 서울 용산구 이촌동에서 처음 문을 열었습니다. 처음 몇 명의 아이들로 시작한 작은 학원이, 이제는 수많은 가정의 교육 파트너가 되었습니다.</p>
+      <p>2022년에는 한국브랜드소비자평가 논술교육 부문 대상을 수상하였고, 중앙일보에 교육 특집 기사로 소개되는 영예를 얻었습니다. 이 모든 것은 아이들의 성장을 믿고 맡겨주신 학부모님들, 그리고 매 수업마다 최선을 다해주신 선생님들 덕분입니다.</p>
+      <p>앞으로도 주니어솔로몬은 변하지 않는 교육 철학으로, 더 많은 아이들의 내면에서 지혜의 씨앗이 자랄 수 있도록 최선을 다하겠습니다.</p>
+    </div>
+
+    <div style="margin-top:40px;display:flex;gap:12px;flex-wrap:wrap;">
+      <a href="mission.html" class="btn btn-outline">교육방향 보기 →</a>
+      <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" class="btn btn-primary" target="_blank" rel="noopener">상담문의 바로가기</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <img src="https://juniorsolomon.com/wp-content/uploads/2022/06/cropped-logo_symbal2_png.png" alt="주니어솔로몬" width="120" height="30" style="filter:brightness(0) invert(1);opacity:0.5;margin-bottom:14px;">
+        <div class="f-brand-name" translate="no">주니어솔로몬 학원</div>
+        <p class="f-brand-desc">지혜가 샘솟는 독서철학논술. 하브루타 교육으로 아이의 사고력을 키웁니다.</p>
+        <ul class="f-info">
+          <li><span class="lbl">등록번호</span>중부교육지원청 제3336호</li>
+          <li><span class="lbl">사업자</span>511-96-33718</li>
+          <li><span class="lbl">대표</span>장화연</li>
+        </ul>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <div class="f-nav-title">학원소개</div>
+          <ul class="f-nav">
+            <li><a href="introduction.html">교사소개</a></li>
+            <li><a href="vision.html">비전</a></li>
+            <li><a href="mission.html">교육방향</a></li>
+            <li><a href="contact.html">오시는길</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="f-nav-title">프로그램</div>
+          <ul class="f-nav">
+            <li><a href="curriculum.html">커리큘럼</a></li>
+            <li><a href="fee.html">교습비</a></li>
+            <li><a href="edu-1.html">입학절차</a></li>
+            <li><a href="facility.html">시설안내</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="f-nav-title">연락처</div>
+          <ul class="f-nav">
+            <li><a href="tel:0279448123">02-794-8123</a></li>
+            <li><a href="mailto:juniorsolomon@naver.com">juniorsolomon@naver.com</a></li>
+            <li><a href="board-notice.html">공지사항</a></li>
+            <li><a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener">상담문의</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="f-copy">COPYRIGHT &copy; 2017 주니어솔로몬. ALL RIGHTS RESERVED.</p>
+      <div style="display:flex;gap:8px;">
+        <span style="background:oklch(43% 0.22 293 / 0.2);color:oklch(99% 0.005 293 / 0.5);padding:4px 12px;border-radius:var(--r-pill);font-size:11px;">서울시 용산구</span>
+        <span style="background:oklch(43% 0.22 293 / 0.2);color:oklch(99% 0.005 293 / 0.5);padding:4px 12px;border-radius:var(--r-pill);font-size:11px;">2022 브랜드 대상</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button class="scroll-top" id="stBtn" aria-label="맨 위로 스크롤">
+  <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+</button>
+
+<script>
+window.addEventListener('scroll', () => { document.getElementById('hdr').classList.toggle('scrolled', scrollY > 20); }, { passive: true });
+const ham = document.getElementById('ham');
+const mMenu = document.getElementById('mMenu');
+ham.addEventListener('click', () => {
+  const isOpen = mMenu.classList.toggle('open');
+  ham.classList.toggle('open', isOpen);
+  ham.setAttribute('aria-expanded', String(isOpen));
+  ham.setAttribute('aria-label', isOpen ? '메뉴 닫기' : '메뉴 열기');
+  mMenu.setAttribute('aria-hidden', String(!isOpen));
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+mMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  ham.classList.remove('open'); mMenu.classList.remove('open');
+  ham.setAttribute('aria-expanded', 'false'); ham.setAttribute('aria-label', '메뉴 열기');
+  mMenu.setAttribute('aria-hidden', 'true'); document.body.style.overflow = '';
+}));
+document.querySelectorAll('.nav-item').forEach(item => {
+  const trigger = item.querySelector('.nav-link');
+  const dropdown = item.querySelector('.dropdown');
+  if (!dropdown) return;
+  trigger.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+      e.preventDefault(); item.classList.add('open'); trigger.setAttribute('aria-expanded', 'true');
+      const first = dropdown.querySelector('a'); if (first) first.focus();
+    }
+  });
+  item.addEventListener('keydown', e => { if (e.key === 'Escape') { item.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); trigger.focus(); } });
+  item.addEventListener('focusout', e => { if (!item.contains(e.relatedTarget)) { item.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); } });
+});
+const stBtn = document.getElementById('stBtn');
+window.addEventListener('scroll', () => stBtn.classList.toggle('show', scrollY > 400), { passive: true });
+stBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+const io = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.anim').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
