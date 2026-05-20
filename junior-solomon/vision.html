@@ -3,11 +3,431 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0d1b3e">
+  <meta name="theme-color" content="#3d1f6e">
   <title>비전 &amp; 교육철학 | 주니어솔로몬</title>
   <meta name="description" content="주니어솔로몬의 교육 비전과 철학. 하브루타 교육으로 모든 아이 안에 잠든 지혜를 깨웁니다. 서울 용산구 이촌동.">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Vision Page Specific ── */
+
+    /* Big vision statement banner */
+    .vision-statement {
+      background: var(--purple-deep);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+    .vision-statement blockquote {
+      font-size: clamp(1.5rem, 4vw, 2.6rem);
+      font-weight: 700;
+      color: var(--yellow);
+      line-height: 1.35;
+      max-width: 820px;
+      margin: 0 auto 1.5rem;
+      position: relative;
+    }
+    .vision-statement blockquote::before,
+    .vision-statement blockquote::after {
+      content: '"';
+      font-size: 5rem;
+      color: var(--yellow-deep);
+      opacity: 0.35;
+      line-height: 0;
+      vertical-align: -0.6em;
+      font-family: Georgia, serif;
+    }
+    .vision-statement blockquote::before { margin-right: 0.2em; }
+    .vision-statement blockquote::after  { margin-left:  0.2em; }
+    .vision-statement cite {
+      display: block;
+      color: oklch(75% 0.06 292);
+      font-style: normal;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+    }
+
+    /* Founding story */
+    .founding-story {
+      padding: 5rem 2rem;
+    }
+    .founding-story .container {
+      max-width: 820px;
+    }
+    .founding-story h2 {
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--purple-deep);
+      margin: 2.5rem 0 0.8rem;
+    }
+    .founding-story h2:first-child { margin-top: 0; }
+    .founding-story p {
+      color: var(--text-2);
+      line-height: 1.8;
+      margin-bottom: 1.1rem;
+    }
+    .founding-story ul {
+      margin: 0.5rem 0 1.1rem 0;
+      padding: 0;
+      list-style: none;
+    }
+    .founding-story ul li {
+      padding: 0.5rem 0 0.5rem 1.6rem;
+      position: relative;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+    .founding-story ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 1.05rem;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--purple);
+    }
+
+    /* 6대 인재상 */
+    .vision-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    @media (min-width: 640px) {
+      .vision-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (min-width: 1024px) {
+      .vision-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .vision-card {
+      background: var(--surf-0);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem 1.75rem;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .vision-card:hover {
+      box-shadow: 0 8px 28px oklch(68% 0.11 292 / 0.12);
+      transform: translateY(-3px);
+    }
+    .vision-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      background: var(--purple-light);
+      color: var(--purple-deep);
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .vision-card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--purple-deep);
+      margin-bottom: 0.6rem;
+    }
+    .vision-card-desc {
+      font-size: 0.9rem;
+      color: var(--text-2);
+      line-height: 1.75;
+    }
+    .vision-card-keyword {
+      display: inline-block;
+      margin-top: 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--purple);
+      background: var(--purple-xlight);
+      border-radius: 100px;
+      padding: 0.2rem 0.75rem;
+    }
+
+    /* 3대 교육 원칙 */
+    .principle-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      margin-top: 2.5rem;
+    }
+    .principle-item {
+      display: grid;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    @media (min-width: 768px) {
+      .principle-item {
+        grid-template-columns: 80px 1fr;
+      }
+    }
+    .principle-num-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      background: var(--yellow);
+      flex-shrink: 0;
+    }
+    .principle-num-box span {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--purple-deep);
+      line-height: 1;
+    }
+    .principle-body {}
+    .principle-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--purple-deep);
+      margin-bottom: 0.5rem;
+    }
+    .principle-sub {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--purple);
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .principle-desc {
+      color: var(--text-2);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+    .principle-divider {
+      border: none;
+      border-top: 1.5px solid var(--border);
+    }
+
+    /* 4단계 프로세스 */
+    .process-section {
+      background: var(--purple-deep);
+      padding: 5rem 2rem;
+    }
+    .process-section .sec-label { color: var(--yellow); }
+    .process-section .sec-title { color: oklch(96% 0.03 292); }
+    .process-section .sec-sub   { color: oklch(75% 0.06 292); }
+    .process-flow {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    @media (min-width: 768px) {
+      .process-flow {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+      }
+    }
+    .process-step {
+      position: relative;
+      background: oklch(26% 0.09 288);
+      border: 1.5px solid oklch(42% 0.1 288);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    @media (min-width: 768px) {
+      .process-step {
+        border-radius: 0;
+        border-right-width: 0;
+      }
+      .process-step:first-child { border-radius: 16px 0 0 16px; }
+      .process-step:last-child  { border-radius: 0 16px 16px 0; border-right-width: 1.5px; }
+      .process-step:not(:last-child)::after {
+        content: '›';
+        position: absolute;
+        right: -0.85rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.8rem;
+        color: var(--yellow);
+        z-index: 1;
+        background: var(--purple-deep);
+        line-height: 1;
+        width: 1.6rem;
+        text-align: center;
+      }
+    }
+    .process-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+      background: var(--yellow);
+      color: var(--purple-deep);
+      font-weight: 800;
+      font-size: 1rem;
+      margin-bottom: 1.1rem;
+    }
+    .process-step-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: oklch(96% 0.03 292);
+      margin-bottom: 0.6rem;
+    }
+    .process-step-desc {
+      font-size: 0.85rem;
+      color: oklch(72% 0.06 292);
+      line-height: 1.7;
+    }
+    .process-step-icon {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    /* 하브루타란? */
+    .havruta-section {
+      padding: 5rem 2rem;
+      background: var(--yellow-light);
+    }
+    .havruta-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .havruta-def {
+      background: var(--surf-0);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin: 2.5rem 0;
+      display: grid;
+      gap: 1.5rem;
+    }
+    @media (min-width: 768px) {
+      .havruta-def {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .havruta-word {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .havruta-word-ko {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--purple-deep);
+    }
+    .havruta-word-en {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--purple);
+      letter-spacing: 0.05em;
+    }
+    .havruta-word-desc {
+      font-size: 0.9rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin-top: 0.5rem;
+    }
+    .havruta-origin {
+      border-left: 3px solid var(--yellow-deep);
+      padding-left: 1.25rem;
+    }
+    .havruta-origin-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--yellow-deep);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 0.4rem;
+    }
+    .havruta-origin-text {
+      font-size: 0.9rem;
+      color: var(--text-2);
+      line-height: 1.75;
+    }
+    .havruta-compare {
+      display: grid;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    @media (min-width: 640px) {
+      .havruta-compare { grid-template-columns: 1fr 1fr; }
+    }
+    .havruta-compare-card {
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .havruta-compare-card.before {
+      background: oklch(95% 0.01 220);
+      border: 1.5px solid oklch(88% 0.02 220);
+    }
+    .havruta-compare-card.after {
+      background: var(--purple-xlight);
+      border: 1.5px solid var(--purple-light);
+    }
+    .havruta-compare-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .havruta-compare-card.before .havruta-compare-label { color: oklch(50% 0.02 220); }
+    .havruta-compare-card.after  .havruta-compare-label { color: var(--purple); }
+    .havruta-compare-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .havruta-compare-list li {
+      padding: 0.4rem 0 0.4rem 1.4rem;
+      position: relative;
+      font-size: 0.88rem;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+    .havruta-compare-card.before .havruta-compare-list li::before {
+      content: '×';
+      position: absolute;
+      left: 0;
+      color: oklch(58% 0.15 22);
+      font-weight: 700;
+    }
+    .havruta-compare-card.after .havruta-compare-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--purple);
+      font-weight: 700;
+    }
+
+    /* Award */
+    .award-bar {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      background: var(--purple-xlight);
+      border: 1.5px solid var(--purple-light);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+    .award-icon-box {
+      font-size: 2.5rem;
+      flex-shrink: 0;
+    }
+    .award-bar h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--purple-deep);
+      margin-bottom: 0.35rem;
+    }
+    .award-bar p {
+      font-size: 0.88rem;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+  </style>
 </head>
 <body>
 <a href="#main" class="skip-link">본문 바로가기</a>
@@ -43,7 +463,7 @@
       <a href="contact.html" class="nav-link">오시는길</a>
     </nav>
 
-        <div class="header-cta-stack">
+    <div class="header-cta-stack">
       <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="header-btn header-btn-naver">
         💬 네이버 톡톡
       </a>
@@ -69,10 +489,10 @@
   <a href="board-notice.html">공지사항</a>
   <a href="contact.html">오시는길</a>
   <a href="tel:027948123" class="m-tel">☎ 02-794-8123 전화상담</a>
-    <div class="m-cta-row">
-      <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="m-cta-naver">💬 네이버 톡톡</a>
-      <a href="http://pf.kakao.com/_xadGxnxb" target="_blank" rel="noopener noreferrer" class="m-cta-kakao">🟡 카카오채널</a>
-    </div>
+  <div class="m-cta-row">
+    <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="m-cta-naver">💬 네이버 톡톡</a>
+    <a href="http://pf.kakao.com/_xadGxnxb" target="_blank" rel="noopener noreferrer" class="m-cta-kakao">🟡 카카오채널</a>
+  </div>
 </nav>
 
 <!-- ══════════════════ PAGE HERO ══════════════════ -->
@@ -86,111 +506,255 @@
       <span class="breadcrumb-cur">비전 &amp; 교육철학</span>
     </nav>
     <h1 class="page-hero-title">비전 &amp; 교육철학</h1>
-    <p class="page-hero-sub">모든 아이 안에 잠든 지혜를 깨우는 교육, 주니어솔로몬의 이야기</p>
+    <p class="page-hero-sub">왜 질문하는 아이가 세상을 바꾸는지, 주니어솔로몬이 증명합니다</p>
   </div>
 </section>
 
 <!-- ══════════════════ MAIN CONTENT ══════════════════ -->
 <main id="main">
 
-  <!-- Vision Statement Banner -->
-  <section class="page-content" aria-labelledby="vision-banner-heading">
-    <div class="container">
-      <div class="vision-banner anim">
-        <blockquote id="vision-banner-heading">
-          "모든 아이는 솔로몬의 지혜를 품을 수 있습니다"
-        </blockquote>
-        <cite>— 주니어솔로몬 교육 비전</cite>
-      </div>
-
-      <!-- 설립 스토리 -->
-      <div class="content-prose anim anim-d1">
-        <h2>설립 이야기</h2>
-        <p>
-          주니어솔로몬은 <strong>2017년 서울 용산구 이촌동</strong>에서 시작되었습니다. "왜 아이들은 책을 읽고도 생각하지 않을까?"라는 질문에서 출발한 이 학원은, 단순한 독서 지식 전달을 넘어 아이들 스스로 질문하고 표현하며 성장하는 공간을 만들고자 설립되었습니다.
-        </p>
-        <p>
-          유대인의 전통 교육 방식 <strong>하브루타(Havruta)</strong>는 짝을 이루어 텍스트를 깊이 읽고, 서로 질문하고 토론하며 생각의 깊이를 더하는 교육법입니다. 주니어솔로몬은 이 하브루타 철학을 한국 아이들의 정서와 교육 환경에 맞게 재해석하여, 독서·철학·논술이 자연스럽게 연결되는 완성된 학습 사이클을 완성하였습니다.
-        </p>
-        <p>
-          이촌동이라는 조용한 주거 지역에서 소수 정예로 운영되며, 7세부터 중학교 3학년까지 각 연령에 맞는 체계적인 교육 과정을 통해 수백 명의 학생들이 스스로 생각하는 힘을 길러 나갔습니다.
-        </p>
-
-        <h2>하브루타 교육 철학</h2>
-        <p>
-          하브루타는 히브리어로 "짝, 우정"을 의미합니다. 탈무드를 공부하는 유대인들이 수천 년간 이어온 이 방식은, 혼자 읽고 외우는 것이 아닌 <strong>함께 읽고, 질문하고, 토론하며</strong> 지식을 내면화합니다. 주니어솔로몬은 이 원리를 현대 독서·논술 교육에 적용합니다.
-        </p>
-        <ul>
-          <li>책을 읽고 <strong>스스로 질문</strong>을 만든다 (창의질문 훈련)</li>
-          <li>짝과 함께 질문을 교환하고 토론하며 깊이 이해한다</li>
-          <li>토론을 통해 형성된 생각을 <strong>논리적인 글</strong>로 표현한다</li>
-          <li>선생님의 개별 피드백으로 글쓰기 역량을 정밀하게 다듬는다</li>
-        </ul>
-      </div>
+  <!-- ① 비전 선언 -->
+  <section class="vision-statement" aria-labelledby="vision-decl">
+    <div class="anim">
+      <blockquote id="vision-decl">
+        모든 아이는 솔로몬의 지혜를 품을 수 있습니다
+      </blockquote>
+      <cite>— 주니어솔로몬 교육 비전 선언</cite>
     </div>
   </section>
 
-  <!-- 6 Vision Cards -->
+  <!-- ② 설립 스토리 + 철학 -->
+  <section class="founding-story" aria-labelledby="founding-heading">
+    <div class="container">
+
+      <h2 id="founding-heading" class="anim">시작 이야기</h2>
+      <p class="anim anim-d1">
+        2017년 서울 용산구 이촌동, 한 가지 물음에서 주니어솔로몬이 시작되었습니다. <strong>"왜 아이들은 책을 읽고도 생각하지 않을까?"</strong> 정답을 외워 시험을 통과하는 것이 아니라, 스스로 질문하고 토론하며 글로 표현하는 아이를 기르는 공간을 만들고자 했습니다.
+      </p>
+      <p class="anim anim-d2">
+        소수 정예로 시작한 이 작은 학원은 7년이 지난 지금, 7세부터 중학교 3학년까지 수백 명의 학생이 거쳐간 이촌동의 대표 독서철학논술 전문 학원으로 성장했습니다. 2022년에는 한국브랜드소비자평가 대상을 수상하며 그 교육 성과를 외부로부터도 인정받았습니다.
+      </p>
+
+      <h2 class="anim anim-d3">하브루타 교육 철학</h2>
+      <p class="anim anim-d4">
+        유대인 수천 년의 지혜, <strong>하브루타(Havruta)</strong>는 짝을 이루어 함께 읽고 질문하고 토론하며 지식을 내면화하는 교육법입니다. 주니어솔로몬은 이 원리를 현대 한국 교육 환경에 맞게 재해석하여, 독서·철학·논술이 하나의 완성된 사이클로 연결되는 커리큘럼을 완성했습니다.
+      </p>
+      <ul class="anim anim-d5">
+        <li>책을 읽고 <strong>스스로 질문을 만드는</strong> 창의질문 훈련</li>
+        <li>짝과 함께 질문을 교환하고 토론하며 깊이 이해하기</li>
+        <li>형성된 생각을 <strong>논리적인 글</strong>로 표현하기</li>
+        <li>선생님의 개별 피드백으로 글쓰기 역량을 정밀하게 다듬기</li>
+      </ul>
+
+      <div class="award-bar anim anim-d6">
+        <div class="award-icon-box" aria-hidden="true">🏆</div>
+        <div>
+          <h3>2022 한국브랜드소비자평가 대상 수상</h3>
+          <p>독서·논술 교육 부문에서 소비자가 직접 선정한 대상을 수상했습니다. 학부모와 학생의 신뢰를 바탕으로 쌓아온 7년의 교육 여정이 외부로부터도 공식 인정받은 결과입니다.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ③ 6대 인재상 -->
   <section class="section" style="background: var(--surf-1);" aria-labelledby="vision-cards-title">
     <div class="container">
       <div class="center anim">
-        <span class="sec-label">6가지 비전</span>
-        <h2 class="sec-title" id="vision-cards-title">주니어솔로몬이 키우는 인재상</h2>
-        <p class="sec-sub">질문에서 시작해 세상을 바꾸는 인재를 만듭니다</p>
+        <span class="sec-label">6가지 인재상</span>
+        <h2 class="sec-title" id="vision-cards-title">주니어솔로몬이 키우는 사람</h2>
+        <p class="sec-sub">질문하는 아이가 세상을 바꿉니다. 주니어솔로몬은 6가지 역량을 가진 인재를 기릅니다.</p>
       </div>
 
-      <div class="cards-grid">
-        <div class="card anim anim-d1">
-          <div class="card-icon" aria-hidden="true">📚</div>
-          <div class="card-title">평생 독서인</div>
-          <div class="card-desc">책을 통해 세상을 이해하고, 평생 스스로 배우며 성장하는 자기주도적 독서 습관을 가진 사람</div>
+      <div class="vision-grid" style="margin-top: 2.5rem;">
+
+        <div class="vision-card anim anim-d1">
+          <div class="vision-num" aria-hidden="true">1</div>
+          <div class="vision-card-title">평생 독서인</div>
+          <div class="vision-card-desc">책을 통해 세상을 이해하고, 평생 스스로 배우며 성장하는 자기주도적 독서 습관을 가진 사람. 독서는 지식의 원천이자 삶의 방식입니다.</div>
+          <span class="vision-card-keyword">Self-directed Learning</span>
         </div>
-        <div class="card anim anim-d2">
-          <div class="card-icon" aria-hidden="true">✍️</div>
-          <div class="card-title">논리적 표현자</div>
-          <div class="card-desc">자신의 생각과 감정을 논리적이고 설득력 있게 말과 글로 표현할 수 있는 사람</div>
+
+        <div class="vision-card anim anim-d2">
+          <div class="vision-num" aria-hidden="true">2</div>
+          <div class="vision-card-title">논리적 표현자</div>
+          <div class="vision-card-desc">자신의 생각과 감정을 논리적이고 설득력 있게 말과 글로 표현하는 사람. 명확한 표현 능력은 세상과 소통하는 가장 강력한 도구입니다.</div>
+          <span class="vision-card-keyword">Logical Expression</span>
         </div>
-        <div class="card anim anim-d3">
-          <div class="card-icon orange" aria-hidden="true">🤝</div>
-          <div class="card-title">공감 능력자</div>
-          <div class="card-desc">문학과 철학을 통해 타인의 입장을 깊이 이해하고, 따뜻한 마음으로 소통하는 사람</div>
+
+        <div class="vision-card anim anim-d3">
+          <div class="vision-num" aria-hidden="true">3</div>
+          <div class="vision-card-title">공감 능력자</div>
+          <div class="vision-card-desc">문학과 철학을 통해 타인의 입장을 깊이 이해하고, 따뜻한 마음으로 소통하는 사람. 공감은 가장 인간다운 지성입니다.</div>
+          <span class="vision-card-keyword">Empathetic Intelligence</span>
         </div>
-        <div class="card anim anim-d4">
-          <div class="card-icon" aria-hidden="true">🔍</div>
-          <div class="card-title">탐구하는 질문자</div>
-          <div class="card-desc">정답보다 좋은 질문을 먼저 만드는 사람. 끊임없이 "왜?"를 묻고 깊이 탐구하는 사람</div>
+
+        <div class="vision-card anim anim-d4">
+          <div class="vision-num" aria-hidden="true">4</div>
+          <div class="vision-card-title">탐구하는 질문자</div>
+          <div class="vision-card-desc">정답보다 좋은 질문을 먼저 만드는 사람. 끊임없이 "왜?"를 물으며 깊이 탐구하는 사람이 세상의 문제를 해결합니다.</div>
+          <span class="vision-card-keyword">Inquiry &amp; Curiosity</span>
         </div>
-        <div class="card anim anim-d5">
-          <div class="card-icon orange" aria-hidden="true">💡</div>
-          <div class="card-title">창의적 사고자</div>
-          <div class="card-desc">기존 틀을 넘어 새로운 방식으로 생각하고, 다양한 관점을 연결해 창의적인 해법을 찾는 사람</div>
+
+        <div class="vision-card anim anim-d5">
+          <div class="vision-num" aria-hidden="true">5</div>
+          <div class="vision-card-title">창의적 사고자</div>
+          <div class="vision-card-desc">기존 틀을 넘어 새로운 방식으로 생각하고, 다양한 관점을 연결해 창의적인 해법을 만드는 사람. 창의성은 훈련됩니다.</div>
+          <span class="vision-card-keyword">Creative Thinking</span>
         </div>
-        <div class="card anim anim-d6">
-          <div class="card-icon green" aria-hidden="true">🌍</div>
-          <div class="card-title">사회에 기여하는 인재</div>
-          <div class="card-desc">배운 지식과 지혜를 공동체를 위해 활용하고, 사회의 문제를 해결하는 데 앞장서는 사람</div>
+
+        <div class="vision-card anim anim-d6">
+          <div class="vision-num" aria-hidden="true">6</div>
+          <div class="vision-card-title">사회에 기여하는 인재</div>
+          <div class="vision-card-desc">배운 지식과 지혜를 공동체를 위해 활용하고, 사회의 문제를 해결하는 데 앞장서는 사람. 교육의 최종 목적은 더 나은 세상입니다.</div>
+          <span class="vision-card-keyword">Social Contribution</span>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Award Highlight -->
-  <section class="page-content" aria-labelledby="award-heading">
+  <!-- ④ 3대 교육 원칙 -->
+  <section class="section" aria-labelledby="principle-title">
     <div class="container">
-      <div class="anim">
-        <div class="center">
-          <span class="sec-label">수상 실적</span>
-          <h2 class="sec-title" id="award-heading">검증된 교육 브랜드</h2>
-          <p class="sec-sub">7년간의 교육 성과가 외부 기관에서도 인정받았습니다</p>
+      <div class="center anim">
+        <span class="sec-label">3대 교육 원칙</span>
+        <h2 class="sec-title" id="principle-title">주니어솔로몬 교육이 다른 이유</h2>
+        <p class="sec-sub">단순한 독서 수업이 아닙니다. 생각하는 힘을 기르는 3가지 원칙입니다.</p>
+      </div>
+
+      <div class="principle-list">
+
+        <div class="principle-item anim anim-d1">
+          <div class="principle-num-box" aria-hidden="true"><span>1</span></div>
+          <div class="principle-body">
+            <div class="principle-sub">First Principle</div>
+            <div class="principle-name">질문이 먼저다 — 답보다 질문을 가르칩니다</div>
+            <p class="principle-desc">
+              좋은 교육은 답을 주는 것이 아니라 더 좋은 질문을 할 수 있게 합니다. 주니어솔로몬의 모든 수업은 아이들이 스스로 질문을 만들고, 그 질문을 통해 더 깊이 생각하도록 설계됩니다. 창의질문 훈련, 철학적 토론, 소크라테스식 문답법이 이 원칙의 실천 도구입니다. 질문할 수 있다는 것은 이미 생각하고 있다는 증거입니다.
+            </p>
+          </div>
         </div>
-        <div class="award-highlight">
-          <div class="award-icon" aria-hidden="true">🏆</div>
-          <div class="award-body">
-            <h3>2022 한국브랜드소비자평가 대상</h3>
-            <p>독서·논술 교육 부문에서 소비자가 직접 선정한 대상을 수상했습니다. 학부모와 학생의 신뢰를 바탕으로 쌓아온 7년의 교육 여정이 공식적으로 인정받은 결과입니다. 주니어솔로몬은 앞으로도 아이들의 진짜 성장을 위해 최선을 다하겠습니다.</p>
+
+        <hr class="principle-divider anim">
+
+        <div class="principle-item anim anim-d2">
+          <div class="principle-num-box" aria-hidden="true"><span>2</span></div>
+          <div class="principle-body">
+            <div class="principle-sub">Second Principle</div>
+            <div class="principle-name">함께 배운다 — 토론이 곧 수업입니다</div>
+            <p class="principle-desc">
+              혼자 읽고 혼자 쓰는 수업은 생각의 깊이를 제한합니다. 하브루타 방식의 짝 토론, 소그룹 디베이트, 발표와 피어 리뷰를 통해 서로의 생각을 검증하고 확장합니다. 다른 시각과 부딪히는 경험이 비판적 사고의 근육을 키웁니다. 주니어솔로몬의 수업은 항상 교사와 학생, 학생과 학생 사이의 살아있는 대화로 채워집니다.
+            </p>
+          </div>
+        </div>
+
+        <hr class="principle-divider anim">
+
+        <div class="principle-item anim anim-d3">
+          <div class="principle-num-box" aria-hidden="true"><span>3</span></div>
+          <div class="principle-body">
+            <div class="principle-sub">Third Principle</div>
+            <div class="principle-name">쓰면 완성된다 — 논술이 사고의 완성입니다</div>
+            <p class="principle-desc">
+              읽고 토론한 것을 글로 표현할 때 비로소 생각이 완성됩니다. 주니어솔로몬의 논술 교육은 단순한 글쓰기 기술이 아닙니다. 독서를 통해 쌓은 사유와 토론을 통해 다듬어진 관점이 논리적 문장으로 이어지는 전 과정을 훈련합니다. 각 아이의 글을 세밀하게 피드백하는 개인화된 지도가 이 원칙의 핵심입니다.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑤ 4단계 프로세스 -->
+  <section class="process-section" aria-labelledby="process-title">
+    <div class="container">
+      <div class="center anim">
+        <span class="sec-label">4단계 학습 사이클</span>
+        <h2 class="sec-title" id="process-title">한 권의 책이 성장이 되는 과정</h2>
+        <p class="sec-sub">독서에서 논술까지, 주니어솔로몬만의 완성된 4단계 학습 사이클입니다</p>
+      </div>
+
+      <div class="process-flow">
+
+        <div class="process-step anim anim-d1">
+          <span class="process-step-icon" aria-hidden="true">📖</span>
+          <div class="process-step-num" aria-hidden="true">1</div>
+          <div class="process-step-title">깊이 읽기</div>
+          <div class="process-step-desc">단순 줄거리 파악을 넘어 주제·배경·작가 의도까지 다층적으로 독서합니다. 밑줄·메모·마인드맵으로 생각을 시각화합니다.</div>
+        </div>
+
+        <div class="process-step anim anim-d2">
+          <span class="process-step-icon" aria-hidden="true">💬</span>
+          <div class="process-step-num" aria-hidden="true">2</div>
+          <div class="process-step-title">질문 만들기</div>
+          <div class="process-step-desc">읽은 내용에서 창의질문을 스스로 만듭니다. "왜?", "만약에?", "나라면?" 질문이 깊어질수록 사고가 성장합니다.</div>
+        </div>
+
+        <div class="process-step anim anim-d3">
+          <span class="process-step-icon" aria-hidden="true">🤝</span>
+          <div class="process-step-num" aria-hidden="true">3</div>
+          <div class="process-step-title">토론하기</div>
+          <div class="process-step-desc">짝 또는 소그룹과 함께 서로의 질문을 교환하고 토론합니다. 다른 관점과 부딪히며 생각의 폭이 넓어집니다.</div>
+        </div>
+
+        <div class="process-step anim anim-d4">
+          <span class="process-step-icon" aria-hidden="true">✍️</span>
+          <div class="process-step-num" aria-hidden="true">4</div>
+          <div class="process-step-title">논술로 완성</div>
+          <div class="process-step-desc">토론을 통해 다듬어진 생각을 논리적인 글로 표현합니다. 선생님의 개별 피드백으로 문장과 논리를 완성합니다.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑥ 하브루타란? -->
+  <section class="havruta-section" aria-labelledby="havruta-title">
+    <div class="havruta-inner">
+      <div class="center anim">
+        <span class="sec-label">교육 방법론</span>
+        <h2 class="sec-title" id="havruta-title">하브루타(Havruta)란 무엇인가요?</h2>
+        <p class="sec-sub">학부모님께서 자주 물어보시는 하브루타 교육법을 쉽게 설명드립니다</p>
+      </div>
+
+      <div class="havruta-def anim anim-d1">
+        <div class="havruta-word">
+          <div class="havruta-word-ko">하브루타</div>
+          <div class="havruta-word-en">Havruta · חַבְרוּתָא</div>
+          <div class="havruta-word-desc">히브리어로 "짝, 우정, 동반자"를 뜻합니다. 유대인이 수천 년간 탈무드를 공부해 온 방식으로, 둘이 짝을 지어 텍스트를 읽고 질문하고 토론하며 함께 배우는 교육 방법론입니다.</div>
+        </div>
+        <div class="havruta-origin">
+          <div class="havruta-origin-label">역사적 배경</div>
+          <div class="havruta-origin-text">
+            바빌론 탈무드(기원전 500년~기원후 500년) 시대부터 유대인 학자들은 혼자 공부하지 않고 반드시 파트너와 함께 읽고 토론했습니다. 하버드 비즈니스 스쿨, 옥스퍼드, 예일대학교 등 세계 명문대의 세미나식 수업도 이 원리에서 비롯되었습니다. 유대인이 전 세계 노벨상 수상자의 22%를 차지하는 배경에 하브루타 교육이 있다고 교육학자들은 분석합니다.
           </div>
         </div>
       </div>
+
+      <div class="havruta-compare anim anim-d2">
+        <div class="havruta-compare-card before">
+          <div class="havruta-compare-label">일반적인 독서 수업</div>
+          <ul class="havruta-compare-list">
+            <li>선생님이 설명, 아이가 받아 적기</li>
+            <li>줄거리 요약 중심 수업</li>
+            <li>정해진 감상문 형식 쓰기</li>
+            <li>정답을 찾는 훈련</li>
+            <li>혼자 읽고 혼자 쓰기</li>
+          </ul>
+        </div>
+        <div class="havruta-compare-card after">
+          <div class="havruta-compare-label">주니어솔로몬 하브루타 수업</div>
+          <ul class="havruta-compare-list">
+            <li>아이가 질문하고 선생님이 함께 탐구</li>
+            <li>주제·철학·가치관 깊이 읽기</li>
+            <li>자신만의 논리로 글쓰기</li>
+            <li>더 좋은 질문을 만드는 훈련</li>
+            <li>짝 토론으로 생각 확장하기</li>
+          </ul>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -199,11 +763,11 @@
 <!-- ══════════════════ CTA BAND ══════════════════ -->
 <div class="cta-band" role="complementary" aria-label="입학 상담 안내">
   <div class="container">
-    <h2>지금 비전을 함께 만들어 가세요</h2>
-    <p>주니어솔로몬의 교육 방향과 커리큘럼이 궁금하시다면 상담을 신청해 주세요</p>
+    <h2>우리 아이의 첫 번째 질문을 함께 만들어 드립니다</h2>
+    <p>교육 철학과 커리큘럼에 대해 더 궁금하신 점은 언제든 상담해 주세요</p>
     <div class="cta-band-actions">
-      <a href="mission.html" class="btn btn-outline">교육방향 보기</a>
-      <a href="tel:027948123" class="btn btn-orange">☎ 입학 상담</a>
+      <a href="curriculum.html" class="btn btn-outline">커리큘럼 보기</a>
+      <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="btn btn-primary">💬 무료 상담 신청</a>
     </div>
   </div>
 </div>
@@ -266,19 +830,16 @@
 (function() {
   'use strict';
 
-  // Header scroll effect
   var header = document.getElementById('header');
   window.addEventListener('scroll', function() {
     header.classList.toggle('scrolled', window.scrollY > 40);
     document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 400);
   }, { passive: true });
 
-  // Scroll to top
   document.getElementById('scrollTop').addEventListener('click', function() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  // Mobile menu
   var toggle    = document.getElementById('menuToggle');
   var mobileNav = document.getElementById('mobileNav');
   toggle.addEventListener('click', function() {
@@ -296,14 +857,28 @@
     });
   });
 
+  // Dropdown
+  document.querySelectorAll('.nav-item button').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', !expanded);
+    });
+  });
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.nav-item')) {
+      document.querySelectorAll('.nav-item button').forEach(function(b) {
+        b.setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
+
   // Scroll-reveal
-  var animEls = document.querySelectorAll('.anim');
   var observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) {
       if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); }
     });
-  }, { threshold: 0.12 });
-  animEls.forEach(function(el) { observer.observe(el); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.anim').forEach(function(el) { observer.observe(el); });
 })();
 </script>
 </body>
