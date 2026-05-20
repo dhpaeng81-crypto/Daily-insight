@@ -163,7 +163,7 @@
 
 - Instagram: https://www.instagram.com/juniorsolomon
 - 네이버 블로그: https://blog.naver.com/juniorsolomon
-- 카카오톡 채널: https://pf.kakao.com/_juniorsolomon
+- 카카오톡 채널: http://pf.kakao.com/_xadGxnxb
 - 네이버 톡톡 (핵심 CTA): https://talk.naver.com/ct/wcal0q?frm=pnmb
 
 ---
