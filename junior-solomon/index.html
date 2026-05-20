@@ -12,7 +12,7 @@
   <style>
     /* ── DESIGN TOKENS ── */
     :root {
-      --indigo:        oklch(55% 0.22 264);
+      --indigo:        oklch(68% 0.11 292);
       --indigo-deep:   oklch(42% 0.22 264);
       --indigo-mid:    oklch(65% 0.18 264);
       --indigo-light:  oklch(93% 0.06 264);
@@ -32,8 +32,8 @@
       --shadow-sm:   0 1px 4px oklch(20% 0.012 265 / 0.07);
       --shadow-md:   0 4px 16px oklch(20% 0.012 265 / 0.10);
       --shadow-lg:   0 8px 32px oklch(20% 0.012 265 / 0.14);
-      --shadow-btn:  0 4px 14px oklch(55% 0.22 264 / 0.35);
-      --shadow-btnH: 0 8px 20px oklch(55% 0.22 264 / 0.45);
+      --shadow-btn:  0 4px 14px oklch(68% 0.11 292 / 0.35);
+      --shadow-btnH: 0 8px 20px oklch(68% 0.11 292 / 0.45);
 
       --r-sm: 6px; --r-md: 12px; --r-lg: 20px; --r-xl: 28px; --r-pill: 9999px;
       --ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -58,7 +58,7 @@
     /* SKIP LINK */
     .skip-link {
       position: absolute; top: -100%; left: 16px;
-      background: var(--indigo); color: #fff;
+      background: var(--purple); color: #fff;
       padding: 8px 16px; border-radius: var(--r-md);
       font-size: 14px; font-weight: 700; text-decoration: none;
       z-index: 9999; transition: top var(--t-fast);
@@ -66,7 +66,7 @@
     .skip-link:focus { top: 8px; }
 
     /* FOCUS */
-    :focus-visible { outline: 3px solid var(--indigo); outline-offset: 3px; border-radius: var(--r-sm); }
+    :focus-visible { outline: 3px solid var(--purple); outline-offset: 3px; border-radius: var(--r-sm); }
 
     /* UTILS */
     .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
@@ -99,9 +99,9 @@
     .sec-label {
       display: inline-flex; align-items: center; gap: 8px;
       font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--indigo); margin-bottom: 12px;
+      color: var(--purple); margin-bottom: 12px;
     }
-    .sec-label::before { content: ''; display: block; width: 24px; height: 2px; background: var(--indigo); border-radius: 2px; }
+    .sec-label::before { content: ''; display: block; width: 24px; height: 2px; background: var(--purple); border-radius: 2px; }
     .sec-title {
       font-size: clamp(24px, 3.5vw, 38px);
       font-weight: 800; line-height: 1.15; letter-spacing: -0.025em;
@@ -123,26 +123,26 @@
     }
     .btn:active { transform: scale(0.97); }
     .btn-primary {
-      background: var(--indigo); color: #fff;
+      background: var(--purple); color: #fff;
       box-shadow: var(--shadow-btn);
     }
-    .btn-primary:hover { background: var(--indigo-deep); box-shadow: var(--shadow-btnH); transform: translateY(-1px); }
+    .btn-primary:hover { background: var(--purple-deep); box-shadow: var(--shadow-btnH); transform: translateY(-1px); }
     .btn-outline {
       background: transparent; color: #fff;
       border: 2px solid rgba(255,255,255,0.65);
     }
     .btn-outline:hover { background: rgba(255,255,255,0.12); border-color: #fff; }
     .btn-orange {
-      background: var(--orange); color: #fff;
+      background: var(--yellow); color: #fff;
       box-shadow: 0 4px 14px oklch(70% 0.20 55 / 0.35);
     }
-    .btn-orange:hover { background: var(--orange-deep); transform: translateY(-1px); }
+    .btn-orange:hover { background: var(--yellow-deep); transform: translateY(-1px); }
     .btn-ghost {
-      background: transparent; color: var(--indigo);
-      border: 2px solid var(--indigo);
+      background: transparent; color: var(--purple);
+      border: 2px solid var(--purple);
       padding: 12px 24px;
     }
-    .btn-ghost:hover { background: var(--indigo-light); }
+    .btn-ghost:hover { background: var(--purple-light); }
 
     /* ═══════════════════════════════════════════════
        HEADER
@@ -167,14 +167,12 @@
       display: flex; align-items: center; gap: 10px;
       text-decoration: none; flex-shrink: 0;
     }
-    .logo-icon {
-      width: 42px; height: 42px; border-radius: 10px;
-      background: linear-gradient(135deg, var(--indigo-deep), var(--indigo));
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; box-shadow: 0 2px 8px oklch(42% 0.22 264 / 0.35);
+    .logo-img {
+      width: 46px; height: 46px; flex-shrink: 0;
+      filter: drop-shadow(0 2px 6px oklch(32% 0.13 285 / 0.30));
+      transition: transform 220ms cubic-bezier(0.16,1,0.3,1);
     }
-    .logo-icon svg { width: 26px; height: 26px; fill: #fff; }
-    .logo-ci { width: 100%; height: 100%; object-fit: contain; }
+    .logo:hover .logo-img { transform: scale(1.05); }
     .logo-text {
       font-size: 19px; font-weight: 900; letter-spacing: -0.04em;
       color: #fff; line-height: 1;
@@ -219,7 +217,7 @@
     }
     .dropdown a:first-child { border-radius: var(--r-lg) var(--r-lg) 0 0; }
     .dropdown a:last-child { border-radius: 0 0 var(--r-lg) var(--r-lg); }
-    .dropdown a:hover { background: var(--indigo-light); color: var(--indigo); }
+    .dropdown a:hover { background: var(--purple-light); color: var(--purple); }
 
     /* Header CTA */
     .header-cta { display: flex; align-items: center; gap: 8px; }
@@ -230,10 +228,10 @@
     .header-tel:hover { color: #fff; }
     .header-btn {
       padding: 8px 16px; font-size: 13px; border-radius: var(--r-pill);
-      background: var(--orange); color: #fff; font-weight: 700;
+      background: var(--yellow); color: #fff; font-weight: 700;
       text-decoration: none; transition: background var(--t-fast), transform var(--t-fast);
     }
-    .header-btn:hover { background: var(--orange-deep); transform: scale(1.03); }
+    .header-btn:hover { background: var(--yellow-deep); transform: scale(1.03); }
 
     /* Mobile menu toggle */
     .menu-toggle {
@@ -267,7 +265,7 @@
     .mobile-nav a:hover { background: rgba(255,255,255,0.08); color: #fff; }
     .mobile-nav .m-tel {
       margin-top: 20px; padding: 16px;
-      background: var(--indigo); border-radius: var(--r-lg);
+      background: var(--purple); border-radius: var(--r-lg);
       font-size: 17px; font-weight: 800; color: #fff; text-align: center;
     }
 
@@ -305,7 +303,7 @@
     .hero-overlay {
       position: absolute; inset: 0; z-index: 1;
       background:
-        radial-gradient(ellipse 70% 60% at 70% 45%, oklch(55% 0.22 264 / 0.18), transparent),
+        radial-gradient(ellipse 70% 60% at 70% 45%, oklch(68% 0.11 292 / 0.18), transparent),
         linear-gradient(to bottom, oklch(14% 0.025 265 / 0.55) 0%, oklch(14% 0.025 265 / 0.3) 50%, oklch(14% 0.025 265 / 0.70) 100%);
     }
 
@@ -317,14 +315,14 @@
 
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
-      background: oklch(55% 0.22 264 / 0.30); border: 1px solid oklch(55% 0.22 264 / 0.50);
+      background: oklch(68% 0.11 292 / 0.30); border: 1px solid oklch(68% 0.11 292 / 0.50);
       backdrop-filter: blur(8px);
       color: oklch(85% 0.12 264); font-size: 13px; font-weight: 700;
       padding: 6px 14px; border-radius: var(--r-pill); margin-bottom: 20px;
     }
     .hero-badge-dot {
       width: 7px; height: 7px; border-radius: 50%;
-      background: var(--orange); box-shadow: 0 0 8px var(--orange);
+      background: var(--yellow); box-shadow: 0 0 8px var(--yellow);
       animation: pulse 2s ease-in-out infinite;
     }
     @keyframes pulse {
@@ -353,7 +351,7 @@
     .stat-num {
       font-size: clamp(26px, 3.5vw, 38px);
       font-weight: 800; letter-spacing: -0.03em;
-      color: var(--orange); line-height: 1;
+      color: var(--yellow); line-height: 1;
     }
     .stat-label {
       font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.65);
@@ -384,7 +382,7 @@
        NOTICE TICKER
     ═══════════════════════════════════════════════ */
     .ticker-bar {
-      background: var(--indigo-deep); color: #fff;
+      background: var(--purple-deep); color: #fff;
       padding: 0; overflow: hidden;
     }
     .ticker-inner {
@@ -393,7 +391,7 @@
     }
     .ticker-label {
       flex-shrink: 0; display: flex; align-items: center;
-      background: var(--indigo); padding: 10px 20px;
+      background: var(--purple); padding: 10px 20px;
       font-size: 12px; font-weight: 800; letter-spacing: 0.08em;
       gap: 6px;
     }
@@ -429,15 +427,15 @@
     }
     .notice-card:hover {
       box-shadow: var(--shadow-md); transform: translateY(-3px);
-      border-color: var(--indigo-light);
+      border-color: var(--purple-light);
     }
     .notice-tag {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
       padding: 3px 10px; border-radius: var(--r-pill);
-      background: var(--indigo-light); color: var(--indigo);
+      background: var(--purple-light); color: var(--purple);
     }
-    .notice-tag.orange { background: var(--orange-light); color: var(--orange-deep); }
+    .notice-tag.orange { background: var(--yellow-light); color: var(--yellow-deep); }
     .notice-title {
       font-size: 15px; font-weight: 700; line-height: 1.4; color: var(--ink);
     }
@@ -447,7 +445,7 @@
        ABOUT
     ═══════════════════════════════════════════════ */
     #about {
-      background: linear-gradient(160deg, var(--indigo-xlight) 0%, var(--canvas) 55%);
+      background: linear-gradient(160deg, var(--purple-xlight) 0%, var(--canvas) 55%);
     }
     .about-grid {
       display: grid; grid-template-columns: 1fr 1fr;
@@ -463,20 +461,20 @@
     .principle:hover { box-shadow: var(--shadow-md); transform: translateX(4px); }
     .principle-icon {
       width: 48px; height: 48px; flex-shrink: 0;
-      background: var(--indigo-light); border-radius: var(--r-md);
+      background: var(--purple-light); border-radius: var(--r-md);
       display: flex; align-items: center; justify-content: center;
       font-size: 22px;
     }
-    .principle:nth-child(2) .principle-icon { background: var(--orange-light); }
+    .principle:nth-child(2) .principle-icon { background: var(--yellow-light); }
     .principle:nth-child(3) .principle-icon { background: oklch(93% 0.06 145); }
     .principle-body h3 {
-      font-size: 16px; font-weight: 800; color: var(--indigo);
+      font-size: 16px; font-weight: 800; color: var(--purple);
       margin-bottom: 4px;
     }
     .principle-body p { font-size: 14px; color: var(--ink-muted); line-height: 1.6; }
 
     .about-visual {
-      background: linear-gradient(145deg, var(--indigo-deep), oklch(35% 0.20 264));
+      background: linear-gradient(145deg, var(--purple-deep), oklch(35% 0.20 264));
       border-radius: var(--r-xl); padding: 40px 36px;
       color: #fff; position: relative; overflow: hidden;
     }
@@ -524,17 +522,17 @@
     }
     .cur-card:hover {
       box-shadow: var(--shadow-lg); transform: translateY(-6px);
-      border-color: var(--indigo);
+      border-color: var(--purple);
     }
     .cur-level {
       display: inline-flex; align-items: center; justify-content: center;
       width: 52px; height: 52px; border-radius: 50%;
-      background: var(--indigo-light); color: var(--indigo);
+      background: var(--purple-light); color: var(--purple);
       font-size: 20px; font-weight: 900; margin: 0 auto 14px;
     }
     .cur-card:nth-child(1) .cur-level { background: oklch(92% 0.10 264); }
     .cur-card:nth-child(2) .cur-level { background: oklch(93% 0.08 145); color: oklch(38% 0.15 145); }
-    .cur-card:nth-child(3) .cur-level { background: var(--orange-light); color: var(--orange-deep); }
+    .cur-card:nth-child(3) .cur-level { background: var(--yellow-light); color: var(--yellow-deep); }
     .cur-card:nth-child(4) .cur-level { background: oklch(93% 0.08 330); color: oklch(42% 0.18 330); }
     .cur-card:nth-child(5) .cur-level { background: oklch(93% 0.06 55); color: oklch(40% 0.16 55); }
     .cur-name {
@@ -565,7 +563,7 @@
     }
     .teacher-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
     .teacher-header {
-      background: linear-gradient(135deg, var(--indigo-deep), oklch(50% 0.20 264));
+      background: linear-gradient(135deg, var(--purple-deep), oklch(50% 0.20 264));
       padding: 28px 24px 24px;
       display: flex; align-items: flex-start; gap: 16px;
     }
@@ -588,7 +586,7 @@
     .teacher-tag {
       font-size: 11px; font-weight: 700;
       padding: 4px 10px; border-radius: var(--r-pill);
-      background: var(--indigo-light); color: var(--indigo);
+      background: var(--purple-light); color: var(--purple);
     }
 
     /* ═══════════════════════════════════════════════
@@ -598,8 +596,8 @@
       background: linear-gradient(160deg, oklch(14% 0.025 265) 0%, oklch(22% 0.18 264) 100%);
       color: #fff;
     }
-    #sophos .sec-label { color: var(--orange); }
-    #sophos .sec-label::before { background: var(--orange); }
+    #sophos .sec-label { color: var(--yellow); }
+    #sophos .sec-label::before { background: var(--yellow); }
     #sophos .sec-title { color: #fff; }
     #sophos .sec-sub { color: rgba(255,255,255,0.65); }
     .sophos-inner { margin-top: 48px; display: grid; grid-template-columns: 340px 1fr; gap: 40px; align-items: start; }
@@ -610,7 +608,7 @@
     }
     .sophos-teacher-avatar {
       width: 80px; height: 80px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--orange), var(--orange-deep));
+      background: linear-gradient(135deg, var(--yellow), var(--yellow-deep));
       display: flex; align-items: center; justify-content: center;
       font-size: 32px; font-weight: 900; color: #fff; margin-bottom: 16px;
     }
@@ -619,7 +617,7 @@
     .sophos-teacher-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
     .sophos-badge {
       font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: var(--r-pill);
-      background: var(--orange-light); color: var(--orange-deep);
+      background: var(--yellow-light); color: var(--yellow-deep);
     }
 
     .sophos-programs { display: flex; flex-direction: column; gap: 12px; }
@@ -636,7 +634,7 @@
     .sophos-prog-tag {
       grid-row: 1 / 3; align-self: center;
       padding: 6px 14px; border-radius: var(--r-pill);
-      background: var(--orange); color: #fff;
+      background: var(--yellow); color: #fff;
       font-size: 12px; font-weight: 700; white-space: nowrap;
     }
 
@@ -645,7 +643,7 @@
     ═══════════════════════════════════════════════ */
     #summer { background: var(--surf-1); }
     .summer-header-band {
-      background: linear-gradient(135deg, var(--orange), oklch(64% 0.20 38));
+      background: linear-gradient(135deg, var(--yellow), oklch(64% 0.20 38));
       border-radius: var(--r-xl); padding: 32px 40px; margin-bottom: 40px;
       display: flex; align-items: center; justify-content: space-between; gap: 24px;
       flex-wrap: wrap;
@@ -671,10 +669,10 @@
     .summer-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
     .summer-card-icon {
       width: 44px; height: 44px; border-radius: var(--r-md);
-      background: var(--orange-light); display: flex; align-items: center; justify-content: center;
+      background: var(--yellow-light); display: flex; align-items: center; justify-content: center;
       font-size: 20px; margin-bottom: 14px;
     }
-    .summer-card:nth-child(even) .summer-card-icon { background: var(--indigo-light); }
+    .summer-card:nth-child(even) .summer-card-icon { background: var(--purple-light); }
     .summer-card h4 { font-size: 15px; font-weight: 800; margin-bottom: 6px; }
     .summer-card p { font-size: 13px; color: var(--ink-muted); line-height: 1.6; }
 
@@ -682,7 +680,7 @@
        TESTIMONIALS
     ═══════════════════════════════════════════════ */
     #testimonials {
-      background: linear-gradient(160deg, var(--indigo-deep), oklch(30% 0.22 264) 100%);
+      background: linear-gradient(160deg, var(--purple-deep), oklch(30% 0.22 264) 100%);
       color: #fff;
     }
     #testimonials .sec-label { color: oklch(80% 0.12 264); }
@@ -699,7 +697,7 @@
       transition: background var(--t-base), transform var(--t-base) var(--ease);
     }
     .testimonial-card:hover { background: rgba(255,255,255,0.12); transform: translateY(-4px); }
-    .t-stars { color: var(--orange); font-size: 16px; letter-spacing: 2px; margin-bottom: 14px; }
+    .t-stars { color: var(--yellow); font-size: 16px; letter-spacing: 2px; margin-bottom: 14px; }
     .t-quote { font-size: 14px; line-height: 1.8; color: rgba(255,255,255,0.82); }
     .t-author {
       display: flex; align-items: center; gap: 12px;
@@ -734,14 +732,14 @@
     }
     .map-placeholder {
       width: 100%; height: 100%;
-      background: linear-gradient(135deg, var(--indigo-light), var(--surf-2));
+      background: linear-gradient(135deg, var(--purple-light), var(--surf-2));
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 12px; color: var(--indigo);
+      gap: 12px; color: var(--purple);
     }
     .map-placeholder svg { width: 48px; height: 48px; opacity: 0.6; }
     .map-placeholder p { font-size: 14px; font-weight: 600; color: var(--ink-muted); }
     .map-placeholder a {
-      padding: 10px 20px; background: var(--indigo); color: #fff;
+      padding: 10px 20px; background: var(--purple); color: #fff;
       border-radius: var(--r-pill); font-size: 13px; font-weight: 700;
       text-decoration: none;
     }
@@ -752,7 +750,7 @@
       border: 1px solid var(--border); padding: 24px;
     }
     .contact-card h3 {
-      font-size: 16px; font-weight: 800; color: var(--indigo);
+      font-size: 16px; font-weight: 800; color: var(--purple);
       margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
     }
     .contact-row {
@@ -760,12 +758,12 @@
       padding: 8px 0; border-bottom: 1px solid var(--border);
     }
     .contact-row:last-child { border-bottom: none; }
-    .contact-row-icon { color: var(--indigo); flex-shrink: 0; margin-top: 2px; }
+    .contact-row-icon { color: var(--purple); flex-shrink: 0; margin-top: 2px; }
     .contact-row-icon svg { width: 16px; height: 16px; }
     .contact-row-label { font-size: 12px; color: var(--ink-subtle); }
     .contact-row-val { font-size: 14px; font-weight: 600; color: var(--ink); }
     .contact-row-val a { color: inherit; text-decoration: none; }
-    .contact-row-val a:hover { color: var(--indigo); }
+    .contact-row-val a:hover { color: var(--purple); }
 
     .contact-channels { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
     .channel-btn {
@@ -783,7 +781,7 @@
        CTA BAND
     ═══════════════════════════════════════════════ */
     .cta-band {
-      background: linear-gradient(135deg, var(--indigo), var(--indigo-deep));
+      background: linear-gradient(135deg, var(--purple), var(--purple-deep));
       padding: 64px 20px; text-align: center; color: #fff;
     }
     .cta-band h2 {
@@ -837,7 +835,7 @@
     .scroll-top {
       position: fixed; bottom: 24px; right: 24px; z-index: 90;
       width: 48px; height: 48px; border-radius: 50%;
-      background: var(--indigo); color: #fff;
+      background: var(--purple); color: #fff;
       border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
       box-shadow: var(--shadow-md);
       opacity: 0; transform: translateY(12px);
@@ -845,7 +843,7 @@
       pointer-events: none;
     }
     .scroll-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
-    .scroll-top:hover { background: var(--indigo-deep); }
+    .scroll-top:hover { background: var(--purple-deep); }
     .scroll-top svg { width: 20px; height: 20px; }
 
     /* ═══════════════════════════════════════════════
@@ -899,11 +897,7 @@
 <header class="header" id="header" role="banner">
   <div class="header-inner">
     <a href="index.html" class="logo" aria-label="주니어솔로몬 홈으로">
-      <div class="logo-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" fill="currentColor" d="M12 2L20.66 17H3.34ZM12 22L3.34 7H20.66Z"/>
-        </svg>
-      </div>
+      <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="46" height="46">
       <div>
         <div class="logo-text">주니어솔로몬</div>
         <div class="logo-sub">Jr. Solomon Academy</div>
@@ -980,7 +974,7 @@
       <h1 class="d1">
         질문으로 시작되는<br>
         철학전문 글쓰기<br>
-        <span style="color: var(--orange);">&amp; 집중 독서</span>
+        <span style="color: var(--yellow);">&amp; 집중 독서</span>
       </h1>
       <p class="hero-desc">
         하브루타 교육법으로 아이들이 스스로 생각하고,<br>
@@ -1285,7 +1279,7 @@
       <div class="sophos-teacher">
         <div class="sophos-teacher-avatar" aria-hidden="true">이</div>
         <h3>이대건 선생님</h3>
-        <div style="color: var(--orange); font-size:13px; font-weight:700;">소포스에듀 대표강사</div>
+        <div style="color: var(--yellow); font-size:13px; font-weight:700;">소포스에듀 대표강사</div>
         <p>
           서울대학교 졸업. 미래탐구·대치명인·대치메이드 등 명문 학원 강의 경력. 수능 문학·독서·문법 전 영역 전문 지도. 내신과 수능을 함께 잡는 전략적 커리큘럼을 설계합니다.
         </p>
@@ -1316,12 +1310,12 @@
         <div class="sophos-program">
           <div class="sophos-prog-name">여름방학 고전문학 특강</div>
           <div class="sophos-prog-info">박효정T 진행 / 7/22–8/17</div>
-          <span class="sophos-prog-tag" style="background: var(--orange-deep);">여름방학</span>
+          <span class="sophos-prog-tag" style="background: var(--yellow-deep);">여름방학</span>
         </div>
         <div class="sophos-program">
           <div class="sophos-prog-name">여름방학 문학독서/문법 특강</div>
           <div class="sophos-prog-info">이대건T 진행 / 7/22–8/17</div>
-          <span class="sophos-prog-tag" style="background: var(--orange-deep);">여름방학</span>
+          <span class="sophos-prog-tag" style="background: var(--yellow-deep);">여름방학</span>
         </div>
         <div style="margin-top:8px;">
           <a href="introduction.html" class="btn btn-orange" style="width:100%; justify-content:center;">수강 신청 문의</a>
@@ -1560,9 +1554,7 @@
   <div class="footer-inner">
     <div class="footer-brand">
       <div class="logo">
-        <div class="logo-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" fill="currentColor" d="M12 2L20.66 17H3.34ZM12 22L3.34 7H20.66Z"/></svg>
-        </div>
+        <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="46" height="46">
         <div>
           <div class="logo-text">주니어솔로몬</div>
           <div class="logo-sub">Jr. Solomon Academy</div>

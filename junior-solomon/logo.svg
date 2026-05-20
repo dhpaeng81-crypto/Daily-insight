@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="주니어솔로몬 로고">
+  <title>주니어솔로몬</title>
+
+  <!-- Outer lavender ring -->
+  <circle cx="100" cy="100" r="98" fill="#BFB3D9"/>
+  <!-- Inner yellow circle -->
+  <circle cx="100" cy="100" r="86" fill="#F7F0A6"/>
+
+  <!-- ── ARCHED TEXT (top) ── -->
+  <defs>
+    <path id="arcTop" d="M 24 100 A 76 76 0 0 1 176 100"/>
+  </defs>
+  <text font-family="'Pretendard Variable','Pretendard',sans-serif" font-size="11.5" font-weight="600" fill="#3D2D6E" letter-spacing="0.8">
+    <textPath href="#arcTop" startOffset="50%" text-anchor="middle">지혜가 샘솟는 독서철학논술</textPath>
+  </text>
+
+  <!-- ── CROWN ── -->
+  <!-- Crown spikes -->
+  <polygon points="63,68 72,46 81,68" fill="#D4AF37"/>
+  <polygon points="81,68 100,40 119,68" fill="#E0BA42"/>
+  <polygon points="119,68 128,46 137,68" fill="#D4AF37"/>
+  <!-- Crown body -->
+  <rect x="63" y="64" width="74" height="16" rx="3" fill="#D4AF37"/>
+  <!-- Crown band (darker stripe) -->
+  <rect x="63" y="70" width="74" height="6" rx="1" fill="#B8932A"/>
+  <!-- Crown gems -->
+  <circle cx="81" cy="73" r="3" fill="#BFB3D9"/>
+  <circle cx="100" cy="72" r="3.5" fill="#E8A0A0"/>
+  <circle cx="119" cy="73" r="3" fill="#BFB3D9"/>
+  <!-- Crown top orb -->
+  <circle cx="100" cy="40" r="4.5" fill="#D4AF37" stroke="#B8932A" stroke-width="0.8"/>
+
+  <!-- ── FACE ── -->
+  <!-- Head / face -->
+  <ellipse cx="100" cy="90" rx="24" ry="26" fill="#FAF9F5"/>
+
+  <!-- Eyebrows -->
+  <path d="M83 82 Q88 79 93 82" stroke="#8B6C42" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M107 82 Q112 79 117 82" stroke="#8B6C42" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- Eyes -->
+  <ellipse cx="90" cy="88" rx="3.5" ry="4" fill="#2D1F5A"/>
+  <ellipse cx="110" cy="88" rx="3.5" ry="4" fill="#2D1F5A"/>
+  <!-- Eye shine -->
+  <circle cx="91.5" cy="86.5" r="1.4" fill="white"/>
+  <circle cx="111.5" cy="86.5" r="1.4" fill="white"/>
+
+  <!-- Nose -->
+  <ellipse cx="100" cy="95" rx="2" ry="1.5" fill="#E8D8C0" opacity="0.6"/>
+
+  <!-- Smile -->
+  <path d="M90 100 Q100 108 110 100" stroke="#8B6C42" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- Cheeks -->
+  <ellipse cx="83" cy="96" rx="6" ry="4" fill="#F4AAAA" opacity="0.38"/>
+  <ellipse cx="117" cy="96" rx="6" ry="4" fill="#F4AAAA" opacity="0.38"/>
+
+  <!-- ── BEARD ── -->
+  <path d="M76 98 Q68 112 70 124 Q78 140 100 142 Q122 140 130 124 Q132 112 124 98 Q114 106 100 107 Q86 106 76 98Z" fill="#FAF9F5"/>
+  <!-- Beard texture -->
+  <path d="M86 108 Q84 120 86 130" stroke="#E2DDD5" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <path d="M100 108 Q99 122 100 134" stroke="#E2DDD5" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <path d="M114 108 Q116 120 114 130" stroke="#E2DDD5" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+
+  <!-- ── ROBE (dark purple, behind beard) ── -->
+  <path d="M76 98 Q64 108 60 128 L60 158 L140 158 L140 128 Q136 108 124 98 Q114 106 100 107 Q86 106 76 98Z" fill="#3D2D6E"/>
+  <!-- Robe collar shadow -->
+  <path d="M76 98 Q86 106 100 107 Q114 106 124 98 Q118 116 100 118 Q82 116 76 98Z" fill="#2D1F5A"/>
+
+  <!-- ── BOOK ── -->
+  <!-- Book shadow/base -->
+  <rect x="58" y="135" width="84" height="22" rx="3" fill="#E8E4F0" opacity="0.5"/>
+  <!-- Book left page -->
+  <rect x="60" y="133" width="38" height="22" rx="2 0 0 2" fill="#FAF9F5" stroke="#C8C0D8" stroke-width="0.8"/>
+  <!-- Book right page -->
+  <rect x="100" y="133" width="38" height="22" rx="0 2 2 0" fill="#FAF9F5" stroke="#C8C0D8" stroke-width="0.8"/>
+  <!-- Book spine -->
+  <rect x="97" y="131" width="6" height="26" rx="2" fill="#C0B4D4"/>
+  <!-- Page lines left -->
+  <line x1="64" y1="139" x2="95" y2="139" stroke="#D0C8DC" stroke-width="1"/>
+  <line x1="64" y1="144" x2="95" y2="144" stroke="#D0C8DC" stroke-width="1"/>
+  <line x1="64" y1="149" x2="95" y2="149" stroke="#D0C8DC" stroke-width="1"/>
+  <!-- Page lines right -->
+  <line x1="105" y1="139" x2="136" y2="139" stroke="#D0C8DC" stroke-width="1"/>
+  <line x1="105" y1="144" x2="136" y2="144" stroke="#D0C8DC" stroke-width="1"/>
+  <line x1="105" y1="149" x2="136" y2="149" stroke="#D0C8DC" stroke-width="1"/>
+
+  <!-- ── BOTTOM TEXT ── -->
+  <!-- 주니어솔로몬 split: 주니어 (lighter) + 솔로몬 (bold) -->
+  <text x="100" y="177" text-anchor="middle" font-family="'Pretendard Variable','Pretendard',sans-serif" font-size="16" fill="#3D2D6E" letter-spacing="-0.5">
+    <tspan font-weight="500">주니어</tspan><tspan font-weight="800">솔로몬</tspan>
+  </text>
+</svg>
