@@ -3,620 +3,605 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0d1b3e">
+  <meta name="theme-color" content="#3d1f6e">
   <title>오시는 길 | 주니어솔로몬</title>
-  <meta name="description" content="주니어솔로몬 오시는 길 — 서울시 용산구 이촌로 200 LG프라자 4층 403호. 이촌역(4호선) 1번 출구 도보 5분. ☎ 02-794-8123">
+  <meta name="description" content="주니어솔로몬 오시는 길 — 서울시 용산구 이촌로 200 LG프라자 4층 403호. 이촌역(4호선·경의중앙선) 1번 출구 도보 5분. ☎ 02-794-8123">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
   <link rel="stylesheet" href="style.css">
   <style>
-    /* contact.html — uses style.css tokens; no :root override needed */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--font); background: var(--canvas); color: var(--ink);
-      font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden;
-    }
-    .skip-link {
-      position: absolute; top: -100%; left: 16px; background: var(--purple); color: #fff;
-      padding: 8px 16px; border-radius: var(--r-md); font-size: 14px; font-weight: 700;
-      text-decoration: none; z-index: 9999; transition: top var(--t-fast);
-    }
-    .skip-link:focus { top: 8px; }
+    .anim { opacity:0; transform:translateY(20px); transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1); }
+    .anim.in  { opacity:1; transform:translateY(0); }
+    .anim-d1  { transition-delay:.08s; }
+    .anim-d2  { transition-delay:.16s; }
+    .anim-d3  { transition-delay:.24s; }
+    @media (prefers-reduced-motion:reduce) { .anim { opacity:1; transform:none; } }
 
-    /* ── HEADER ── */
-    .header {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      background: rgba(13,27,62,0.95); backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px); transition: box-shadow var(--t-base);
-    }
-    .header.scrolled { box-shadow: 0 2px 20px oklch(20% 0.012 265 / 0.20); }
-    .header-inner {
-      max-width: 1200px; margin: 0 auto; padding: 0 20px;
-      display: flex; align-items: center; justify-content: space-between; height: var(--header-h);
-    }
-    .logo { text-decoration: none; display: flex; align-items: center; gap: 10px; }
-    .logo-img {
-      width: 46px; height: 46px; flex-shrink: 0;
-      filter: drop-shadow(0 2px 6px oklch(32% 0.13 285 / 0.30));
-      transition: transform 220ms cubic-bezier(0.16,1,0.3,1);
-    }
-    .logo:hover .logo-img { transform: scale(1.05); }
-
-    .logo-text { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.2; }
-    .logo-sub  { font-size: 10px; color: rgba(255,255,255,0.55); letter-spacing: 0.5px; }
-    .nav { display: none; align-items: center; gap: 2px; }
-    .nav-item { position: relative; }
-    .nav-link {
-      display: flex; align-items: center; gap: 3px; padding: 7px 13px;
-      text-decoration: none; color: rgba(255,255,255,0.82); font-size: 14px; font-weight: 500;
-      border-radius: var(--r-md); transition: background var(--t-fast), color var(--t-fast);
-      background: none; border: none; cursor: pointer; font-family: var(--font);
-    }
-    .nav-link:hover { background: rgba(255,255,255,0.10); color: #fff; }
-    .nav-link[aria-current="page"] { color: var(--yellow); background: rgba(255,255,255,0.08); }
-    .nav-link svg { width: 12px; height: 12px; opacity: 0.5; transition: transform var(--t-base) var(--ease); }
-    .nav-item:hover .nav-link svg { transform: rotate(180deg); }
-    .dropdown {
-      position: absolute; top: calc(100% + 6px); left: 0; min-width: 160px;
-      background: var(--canvas); border: 1px solid var(--border); border-radius: var(--r-md);
-      box-shadow: var(--shadow-lg); opacity: 0; visibility: hidden;
-      transform: translateY(-6px) scale(0.97);
-      transition: opacity var(--t-base) var(--ease), visibility var(--t-base), transform var(--t-base) var(--ease); z-index: 200;
-    }
-    .nav-item:hover .dropdown { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
-    .dropdown a { display: block; padding: 10px 16px; font-size: 13px; color: var(--ink-muted); text-decoration: none; transition: background var(--t-fast); }
-    .dropdown a:hover { background: var(--surf-1); color: var(--purple); }
-    .header-cta { display: none; align-items: center; gap: 10px; }
-    .header-tel { font-size: 13px; color: rgba(255,255,255,0.70); text-decoration: none; font-weight: 500; }
-    .header-tel:hover { color: #fff; }
-    .header-btn {
-      background: var(--yellow); color: #fff; font-size: 13px; font-weight: 700;
-      padding: 8px 18px; border-radius: var(--r-pill); text-decoration: none;
-      transition: background var(--t-fast), transform var(--t-base) var(--ease);
-    }
-    .header-btn:hover { background: var(--yellow-deep); transform: translateY(-1px); }
-    .menu-toggle {
-      display: flex; flex-direction: column; gap: 5px;
-      padding: 8px; border: none; background: none; border-radius: var(--r-md); cursor: pointer;
-    }
-    .menu-toggle span { display: block; width: 20px; height: 2px; background: rgba(255,255,255,0.85); border-radius: 2px; transition: transform var(--t-base), opacity var(--t-base); }
-    .mobile-nav {
-      display: block; position: fixed; top: var(--header-h); left: 0; right: 0; bottom: 0;
-      background: var(--canvas); z-index: 999; overflow-y: auto;
-      padding: 24px 20px 48px; transform: translateX(101%);
-      transition: transform 0.28s var(--ease); border-top: 1px solid var(--border);
-    }
-    .mobile-nav.open { transform: translateX(0); }
-    .mobile-nav a {
-      display: block; padding: 14px 0; font-size: 18px; font-weight: 600;
-      color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--border);
-      transition: color var(--t-fast);
-    }
-    .mobile-nav a:hover { color: var(--purple); }
-    .mobile-nav a[aria-current="page"] { color: var(--purple); }
-    .mobile-nav .m-tel { color: var(--purple); font-size: 16px; border-bottom: none; margin-top: 8px; }
-    @media (min-width: 1024px) {
-      .nav { display: flex; } .header-cta { display: flex; } .menu-toggle { display: none; }
-      .header-inner { padding: 0 32px; }
-    }
-
-    /* ── LAYOUT ── */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-    @media (min-width: 1024px) { .container { padding: 0 32px; } }
-
-    /* ── PAGE HERO ── */
+    /* PAGE HERO */
     .page-hero {
-      padding-top: calc(var(--header-h) + 48px); padding-bottom: 56px;
-      background: linear-gradient(160deg, var(--canvas) 0%, var(--surf-1) 60%, var(--purple-light) 100%);
+      padding: calc(var(--header-h) + 56px) 0 56px;
+      background: linear-gradient(150deg, oklch(10% .03 292) 0%, oklch(18% .07 292) 60%, oklch(24% .10 285) 100%);
       position: relative; overflow: hidden;
     }
     .page-hero::before {
-      content: ''; position: absolute; width: 480px; height: 480px; border-radius: 50%;
-      background: radial-gradient(circle, oklch(68% 0.11 292 / 0.09), transparent 70%);
-      top: -180px; right: -80px; pointer-events: none;
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background: radial-gradient(ellipse 60% 70% at 80% 40%, oklch(68% .11 292 / .14), transparent);
     }
-    .breadcrumb {
-      display: flex; align-items: center; gap: 6px;
-      font-size: 13px; color: var(--ink-muted); margin-bottom: 20px; flex-wrap: wrap;
-    }
-    .breadcrumb a { color: var(--ink-muted); text-decoration: none; transition: color var(--t-fast); }
-    .breadcrumb a:hover { color: var(--purple); }
-    .breadcrumb-sep { opacity: 0.4; }
-    .page-title {
-      font-size: clamp(28px, 5vw, 46px); font-weight: 800;
-      letter-spacing: -0.02em; color: var(--ink); margin-bottom: 12px; line-height: 1.15;
-    }
-    .page-desc { font-size: 16px; color: var(--ink-muted); max-width: 50ch; line-height: 1.75; }
+    .breadcrumb { display:flex; align-items:center; gap:6px; font-size:13px; color:oklch(55% .04 292); margin-bottom:20px; flex-wrap:wrap; }
+    .breadcrumb a { color:oklch(55% .04 292); text-decoration:none; }
+    .breadcrumb a:hover { color:oklch(80% .05 292); }
+    .breadcrumb span { color:oklch(40% .04 292); }
+    .page-hero h1 { font-size:clamp(28px,5vw,52px); font-weight:800; color:#fff; letter-spacing:-.03em; line-height:1.1; }
+    .page-hero p  { font-size:clamp(15px,1.8vw,17px); color:oklch(70% .04 292); margin-top:14px; line-height:1.75; max-width:520px; }
 
-    /* ── MAP ── */
-    .map-section { padding: 56px 0; background: var(--surf-1); }
+    /* MAP */
+    .map-section { padding: 0; background: var(--surf-1); }
+    .map-embed {
+      width: 100%; height: 420px; border: none; display: block;
+    }
+    @media (min-width: 768px) { .map-embed { height: 500px; } }
     .map-placeholder {
-      border-radius: var(--r-lg); overflow: hidden;
-      background: linear-gradient(145deg, var(--surf-2) 0%, oklch(90% 0.05 264) 100%);
-      height: 360px; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 20px;
-      border: 2px dashed var(--border); position: relative;
+      height: 420px; background: var(--surf-2);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 16px; border-bottom: 1.5px solid var(--border);
     }
-    .map-pin-icon { color: var(--purple); }
-    .map-pin-icon svg { width: 52px; height: 52px; }
-    .map-addr-text { font-size: 17px; font-weight: 600; color: var(--ink); text-align: center; line-height: 1.65; }
-    .map-link {
+    @media (min-width: 768px) { .map-placeholder { height: 500px; } }
+    .map-placeholder-icon { font-size: 3rem; }
+    .map-placeholder-text { font-size: 1rem; font-weight: 600; color: var(--ink-muted); text-align: center; line-height: 1.7; }
+    .map-naver-btn {
       display: inline-flex; align-items: center; gap: 8px;
-      background: var(--purple); color: #fff; text-decoration: none;
-      padding: 12px 26px; border-radius: var(--r-pill); font-size: 14px; font-weight: 700;
-      transition: background var(--t-fast), transform var(--t-base) var(--ease);
-      box-shadow: var(--shadow-btn);
+      background: #03c75a; color: #fff; text-decoration: none;
+      padding: 11px 22px; border-radius: var(--r-pill);
+      font-size: 14px; font-weight: 700;
+      transition: opacity var(--t-fast), transform var(--t-base) cubic-bezier(.16,1,.3,1);
     }
-    .map-link:hover { background: var(--purple-deep); transform: translateY(-2px); }
-    .map-link svg { width: 16px; height: 16px; }
+    .map-naver-btn:hover { opacity: .88; transform: translateY(-2px); }
+    .map-kakao-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #FEE500; color: #3B1B1B; text-decoration: none;
+      padding: 11px 22px; border-radius: var(--r-pill);
+      font-size: 14px; font-weight: 700;
+      transition: opacity var(--t-fast), transform var(--t-base) cubic-bezier(.16,1,.3,1);
+    }
+    .map-kakao-btn:hover { opacity: .9; transform: translateY(-2px); }
+    .map-btns { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 
-    /* ── INFO CARDS ── */
-    .section-eyebrow {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: var(--purple-light); color: var(--purple);
-      font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
-      padding: 5px 14px; border-radius: var(--r-pill); margin-bottom: 16px;
-    }
-    .section-title {
-      font-size: clamp(22px, 3.5vw, 34px); font-weight: 800;
-      letter-spacing: -0.02em; color: var(--ink); margin-bottom: 8px;
-    }
-    .section-desc { font-size: 16px; color: var(--ink-muted); max-width: 52ch; line-height: 1.75; margin-bottom: 40px; }
-
-    .info-section { padding: 72px 0; }
+    /* INFO CARDS */
+    .info-section { padding: 5rem 2rem; background: var(--canvas); }
     .info-grid {
-      display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 40px;
+      display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 2.5rem;
     }
-    @media (min-width: 640px) { .info-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 640px)  { .info-grid { grid-template-columns: 1fr 1fr; } }
     @media (min-width: 1024px) { .info-grid { grid-template-columns: repeat(3, 1fr); } }
-
     .info-card {
-      background: var(--canvas); border-radius: var(--r-lg);
-      border: 1px solid var(--border); padding: 28px;
-      box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 10px;
-      transition: transform var(--t-base) var(--ease), box-shadow var(--t-base);
+      background: var(--surf-0); border: 1.5px solid var(--border);
+      border-radius: 14px; padding: 1.5rem 1.75rem;
+      display: flex; flex-direction: column; gap: .6rem;
+      transition: box-shadow .25s, transform .25s;
     }
-    .info-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-    .info-card-icon {
-      width: 44px; height: 44px; border-radius: var(--r-md);
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    .info-card:hover { box-shadow: 0 6px 24px oklch(68% .11 292 / .1); transform: translateY(-2px); }
+    .info-icon {
+      width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
     }
-    .info-card-icon svg { width: 22px; height: 22px; }
-    .info-card-icon.indigo { background: var(--purple-light); color: var(--purple); }
-    .info-card-icon.orange { background: oklch(93% 0.07 55); color: oklch(52% 0.18 50); }
-    .info-card-label { font-size: 11px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--ink-muted); }
-    .info-card-value { font-size: 15px; color: var(--ink); font-weight: 500; line-height: 1.65; }
-    .info-card-value a { color: var(--purple); text-decoration: none; font-weight: 600; }
-    .info-card-value a:hover { text-decoration: underline; }
-    .info-card-sub { font-size: 13px; color: var(--ink-muted); line-height: 1.6; }
+    .info-icon.purple { background: var(--purple-light); }
+    .info-icon.yellow { background: var(--yellow-light); }
+    .info-label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--purple); }
+    .info-value { font-size: 14px; color: var(--ink); font-weight: 500; line-height: 1.7; }
+    .info-value a { color: var(--purple); text-decoration: none; font-weight: 600; }
+    .info-value a:hover { text-decoration: underline; }
+    .info-sub { font-size: 12px; color: var(--ink-subtle); line-height: 1.6; }
 
-    /* ── HOURS ── */
-    .hours-section { padding: 56px 0; background: var(--surf-1); }
-    .hours-table-wrap { overflow-x: auto; border-radius: var(--r-lg); box-shadow: var(--shadow-md); margin-top: 40px; }
-    .hours-table { width: 100%; border-collapse: collapse; min-width: 480px; }
-    .hours-table thead { background: var(--purple); color: #fff; }
-    .hours-table thead th { padding: 14px 20px; text-align: left; font-size: 14px; font-weight: 700; }
-    .hours-table tbody tr { border-bottom: 1px solid var(--border); transition: background var(--t-fast); }
-    .hours-table tbody tr:last-child { border-bottom: none; }
-    .hours-table tbody tr:hover { background: oklch(94% 0.010 265); }
-    .hours-table td { padding: 14px 20px; font-size: 15px; color: var(--ink); background: var(--canvas); }
-    .hours-table td:first-child { font-weight: 600; }
-    .hours-badge {
-      display: inline-block; padding: 3px 10px; border-radius: var(--r-pill);
-      font-size: 12px; font-weight: 700;
+    /* HOURS */
+    .hours-section { padding: 5rem 2rem; background: var(--surf-1); }
+    .hours-table-wrap { overflow-x: auto; border-radius: 14px; border: 1.5px solid var(--border); margin-top: 2rem; }
+    .hours-table { width: 100%; border-collapse: collapse; min-width: 440px; }
+    .hours-table thead tr { background: var(--purple-deep); }
+    .hours-table th {
+      padding: 14px 20px; font-size: 12px; font-weight: 700;
+      letter-spacing: .05em; text-transform: uppercase; color: oklch(85% .04 292); text-align: left;
     }
-    .hours-badge.open   { background: oklch(90% 0.10 145); color: oklch(32% 0.15 145); }
-    .hours-badge.closed { background: oklch(93% 0.02 30);  color: oklch(42% 0.10 30);  }
+    .hours-table td {
+      padding: 14px 20px; font-size: 14px; color: var(--ink-muted);
+      border-bottom: 1.5px solid var(--border);
+    }
+    .hours-table tr:last-child td { border-bottom: none; }
+    .hours-table td:first-child { font-weight: 700; color: var(--ink); }
+    .hours-table tr:hover td { background: var(--purple-xlight); }
+    .badge-open   { display:inline-block; padding:3px 10px; border-radius:100px; font-size:11px; font-weight:700; background:oklch(91% .10 145); color:oklch(32% .15 145); }
+    .badge-closed { display:inline-block; padding:3px 10px; border-radius:100px; font-size:11px; font-weight:700; background:oklch(93% .02 30); color:oklch(42% .10 30); }
 
-    /* ── SNS ── */
-    .sns-section { padding: 72px 0; }
-    .sns-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 36px; }
+    /* TRANSPORT */
+    .transport-section { padding: 5rem 2rem; background: var(--canvas); }
+    .transport-grid {
+      display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 2rem;
+    }
+    @media (min-width: 640px) { .transport-grid { grid-template-columns: 1fr 1fr; } }
+    .transport-card {
+      background: var(--purple-xlight); border: 1.5px solid var(--purple-light);
+      border-radius: 14px; padding: 1.5rem 1.75rem;
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .transport-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: .1rem; }
+    .transport-type { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--purple); margin-bottom: .3rem; }
+    .transport-desc { font-size: .9rem; color: var(--ink-muted); line-height: 1.75; }
+    .transport-desc strong { color: var(--purple-deep); }
+
+    /* SNS */
+    .sns-section { padding: 5rem 2rem; background: var(--surf-1); }
+    .sns-grid { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
     .sns-card {
-      display: flex; align-items: center; gap: 16px;
-      background: var(--canvas); border: 1px solid var(--border);
-      border-radius: var(--r-lg); padding: 22px 28px;
-      text-decoration: none; color: var(--ink); box-shadow: var(--shadow-sm);
       flex: 1; min-width: 240px;
-      transition: transform var(--t-base) var(--ease), box-shadow var(--t-base);
+      display: flex; align-items: center; gap: 1rem;
+      background: var(--surf-0); border: 1.5px solid var(--border);
+      border-radius: 14px; padding: 1.25rem 1.5rem;
+      text-decoration: none; color: var(--ink);
+      transition: box-shadow .25s, transform .25s;
     }
-    .sns-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
-    .sns-icon { width: 48px; height: 48px; border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .sns-icon svg { width: 24px; height: 24px; }
+    .sns-card:hover { box-shadow: 0 6px 24px oklch(68% .11 292 / .1); transform: translateY(-2px); }
+    .sns-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .sns-icon svg { width: 22px; height: 22px; }
     .sns-icon.insta { background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af); color: #fff; }
     .sns-icon.naver { background: #03c75a; color: #fff; }
-    .sns-name   { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+    .sns-name   { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
     .sns-handle { font-size: 13px; color: var(--ink-muted); }
 
-    /* ── CTA BAND ── */
-    .cta-band {
-      padding: 80px 0; text-align: center;
-      background: linear-gradient(135deg, var(--purple) 0%, var(--purple-deep) 100%);
-      position: relative; overflow: hidden;
+    /* CONSULT */
+    .consult { background: var(--purple-deep); padding: 72px 0; text-align: center; }
+    .consult-title { font-size:clamp(22px,3.5vw,36px); font-weight:800; color:#fff; letter-spacing:-.025em; text-wrap:balance; }
+    .consult-sub { font-size:15px; color:oklch(72% .05 292); margin-top:12px; }
+    .consult-cta { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:32px; }
+    .btn-naver {
+      background:oklch(76% .09 292); color:#fff; padding:15px 30px; border-radius:var(--r-pill);
+      font-size:15px; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+      transition:opacity var(--t-fast),transform var(--t-base) cubic-bezier(.16,1,.3,1);
     }
-    .cta-band::before {
-      content: ''; position: absolute; width: 420px; height: 420px; border-radius: 50%;
-      background: oklch(99% 0.004 265 / 0.06); top: -160px; right: -80px; pointer-events: none;
+    .btn-naver:hover { opacity:.88; transform:translateY(-2px); }
+    .btn-kakao {
+      background:#FEE500; color:#3B1B1B; padding:15px 30px; border-radius:var(--r-pill);
+      font-size:15px; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+      transition:opacity var(--t-fast),transform var(--t-base) cubic-bezier(.16,1,.3,1);
     }
-    .cta-band::after {
-      content: ''; position: absolute; width: 280px; height: 280px; border-radius: 50%;
-      background: oklch(70% 0.20 55 / 0.12); bottom: -100px; left: -60px; pointer-events: none;
+    .btn-kakao:hover { opacity:.9; transform:translateY(-2px); }
+    .btn-tel {
+      background:#fff; color:var(--purple-deep); padding:15px 30px; border-radius:var(--r-pill);
+      font-size:15px; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+      transition:opacity var(--t-fast),transform var(--t-base) cubic-bezier(.16,1,.3,1);
     }
-    .cta-inner { position: relative; z-index: 1; }
-    .cta-tag {
-      display: inline-block; background: oklch(70% 0.20 55 / 0.20); color: var(--yellow);
-      font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
-      padding: 5px 14px; border-radius: var(--r-pill); margin-bottom: 20px;
-    }
-    .cta-title {
-      font-size: clamp(24px, 4vw, 40px); font-weight: 800;
-      letter-spacing: -0.02em; color: #fff; margin-bottom: 14px; line-height: 1.2;
-    }
-    .cta-desc { font-size: 16px; color: rgba(255,255,255,0.75); max-width: 44ch; margin: 0 auto 36px; line-height: 1.75; }
-    .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .btn-white {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: #fff; color: var(--purple); font-size: 15px; font-weight: 700;
-      padding: 14px 28px; border-radius: var(--r-pill); text-decoration: none;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-      transition: background var(--t-fast), transform var(--t-base) var(--ease);
-    }
-    .btn-white:hover { background: var(--surf-1); transform: translateY(-2px); }
-    .btn-outline-white {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: transparent; color: #fff; font-size: 15px; font-weight: 700;
-      padding: 13px 28px; border-radius: var(--r-pill); text-decoration: none;
-      border: 2px solid rgba(255,255,255,0.50);
-      transition: border-color var(--t-fast), background var(--t-fast), transform var(--t-base) var(--ease);
-    }
-    .btn-outline-white:hover { border-color: #fff; background: rgba(255,255,255,0.10); transform: translateY(-1px); }
-
-    /* ── FOOTER ── */
-    .footer { background: oklch(14% 0.025 265); color: rgba(255,255,255,0.60); padding: 64px 0 32px; }
-    .footer-inner {
-      max-width: 1200px; margin: 0 auto; padding: 0 20px 48px;
-      display: grid; grid-template-columns: 1fr; gap: 32px;
-    }
-    @media (min-width: 1024px) { .footer-inner { grid-template-columns: 2fr 1fr 1fr 1fr; padding: 0 32px 48px; gap: 48px; } }
-    .footer-brand p { font-size: 13px; line-height: 1.8; margin-top: 12px; }
-    .footer-col h4 { font-size: 11px; font-weight: 700; color: #fff; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
-    .footer-col ul { list-style: none; }
-    .footer-col li { margin-bottom: 9px; }
-    .footer-col a { font-size: 14px; color: rgba(255,255,255,0.55); text-decoration: none; transition: color var(--t-fast); }
-    .footer-col a:hover { color: #fff; }
-    .footer-bottom {
-      max-width: 1200px; margin: 0 auto; padding: 24px 20px 0;
-      border-top: 1px solid rgba(255,255,255,0.10);
-      display: flex; flex-direction: column; gap: 8px;
-    }
-    @media (min-width: 1024px) { .footer-bottom { flex-direction: row; justify-content: space-between; align-items: center; padding: 24px 32px 0; } }
-    .footer-bottom span { font-size: 12px; color: rgba(255,255,255,0.30); }
-
-    /* ── SCROLL TOP ── */
-    .scroll-top {
-      position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px;
-      border-radius: 50%; background: var(--purple); color: #fff;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; border: none; box-shadow: var(--shadow-btn);
-      transition: opacity var(--t-base), visibility var(--t-base), transform var(--t-base) var(--ease);
-      opacity: 0; visibility: hidden; z-index: 500;
-    }
-    .scroll-top.visible { opacity: 1; visibility: visible; }
-    .scroll-top:hover { transform: translateY(-3px) scale(1.1); }
-
-    /* ── ANIM ── */
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    .anim { opacity: 0; }
-    .anim.in { animation: fadeUp 0.45s var(--ease) forwards; }
-    .anim:nth-child(2) { animation-delay: 0.06s; }
-    .anim:nth-child(3) { animation-delay: 0.12s; }
-    .anim:nth-child(4) { animation-delay: 0.18s; }
-    .anim:nth-child(5) { animation-delay: 0.24s; }
-    .anim:nth-child(6) { animation-delay: 0.30s; }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-      .anim { opacity: 1; }
-    }
+    .btn-tel:hover { opacity:.88; transform:translateY(-2px); }
   </style>
 </head>
 <body>
-  <a href="#main-content" class="skip-link">본문 바로가기</a>
+<a href="#main" class="skip-link">본문 바로가기</a>
 
-  <header class="header" id="header">
-    <div class="header-inner">
-      <a href="index.html" class="logo" aria-label="주니어솔로몬 홈으로">
-        <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="46" height="46">
-        <div><div class="logo-text">주니어솔로몬</div><div class="logo-sub">Jr. Solomon Academy</div></div>
-      </a>
-      <nav class="nav" aria-label="주메뉴">
-        <div class="nav-item">
-          <button class="nav-link" aria-haspopup="true">학원소개 <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"/></svg></button>
-          <div class="dropdown">
-            <a href="vision.html">비전 &amp; 교육철학</a>
-            <a href="mission.html">교육방향</a>
-            <a href="introduction.html">선생님 소개</a>
-            <a href="facility.html">시설 안내</a>
-          </div>
+<!-- HEADER -->
+<header class="header" id="header" role="banner">
+  <div class="header-inner">
+    <a href="index.html" class="logo" aria-label="주니어솔로몬 홈으로">
+      <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="46" height="46">
+      <div><div class="logo-text">주니어솔로몬</div><div class="logo-sub">Jr. Solomon Academy</div></div>
+    </a>
+    <nav class="nav" role="navigation" aria-label="주메뉴">
+      <div class="nav-item">
+        <button class="nav-link" aria-haspopup="true" aria-expanded="false">
+          학원소개
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"/></svg>
+        </button>
+        <div class="dropdown" role="menu">
+          <a href="vision.html" role="menuitem">비전 &amp; 교육철학</a>
+          <a href="mission.html" role="menuitem">교육방향</a>
+          <a href="introduction.html" role="menuitem">선생님 소개</a>
+          <a href="facility.html" role="menuitem">시설 안내</a>
         </div>
-        <a href="curriculum.html" class="nav-link">커리큘럼</a>
-        <a href="introduction.html" class="nav-link">선생님소개</a>
-        <a href="fee.html" class="nav-link">교습비</a>
-        <a href="board-notice.html" class="nav-link">공지사항</a>
-        <a href="contact.html" class="nav-link" aria-current="page">오시는길</a>
-      </nav>
-          <div class="header-cta-stack">
-      <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="header-btn header-btn-naver">
-        💬 네이버 톡톡
-      </a>
-      <a href="http://pf.kakao.com/_xadGxnxb" target="_blank" rel="noopener noreferrer" class="header-btn header-btn-kakao">
-        🟡 카카오톡 채널
-      </a>
+      </div>
+      <div class="nav-item">
+        <button class="nav-link" aria-haspopup="true" aria-expanded="false">
+          프로그램
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"/></svg>
+        </button>
+        <div class="dropdown" role="menu">
+          <a href="curriculum.html" role="menuitem">커리큘럼</a>
+          <a href="edu-1.html" role="menuitem">소포스에듀</a>
+          <a href="fee.html" role="menuitem">교습비 안내</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <button class="nav-link" aria-haspopup="true" aria-expanded="false">
+          커뮤니티
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"/></svg>
+        </button>
+        <div class="dropdown" role="menu">
+          <a href="board-notice.html" role="menuitem">공지사항</a>
+          <a href="board-gallery.html" role="menuitem">갤러리</a>
+          <a href="board-qna.html" role="menuitem">Q&amp;A</a>
+          <a href="board-review.html" role="menuitem">수강후기</a>
+        </div>
+      </div>
+      <a href="contact.html" class="nav-link active" aria-current="page">오시는길</a>
+    </nav>
+    <div class="header-cta-stack">
+      <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="header-btn header-btn-naver">💬 네이버 톡톡</a>
+      <a href="http://pf.kakao.com/_xadGxnxb" target="_blank" rel="noopener noreferrer" class="header-btn header-btn-kakao">🟡 카카오톡 채널</a>
     </div>
-      <button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+    <button class="menu-toggle" aria-label="메뉴 열기" aria-expanded="false" id="menuToggle">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav" aria-label="모바일 메뉴">
+  <a href="vision.html">비전 &amp; 교육철학</a>
+  <a href="mission.html">교육방향</a>
+  <a href="introduction.html">선생님 소개</a>
+  <a href="facility.html">시설 안내</a>
+  <a href="curriculum.html">커리큘럼</a>
+  <a href="edu-1.html">소포스에듀</a>
+  <a href="fee.html">교습비 안내</a>
+  <a href="board-notice.html">공지사항</a>
+  <a href="board-gallery.html">갤러리</a>
+  <a href="board-qna.html">Q&amp;A</a>
+  <a href="board-review.html">수강후기</a>
+  <a href="contact.html" aria-current="page">오시는길</a>
+  <a href="tel:027948123" class="m-tel">☎ 02-794-8123</a>
+  <div class="m-cta-row">
+    <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="m-cta-naver">💬 네이버 톡톡</a>
+    <a href="http://pf.kakao.com/_xadGxnxb" target="_blank" rel="noopener noreferrer" class="m-cta-kakao">🟡 카카오채널</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero" aria-labelledby="page-title">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="현재 위치">
+      <a href="index.html">홈</a><span aria-hidden="true">›</span>
+      <span aria-current="page">오시는 길</span>
+    </nav>
+    <h1 id="page-title" class="anim">오시는 길</h1>
+    <p class="anim anim-d1">
+      서울시 용산구 이촌로 200 LG프라자 4층 403호<br>
+      이촌역(4호선·경의중앙선) 1번 출구에서 도보 5분
+    </p>
+  </div>
+</section>
+
+<main id="main">
+
+  <!-- MAP -->
+  <section class="map-section" aria-label="지도">
+    <div class="map-placeholder">
+      <div class="map-placeholder-icon" aria-hidden="true">📍</div>
+      <p class="map-placeholder-text">
+        서울시 용산구 이촌로 200<br>
+        LG프라자 4층 403호
+      </p>
+      <div class="map-btns">
+        <a href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%EC%8B%9C+%EC%9A%A9%EC%82%B0%EA%B5%AC+%EC%9D%B4%EC%B4%8C%EB%A1%9C+200+LG%ED%94%84%EB%9D%BC%EC%9E%90"
+           target="_blank" rel="noopener noreferrer" class="map-naver-btn">
+          네이버 지도로 보기
+        </a>
+        <a href="https://map.kakao.com/link/search/서울시+용산구+이촌로+200+LG프라자"
+           target="_blank" rel="noopener noreferrer" class="map-kakao-btn">
+          카카오맵으로 보기
+        </a>
+      </div>
     </div>
-  </header>
-  <nav class="mobile-nav" id="mobileNav" aria-label="모바일 메뉴">
-    <a href="index.html">홈</a>
-    <a href="vision.html">학원소개</a>
-    <a href="curriculum.html">커리큘럼</a>
-    <a href="introduction.html">선생님소개</a>
-    <a href="fee.html">교습비</a>
-    <a href="board-notice.html">공지사항</a>
-    <a href="contact.html" aria-current="page">오시는길</a>
-    <a href="tel:027948123" class="m-tel">☎ 02-794-8123</a>
-    <div class="m-cta-row">
-      <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="m-cta-naver">💬 네이버 톡톡</a>
-      <a href="http://pf.kakao.com/_xadGxnxb" target="_blank" rel="noopener noreferrer" class="m-cta-kakao">🟡 카카오채널</a>
-    </div>
-  </nav>
+  </section>
 
-  <main id="main-content">
-
-    <!-- PAGE HERO -->
-    <section class="page-hero">
-      <div class="container">
-        <nav class="breadcrumb" aria-label="현재 위치">
-          <a href="index.html">홈</a>
-          <span class="breadcrumb-sep" aria-hidden="true">›</span>
-          <span>오시는 길</span>
-        </nav>
-        <h1 class="page-title anim">오시는 길</h1>
-        <p class="page-desc anim">서울시 용산구 이촌로 200 LG프라자 4층 403호<br>이촌역(4호선) 1번 출구에서 도보 5분 거리에 있습니다.</p>
+  <!-- CONTACT INFO -->
+  <section class="info-section" aria-labelledby="info-title">
+    <div class="container">
+      <div class="center anim">
+        <span class="sec-label">연락처 안내</span>
+        <h2 class="sec-title" id="info-title">주요 연락처</h2>
+        <p class="sec-sub">방문 전 사전 상담을 권장합니다. 편한 방법으로 연락 주세요.</p>
       </div>
-    </section>
+      <div class="info-grid">
 
-    <!-- MAP -->
-    <section class="map-section">
-      <div class="container">
-        <div class="map-placeholder anim">
-          <div class="map-pin-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-              <circle cx="12" cy="9" r="2.5"/>
-            </svg>
-          </div>
-          <p class="map-addr-text">서울시 용산구 이촌로 200<br>LG프라자 4층 403호</p>
-          <a href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%EC%8B%9C+%EC%9A%A9%EC%82%B0%EA%B5%AC+%EC%9D%B4%EC%B4%8C%EB%A1%9C+200+LG%ED%94%84%EB%9D%BC%EC%9E%90"
-             target="_blank" rel="noopener noreferrer" class="map-link">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-            네이버 지도로 보기
-          </a>
+        <div class="info-card anim anim-d1">
+          <div class="info-icon purple" aria-hidden="true">🏢</div>
+          <div class="info-label">주소</div>
+          <div class="info-value">서울시 용산구 이촌로 200<br>LG프라자 4층 403호</div>
+          <div class="info-sub">우편번호 04377</div>
         </div>
-      </div>
-    </section>
 
-    <!-- CONTACT INFO CARDS -->
-    <section class="info-section">
-      <div class="container">
-        <div class="section-eyebrow anim">연락처 &amp; 교통 안내</div>
-        <h2 class="section-title anim">주요 연락처 및 찾아오시는 방법</h2>
-        <p class="section-desc anim">궁금한 점은 언제든지 전화 또는 이메일로 문의해 주세요. 방문 전 사전 상담을 권장합니다.</p>
-        <div class="info-grid">
-          <div class="info-card anim">
-            <div class="info-card-icon indigo">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-              </svg>
-            </div>
-            <div class="info-card-label">주소</div>
-            <div class="info-card-value">서울시 용산구 이촌로 200<br>LG프라자 4층 403호</div>
-            <div class="info-card-sub">우편번호 04377</div>
+        <div class="info-card anim anim-d2">
+          <div class="info-icon purple" aria-hidden="true">📞</div>
+          <div class="info-label">전화</div>
+          <div class="info-value">
+            <a href="tel:027948123">02-794-8123</a> (대표)<br>
+            <a href="tel:01032128123">010-3212-8123</a> (상담)
           </div>
-          <div class="info-card anim">
-            <div class="info-card-icon indigo">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.42 9.79 19.79 19.79 0 01.35 1.15 2 2 0 012.53 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.5A16 16 0 0015.5 17.09l.87-.87a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
-              </svg>
-            </div>
-            <div class="info-card-label">전화</div>
-            <div class="info-card-value">
-              <a href="tel:027948123">02-794-8123</a> (대표)<br>
-              <a href="tel:01032128123">010-3212-8123</a> (상담)
-            </div>
-            <div class="info-card-sub">운영 시간 내 통화 가능</div>
-          </div>
-          <div class="info-card anim">
-            <div class="info-card-icon orange">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                <polyline points="22,6 12,13 2,6"/>
-              </svg>
-            </div>
-            <div class="info-card-label">이메일</div>
-            <div class="info-card-value"><a href="mailto:juniorsolomon@naver.com">juniorsolomon@naver.com</a></div>
-            <div class="info-card-sub">이메일로 입학 문의 가능합니다</div>
-          </div>
-          <div class="info-card anim">
-            <div class="info-card-icon indigo">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="1" y="6" width="22" height="13" rx="2" ry="2"/>
-                <polyline points="5,6 12,13 19,6"/>
-              </svg>
-            </div>
-            <div class="info-card-label">교통</div>
-            <div class="info-card-value">이촌역 (4호선·경의중앙선)<br>1번 출구 도보 5분</div>
-            <div class="info-card-sub">버스: 용산구청 방면 이촌동 하차</div>
-          </div>
-          <div class="info-card anim">
-            <div class="info-card-icon orange">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                <path d="M9 17V7h4a3 3 0 0 1 0 6H9"/>
-              </svg>
-            </div>
-            <div class="info-card-label">주차</div>
-            <div class="info-card-value">LG프라자 건물 내 주차장</div>
-            <div class="info-card-sub">수업 방문 시 1시간 무료 (원무실 확인 후 스티커 수령)</div>
-          </div>
-          <div class="info-card anim">
-            <div class="info-card-icon indigo">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-              </svg>
-            </div>
-            <div class="info-card-label">등록 정보</div>
-            <div class="info-card-value">중부지원교육청 제3336호</div>
-            <div class="info-card-sub">2022 한국브랜드소비자평가 대상 수상 학원</div>
-          </div>
+          <div class="info-sub">운영 시간 내 통화 가능</div>
         </div>
-      </div>
-    </section>
 
-    <!-- OPERATING HOURS -->
-    <section class="hours-section">
-      <div class="container">
-        <div class="section-eyebrow anim">운영 시간</div>
-        <h2 class="section-title anim">운영 시간 안내</h2>
-        <p class="section-desc anim">방문 전 반드시 전화 또는 이메일로 사전 상담을 예약해 주시기 바랍니다. 방학 기간 운영 시간은 별도 공지됩니다.</p>
-        <div class="hours-table-wrap anim">
-          <table class="hours-table">
-            <thead>
-              <tr>
-                <th>요일</th>
-                <th>운영 시간</th>
-                <th>상태</th>
-                <th>비고</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>월요일 – 금요일</td>
-                <td>14:00 – 21:00</td>
-                <td><span class="hours-badge open">운영</span></td>
-                <td>수업 및 상담 가능</td>
-              </tr>
-              <tr>
-                <td>토요일</td>
-                <td>10:00 – 18:00</td>
-                <td><span class="hours-badge open">운영</span></td>
-                <td>오전 수업 및 상담 가능</td>
-              </tr>
-              <tr>
-                <td>일요일</td>
-                <td>–</td>
-                <td><span class="hours-badge closed">휴원</span></td>
-                <td>–</td>
-              </tr>
-              <tr>
-                <td>공휴일</td>
-                <td>–</td>
-                <td><span class="hours-badge closed">휴원</span></td>
-                <td>방학 특강 기간은 별도 안내</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="info-card anim anim-d3">
+          <div class="info-icon yellow" aria-hidden="true">✉️</div>
+          <div class="info-label">이메일</div>
+          <div class="info-value"><a href="mailto:juniorsolomon@naver.com">juniorsolomon@naver.com</a></div>
+          <div class="info-sub">입학 문의 및 상담 가능</div>
         </div>
-      </div>
-    </section>
 
-    <!-- SNS -->
-    <section class="sns-section">
-      <div class="container">
-        <div class="section-eyebrow anim">SNS 채널</div>
-        <h2 class="section-title anim">소셜 미디어로 소식 받기</h2>
-        <p class="section-desc anim">인스타그램과 네이버 블로그에서 수업 현장, 공지사항, 이벤트 소식을 실시간으로 확인하세요.</p>
-        <div class="sns-grid">
-          <a href="https://www.instagram.com/juniorsolomon" target="_blank" rel="noopener noreferrer" class="sns-card anim">
-            <div class="sns-icon insta">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-            </div>
-            <div>
-              <div class="sns-name">Instagram</div>
-              <div class="sns-handle">@juniorsolomon</div>
-            </div>
-          </a>
-          <a href="https://blog.naver.com/juniorsolomon" target="_blank" rel="noopener noreferrer" class="sns-card anim">
-            <div class="sns-icon naver">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
-            </div>
-            <div>
-              <div class="sns-name">Naver Blog</div>
-              <div class="sns-handle">blog.naver.com/juniorsolomon</div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="cta-band">
-      <div class="container">
-        <div class="cta-inner">
-          <div class="cta-tag anim">입학 상담</div>
-          <h2 class="cta-title anim">지금 바로 상담 문의하세요</h2>
-          <p class="cta-desc anim">질문 하나가 아이의 생각을 바꿉니다. 주니어솔로몬에서 철학적 사고와 독서·글쓰기의 힘을 경험해 보세요.</p>
-          <div class="cta-btns">
-            <a href="tel:027948123" class="btn-white anim">
-              <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path fill-rule="evenodd" d="M2 3.5A1.5 1.5 0 013.5 2h1.148a1.5 1.5 0 011.465 1.175l.716 3.223a1.5 1.5 0 01-1.052 1.767l-.933.267c-.41.117-.643.555-.48.95a11.542 11.542 0 006.254 6.254c.395.163.833-.07.95-.48l.267-.933a1.5 1.5 0 011.767-1.052l3.223.716A1.5 1.5 0 0118 15.352V16.5a1.5 1.5 0 01-1.5 1.5H15c-1.149 0-2.263-.15-3.326-.43A13.022 13.022 0 012.43 8.326 13.019 13.019 0 012 5V3.5z" clip-rule="evenodd"/></svg>
-              02-794-8123
+        <div class="info-card anim anim-d1">
+          <div class="info-icon purple" aria-hidden="true">💬</div>
+          <div class="info-label">네이버 톡톡</div>
+          <div class="info-value">
+            <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer">
+              네이버 톡톡 바로가기
             </a>
-            <a href="introduction.html" class="btn-outline-white anim">입학 상담 신청</a>
+          </div>
+          <div class="info-sub">빠른 답변 가능 · 운영 시간 내</div>
+        </div>
+
+        <div class="info-card anim anim-d2">
+          <div class="info-icon yellow" aria-hidden="true">🟡</div>
+          <div class="info-label">카카오톡 채널</div>
+          <div class="info-value">
+            <a href="http://pf.kakao.com/_xadGxnxb" target="_blank" rel="noopener noreferrer">
+              카카오톡 채널 바로가기
+            </a>
+          </div>
+          <div class="info-sub">카카오로 편하게 문의하세요</div>
+        </div>
+
+        <div class="info-card anim anim-d3">
+          <div class="info-icon purple" aria-hidden="true">🏛️</div>
+          <div class="info-label">등록 정보</div>
+          <div class="info-value">중부교육지원청 제3336호</div>
+          <div class="info-sub">2022 한국브랜드소비자평가 대상</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HOURS -->
+  <section class="hours-section" aria-labelledby="hours-title">
+    <div class="container">
+      <div class="center anim">
+        <span class="sec-label">운영 시간</span>
+        <h2 class="sec-title" id="hours-title">운영 시간 안내</h2>
+        <p class="sec-sub">방학 기간 운영 시간은 별도 공지됩니다</p>
+      </div>
+      <div class="hours-table-wrap anim anim-d1">
+        <table class="hours-table" aria-label="운영 시간 안내">
+          <thead>
+            <tr>
+              <th scope="col">요일</th>
+              <th scope="col">운영 시간</th>
+              <th scope="col">상태</th>
+              <th scope="col">비고</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>월요일 – 금요일</td>
+              <td>오후 2:00 – 오후 7:00</td>
+              <td><span class="badge-open">운영</span></td>
+              <td>수업 및 상담 가능</td>
+            </tr>
+            <tr>
+              <td>토요일</td>
+              <td>오전 10:00 – 오후 3:00</td>
+              <td><span class="badge-open">운영</span></td>
+              <td>오전 수업 및 상담 가능</td>
+            </tr>
+            <tr>
+              <td>일요일</td>
+              <td>–</td>
+              <td><span class="badge-closed">휴원</span></td>
+              <td>–</td>
+            </tr>
+            <tr>
+              <td>공휴일</td>
+              <td>–</td>
+              <td><span class="badge-closed">휴원</span></td>
+              <td>방학 특강 기간은 별도 안내</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSPORT -->
+  <section class="transport-section" aria-labelledby="transport-title">
+    <div class="container">
+      <div class="center anim">
+        <span class="sec-label">찾아오시는 방법</span>
+        <h2 class="sec-title" id="transport-title">교통 안내</h2>
+        <p class="sec-sub">대중교통을 이용하시면 편리하게 오실 수 있습니다</p>
+      </div>
+      <div class="transport-grid">
+
+        <div class="transport-card anim anim-d1">
+          <div class="transport-icon" aria-hidden="true">🚇</div>
+          <div>
+            <div class="transport-type">지하철</div>
+            <div class="transport-desc">
+              <strong>이촌역 (4호선·경의중앙선)</strong><br>
+              1번 출구로 나와 도보 약 5분<br>
+              LG프라자 건물 4층 403호
+            </div>
           </div>
         </div>
-      </div>
-    </section>
 
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="logo" style="margin-bottom:12px;">
-          <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="46" height="46">
-          <div><div class="logo-text">주니어솔로몬</div><div class="logo-sub">Jr. Solomon Academy</div></div>
+        <div class="transport-card anim anim-d2">
+          <div class="transport-icon" aria-hidden="true">🚌</div>
+          <div>
+            <div class="transport-type">버스</div>
+            <div class="transport-desc">
+              <strong>이촌동 정류장</strong> 하차 후 도보<br>
+              간선 버스 및 지선 버스 이용<br>
+              용산구청 방면 이촌로 경유
+            </div>
+          </div>
         </div>
-        <p>서울시 용산구 이촌로 200 LG프라자 4층 403호<br>대표전화: 02-794-8123 | 상담: 010-3212-8123<br>이메일: juniorsolomon@naver.com<br>중부지원교육청 제3336호</p>
+
+        <div class="transport-card anim anim-d1">
+          <div class="transport-icon" aria-hidden="true">🚗</div>
+          <div>
+            <div class="transport-type">자가용</div>
+            <div class="transport-desc">
+              <strong>LG프라자 건물 내 주차장</strong> 이용<br>
+              수업 방문 시 1시간 무료<br>
+              원무실 확인 후 주차 스티커 수령
+            </div>
+          </div>
+        </div>
+
+        <div class="transport-card anim anim-d2">
+          <div class="transport-icon" aria-hidden="true">🏢</div>
+          <div>
+            <div class="transport-type">건물 안내</div>
+            <div class="transport-desc">
+              LG프라자 1층 로비 엘리베이터 이용<br>
+              <strong>4층 403호</strong>에 위치<br>
+              건물 입구 안내 데스크 문의 가능
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div class="footer-col"><h4>학원소개</h4><ul><li><a href="vision.html">비전 &amp; 교육철학</a></li><li><a href="mission.html">교육방향</a></li><li><a href="introduction.html">선생님 소개</a></li><li><a href="facility.html">시설안내</a></li></ul></div>
-      <div class="footer-col"><h4>프로그램</h4><ul><li><a href="curriculum.html">커리큘럼</a></li><li><a href="edu-1.html">소포스에듀</a></li><li><a href="fee.html">교습비 안내</a></li></ul></div>
-      <div class="footer-col"><h4>커뮤니티</h4><ul><li><a href="board-notice.html">공지사항</a></li><li><a href="board-gallery.html">갤러리</a></li><li><a href="board-qna.html">Q&amp;A</a></li><li><a href="board-review.html">수강후기</a></li></ul></div>
     </div>
-    <div class="footer-bottom"><span>© 2024 주니어솔로몬. All rights reserved.</span><span>2022 한국브랜드소비자평가 대상</span></div>
-  </footer>
+  </section>
 
-  <button class="scroll-top" id="scrollTop" aria-label="맨 위로">
-    <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04L10.75 5.612V16.25A.75.75 0 0 1 10 17Z"/></svg>
-  </button>
+  <!-- SNS -->
+  <section class="sns-section" aria-labelledby="sns-title">
+    <div class="container">
+      <div class="center anim">
+        <span class="sec-label">소셜 미디어</span>
+        <h2 class="sec-title" id="sns-title">SNS 채널</h2>
+        <p class="sec-sub">수업 현장, 공지사항, 이벤트 소식을 실시간으로 확인하세요</p>
+      </div>
+      <div class="sns-grid">
+        <a href="https://www.instagram.com/juniorsolomon" target="_blank" rel="noopener noreferrer" class="sns-card anim anim-d1">
+          <div class="sns-icon insta">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+          <div>
+            <div class="sns-name">Instagram</div>
+            <div class="sns-handle">@juniorsolomon</div>
+          </div>
+        </a>
+        <a href="https://blog.naver.com/juniorsolomon" target="_blank" rel="noopener noreferrer" class="sns-card anim anim-d2">
+          <div class="sns-icon naver">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
+          </div>
+          <div>
+            <div class="sns-name">Naver Blog</div>
+            <div class="sns-handle">blog.naver.com/juniorsolomon</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
 
-  <script>
-  (function(){
-    const header = document.getElementById('header');
-    window.addEventListener('scroll', function(){ header.classList.toggle('scrolled', window.scrollY > 40); }, {passive:true});
-    document.getElementById('scrollTop').addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
-    window.addEventListener('scroll', function(){ document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 400); }, {passive:true});
-    const toggle = document.getElementById('menuToggle');
-    const mobileNav = document.getElementById('mobileNav');
-    toggle.addEventListener('click', function(){
-      const isOpen = mobileNav.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
+</main>
+
+<!-- CONSULT CTA -->
+<section class="consult" aria-labelledby="consult-heading">
+  <div class="container">
+    <h2 id="consult-heading" class="consult-title anim">방문 전 상담을 먼저 받아보세요</h2>
+    <p class="consult-sub anim anim-d1">전화, 네이버 톡톡, 카카오톡 채널 모두 가능합니다</p>
+    <div class="consult-cta anim anim-d2">
+      <a href="tel:027948123" class="btn-tel">☎ 02-794-8123</a>
+      <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="btn-naver">💬 네이버 톡톡</a>
+      <a href="http://pf.kakao.com/_xadGxnxb" target="_blank" rel="noopener noreferrer" class="btn-kakao">🟡 카카오톡</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner container" style="display:grid;grid-template-columns:1fr;gap:40px;padding-top:48px;padding-bottom:32px;">
+    <div style="display:grid;grid-template-columns:1fr;gap:32px;">
+      <div>
+        <a href="index.html" class="logo" style="margin-bottom:12px;display:inline-flex;">
+          <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="40" height="40">
+          <div style="margin-left:10px;">
+            <div class="logo-text" style="color:#fff;font-size:17px;">주니어솔로몬</div>
+            <div class="logo-sub" style="color:oklch(45% .04 292);">Jr. Solomon Academy</div>
+          </div>
+        </a>
+        <p style="font-size:13px;color:oklch(40% .04 292);line-height:1.7;margin-top:12px;">
+          "모든 아이는 솔로몬의 지혜를 품을 수 있습니다"<br>
+          서울 용산구 이촌로 200, LG프라자 4층 403호<br>
+          ☎ 02-794-8123 · 월~금 14:00~19:00 / 토 10:00~15:00
+        </p>
+      </div>
+      <nav aria-label="푸터 메뉴" style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;">
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:oklch(40% .04 292);margin-bottom:10px;">학원소개</div>
+          <a href="vision.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">비전 &amp; 교육철학</a>
+          <a href="mission.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">교육방향</a>
+          <a href="introduction.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">선생님 소개</a>
+          <a href="facility.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;">시설 안내</a>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:oklch(40% .04 292);margin-bottom:10px;">프로그램</div>
+          <a href="curriculum.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">커리큘럼</a>
+          <a href="edu-1.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">소포스에듀</a>
+          <a href="fee.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">교습비 안내</a>
+          <a href="contact.html" style="display:block;font-size:13px;color:oklch(80% .05 292);text-decoration:none;font-weight:700;">오시는길</a>
+        </div>
+      </nav>
+    </div>
+    <div style="border-top:1px solid oklch(18% .03 292);padding-top:20px;font-size:12px;color:oklch(35% .04 292);line-height:1.8;">
+      대표: 장화연 · 사업자 511-96-33718 · 중부교육지원청 제3336호<br>
+      © 2017 주니어솔로몬. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<button class="scroll-top" id="scrollTop" aria-label="페이지 맨 위로 이동">
+  <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04L10.75 5.612V16.25A.75.75 0 0 1 10 17Z" clip-rule="evenodd"/></svg>
+</button>
+
+<script>
+(function () {
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function () {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+    document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+
+  document.getElementById('scrollTop').addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var toggle = document.getElementById('menuToggle');
+  var mobileNav = document.getElementById('mobileNav');
+  toggle.addEventListener('click', function () {
+    var open = mobileNav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+    toggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  mobileNav.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      mobileNav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', '메뉴 열기');
+      document.body.style.overflow = '';
     });
-    mobileNav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileNav.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }); });
-    const io = new IntersectionObserver(function(entries){ entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {threshold:0.1, rootMargin:'0px 0px -40px 0px'});
-    document.querySelectorAll('.anim').forEach(function(el){ io.observe(el); });
-  })();
-  </script>
+  });
+
+  document.querySelectorAll('.nav-item button.nav-link').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var exp = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.nav-item button.nav-link').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+      btn.setAttribute('aria-expanded', !exp);
+    });
+  });
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.nav-item'))
+      document.querySelectorAll('.nav-item button.nav-link').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+  });
+
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.anim').forEach(function (el) { obs.observe(el); });
+})();
+</script>
 </body>
 </html>
