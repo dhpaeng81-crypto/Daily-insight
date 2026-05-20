@@ -197,7 +197,7 @@ index.html          홈페이지
 
 ## 17. 디자인 토큰
 
-- **색상**: OKLCH 인디고(--indigo: oklch(55% 0.22 264)) + 오렌지(--orange: oklch(70% 0.20 55))
+- **색상**: CI 로고 기반. OKLCH 퍼플(--purple: oklch(68% 0.11 292)) + 옐로우(--yellow: oklch(88% 0.13 97))
 - **폰트**: Pretendard Variable (CDN: jsdelivr)
 - **로고**: 솔로몬의 별(Star of Solomon, 육각별) + "주니어솔로몬" 워드마크
 - **반응형 브레이크포인트**: 640px / 768px / 1024px
