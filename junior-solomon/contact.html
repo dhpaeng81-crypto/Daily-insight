@@ -10,28 +10,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
   <link rel="stylesheet" href="style.css">
   <style>
-    :root {
-      --indigo:       oklch(68% 0.11 292);
-      --indigo-deep:  oklch(42% 0.22 264);
-      --indigo-light: oklch(93% 0.06 264);
-      --orange:       oklch(70% 0.20 55);
-      --orange-deep:  oklch(60% 0.18 50);
-      --ink:          oklch(20% 0.012 265);
-      --ink-muted:    oklch(48% 0.010 265);
-      --canvas:       oklch(99% 0.004 265);
-      --surf-1:       oklch(96% 0.008 265);
-      --surf-2:       oklch(92% 0.012 265);
-      --border:       oklch(88% 0.010 265);
-      --font: 'Pretendard Variable', 'Pretendard', -apple-system, sans-serif;
-      --header-h: 64px;
-      --r-sm: 6px; --r-md: 12px; --r-lg: 20px; --r-pill: 9999px;
-      --ease: cubic-bezier(0.16, 1, 0.3, 1);
-      --t-fast: 120ms; --t-base: 220ms;
-      --shadow-sm:  0 1px 4px oklch(20% 0.012 265 / 0.07);
-      --shadow-md:  0 4px 16px oklch(20% 0.012 265 / 0.10);
-      --shadow-lg:  0 8px 32px oklch(20% 0.012 265 / 0.14);
-      --shadow-btn: 0 4px 14px oklch(68% 0.11 292 / 0.35);
-    }
+    /* contact.html — uses style.css tokens; no :root override needed */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
@@ -365,10 +344,14 @@
         <a href="board-notice.html" class="nav-link">공지사항</a>
         <a href="contact.html" class="nav-link" aria-current="page">오시는길</a>
       </nav>
-      <div class="header-cta">
-        <a href="tel:027948123" class="header-tel">☎ 02-794-8123</a>
-        <a href="introduction.html" class="header-btn">입학상담</a>
-      </div>
+          <div class="header-cta-stack">
+      <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="header-btn header-btn-naver">
+        💬 네이버 톡톡
+      </a>
+      <a href="http://pf.kakao.com/_xadGxnxb" target="_blank" rel="noopener noreferrer" class="header-btn header-btn-kakao">
+        🟡 카카오톡 채널
+      </a>
+    </div>
       <button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -383,6 +366,10 @@
     <a href="board-notice.html">공지사항</a>
     <a href="contact.html" aria-current="page">오시는길</a>
     <a href="tel:027948123" class="m-tel">☎ 02-794-8123</a>
+    <div class="m-cta-row">
+      <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="m-cta-naver">💬 네이버 톡톡</a>
+      <a href="http://pf.kakao.com/_xadGxnxb" target="_blank" rel="noopener noreferrer" class="m-cta-kakao">🟡 카카오채널</a>
+    </div>
   </nav>
 
   <main id="main-content">
