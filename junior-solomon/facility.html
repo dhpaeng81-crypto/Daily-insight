@@ -3,32 +3,137 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0d1b3e">
+  <meta name="theme-color" content="#3d1f6e">
   <title>시설 안내 | 주니어솔로몬</title>
-  <meta name="description" content="주니어솔로몬 학원 시설 안내. 쾌적한 강의실, 하브루타 토론실, 인문 전문 도서관을 갖춘 서울 용산구 이촌동 학원.">
+  <meta name="description" content="주니어솔로몬 학원 시설 안내. 솔로몬 사설 도서관, 하브루타 수업실, UV 도서 소독 시스템. 서울 용산구 이촌동 LG프라자 4층.">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="stylesheet" href="style.css">
   <style>
-    .facility-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px;}
-    @media(max-width:768px){.facility-grid{grid-template-columns:1fr 1fr;}}
-    @media(max-width:480px){.facility-grid{grid-template-columns:1fr;}}
-    .facility-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow var(--t-base),transform var(--t-base) var(--ease);}
-    .facility-card:hover{box-shadow:var(--shadow-md);transform:translateY(-4px);}
-    .facility-img{width:100%;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:52px;}
-    .facility-img.c1{background:linear-gradient(135deg,var(--indigo-light),oklch(88% 0.08 264));}
-    .facility-img.c2{background:linear-gradient(135deg,var(--orange-light),oklch(88% 0.08 55));}
-    .facility-img.c3{background:linear-gradient(135deg,oklch(93% 0.06 145),oklch(88% 0.08 145));}
-    .facility-img.c4{background:linear-gradient(135deg,oklch(93% 0.06 330),oklch(88% 0.08 330));}
-    .facility-img.c5{background:linear-gradient(135deg,oklch(93% 0.06 200),oklch(88% 0.08 200));}
-    .facility-img.c6{background:linear-gradient(135deg,var(--surf-2),var(--surf-1));}
-    .facility-body{padding:20px 22px;}
-    .facility-body h3{font-size:16px;font-weight:800;color:var(--ink);margin-bottom:6px;}
-    .facility-body p{font-size:13px;color:var(--ink-muted);line-height:1.65;}
+    .anim { opacity:0; transform:translateY(20px); transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1); }
+    .anim.in  { opacity:1; transform:translateY(0); }
+    .anim-d1  { transition-delay:.08s; }
+    .anim-d2  { transition-delay:.16s; }
+    .anim-d3  { transition-delay:.24s; }
+    @media (prefers-reduced-motion:reduce) { .anim { opacity:1; transform:none; } }
+
+    /* PAGE HERO */
+    .page-hero {
+      padding: calc(var(--header-h) + 56px) 0 56px;
+      background: linear-gradient(150deg, oklch(10% .03 292) 0%, oklch(18% .07 292) 60%, oklch(24% .10 285) 100%);
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background: radial-gradient(ellipse 60% 70% at 80% 40%, oklch(68% .11 292 / .14), transparent);
+    }
+    .breadcrumb { display:flex; align-items:center; gap:6px; font-size:13px; color:oklch(55% .04 292); margin-bottom:20px; flex-wrap:wrap; }
+    .breadcrumb a { color:oklch(55% .04 292); text-decoration:none; }
+    .breadcrumb a:hover { color:oklch(80% .05 292); }
+    .breadcrumb span { color:oklch(40% .04 292); }
+    .page-hero h1 { font-size:clamp(28px,5vw,52px); font-weight:800; color:#fff; letter-spacing:-.03em; line-height:1.1; }
+    .page-hero p  { font-size:clamp(15px,1.8vw,17px); color:oklch(70% .04 292); margin-top:14px; line-height:1.75; max-width:520px; }
+
+    /* HERO PHOTO */
+    .hero-photo {
+      width: 100%; aspect-ratio: 21/9; object-fit: cover;
+      display: block;
+    }
+    @media (max-width: 640px) { .hero-photo { aspect-ratio: 4/3; } }
+
+    /* OVERVIEW */
+    .overview-section { padding: 5rem 2rem; background: var(--canvas); }
+    .overview-grid {
+      display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-top: 2.5rem;
+    }
+    @media (min-width: 640px) { .overview-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .overview-grid { grid-template-columns: repeat(3, 1fr); } }
+    .overview-card {
+      background: var(--purple-xlight); border: 1.5px solid var(--purple-light);
+      border-radius: 14px; padding: 1.75rem 1.5rem;
+      display: flex; flex-direction: column; gap: .6rem;
+    }
+    .overview-icon { font-size: 1.75rem; }
+    .overview-title { font-size: 1.05rem; font-weight: 700; color: var(--purple-deep); }
+    .overview-desc { font-size: .88rem; color: var(--text-2); line-height: 1.75; }
+
+    /* SPACE SECTIONS */
+    .space-section { padding: 5rem 2rem; }
+    .space-section:nth-child(odd)  { background: var(--surf-1); }
+    .space-section:nth-child(even) { background: var(--canvas); }
+
+    .space-layout {
+      display: grid; grid-template-columns: 1fr; gap: 2.5rem; align-items: center; margin-top: 2.5rem;
+    }
+    @media (min-width: 768px) {
+      .space-layout { grid-template-columns: 1fr 1fr; }
+      .space-layout.reverse .space-photo-col { order: 2; }
+      .space-layout.reverse .space-text-col  { order: 1; }
+    }
+
+    .space-photo-col {}
+    .space-photo {
+      width: 100%; aspect-ratio: 4/3; object-fit: cover;
+      border-radius: 16px; display: block;
+      box-shadow: 0 8px 32px oklch(68% .11 292 / .12);
+    }
+    .space-photo-pair {
+      display: grid; grid-template-columns: 1fr 1fr; gap: .75rem;
+    }
+    .space-photo-pair .space-photo { aspect-ratio: 1/1; }
+
+    .space-text-col {}
+    .space-label { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--purple); margin-bottom: .5rem; }
+    .space-title { font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 800; color: var(--purple-deep); letter-spacing: -.025em; line-height: 1.2; margin-bottom: 1rem; }
+    .space-desc  { font-size: .95rem; color: var(--text-2); line-height: 1.85; margin-bottom: 1.25rem; }
+    .space-features { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .5rem; }
+    .space-features li {
+      display: flex; align-items: flex-start; gap: .6rem;
+      font-size: .9rem; color: var(--text-2); line-height: 1.65;
+    }
+    .space-features li::before {
+      content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--purple); margin-top: .55rem; flex-shrink: 0;
+    }
+    .feature-highlight {
+      display: inline-flex; align-items: center; gap: .5rem;
+      margin-top: 1.25rem; padding: .75rem 1.25rem;
+      background: var(--yellow-light); border: 1.5px solid oklch(88% .13 97 / .5);
+      border-radius: 10px; font-size: .85rem; color: var(--purple-deep);
+    }
+
+    /* UV STERILIZER CALLOUT */
+    .uv-callout {
+      background: var(--purple-deep); border-radius: 16px;
+      padding: 2rem; margin-top: 1.5rem;
+      display: flex; gap: 1.25rem; align-items: flex-start;
+    }
+    .uv-icon { font-size: 2rem; flex-shrink: 0; }
+    .uv-title { font-size: 1rem; font-weight: 700; color: var(--yellow); margin-bottom: .4rem; }
+    .uv-desc  { font-size: .85rem; color: oklch(72% .05 292); line-height: 1.75; }
+
+    /* CONSULT */
+    .consult { background: var(--purple-deep); padding: 72px 0; text-align: center; }
+    .consult-title { font-size:clamp(22px,3.5vw,36px); font-weight:800; color:#fff; letter-spacing:-.025em; text-wrap:balance; }
+    .consult-sub { font-size:15px; color:oklch(72% .05 292); margin-top:12px; }
+    .consult-cta { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:32px; }
+    .btn-naver {
+      background:oklch(76% .09 292); color:#fff; padding:15px 30px; border-radius:var(--r-pill);
+      font-size:15px; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+      transition:opacity var(--t-fast),transform var(--t-base) cubic-bezier(.16,1,.3,1);
+    }
+    .btn-naver:hover { opacity:.88; transform:translateY(-2px); }
+    .btn-kakao {
+      background:#FEE500; color:#3B1B1B; padding:15px 30px; border-radius:var(--r-pill);
+      font-size:15px; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+      transition:opacity var(--t-fast),transform var(--t-base) cubic-bezier(.16,1,.3,1);
+    }
+    .btn-kakao:hover { opacity:.9; transform:translateY(-2px); }
   </style>
 </head>
 <body>
 <a href="#main" class="skip-link">본문 바로가기</a>
 
+<!-- HEADER -->
 <header class="header" id="header" role="banner">
   <div class="header-inner">
     <a href="index.html" class="logo" aria-label="주니어솔로몬 홈으로">
@@ -37,7 +142,10 @@
     </a>
     <nav class="nav" role="navigation" aria-label="주메뉴">
       <div class="nav-item">
-        <button class="nav-link active" aria-haspopup="true" aria-expanded="false">학원소개 <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"/></svg></button>
+        <button class="nav-link active" aria-haspopup="true" aria-expanded="false">
+          학원소개
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"/></svg>
+        </button>
         <div class="dropdown" role="menu">
           <a href="vision.html" role="menuitem">비전 &amp; 교육철학</a>
           <a href="mission.html" role="menuitem">교육방향</a>
@@ -45,131 +153,359 @@
           <a href="facility.html" class="active" role="menuitem">시설 안내</a>
         </div>
       </div>
-      <a href="curriculum.html" class="nav-link">커리큘럼</a>
-      <a href="introduction.html" class="nav-link">선생님소개</a>
-      <a href="fee.html" class="nav-link">교습비</a>
-      <a href="board-notice.html" class="nav-link">공지사항</a>
+      <div class="nav-item">
+        <button class="nav-link" aria-haspopup="true" aria-expanded="false">
+          프로그램
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"/></svg>
+        </button>
+        <div class="dropdown" role="menu">
+          <a href="curriculum.html" role="menuitem">커리큘럼</a>
+          <a href="edu-1.html" role="menuitem">소포스에듀</a>
+          <a href="fee.html" role="menuitem">교습비 안내</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <button class="nav-link" aria-haspopup="true" aria-expanded="false">
+          커뮤니티
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"/></svg>
+        </button>
+        <div class="dropdown" role="menu">
+          <a href="board-notice.html" role="menuitem">공지사항</a>
+          <a href="board-gallery.html" role="menuitem">갤러리</a>
+          <a href="board-qna.html" role="menuitem">Q&amp;A</a>
+          <a href="board-review.html" role="menuitem">수강후기</a>
+        </div>
+      </div>
       <a href="contact.html" class="nav-link">오시는길</a>
     </nav>
-        <div class="header-cta-stack">
-      <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="header-btn header-btn-naver">
-        💬 네이버 톡톡
-      </a>
-      <a href="http://pf.kakao.com/_xadGxnxb" target="_blank" rel="noopener noreferrer" class="header-btn header-btn-kakao">
-        🟡 카카오톡 채널
-      </a>
+    <div class="header-cta-stack">
+      <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="header-btn header-btn-naver">💬 네이버 톡톡</a>
+      <a href="http://pf.kakao.com/_xadGxnxb" target="_blank" rel="noopener noreferrer" class="header-btn header-btn-kakao">🟡 카카오톡 채널</a>
     </div>
-    <button class="menu-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobileNav" id="menuToggle"><span></span><span></span><span></span></button>
+    <button class="menu-toggle" aria-label="메뉴 열기" aria-expanded="false" id="menuToggle">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
+
 <nav class="mobile-nav" id="mobileNav" aria-label="모바일 메뉴">
   <a href="vision.html">비전 &amp; 교육철학</a>
   <a href="mission.html">교육방향</a>
-  <a href="curriculum.html">커리큘럼</a>
   <a href="introduction.html">선생님 소개</a>
-  <a href="facility.html" class="active">시설안내</a>
+  <a href="facility.html" aria-current="page">시설 안내</a>
+  <a href="curriculum.html">커리큘럼</a>
+  <a href="edu-1.html">소포스에듀</a>
   <a href="fee.html">교습비 안내</a>
   <a href="board-notice.html">공지사항</a>
+  <a href="board-gallery.html">갤러리</a>
+  <a href="board-qna.html">Q&amp;A</a>
+  <a href="board-review.html">수강후기</a>
   <a href="contact.html">오시는길</a>
-  <a href="tel:027948123" class="m-tel">☎ 02-794-8123 전화상담</a>
-    <div class="m-cta-row">
-      <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="m-cta-naver">💬 네이버 톡톡</a>
-      <a href="http://pf.kakao.com/_xadGxnxb" target="_blank" rel="noopener noreferrer" class="m-cta-kakao">🟡 카카오채널</a>
-    </div>
+  <a href="tel:027948123" class="m-tel">☎ 02-794-8123</a>
+  <div class="m-cta-row">
+    <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="m-cta-naver">💬 네이버 톡톡</a>
+    <a href="http://pf.kakao.com/_xadGxnxb" target="_blank" rel="noopener noreferrer" class="m-cta-kakao">🟡 카카오채널</a>
+  </div>
 </nav>
 
-<section class="page-hero" aria-label="페이지 타이틀">
-  <div class="page-hero-inner">
+<!-- PAGE HERO -->
+<section class="page-hero" aria-labelledby="page-title">
+  <div class="container">
     <nav class="breadcrumb" aria-label="현재 위치">
-      <a href="index.html">홈</a>
-      <span class="breadcrumb-sep" aria-hidden="true">›</span>
-      <a href="#">학원소개</a>
-      <span class="breadcrumb-sep" aria-hidden="true">›</span>
-      <span class="breadcrumb-cur">시설 안내</span>
+      <a href="index.html">홈</a><span aria-hidden="true">›</span>
+      <a href="vision.html">학원소개</a><span aria-hidden="true">›</span>
+      <span aria-current="page">시설 안내</span>
     </nav>
-    <h1 class="page-hero-title">시설 안내</h1>
-    <p class="page-hero-sub">생각이 자라는 공간, 주니어솔로몬</p>
+    <h1 id="page-title" class="anim">아이의 생각이<br>자라는 공간</h1>
+    <p class="anim anim-d1">
+      공부하는 곳이 아니라 탐구하는 곳.<br>
+      주니어솔로몬의 공간을 소개합니다.
+    </p>
   </div>
 </section>
 
+<!-- HERO PHOTO: 로비 전경 -->
+<img
+  src="img-facility-05.jpg"
+  alt="주니어솔로몬 로비. 주니어솔로몬 간판과 안내 데스크, 그 뒤로 도서관이 보입니다."
+  class="hero-photo"
+  loading="eager"
+  width="1200" height="514"
+>
+
 <main id="main">
-  <section class="page-content">
+
+  <!-- OVERVIEW -->
+  <section class="overview-section" aria-labelledby="overview-title">
     <div class="container">
-      <div class="content-prose anim" style="margin-bottom:16px;">
-        <h2>배움에 집중할 수 있는 환경</h2>
-        <p>주니어솔로몬은 아이들이 편안하게 생각하고 표현할 수 있는 환경을 만들기 위해 시설을 지속적으로 정비합니다. 서울시 용산구 이촌로 200 LG프라자 4층 403호에 위치하며, 이촌역 4호선 1번 출구에서 도보 5분 거리입니다.</p>
+      <div class="center anim">
+        <span class="sec-label">시설 개요</span>
+        <h2 class="sec-title" id="overview-title">서울 이촌동, LG프라자 4층</h2>
+        <p class="sec-sub">용산구 이촌역 도보 5분 거리에 위치한 쾌적하고 따뜻한 학습 공간입니다</p>
       </div>
-      <div class="facility-grid">
-        <div class="facility-card anim anim-d1">
-          <div class="facility-img c1" aria-hidden="true">🏫</div>
-          <div class="facility-body"><h3>쾌적한 강의실</h3><p>소수정예 수업에 최적화된 공간. 학생 간 충분한 거리와 채광으로 집중력을 높입니다.</p></div>
+      <div class="overview-grid">
+        <div class="overview-card anim anim-d1">
+          <div class="overview-icon" aria-hidden="true">📚</div>
+          <div class="overview-title">솔로몬 사설 도서관</div>
+          <div class="overview-desc">회원 전용 사설 도서관을 운영합니다. 수업 전후 자유롭게 방문하여 현장 독서 또는 도서 대출이 가능합니다.</div>
         </div>
-        <div class="facility-card anim anim-d2">
-          <div class="facility-img c2" aria-hidden="true">💬</div>
-          <div class="facility-body"><h3>하브루타 토론실</h3><p>원형 토론 테이블로 구성된 토론 전용 공간. 마주 보며 이야기하는 하브루타 수업에 최적화되었습니다.</p></div>
+        <div class="overview-card anim anim-d2">
+          <div class="overview-icon" aria-hidden="true">🪑</div>
+          <div class="overview-title">하브루타 수업실</div>
+          <div class="overview-desc">짝 토론과 소그룹 수업에 최적화된 수업 공간. 아이들이 자유롭게 생각을 나눌 수 있도록 설계되었습니다.</div>
         </div>
-        <div class="facility-card anim anim-d3">
-          <div class="facility-img c3" aria-hidden="true">📚</div>
-          <div class="facility-body"><h3>인문 전문 도서관</h3><p>철학·인문·문학 전문 서가 구비. 수업에 활용하는 책들을 언제든 열람할 수 있습니다.</p></div>
+        <div class="overview-card anim anim-d3">
+          <div class="overview-icon" aria-hidden="true">🧼</div>
+          <div class="overview-title">UV 도서 소독 시스템</div>
+          <div class="overview-desc">UV 자외선 살균기를 갖추고 도서를 정기적으로 소독합니다. 위생적인 독서 환경을 제공합니다.</div>
         </div>
-        <div class="facility-card anim anim-d4">
-          <div class="facility-img c4" aria-hidden="true">🤝</div>
-          <div class="facility-body"><h3>개별 상담실</h3><p>1:1 학부모 상담 전용 공간. 아이의 성장 상황을 선생님과 조용히 나눌 수 있습니다.</p></div>
-        </div>
-        <div class="facility-card anim anim-d5">
-          <div class="facility-img c5" aria-hidden="true">☕</div>
-          <div class="facility-body"><h3>대기실 &amp; 쉼터</h3><p>수업 전후로 편안하게 머물 수 있는 대기 공간. 학부모님도 편하게 기다리실 수 있습니다.</p></div>
-        </div>
-        <div class="facility-card anim anim-d6">
-          <div class="facility-img c6" aria-hidden="true">🔒</div>
-          <div class="facility-body"><h3>안전한 환경</h3><p>CCTV 설치 및 주기적인 방역·위생 관리. 학부모님이 안심할 수 있는 안전한 학습 환경을 유지합니다.</p></div>
-        </div>
-      </div>
-      <div class="content-prose anim" style="margin-top:48px;">
-        <h2>위치 안내</h2>
-        <p><strong>주소:</strong> 서울시 용산구 이촌로 200 LG프라자 4층 403호</p>
-        <p><strong>교통:</strong> 지하철 4호선 이촌역 1번 출구에서 도보 약 5분</p>
-        <p><strong>주차:</strong> LG프라자 건물 내 주차 가능 (유료, 수업 시간 중 할인 가능 — 상담 시 문의)</p>
       </div>
     </div>
   </section>
-  <div class="cta-band">
+
+  <!-- SPACE 1: 솔로몬 도서관 -->
+  <section class="space-section" aria-labelledby="library-title">
     <div class="container">
-      <h2>직접 방문해서 확인해보세요</h2>
-      <p>사전 예약 후 시설 투어 및 입학 상담을 받으실 수 있습니다</p>
-      <div class="cta-band-actions">
-        <a href="tel:027948123" class="btn btn-orange">☎ 02-794-8123 예약하기</a>
-        <a href="contact.html" class="btn btn-outline">오시는 길 보기</a>
+      <div class="space-layout anim">
+        <div class="space-photo-col">
+          <img
+            src="img-facility-02.jpg"
+            alt="솔로몬 도서관 전경. 긴 통원목 테이블과 글로브 펜던트 조명, 벽면 가득한 서가."
+            class="space-photo"
+            loading="lazy"
+            width="800" height="600"
+          >
+        </div>
+        <div class="space-text-col">
+          <div class="space-label">Solomon Library</div>
+          <h2 id="library-title" class="space-title">솔로몬 도서관</h2>
+          <p class="space-desc">
+            주니어솔로몬만의 회원제 사설 도서관입니다. 통원목 긴 테이블과 글로브 펜던트 조명, 벽면을 가득 채운 서가가 아이들의 독서 감성을 자극합니다.
+          </p>
+          <ul class="space-features">
+            <li>솔로몬 회원이라면 누구든 운영 시간 내 자유롭게 방문 가능</li>
+            <li>현장 독서 및 도서 자유 대출 서비스 제공</li>
+            <li>아동·청소년 인문·철학·문학 서적 다수 보유</li>
+            <li>수업 전후 자율 독서 시간 활용 가능</li>
+          </ul>
+          <div class="feature-highlight">
+            📖 <span>수업 후 <strong>2시간 자율 독서</strong> 시간에 이 공간을 활용합니다</span>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
+
+  <!-- SPACE 2: 도서관 내부 -->
+  <section class="space-section" aria-labelledby="library2-title">
+    <div class="container">
+      <div class="space-layout reverse anim">
+        <div class="space-text-col">
+          <div class="space-label">Reading Space</div>
+          <h2 id="library2-title" class="space-title">감성을 더하는<br>독서 환경</h2>
+          <p class="space-desc">
+            형형색색의 문과 천장을 장식한 초록 식물, 따뜻한 글로브 조명이 어우러진 공간입니다. 단순한 독서실이 아니라 책을 읽고 싶어지는 공간을 만들었습니다.
+          </p>
+          <ul class="space-features">
+            <li>천장 목재 빔과 그린 플랜트로 자연 감성 연출</li>
+            <li>글로브 펜던트 조명으로 눈에 편안한 간접 조명</li>
+            <li>컬러 도어로 구역별 아늑한 독서 코너 형성</li>
+            <li>넓은 통원목 테이블로 편안한 독서·토론 가능</li>
+          </ul>
+        </div>
+        <div class="space-photo-col">
+          <img
+            src="img-facility-06.jpg"
+            alt="도서관 내부. 노란 문과 초록 문, 서가, 글로브 조명이 있는 따뜻한 독서 공간."
+            class="space-photo"
+            loading="lazy"
+            width="800" height="600"
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPACE 3: 수업실 -->
+  <section class="space-section" aria-labelledby="classroom-title">
+    <div class="container">
+      <div class="space-layout anim">
+        <div class="space-photo-col">
+          <div class="space-photo-pair">
+            <img
+              src="img-facility-01.jpg"
+              alt="수업 중인 아이. 자체교재에 집중하여 글을 쓰고 있습니다."
+              class="space-photo"
+              loading="lazy"
+              width="400" height="400"
+            >
+            <img
+              src="img-facility-04.jpg"
+              alt="그룹 활동 중인 아이들. 서로 카드를 보여주며 이야기를 나누고 있습니다."
+              class="space-photo"
+              loading="lazy"
+              width="400" height="400"
+            >
+          </div>
+        </div>
+        <div class="space-text-col">
+          <div class="space-label">Classroom</div>
+          <h2 id="classroom-title" class="space-title">하브루타 수업실</h2>
+          <p class="space-desc">
+            개인 집중과 짝 토론이 모두 가능한 수업 공간입니다. 아이들이 자유롭게 의견을 교환하고, 선생님과 밀착 피드백을 주고받을 수 있도록 소그룹 구조로 운영됩니다.
+          </p>
+          <ul class="space-features">
+            <li>소수 정예 수업으로 개인 집중 지도 가능</li>
+            <li>짝 토론에 최적화된 좌석 배치</li>
+            <li>자체교재 + 문제집을 활용한 체계적 수업 진행</li>
+            <li>그룹 활동, 발표, 논술 작성까지 한 공간에서 진행</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPACE 4: UV 소독 시스템 -->
+  <section class="space-section" aria-labelledby="uv-title">
+    <div class="container">
+      <div class="space-layout reverse anim">
+        <div class="space-text-col">
+          <div class="space-label">Hygiene System</div>
+          <h2 id="uv-title" class="space-title">위생적인 독서 환경</h2>
+          <p class="space-desc">
+            아이들이 매일 만지는 책의 위생을 관리합니다. UV 자외선 살균기(도서소독기)를 갖추고 도서관의 책을 정기적으로 소독합니다.
+          </p>
+          <div class="uv-callout">
+            <div class="uv-icon" aria-hidden="true">🔬</div>
+            <div>
+              <div class="uv-title">UV 도서 소독기 운영</div>
+              <div class="uv-desc">
+                UV 자외선 살균기로 도서관 책을 정기 소독합니다. 아이들이 안심하고 책을 읽을 수 있는 위생 환경을 유지합니다.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="space-photo-col">
+          <img
+            src="img-facility-03.jpg"
+            alt="UV 도서소독기와 그 옆에 정리된 도서 서가."
+            class="space-photo"
+            loading="lazy"
+            width="800" height="600"
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="logo"><img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="46" height="46"><div><div class="logo-text">주니어솔로몬</div><div class="logo-sub">Jr. Solomon Academy</div></div></div>
-      <p>서울시 용산구 이촌로 200 LG프라자 4층 403호<br>대표전화: 02-794-8123 | 상담: 010-3212-8123<br>이메일: juniorsolomon@naver.com<br>중부지원교육청 제3336호</p>
+<!-- CTA -->
+<section class="consult" aria-labelledby="consult-heading">
+  <div class="container">
+    <h2 id="consult-heading" class="consult-title anim">직접 방문해서 확인해 보세요</h2>
+    <p class="consult-sub anim anim-d1">
+      상담 예약 후 방문하시면 시설을 직접 둘러보실 수 있습니다.<br>
+      이촌역 1번 출구에서 도보 5분 · LG프라자 4층 403호
+    </p>
+    <div class="consult-cta anim anim-d2">
+      <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="btn-naver">💬 방문 상담 예약</a>
+      <a href="http://pf.kakao.com/_xadGxnxb" target="_blank" rel="noopener noreferrer" class="btn-kakao">🟡 카카오톡 문의</a>
     </div>
-    <div class="footer-col"><h4>학원소개</h4><ul><li><a href="vision.html">비전 &amp; 교육철학</a></li><li><a href="mission.html">교육방향</a></li><li><a href="introduction.html">선생님 소개</a></li><li><a href="facility.html">시설안내</a></li></ul></div>
-    <div class="footer-col"><h4>프로그램</h4><ul><li><a href="curriculum.html">커리큘럼</a></li><li><a href="edu-1.html">소포스에듀</a></li><li><a href="fee.html">교습비 안내</a></li></ul></div>
-    <div class="footer-col"><h4>커뮤니티</h4><ul><li><a href="board-notice.html">공지사항</a></li><li><a href="board-gallery.html">갤러리</a></li><li><a href="board-qna.html">Q&amp;A</a></li><li><a href="board-review.html">수강후기</a></li></ul></div>
   </div>
-  <div class="footer-bottom"><span>© 2024 주니어솔로몬. All rights reserved.</span><span>2022 한국브랜드소비자평가 대상</span></div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner container" style="display:grid;grid-template-columns:1fr;gap:40px;padding-top:48px;padding-bottom:32px;">
+    <div style="display:grid;grid-template-columns:1fr;gap:32px;">
+      <div>
+        <a href="index.html" class="logo" style="margin-bottom:12px;display:inline-flex;">
+          <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="40" height="40">
+          <div style="margin-left:10px;">
+            <div class="logo-text" style="color:#fff;font-size:17px;">주니어솔로몬</div>
+            <div class="logo-sub" style="color:oklch(45% .04 292);">Jr. Solomon Academy</div>
+          </div>
+        </a>
+        <p style="font-size:13px;color:oklch(40% .04 292);line-height:1.7;margin-top:12px;">
+          "모든 아이는 솔로몬의 지혜를 품을 수 있습니다"<br>
+          서울 용산구 이촌로 200, LG프라자 4층 403호<br>
+          ☎ 02-794-8123 · 월~금 14:00~21:00 / 토 09:00~18:00
+        </p>
+      </div>
+      <nav aria-label="푸터 메뉴" style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;">
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:oklch(40% .04 292);margin-bottom:10px;">학원소개</div>
+          <a href="vision.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">비전 &amp; 교육철학</a>
+          <a href="mission.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">교육방향</a>
+          <a href="introduction.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">선생님 소개</a>
+          <a href="facility.html" style="display:block;font-size:13px;color:oklch(80% .05 292);text-decoration:none;font-weight:700;">시설 안내</a>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:oklch(40% .04 292);margin-bottom:10px;">프로그램</div>
+          <a href="curriculum.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">커리큘럼</a>
+          <a href="edu-1.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">소포스에듀</a>
+          <a href="fee.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">교습비 안내</a>
+          <a href="contact.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;">오시는길</a>
+        </div>
+      </nav>
+    </div>
+    <div style="border-top:1px solid oklch(18% .03 292);padding-top:20px;font-size:12px;color:oklch(35% .04 292);line-height:1.8;">
+      대표: 장화연 · 사업자 511-96-33718 · 중부교육지원청 제3336호<br>
+      © 2017 주니어솔로몬. All rights reserved.
+    </div>
+  </div>
 </footer>
-<button class="scroll-top" id="scrollTop" aria-label="맨 위로"><svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04L10.75 5.612V16.25A.75.75 0 0 1 10 17Z"/></svg></button>
+
+<button class="scroll-top" id="scrollTop" aria-label="페이지 맨 위로 이동">
+  <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04L10.75 5.612V16.25A.75.75 0 0 1 10 17Z" clip-rule="evenodd"/></svg>
+</button>
+
 <script>
-(function(){
-  var h=document.getElementById('header');
-  window.addEventListener('scroll',function(){h.classList.toggle('scrolled',window.scrollY>40);},{passive:true});
-  var st=document.getElementById('scrollTop');
-  window.addEventListener('scroll',function(){st.classList.toggle('visible',window.scrollY>400);},{passive:true});
-  st.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
-  var t=document.getElementById('menuToggle'),m=document.getElementById('mobileNav');
-  t.addEventListener('click',function(){var o=m.classList.toggle('open');t.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';});
-  m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){m.classList.remove('open');t.setAttribute('aria-expanded','false');document.body.style.overflow='';});});
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
-  document.querySelectorAll('.anim').forEach(function(el){io.observe(el);});
+(function () {
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function () {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+    document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+
+  document.getElementById('scrollTop').addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var toggle = document.getElementById('menuToggle');
+  var mobileNav = document.getElementById('mobileNav');
+  toggle.addEventListener('click', function () {
+    var open = mobileNav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+    toggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  mobileNav.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      mobileNav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', '메뉴 열기');
+      document.body.style.overflow = '';
+    });
+  });
+
+  document.querySelectorAll('.nav-item button.nav-link').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var exp = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.nav-item button.nav-link').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+      btn.setAttribute('aria-expanded', !exp);
+    });
+  });
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.nav-item'))
+      document.querySelectorAll('.nav-item button.nav-link').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+  });
+
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.anim').forEach(function (el) { obs.observe(el); });
 })();
 </script>
 </body>
