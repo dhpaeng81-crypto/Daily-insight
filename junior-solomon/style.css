@@ -22,9 +22,11 @@
   --ink-muted:     oklch(48% 0.010 292);
   --ink-subtle:    oklch(62% 0.008 292);
   --canvas:        oklch(99% 0.004 292);
+  --surf-0:        oklch(99% 0.004 292);   /* alias for canvas; used in page-specific styles */
   --surf-1:        oklch(96% 0.008 292);
   --surf-2:        oklch(92% 0.012 292);
   --border:        oklch(88% 0.010 292);
+  --text-2:        oklch(48% 0.010 292);   /* alias for ink-muted */
   --hero-dark:     oklch(14% 0.025 292);
 
   --shadow-sm:   0 1px 4px oklch(20% 0.015 292 / 0.07);
