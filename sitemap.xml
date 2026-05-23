@@ -2,45 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://dhpaeng81-crypto.github.io/Daily-insight/index.html</loc>
-    <lastmod>2026-05-23</lastmod>
+    <lastmod>2026-05-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://dhpaeng81-crypto.github.io/Daily-insight/index_en.html</loc>
-    <lastmod>2026-05-23</lastmod>
+    <lastmod>2026-05-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://dhpaeng81-crypto.github.io/Daily-insight/archive.html</loc>
-    <lastmod>2026-05-23</lastmod>
+    <lastmod>2026-05-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dhpaeng81-crypto.github.io/Daily-insight/archive_en.html</loc>
-    <lastmod>2026-05-23</lastmod>
+    <lastmod>2026-05-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dhpaeng81-crypto.github.io/Daily-insight/politics_index.html</loc>
-    <lastmod>2026-05-23</lastmod>
+    <lastmod>2026-05-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://dhpaeng81-crypto.github.io/Daily-insight/politics_archive.html</loc>
-    <lastmod>2026-05-23</lastmod>
+    <lastmod>2026-05-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://dhpaeng81-crypto.github.io/Daily-insight/briefing_20260524.html</loc>
+    <lastmod>2026-05-24</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://dhpaeng81-crypto.github.io/Daily-insight/briefing_20260523.html</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>never</changefreq>
-    <priority>0.9</priority>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://dhpaeng81-crypto.github.io/Daily-insight/briefing_20260522.html</loc>
@@ -199,10 +205,16 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://dhpaeng81-crypto.github.io/Daily-insight/briefing_en_20260524.html</loc>
+    <lastmod>2026-05-24</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://dhpaeng81-crypto.github.io/Daily-insight/briefing_en_20260523.html</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>never</changefreq>
-    <priority>0.9</priority>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://dhpaeng81-crypto.github.io/Daily-insight/briefing_en_20260522.html</loc>
@@ -301,10 +313,16 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://dhpaeng81-crypto.github.io/Daily-insight/politics_20260523.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://dhpaeng81-crypto.github.io/Daily-insight/politics_20260522.html</loc>
     <lastmod>2026-05-22</lastmod>
     <changefreq>never</changefreq>
-    <priority>0.9</priority>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://dhpaeng81-crypto.github.io/Daily-insight/politics_20260521.html</loc>
