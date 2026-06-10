@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0d1b3e">
+  <title>소포스에듀 | 주니어솔로몬</title>
+  <meta name="description" content="소포스에듀 — 서울대 졸업 이대건 선생님의 수능·내신 전문 국어 프로그램. 용산구 이촌동 주니어솔로몬 내 운영.">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .sophos-hero-band{background:linear-gradient(135deg,oklch(14% 0.025 265),oklch(22% 0.18 264));border-radius:var(--r-xl);padding:40px;color:#fff;display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center;margin-bottom:40px;}
+    @media(max-width:640px){.sophos-hero-band{grid-template-columns:1fr;}}
+    .sophos-avatar-lg{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--yellow),var(--yellow-deep));display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:900;color:#fff;flex-shrink:0;}
+    .sophos-name{font-size:clamp(22px,3vw,30px);font-weight:900;margin-bottom:4px;}
+    .sophos-title{font-size:14px;color:oklch(70% 0.20 55);font-weight:700;margin-bottom:12px;}
+    .sophos-desc{font-size:14px;color:rgba(255,255,255,0.72);line-height:1.75;}
+    .sophos-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;}
+    .sophos-badge{padding:4px 12px;border-radius:var(--r-pill);background:var(--yellow-light);color:var(--yellow-deep);font-size:12px;font-weight:700;}
+    .program-table{width:100%;border-collapse:collapse;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--border);}
+    .program-table thead tr{background:var(--purple-deep);}
+    .program-table thead th{padding:14px 16px;font-size:13px;font-weight:700;color:#fff;text-align:left;}
+    .program-table tbody tr{border-bottom:1px solid var(--border);background:#fff;transition:background var(--t-fast);}
+    .program-table tbody tr:last-child{border-bottom:none;}
+    .program-table tbody tr:hover{background:var(--surf-1);}
+    .program-table td{padding:14px 16px;font-size:14px;color:var(--ink);}
+    .program-table td:first-child{font-weight:700;color:var(--purple);}
+    .prog-badge{display:inline-block;padding:3px 10px;border-radius:var(--r-pill);font-size:11px;font-weight:700;}
+    .prog-badge.open{background:oklch(93% 0.07 55);color:oklch(40% 0.18 50);}
+    .prog-badge.upcoming{background:var(--purple-light);color:var(--purple);}
+    .prog-badge.summer{background:oklch(93% 0.07 330);color:oklch(35% 0.18 330);}
+    .summer-section{background:linear-gradient(135deg,var(--yellow),oklch(64% 0.20 38));border-radius:var(--r-xl);padding:36px;color:#fff;margin-top:40px;}
+    .summer-section h2{font-size:clamp(20px,2.5vw,26px);font-weight:800;margin-bottom:8px;}
+    .summer-section p{color:rgba(255,255,255,0.80);font-size:14px;margin-bottom:24px;}
+    .summer-programs{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    @media(max-width:640px){.summer-programs{grid-template-columns:1fr;}}
+    .summer-prog-card{background:rgba(255,255,255,0.15);border-radius:var(--r-lg);padding:18px 20px;border:1px solid rgba(255,255,255,0.20);}
+    .summer-prog-name{font-size:15px;font-weight:800;margin-bottom:4px;}
+    .summer-prog-info{font-size:13px;color:rgba(255,255,255,0.72);}
+  </style>
+</head>
+<body>
+<a href="#main" class="skip-link">본문 바로가기</a>
+
+<header class="header" id="header" role="banner">
+  <div class="header-inner">
+    <a href="index.html" class="logo" aria-label="주니어솔로몬 홈으로">
+      <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="46" height="46">
+      <div><div class="logo-text">주니어솔로몬</div><div class="logo-sub">Jr. Solomon Academy</div></div>
+    </a>
+    <nav class="nav" role="navigation" aria-label="주메뉴">
+      <div class="nav-item">
+        <button class="nav-link" aria-haspopup="true" aria-expanded="false">학원소개 <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"/></svg></button>
+        <div class="dropdown" role="menu">
+          <a href="vision.html" role="menuitem">비전 &amp; 교육철학</a>
+          <a href="mission.html" role="menuitem">교육방향</a>
+          <a href="introduction.html" role="menuitem">선생님 소개</a>
+          <a href="facility.html" role="menuitem">시설 안내</a>
+        </div>
+      </div>
+      <a href="curriculum.html" class="nav-link">커리큘럼</a>
+      <a href="edu-1.html" class="nav-link active">소포스에듀</a>
+      <a href="fee.html" class="nav-link">교습비</a>
+      <a href="board-notice.html" class="nav-link">공지사항</a>
+      <a href="contact.html" class="nav-link">오시는길</a>
+    </nav>
+        <div class="header-cta-stack">
+      <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="header-btn header-btn-naver">
+        💬 네이버 톡톡
+      </a>
+      <a href="http://pf.kakao.com/_xadGxnxb" target="_blank" rel="noopener noreferrer" class="header-btn header-btn-kakao">
+        🟡 카카오톡 채널
+      </a>
+    </div>
+    <button class="menu-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobileNav" id="menuToggle"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobileNav" aria-label="모바일 메뉴">
+  <a href="vision.html">비전 &amp; 교육철학</a>
+  <a href="mission.html">교육방향</a>
+  <a href="curriculum.html">커리큘럼</a>
+  <a href="introduction.html">선생님 소개</a>
+  <a href="facility.html">시설안내</a>
+  <a href="fee.html">교습비 안내</a>
+  <a href="edu-1.html" class="active">소포스에듀</a>
+  <a href="board-notice.html">공지사항</a>
+  <a href="board-gallery.html">갤러리</a>
+  <a href="board-qna.html">Q&amp;A</a>
+  <a href="board-review.html">수강후기</a>
+  <a href="contact.html">오시는길</a>
+  <a href="tel:027948123" class="m-tel">☎ 02-794-8123 전화상담</a>
+    <div class="m-cta-row">
+      <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="m-cta-naver">💬 네이버 톡톡</a>
+      <a href="http://pf.kakao.com/_xadGxnxb" target="_blank" rel="noopener noreferrer" class="m-cta-kakao">🟡 카카오채널</a>
+    </div>
+</nav>
+
+<section class="page-hero" aria-label="페이지 타이틀">
+  <div class="page-hero-inner">
+    <nav class="breadcrumb" aria-label="현재 위치">
+      <a href="index.html">홈</a>
+      <span class="breadcrumb-sep" aria-hidden="true">›</span>
+      <span class="breadcrumb-cur">소포스에듀</span>
+    </nav>
+    <h1 class="page-hero-title">소포스에듀</h1>
+    <p class="page-hero-sub">수능 · 내신 전문 국어 프로그램 — 이대건 선생님</p>
+  </div>
+</section>
+
+<main id="main">
+  <section class="page-content">
+    <div class="container">
+
+      <div class="sophos-hero-band anim">
+        <div class="sophos-avatar-lg" aria-hidden="true">이</div>
+        <div>
+          <div class="sophos-name">이대건 선생님</div>
+          <div class="sophos-title">소포스에듀 대표강사</div>
+          <p class="sophos-desc">서울대학교 졸업 후 미래탐구·대치명인·대치메이드 등 대치동 명문 학원에서 강의 경력을 쌓아온 수능 국어 전문가입니다. 문학·독서·문법 전 영역을 아우르는 체계적 커리큘럼으로 내신과 수능을 동시에 대비합니다.</p>
+          <div class="sophos-badges">
+            <span class="sophos-badge">서울대 졸업</span>
+            <span class="sophos-badge">미래탐구</span>
+            <span class="sophos-badge">대치명인</span>
+            <span class="sophos-badge">대치메이드</span>
+            <span class="sophos-badge">수능 국어 전문</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-prose anim anim-d1" style="margin-bottom:24px;">
+        <h2>현재 운영 중인 프로그램</h2>
+        <p>아래 프로그램은 주니어솔로몬 내에서 별도로 운영됩니다. 정원이 제한되어 있으므로 조기 마감될 수 있습니다.</p>
+      </div>
+
+      <div style="overflow-x:auto;" class="anim anim-d2">
+        <table class="program-table" role="table" aria-label="소포스에듀 프로그램 현황">
+          <thead>
+            <tr>
+              <th scope="col">프로그램</th>
+              <th scope="col">요일 · 시간</th>
+              <th scope="col">개강일</th>
+              <th scope="col">대상</th>
+              <th scope="col">상태</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>수능 문학독서반</td>
+              <td>화·금 18:00–21:00</td>
+              <td>5/12, 5/15</td>
+              <td>고등</td>
+              <td><span class="prog-badge open">개강</span></td>
+            </tr>
+            <tr>
+              <td>수능 문법반</td>
+              <td>목 18:00–21:00</td>
+              <td>5/14</td>
+              <td>중·고등</td>
+              <td><span class="prog-badge open">개강</span></td>
+            </tr>
+            <tr>
+              <td>용강중 기말 내신대비반</td>
+              <td>월 16:30–19:30</td>
+              <td>6/1, 6/8, 6/15, 6/22</td>
+              <td>중등</td>
+              <td><span class="prog-badge upcoming">예약중</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="summer-section anim anim-d3">
+        <h2>☀️ 2026 여름방학 특강</h2>
+        <p>7월 22일 ~ 8월 17일 집중 운영 | 박효정T · 이대건T 공동 진행</p>
+        <div class="summer-programs">
+          <div class="summer-prog-card">
+            <div class="summer-prog-name">고전문학 집중 특강</div>
+            <div class="summer-prog-info">박효정T 진행 | 7/22–8/17<br>수능 고전문학 핵심 작품 전략 분석</div>
+          </div>
+          <div class="summer-prog-card">
+            <div class="summer-prog-name">현대문학 독서 특강</div>
+            <div class="summer-prog-info">이대건T 진행 | 7/22–8/17<br>수능 현대문학 독서 심화</div>
+          </div>
+          <div class="summer-prog-card">
+            <div class="summer-prog-name">수능 문법 집중반</div>
+            <div class="summer-prog-info">이대건T 진행 | 7/22–8/17<br>문법 전 단원 + 실전 문제 완성</div>
+          </div>
+          <div class="summer-prog-card">
+            <div class="summer-prog-name">중등 내신 특강</div>
+            <div class="summer-prog-info">이대건T 진행 | 7/22–8/17<br>2학기 내신 선행 대비</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-prose anim" style="margin-top:40px;">
+        <h2>소포스에듀 수강 안내</h2>
+        <ul>
+          <li>소포스에듀는 주니어솔로몬 정규 과정과 <strong>별도로 등록</strong>합니다.</li>
+          <li>기존 주니어솔로몬 수강생도 추가 신청 가능합니다.</li>
+          <li>소수정예 운영으로 정원이 차면 조기 마감됩니다.</li>
+          <li>수강 문의: <a href="tel:027948123" style="color:var(--purple);font-weight:700;">02-794-8123</a> / <a href="tel:01032128123" style="color:var(--purple);">010-3212-8123</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <div class="container">
+      <h2>수강 신청 및 문의</h2>
+      <p>빠른 정원 마감이 예상됩니다. 지금 바로 문의해 주세요</p>
+      <div class="cta-band-actions">
+        <a href="tel:027948123" class="btn btn-orange">☎ 02-794-8123 수강 신청</a>
+        <a href="board-notice.html" class="btn btn-outline">공지사항 확인</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo"><img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="46" height="46"><div><div class="logo-text">주니어솔로몬</div><div class="logo-sub">Jr. Solomon Academy</div></div></div>
+      <p>서울시 용산구 이촌로 200 LG프라자 4층 403호<br>대표전화: 02-794-8123 | 상담: 010-3212-8123<br>이메일: juniorsolomon@naver.com<br>중부교육지원청 제3336호</p>
+    </div>
+    <div class="footer-col"><h4>학원소개</h4><ul><li><a href="vision.html">비전 &amp; 교육철학</a></li><li><a href="mission.html">교육방향</a></li><li><a href="introduction.html">선생님 소개</a></li><li><a href="facility.html">시설안내</a></li></ul></div>
+    <div class="footer-col"><h4>프로그램</h4><ul><li><a href="curriculum.html">커리큘럼</a></li><li><a href="edu-1.html">소포스에듀</a></li><li><a href="fee.html">교습비 안내</a></li></ul></div>
+    <div class="footer-col"><h4>커뮤니티</h4><ul><li><a href="board-notice.html">공지사항</a></li><li><a href="board-gallery.html">갤러리</a></li><li><a href="board-qna.html">Q&amp;A</a></li><li><a href="board-review.html">수강후기</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2017–2026 주니어솔로몬. All rights reserved.</span><span>2022 한국브랜드소비자평가 대상</span></div>
+</footer>
+<button class="scroll-top" id="scrollTop" aria-label="맨 위로"><svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04L10.75 5.612V16.25A.75.75 0 0 1 10 17Z"/></svg></button>
+<script>
+(function(){
+  var h=document.getElementById('header');
+  window.addEventListener('scroll',function(){h.classList.toggle('scrolled',window.scrollY>40);},{passive:true});
+  var st=document.getElementById('scrollTop');
+  window.addEventListener('scroll',function(){st.classList.toggle('visible',window.scrollY>400);},{passive:true});
+  st.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  var t=document.getElementById('menuToggle'),m=document.getElementById('mobileNav');
+  t.addEventListener('click',function(){var o=m.classList.toggle('open');t.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';});
+  m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){m.classList.remove('open');t.setAttribute('aria-expanded','false');document.body.style.overflow='';});});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.anim').forEach(function(el){io.observe(el);});
+})();
+</script>
+</body>
+</html>
