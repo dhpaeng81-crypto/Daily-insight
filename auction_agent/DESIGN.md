@@ -30,7 +30,10 @@ Open API를 제공한다. 회원가입 후 활용신청 → 승인 시 서비스
 구현은 직접 REST 호출 대신 오픈소스 라이브러리
 [`PublicDataReader`](https://github.com/WooilJeong/PublicDataReader)의 `Kamco`
 모듈(`pdr.Kamco(serviceKey)`)을 사용한다. `stock_picker.py`가 같은 제작자의
-`FinanceDataReader`를 쓰고 있어 기술 스택 일관성도 맞는다.
+`FinanceDataReader`를 쓰고 있어 기술 스택 일관성도 맞는다. 실제 신청 대상
+서비스와 호출 함수는 `auction_agent/README.md` 1절 참고 (`물건정보` 서비스의
+`통합용도별물건목록` 기능 — 아파트/주택/상가/토지 등 전 용도를 하나의 목록으로
+반환한다).
 
 주의: "공매"는 압류재산·국유재산 등을 다루며, 법원 "경매"와 법적으로 다른 절차다.
 사용자가 원하는 것이 "경매"라면 공매만으로는 커버리지가 부족하므로 2.2가 필요하다.
