@@ -1,0 +1,5 @@
+# 사용자 개인 데이터 (예산/관심지역 등) - 공개 저장소에 커밋되면 안 됨
+auction_agent/data/
+
+__pycache__/
+*.pyc
