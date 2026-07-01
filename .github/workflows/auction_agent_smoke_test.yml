@@ -1,0 +1,25 @@
+name: Auction Agent Smoke Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  onbid-smoke-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r auction_agent/requirements.txt
+
+      - name: Run OnBid connectivity smoke test
+        env:
+          ONBID_SERVICE_KEY: ${{ secrets.ONBID_SERVICE_KEY }}
+        run: python -m auction_agent.smoke_test
