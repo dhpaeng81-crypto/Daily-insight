@@ -151,6 +151,31 @@ def _narrowing_diagnostic() -> None:
         print(f"요청 자체가 실패함: {e}")
     print()
 
+    # 빈 문자열이 UNKNOWN_ERROR를 유발했다면, 숫자형 범위 필드는 빈 문자열
+    # 대신 아주 넓은 범위(0~매우 큰 값)를 주고 문자열 필드만 빈 값으로 둔다.
+    wide_numeric_open_search = {
+        **blank_open_search,
+        "lowstBidPrcStart": "0",
+        "lowstBidPrcEnd": "999999999999",
+        "landSqmsStart": "0",
+        "landSqmsEnd": "999999",
+        "bldSqmsStart": "0",
+        "bldSqmsEnd": "999999",
+        "usbdNfStart": "0",
+        "usbdNfEnd": "99",
+        "apslEvlAmtStart": "0",
+        "apslEvlAmtEnd": "999999999999",
+        "mdfcnYmdStart": "19000101",
+        "mdfcnYmdEnd": today.strftime("%Y%m%d"),
+    }
+    print("=== NARROWING DIAGNOSTIC: 문자열 필드만 공백 + 숫자/날짜 범위는 아주 넓게 ===")
+    try:
+        payload = _request(wide_numeric_open_search)
+        print(f"응답: {payload}")
+    except Exception as e:
+        print(f"요청 자체가 실패함: {e}")
+    print()
+
 
 def main() -> None:
     _raw_diagnostic()
