@@ -1,72 +1,104 @@
-"""온비드 공매 물건 조회 (공식 공공데이터포털 API, PublicDataReader.Kamco 래핑).
+"""온비드 차세대 부동산 물건목록 조회서비스 연동.
 
-서비스/기능/필드명은 로컬에 설치된 PublicDataReader==1.1.1-post2의
-`Kamco.meta_dict`와 내부 컬럼 번역 테이블을 직접 확인해서 검증했다
-(`통합용도별물건목록` = 아파트/주택/상가/토지 등 모든 용도를 포괄하는 목록 API).
+구버전 PublicDataReader 라이브러리(1.1.1.post2)는 이 "차세대" 세대 API를
+지원하지 않는다 (meta_dict에 없음). 실제 신청/승인받은 서비스는
+`한국자산관리공사_차세대 온비드 부동산 물건목록 조회서비스`이며, 사용자가
+공유한 data.go.kr 활용신청 상세 페이지 기준 End Point와 요청 파라미터는
+다음과 같다 (2026-07-02 확인):
 
-다만 이 실행 환경은 `openapi.onbid.co.kr`로 나가는 아웃바운드가 네트워크
-정책상 차단되어 있어 실제 응답을 받아 재확인하지는 못했다. `ONBID_SERVICE_KEY`
-발급 후 처음 실행할 때 아래 필드 매핑이 실제 응답과 다르면 `_row_to_item`을
-조정해야 한다.
+    End Point: https://apis.data.go.kr/8010003/OnbidRlstListSrvc2
+
+응답(출력결과) 필드 명세는 아직 확보하지 못했다. `smoke_test.py`의 raw
+diagnostic으로 실제 JSON 응답을 먼저 확인한 뒤 `_row_to_item`을 완성해야 한다.
 """
 
 from typing import List, Optional
 
+import requests
+
 from .config import ONBID_SERVICE_KEY
 from .models import AuctionItem
 
-_FUNC_GROUP = "물건정보"
-_FUNC_NAME = "통합용도별물건목록"  # getUnifyUsageCltr
+_ENDPOINT = "https://apis.data.go.kr/8010003/OnbidRlstListSrvc2"
 
 
-def _get_client():
+def _request(params: dict) -> dict:
     if not ONBID_SERVICE_KEY:
         raise RuntimeError(
             "ONBID_SERVICE_KEY가 설정되어 있지 않습니다. "
             "auction_agent/README.md의 키 발급 안내를 참고하세요."
         )
-    import PublicDataReader as pdr
-
-    return pdr.Kamco(ONBID_SERVICE_KEY)
-
-
-def _to_int(value) -> int:
-    if value in (None, ""):
-        return 0
-    try:
-        return int(str(value).replace(",", "").strip())
-    except ValueError:
-        return 0
+    query = {
+        "serviceKey": requests.utils.unquote(ONBID_SERVICE_KEY),
+        "resultType": "json",
+        "pageNo": 1,
+        "numOfRows": 10,
+    }
+    query.update(params)
+    resp = requests.get(_ENDPOINT, params=query, timeout=15)
+    resp.raise_for_status()
+    return resp.json()
 
 
-def _split_region(address: str):
-    parts = address.split()
-    sido = parts[0] if len(parts) > 0 else ""
-    sigungu = parts[1] if len(parts) > 1 else ""
-    return sido, sigungu
+def _extract_rows(payload: dict) -> List[dict]:
+    """data.go.kr JSON 응답 봉투에서 물건 목록(items)을 꺼낸다.
+
+    정확한 응답 스키마를 아직 확보하지 못해 흔한 형태들을 방어적으로 시도한다.
+    """
+    body = payload.get("response", {}).get("body", payload.get("body", {}))
+    items = body.get("items", body.get("item", []))
+
+    if isinstance(items, dict):
+        items = items.get("item", [])
+    if isinstance(items, dict):
+        items = [items]
+    if not isinstance(items, list):
+        items = []
+
+    return items
 
 
 def _row_to_item(row: dict) -> AuctionItem:
-    """온비드 `통합용도별물건목록` 응답 1건을 공통 스키마로 변환 (translate=False, 원본 코드 기준)."""
+    """온비드 차세대 물건목록 응답 1건을 공통 스키마로 변환.
 
-    address = str(row.get("LDNM_ADRS") or row.get("NMRD_ADRS") or "")
-    sido, sigungu = _split_region(address)
+    실제 응답 필드명이 확인되기 전까지는 요청 파라미터명과 동일한 규칙
+    (cltrMngNo, onbidCltrNm, lctnSdnm 등)을 우선 시도하고, 모르는 필드는
+    빈 값으로 둔다. 실제 응답을 보고 나서 이 함수를 다시 조정해야 한다.
+    """
+
+    def pick(*keys, default=""):
+        for k in keys:
+            if k in row and row[k] not in (None, ""):
+                return row[k]
+        return default
+
+    def to_int(v):
+        if v in (None, ""):
+            return 0
+        try:
+            return int(str(v).replace(",", "").strip())
+        except ValueError:
+            return 0
+
+    sido = str(pick("lctnSdnm", "lctnSdNm", default=""))
+    sigungu = str(pick("lctnSggnm", "lctnSggNm", default=""))
+    emd = str(pick("lctnEmdNm", default=""))
+    address = " ".join(p for p in [sido, sigungu, emd] if p)
 
     return AuctionItem(
         source="onbid",
-        item_id=str(row.get("CLTR_NO") or row.get("PBCT_NO") or ""),
-        title=str(row.get("CLTR_NM") or "(제목 없음)"),
-        property_type=str(row.get("CTGR_FULL_NM") or "기타"),
+        item_id=str(pick("cltrMngNo", "pbctCdtnNo", "pbancMngNo", default="")),
+        title=str(pick("onbidCltrNm", "cltrNm", default="(제목 없음)")),
+        property_type=str(pick("cltrUsgSclsCtgrNm", "cltrUsgMclsCtgrNm", "cltrUsgLclsCtgrNm", default="기타")),
         region_sido=sido,
         region_sigungu=sigungu,
         address=address,
-        appraisal_price=_to_int(row.get("APSL_ASES_AVG_AMT")),
-        min_bid_price=_to_int(row.get("MIN_BID_PRC")),
-        bid_start_date=row.get("PBCT_BEGN_DTM") or None,
-        bid_end_date=row.get("PBCT_CLS_DTM") or None,
+        appraisal_price=to_int(pick("apslEvlAmt", "apslEvlAmtStart")),
+        min_bid_price=to_int(pick("lowstBidPrc", "lowstBidPrcStart")),
+        bid_start_date=pick("bidPrdYmdStart", default=None) or None,
+        bid_end_date=pick("bidPrdYmdEnd", default=None) or None,
         source_url="https://www.onbid.co.kr",
-        failed_count=_to_int(row.get("USCBD_CNT")),
-        status=str(row.get("PBCT_CLTR_STAT_NM") or "진행중"),
+        failed_count=to_int(pick("usbdCnt", "usbdNfStart")),
     )
 
 
@@ -75,24 +107,19 @@ def search_onbid(
     regions: Optional[List[str]] = None,
     budget_max: Optional[int] = None,
 ) -> List[AuctionItem]:
-    """조건에 맞는 온비드 공매 물건을 조회한다.
+    """조건에 맞는 온비드 부동산 공매 물건을 조회한다.
 
-    property_types: 예) ["아파트", "주택"]
-    regions: 예) ["서울특별시 강남구"]
-    budget_max: 최저입찰가 상한 (원)
-
-    현재는 API가 지원하는 서버 사이드 검색 파라미터(용도/지역 코드)를 확정하지
-    못해 전체 목록을 가져온 뒤 클라이언트에서 필터링한다. 물건 수가 많아지면
-    온비드코드 조회서비스로 용도/주소 코드를 먼저 얻어 서버 사이드로 필터링하도록
-    개선하자.
+    property_types: 예) ["아파트", "주택"] (클라이언트 사이드 필터)
+    regions: 예) ["서울특별시 강남구"] (클라이언트 사이드 필터)
+    budget_max: 최저입찰가 상한 (원) - 서버 사이드 필터(lowstBidPrcEnd)로 전달
     """
-    client = _get_client()
-    df = client.get_data(_FUNC_GROUP, _FUNC_NAME, translate=False)
+    params = {}
+    if budget_max:
+        params["lowstBidPrcEnd"] = budget_max
 
-    if df is None or df.empty:
-        return []
-
-    items = [_row_to_item(row) for row in df.to_dict("records")]
+    payload = _request(params)
+    rows = _extract_rows(payload)
+    items = [_row_to_item(row) for row in rows]
 
     if property_types:
         items = [i for i in items if any(pt in i.property_type for pt in property_types)]
@@ -101,7 +128,5 @@ def search_onbid(
             i for i in items
             if any(r in f"{i.region_sido} {i.region_sigungu}" for r in regions)
         ]
-    if budget_max:
-        items = [i for i in items if i.min_bid_price and i.min_bid_price <= budget_max]
 
     return items

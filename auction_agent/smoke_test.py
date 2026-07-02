@@ -4,29 +4,28 @@
 서비스키 값은 출력하지 않는다.
 """
 
+import json
+
 import requests
 
 from auction_agent.config import ONBID_SERVICE_KEY
-from auction_agent.onbid_source import search_onbid
+from auction_agent.onbid_source import _ENDPOINT, search_onbid
 
 
 def _raw_diagnostic() -> None:
-    """PublicDataReader를 거치지 않고 원본 응답을 그대로 출력한다.
-
-    get_data()가 파싱 실패(KeyError 등)를 조용히 삼키는 경우, 실제 온비드가
-    보낸 에러 메시지(resultCode/resultMsg)를 확인하기 위한 용도.
-    """
-    url = "http://openapi.onbid.co.kr/openapi/services/ThingInfoInquireSvc/getUnifyUsageCltr"
+    """차세대 온비드 물건목록 API에 최소 파라미터로 요청해 원본 응답을 출력한다."""
     params = {
         "serviceKey": requests.utils.unquote(ONBID_SERVICE_KEY),
-        "numOfRows": 5,
+        "resultType": "json",
         "pageNo": 1,
+        "numOfRows": 3,
     }
     print("=== RAW REQUEST DIAGNOSTIC ===")
+    print(f"Endpoint: {_ENDPOINT}")
     try:
-        resp = requests.get(url, params=params, timeout=15, verify=False)
+        resp = requests.get(_ENDPOINT, params=params, timeout=15)
         print(f"HTTP status: {resp.status_code}")
-        print(f"응답 본문 (앞 1500자):\n{resp.text[:1500]}")
+        print(f"응답 본문 (앞 3000자):\n{resp.text[:3000]}")
     except Exception as e:
         print(f"요청 자체가 실패함: {e}")
     print("=== END DIAGNOSTIC ===\n")
