@@ -68,9 +68,51 @@ def _full_sample_diagnostic() -> None:
     print("=== END DIAGNOSTIC ===\n")
 
 
+def _narrowing_diagnostic() -> None:
+    """전체 샘플에서 지역/가격/면적 등 좁히는 필드를 하나씩 빼며 어떤 조합이
+    'NO_MANDATORY_REQUEST_PARAMETERS_ERROR' 없이 통과하는지 확인한다."""
+    from datetime import datetime, timedelta, timezone
+
+    KST = timezone(timedelta(hours=9))
+    today = datetime.now(KST)
+    wide_range = {
+        "bidPrdYmdStart": today.strftime("%Y%m%d"),
+        "bidPrdYmdEnd": (today + timedelta(days=90)).strftime("%Y%m%d"),
+    }
+
+    candidates = {
+        "prptDivCd만 (0007,0005) + 넓은 기간": {
+            "prptDivCd": "0007,0005",
+            **wide_range,
+        },
+        "prptDivCd + bidDivCd + dispsMthodCd + 넓은 기간": {
+            "prptDivCd": "0007,0005",
+            "bidDivCd": "0001",
+            "dispsMthodCd": "0001",
+            **wide_range,
+        },
+        "prptDivCd + cltrUsgLclsCtgrid/Nm + 넓은 기간": {
+            "prptDivCd": "0007,0005",
+            "cltrUsgLclsCtgrid": "10000",
+            "cltrUsgLclsCtgrNm": "부동산",
+            **wide_range,
+        },
+    }
+
+    for label, params in candidates.items():
+        print(f"=== NARROWING DIAGNOSTIC: {label} ===")
+        try:
+            payload = _request(params)
+            print(f"응답: {payload}")
+        except Exception as e:
+            print(f"요청 자체가 실패함: {e}")
+        print()
+
+
 def main() -> None:
     _raw_diagnostic()
     _full_sample_diagnostic()
+    _narrowing_diagnostic()
 
     items = search_onbid()
     print(f"조회된 물건 수: {len(items)}")
