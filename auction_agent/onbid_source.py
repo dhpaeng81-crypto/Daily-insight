@@ -40,6 +40,10 @@ def _request(params: dict) -> dict:
         # 입찰기간은 필수 파라미터로 보여, 기본값으로 "오늘 ~ 30일 후"를 준다.
         "bidPrdYmdStart": today.strftime("%Y%m%d"),
         "bidPrdYmdEnd": (today + timedelta(days=30)).strftime("%Y%m%d"),
+        # 재산종류코드도 필수로 보여, 기본값으로 전체 종류를 넣는다.
+        # (0002:공유재산, 0003:건축관리보통재산, 0004:물류센터, 0005:기타일반재산,
+        #  0006:수임재산, 0007:압류재산, 0008:수탁재산, 0010:유입자산, 0011:공공개발재산, 0013:곽산재산)
+        "prptDivCd": "0002,0003,0004,0005,0006,0007,0008,0010,0011,0013",
     }
     query.update(params)
     resp = requests.get(_ENDPOINT, params=query, timeout=15)
