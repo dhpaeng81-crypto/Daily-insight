@@ -6,7 +6,7 @@
 공유한 data.go.kr 활용신청 상세 페이지 기준 End Point와 요청 파라미터는
 다음과 같다 (2026-07-02 확인):
 
-    End Point: https://apis.data.go.kr/B010003/OnbidRlstListSrvc2
+    End Point: https://apis.data.go.kr/B010003/OnbidRlstListSrvc2/getRlstCltrList2
 
 응답(출력결과) 필드 명세는 아직 확보하지 못했다. `smoke_test.py`의 raw
 diagnostic으로 실제 JSON 응답을 먼저 확인한 뒤 `_row_to_item`을 완성해야 한다.
@@ -19,7 +19,7 @@ import requests
 from .config import ONBID_SERVICE_KEY
 from .models import AuctionItem
 
-_ENDPOINT = "https://apis.data.go.kr/B010003/OnbidRlstListSrvc2"
+_ENDPOINT = "https://apis.data.go.kr/B010003/OnbidRlstListSrvc2/getRlstCltrList2"
 
 
 def _request(params: dict) -> dict:
