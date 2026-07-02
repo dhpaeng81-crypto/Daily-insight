@@ -12,6 +12,7 @@
 diagnostic으로 실제 JSON 응답을 먼저 확인한 뒤 `_row_to_item`을 완성해야 한다.
 """
 
+from datetime import datetime, timedelta, timezone
 from typing import List, Optional
 
 import requests
@@ -21,6 +22,8 @@ from .models import AuctionItem
 
 _ENDPOINT = "https://apis.data.go.kr/B010003/OnbidRlstListSrvc2/getRlstCltrList2"
 
+KST = timezone(timedelta(hours=9))
+
 
 def _request(params: dict) -> dict:
     if not ONBID_SERVICE_KEY:
@@ -28,11 +31,15 @@ def _request(params: dict) -> dict:
             "ONBID_SERVICE_KEY가 설정되어 있지 않습니다. "
             "auction_agent/README.md의 키 발급 안내를 참고하세요."
         )
+    today = datetime.now(KST)
     query = {
         "serviceKey": requests.utils.unquote(ONBID_SERVICE_KEY),
         "resultType": "json",
         "pageNo": 1,
         "numOfRows": 10,
+        # 입찰기간은 필수 파라미터로 보여, 기본값으로 "오늘 ~ 30일 후"를 준다.
+        "bidPrdYmdStart": today.strftime("%Y%m%d"),
+        "bidPrdYmdEnd": (today + timedelta(days=30)).strftime("%Y%m%d"),
     }
     query.update(params)
     resp = requests.get(_ENDPOINT, params=query, timeout=15)

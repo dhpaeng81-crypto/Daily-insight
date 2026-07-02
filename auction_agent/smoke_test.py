@@ -4,28 +4,16 @@
 서비스키 값은 출력하지 않는다.
 """
 
-import json
-
-import requests
-
-from auction_agent.config import ONBID_SERVICE_KEY
-from auction_agent.onbid_source import _ENDPOINT, search_onbid
+from auction_agent.onbid_source import _ENDPOINT, _request, search_onbid
 
 
 def _raw_diagnostic() -> None:
-    """차세대 온비드 물건목록 API에 최소 파라미터로 요청해 원본 응답을 출력한다."""
-    params = {
-        "serviceKey": requests.utils.unquote(ONBID_SERVICE_KEY),
-        "resultType": "json",
-        "pageNo": 1,
-        "numOfRows": 3,
-    }
+    """차세대 온비드 물건목록 API에 기본 파라미터로 요청해 원본 응답을 출력한다."""
     print("=== RAW REQUEST DIAGNOSTIC ===")
     print(f"Endpoint: {_ENDPOINT}")
     try:
-        resp = requests.get(_ENDPOINT, params=params, timeout=15)
-        print(f"HTTP status: {resp.status_code}")
-        print(f"응답 본문 (앞 3000자):\n{resp.text[:3000]}")
+        payload = _request({"numOfRows": 3})
+        print(f"응답 (앞 3000자):\n{str(payload)[:3000]}")
     except Exception as e:
         print(f"요청 자체가 실패함: {e}")
     print("=== END DIAGNOSTIC ===\n")
