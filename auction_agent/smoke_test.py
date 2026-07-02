@@ -9,7 +9,7 @@ from auction_agent.onbid_source import _ENDPOINT, _request, search_onbid
 
 def _raw_diagnostic() -> None:
     """차세대 온비드 물건목록 API에 기본 파라미터로 요청해 원본 응답을 출력한다."""
-    print("=== RAW REQUEST DIAGNOSTIC ===")
+    print("=== RAW REQUEST DIAGNOSTIC (default params) ===")
     print(f"Endpoint: {_ENDPOINT}")
     try:
         payload = _request({"numOfRows": 3})
@@ -19,8 +19,58 @@ def _raw_diagnostic() -> None:
     print("=== END DIAGNOSTIC ===\n")
 
 
+def _full_sample_diagnostic() -> None:
+    """data.go.kr 활용신청 페이지의 전체 샘플 파라미터를 그대로 재현해본다.
+
+    사용자가 미리보기 패널에서 이 조합으로 NODATA_ERROR(정상 처리, 결과 없음)를
+    받았으므로, 여기서도 같은 결과가 나오는지 확인해 재현성을 검증한다.
+    """
+    sample_params = {
+        "prptDivCd": "0007,0005",
+        "bidDivCd": "0001",
+        "pvctTrgtYn": "N",
+        "dispsMthodCd": "0001",
+        "cltrUsgLclsCtgrid": "10000",
+        "cltrUsgMclsCtgrid": "10400",
+        "cltrUsgSclsCtgrid": "10402",
+        "cltrUsgLclsCtgrNm": "부동산",
+        "cltrUsgMclsCtgrNm": "산업용지기타특수용건물",
+        "cltrUsgSclsCtgrNm": "창고시설",
+        "lctnSdnm": "경기도",
+        "lctnSggnm": "고양시 일산동구",
+        "lctnEmdNm": "마두동",
+        "lowstBidPrcStart": "700000000",
+        "lowstBidPrcEnd": "900000000",
+        "landSqmsStart": "84",
+        "landSqmsEnd": "100",
+        "bldSqmsStart": "24",
+        "bldSqmsEnd": "50",
+        "bidPrdYmdStart": "20250518",
+        "bidPrdYmdEnd": "20250618",
+        "cptnMthodCd": "0001",
+        "cptnMthodNm": "일반경쟁",
+        "alcYn": "N",
+        "usbdNfStart": "0",
+        "usbdNfEnd": "3",
+        "apslEvlAmtStart": "500000000",
+        "apslEvlAmtEnd": "1000000000",
+        "onbidCltrNm": "서울특별시 송파구 석촌동",
+        "orgNm": "한국자산관리공사",
+        "mdfcnYmdStart": "20251201",
+        "mdfcnYmdEnd": "20251231",
+    }
+    print("=== FULL SAMPLE PARAM DIAGNOSTIC ===")
+    try:
+        payload = _request(sample_params)
+        print(f"응답: {payload}")
+    except Exception as e:
+        print(f"요청 자체가 실패함: {e}")
+    print("=== END DIAGNOSTIC ===\n")
+
+
 def main() -> None:
     _raw_diagnostic()
+    _full_sample_diagnostic()
 
     items = search_onbid()
     print(f"조회된 물건 수: {len(items)}")
