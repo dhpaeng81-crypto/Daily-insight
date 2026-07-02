@@ -27,13 +27,12 @@ Open API를 제공한다. 회원가입 후 활용신청 → 승인 시 서비스
 - **온비드 코드 조회서비스** (`data.go.kr/data/15000920`) — 용도별 코드, 시/도/
   시군구 주소 코드. 검색 조건을 API 파라미터로 변환할 때 필요.
 
-구현은 직접 REST 호출 대신 오픈소스 라이브러리
-[`PublicDataReader`](https://github.com/WooilJeong/PublicDataReader)의 `Kamco`
-모듈(`pdr.Kamco(serviceKey)`)을 사용한다. `stock_picker.py`가 같은 제작자의
-`FinanceDataReader`를 쓰고 있어 기술 스택 일관성도 맞는다. 실제 신청 대상
-서비스와 호출 함수는 `auction_agent/README.md` 1절 참고 (`물건정보` 서비스의
-`통합용도별물건목록` 기능 — 아파트/주택/상가/토지 등 전 용도를 하나의 목록으로
-반환한다).
+이 "차세대" API는 오픈소스 라이브러리 `PublicDataReader`(구버전 API만 지원)로는
+호출할 수 없어 `requests`로 직접 REST 호출한다. 실제 신청 대상 서비스와 호출
+End Point, 필수 파라미터는 `auction_agent/README.md` 1절과 `onbid_source.py`
+상단 docstring 참고 — data.go.kr 활용신청 페이지의 요청 파라미터 표만으로는
+어떤 필드가 필수인지 알 수 없어, GitHub Actions에서 실제 라이브 호출로
+검증했다 (`.github/workflows/auction_agent_smoke_test.yml`).
 
 주의: "공매"는 압류재산·국유재산 등을 다루며, 법원 "경매"와 법적으로 다른 절차다.
 사용자가 원하는 것이 "경매"라면 공매만으로는 커버리지가 부족하므로 2.2가 필요하다.
@@ -178,7 +177,7 @@ auction_agent/
   README.md          # 설정/실행 가이드 (온비드 키 신청, 봇 생성 방법)
   config.py          # 환경변수 로딩
   models.py          # 공통 데이터 모델 (AuctionItem, UserProfile)
-  onbid_source.py    # 온비드 API 연동 (PublicDataReader.Kamco 래핑)
+  onbid_source.py    # 온비드 차세대 API 연동 (requests 직접 호출)
   court_auction_source.py  # 법원경매 스크래핑 스텁 (기본 비활성화)
   scorer.py          # 규칙 기반 필터링/스코어링
   profiles.py         # 사용자 프로필 저장/조회 (JSON, gitignore 처리)

@@ -2,14 +2,24 @@
 
 구버전 PublicDataReader 라이브러리(1.1.1.post2)는 이 "차세대" 세대 API를
 지원하지 않는다 (meta_dict에 없음). 실제 신청/승인받은 서비스는
-`한국자산관리공사_차세대 온비드 부동산 물건목록 조회서비스`이며, 사용자가
-공유한 data.go.kr 활용신청 상세 페이지 기준 End Point와 요청 파라미터는
-다음과 같다 (2026-07-02 확인):
+`한국자산관리공사_차세대 온비드 부동산 물건목록 조회서비스`이며, 실제 GitHub
+Actions에서 라이브 호출로 검증한 End Point와 파라미터는 다음과 같다
+(2026-07-02 확인):
 
     End Point: https://apis.data.go.kr/B010003/OnbidRlstListSrvc2/getRlstCltrList2
 
-응답(출력결과) 필드 명세는 아직 확보하지 못했다. `smoke_test.py`의 raw
-diagnostic으로 실제 JSON 응답을 먼저 확인한 뒤 `_row_to_item`을 완성해야 한다.
+data.go.kr 활용신청 페이지의 요청 파라미터 표에는 모든 필드가 "예시값"처럼
+나열되어 있어 어떤 게 필수인지 알 수 없었는데, 실제 호출로 확인한 결과 아래
+"단일 선택 코드" 필드들과 입찰기간은 반드시 값을 채워 보내야 하고
+(비우면 NO_MANDATORY_REQUEST_PARAMETERS_ERROR), 지역/용도소분류/가격·면적
+범위/자유검색 필드는 아예 생략해도 무방하다 (전체 대상으로 검색됨):
+필수 - prptDivCd, bidDivCd, pvctTrgtYn, dispsMthodCd(요청 시 이 이름이지만
+응답에는 dspsMthodCd로 옴), cptnMthodCd, cptnMthodNm, alcYn, bidPrdYmdStart,
+bidPrdYmdEnd.
+
+응답 필드명은 요청 파라미터명과 다른 경우가 많다 (예: 입찰시작일시는 요청 시
+`bidPrdYmdStart`지만 응답에는 `cltrBidBgngDt`로 온다). `_row_to_item`은 실제
+응답에서 확인된 필드명을 기준으로 작성했다.
 """
 
 from datetime import datetime, timedelta, timezone
@@ -24,6 +34,11 @@ _ENDPOINT = "https://apis.data.go.kr/B010003/OnbidRlstListSrvc2/getRlstCltrList2
 
 KST = timezone(timedelta(hours=9))
 
+# 확인된 유효한 재산종류코드 조합. 0007:압류재산, 0005:기타일반재산.
+# 그 외 코드(공유재산·물류센터 등)를 추가하려면 실제 호출로 유효성을 검증하고 넣자
+# - 존재하지 않는 코드를 섞으면 요청 전체가 거부된다.
+_DEFAULT_PRPT_DIV_CD = "0007,0005"
+
 
 def _request(params: dict) -> dict:
     if not ONBID_SERVICE_KEY:
@@ -37,13 +52,17 @@ def _request(params: dict) -> dict:
         "resultType": "json",
         "pageNo": 1,
         "numOfRows": 10,
-        # 입찰기간은 필수 파라미터로 보여, 기본값으로 "오늘 ~ 30일 후"를 준다.
+        # 아래 8개는 실측 결과 필수 파라미터. 기본값은 "입찰 진행중/예정 매각 물건,
+        # 오늘부터 90일 이내, 일반경쟁, 수의계약 대상 아님, 지분공유 아님"으로 넓게 잡는다.
+        "prptDivCd": _DEFAULT_PRPT_DIV_CD,
+        "bidDivCd": "0001",
+        "pvctTrgtYn": "N",
+        "dispsMthodCd": "0001",
+        "cptnMthodCd": "0001",
+        "cptnMthodNm": "일반경쟁",
+        "alcYn": "N",
         "bidPrdYmdStart": today.strftime("%Y%m%d"),
-        "bidPrdYmdEnd": (today + timedelta(days=30)).strftime("%Y%m%d"),
-        # 재산종류코드도 필수로 보여, 기본값으로 전체 종류를 넣는다.
-        # (0002:공유재산, 0003:건축관리보통재산, 0004:물류센터, 0005:기타일반재산,
-        #  0006:수임재산, 0007:압류재산, 0008:수탁재산, 0010:유입자산, 0011:공공개발재산, 0013:곽산재산)
-        "prptDivCd": "0002,0003,0004,0005,0006,0007,0008,0010,0011,0013",
+        "bidPrdYmdEnd": (today + timedelta(days=90)).strftime("%Y%m%d"),
     }
     query.update(params)
     resp = requests.get(_ENDPOINT, params=query, timeout=15)
@@ -52,12 +71,10 @@ def _request(params: dict) -> dict:
 
 
 def _extract_rows(payload: dict) -> List[dict]:
-    """data.go.kr JSON 응답 봉투에서 물건 목록(items)을 꺼낸다.
-
-    정확한 응답 스키마를 아직 확보하지 못해 흔한 형태들을 방어적으로 시도한다.
-    """
-    body = payload.get("response", {}).get("body", payload.get("body", {}))
-    items = body.get("items", body.get("item", []))
+    """data.go.kr JSON 응답 봉투({'header':..., 'body':{'items':{'item':[...]}}})에서
+    물건 목록을 꺼낸다."""
+    body = payload.get("body", {})
+    items = body.get("items", [])
 
     if isinstance(items, dict):
         items = items.get("item", [])
@@ -70,46 +87,44 @@ def _extract_rows(payload: dict) -> List[dict]:
 
 
 def _row_to_item(row: dict) -> AuctionItem:
-    """온비드 차세대 물건목록 응답 1건을 공통 스키마로 변환.
-
-    실제 응답 필드명이 확인되기 전까지는 요청 파라미터명과 동일한 규칙
-    (cltrMngNo, onbidCltrNm, lctnSdnm 등)을 우선 시도하고, 모르는 필드는
-    빈 값으로 둔다. 실제 응답을 보고 나서 이 함수를 다시 조정해야 한다.
-    """
-
-    def pick(*keys, default=""):
-        for k in keys:
-            if k in row and row[k] not in (None, ""):
-                return row[k]
-        return default
+    """온비드 차세대 물건목록 응답 1건을 공통 스키마로 변환 (실제 응답 필드명 기준)."""
 
     def to_int(v):
         if v in (None, ""):
             return 0
         try:
-            return int(str(v).replace(",", "").strip())
+            return int(float(str(v).replace(",", "").strip()))
         except ValueError:
             return 0
 
-    sido = str(pick("lctnSdnm", "lctnSdNm", default=""))
-    sigungu = str(pick("lctnSggnm", "lctnSggNm", default=""))
-    emd = str(pick("lctnEmdNm", default=""))
+    sido = str(row.get("lctnSdnm") or "")
+    sigungu = str(row.get("lctnSggnm") or "")
+    emd = str(row.get("lctnEmdNm") or "")
     address = " ".join(p for p in [sido, sigungu, emd] if p)
+
+    property_type = str(
+        row.get("cltrUsgSclsCtgrNm")
+        or row.get("cltrUsgMclsCtgrNm")
+        or row.get("cltrUsgLclsCtgrNm")
+        or "기타"
+    )
 
     return AuctionItem(
         source="onbid",
-        item_id=str(pick("cltrMngNo", "pbctCdtnNo", "pbancMngNo", default="")),
-        title=str(pick("onbidCltrNm", "cltrNm", default="(제목 없음)")),
-        property_type=str(pick("cltrUsgSclsCtgrNm", "cltrUsgMclsCtgrNm", "cltrUsgLclsCtgrNm", default="기타")),
+        item_id=str(row.get("cltrMngNo") or row.get("pbctCdtnNo") or ""),
+        title=str(row.get("onbidCltrNm") or "(제목 없음)"),
+        property_type=property_type,
         region_sido=sido,
         region_sigungu=sigungu,
-        address=address,
-        appraisal_price=to_int(pick("apslEvlAmt", "apslEvlAmtStart")),
-        min_bid_price=to_int(pick("lowstBidPrc", "lowstBidPrcStart")),
-        bid_start_date=pick("bidPrdYmdStart", default=None) or None,
-        bid_end_date=pick("bidPrdYmdEnd", default=None) or None,
+        address=address or str(row.get("onbidCltrNm") or ""),
+        appraisal_price=to_int(row.get("apslEvlAmt")),
+        min_bid_price=to_int(row.get("lowstBidPrcIndctCont")),
+        bid_start_date=row.get("cltrBidBgngDt") or None,
+        bid_end_date=row.get("cltrBidEndDt") or None,
         source_url="https://www.onbid.co.kr",
-        failed_count=to_int(pick("usbdCnt", "usbdNfStart")),
+        failed_count=to_int(row.get("usbdNft")),
+        area_m2=row.get("bldSqms") or row.get("landSqms"),
+        status=str(row.get("pbctStatNm") or "진행중"),
     )
 
 
@@ -122,13 +137,10 @@ def search_onbid(
 
     property_types: 예) ["아파트", "주택"] (클라이언트 사이드 필터)
     regions: 예) ["서울특별시 강남구"] (클라이언트 사이드 필터)
-    budget_max: 최저입찰가 상한 (원) - 서버 사이드 필터(lowstBidPrcEnd)로 전달
+    budget_max: 최저입찰가 상한 (원). 서버가 이 값을 정확히 어떻게 필터링하는지는
+        검증되지 않아 우선 클라이언트 사이드에서도 다시 거른다.
     """
-    params = {}
-    if budget_max:
-        params["lowstBidPrcEnd"] = budget_max
-
-    payload = _request(params)
+    payload = _request({})
     rows = _extract_rows(payload)
     items = [_row_to_item(row) for row in rows]
 
@@ -139,5 +151,7 @@ def search_onbid(
             i for i in items
             if any(r in f"{i.region_sido} {i.region_sigungu}" for r in regions)
         ]
+    if budget_max:
+        items = [i for i in items if i.min_bid_price and i.min_bid_price <= budget_max]
 
     return items
