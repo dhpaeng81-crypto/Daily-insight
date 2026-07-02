@@ -108,6 +108,49 @@ def _narrowing_diagnostic() -> None:
             print(f"요청 자체가 실패함: {e}")
         print()
 
+    # 가설: 필드를 아예 생략하면 안 되고, 빈 문자열이라도 키 자체는 보내야
+    # "필수 파라미터 누락"으로 처리되지 않을 수 있다.
+    blank_open_search = {
+        "prptDivCd": "0007,0005",
+        "bidDivCd": "0001",
+        "pvctTrgtYn": "N",
+        "dispsMthodCd": "0001",
+        "cltrUsgLclsCtgrid": "",
+        "cltrUsgMclsCtgrid": "",
+        "cltrUsgSclsCtgrid": "",
+        "cltrUsgLclsCtgrNm": "",
+        "cltrUsgMclsCtgrNm": "",
+        "cltrUsgSclsCtgrNm": "",
+        "lctnSdnm": "",
+        "lctnSggnm": "",
+        "lctnEmdNm": "",
+        "lowstBidPrcStart": "",
+        "lowstBidPrcEnd": "",
+        "landSqmsStart": "",
+        "landSqmsEnd": "",
+        "bldSqmsStart": "",
+        "bldSqmsEnd": "",
+        **wide_range,
+        "cptnMthodCd": "0001",
+        "cptnMthodNm": "일반경쟁",
+        "alcYn": "N",
+        "usbdNfStart": "",
+        "usbdNfEnd": "",
+        "apslEvlAmtStart": "",
+        "apslEvlAmtEnd": "",
+        "onbidCltrNm": "",
+        "orgNm": "",
+        "mdfcnYmdStart": "",
+        "mdfcnYmdEnd": "",
+    }
+    print("=== NARROWING DIAGNOSTIC: 전체 키 유지 + 좁히는 값만 빈 문자열 ===")
+    try:
+        payload = _request(blank_open_search)
+        print(f"응답: {payload}")
+    except Exception as e:
+        print(f"요청 자체가 실패함: {e}")
+    print()
+
 
 def main() -> None:
     _raw_diagnostic()
