@@ -176,6 +176,26 @@ def _narrowing_diagnostic() -> None:
         print(f"요청 자체가 실패함: {e}")
     print()
 
+    # 모든 "단일 선택 코드" 필드(재산종류/입찰구분/수의계약가능/처분방식/경쟁방식/지분공유)를
+    # 전부 채우고, 자유검색/범위/계층코드 필드는 아예 생략한다.
+    all_single_select_codes = {
+        "prptDivCd": "0007,0005",
+        "bidDivCd": "0001",
+        "pvctTrgtYn": "N",
+        "dispsMthodCd": "0001",
+        "cptnMthodCd": "0001",
+        "cptnMthodNm": "일반경쟁",
+        "alcYn": "N",
+        **wide_range,
+    }
+    print("=== NARROWING DIAGNOSTIC: 단일선택 코드필드 전부 + 계층/범위/자유검색 생략 ===")
+    try:
+        payload = _request(all_single_select_codes)
+        print(f"응답: {payload}")
+    except Exception as e:
+        print(f"요청 자체가 실패함: {e}")
+    print()
+
 
 def main() -> None:
     _raw_diagnostic()
