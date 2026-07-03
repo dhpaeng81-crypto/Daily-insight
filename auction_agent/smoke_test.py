@@ -1,13 +1,28 @@
 """ONBID_SERVICE_KEY 연결 확인용 스모크 테스트.
 
-실제 API 응답 구조가 onbid_source.py의 필드 매핑 가정과 맞는지 확인한다.
 서비스키 값은 출력하지 않는다.
 """
 
-from auction_agent.onbid_source import search_onbid
+from auction_agent.onbid_source import _ENDPOINT, _request, search_onbid
+
+
+def _raw_diagnostic() -> None:
+    """기본 파라미터로 요청해 원본 응답의 총 건수만 확인한다."""
+    print("=== RAW REQUEST DIAGNOSTIC ===")
+    print(f"Endpoint: {_ENDPOINT}")
+    try:
+        payload = _request({"numOfRows": 1})
+        body = payload.get("body", {})
+        print(f"header: {payload.get('header')}")
+        print(f"totalCount: {body.get('totalCount')}")
+    except Exception as e:
+        print(f"요청 자체가 실패함: {e}")
+    print("=== END DIAGNOSTIC ===\n")
 
 
 def main() -> None:
+    _raw_diagnostic()
+
     items = search_onbid()
     print(f"조회된 물건 수: {len(items)}")
 
