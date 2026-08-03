@@ -44,6 +44,7 @@ def _search_all(property_types, regions, budget_max):
 def _format_item(item) -> str:
     return (
         f"[{item.source}] {item.title}\n"
+        f"  물건번호 {item.item_id}\n"
         f"  {item.address} ({item.property_type})\n"
         f"  감정가 {item.appraisal_price:,}원 / 최저입찰가 {item.min_bid_price:,}원 "
         f"(낙찰가율 {item.bid_price_rate:.0%}, 유찰 {item.failed_count}회)\n"

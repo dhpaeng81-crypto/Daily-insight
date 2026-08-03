@@ -24,6 +24,7 @@ bidPrdYmdEnd.
 
 from datetime import datetime, timedelta, timezone
 from typing import List, Optional
+from urllib.parse import urlencode
 
 import requests
 
@@ -86,6 +87,33 @@ def _extract_rows(payload: dict) -> List[dict]:
     return items
 
 
+_DETAIL_URL_BASE = "https://www.onbid.co.kr/op/cltrpbancinf/cltrdtl/CltrDtlController/mvmnCltrDtl.do"
+
+
+def _detail_url(row: dict) -> str:
+    """물건 상세 페이지 URL을 만든다.
+
+    onbid.co.kr에서 실제로 쓰이는 URL 패턴을 검색으로 확인해서 재현했다
+    (`cltrScrnGrpCd=0001`은 부동산 물건 상세 화면 그룹으로, 이 서비스가
+    반환하는 물건은 전부 부동산이라 고정값으로 둔다). 상세 조회에 필요한
+    onbidCltrno/onbidPbancNo/pbctNo/pbctCdtnNo/prptDivCd가 없으면 온비드
+    메인 페이지로 대체한다.
+    """
+    required = ["onbidCltrno", "onbidPbancNo", "pbctNo", "pbctCdtnNo", "prptDivCd"]
+    if not all(row.get(k) not in (None, "") for k in required):
+        return "https://www.onbid.co.kr"
+
+    params = {
+        "cltrScrnGrpCd": "0001",
+        "cltrPrptDivCd": row["prptDivCd"],
+        "onbidCltrno": row["onbidCltrno"],
+        "onbidPbancNo": row["onbidPbancNo"],
+        "pbctNo": row["pbctNo"],
+        "pbctCdtnNo": row["pbctCdtnNo"],
+    }
+    return f"{_DETAIL_URL_BASE}?{urlencode(params)}"
+
+
 def _row_to_item(row: dict) -> AuctionItem:
     """온비드 차세대 물건목록 응답 1건을 공통 스키마로 변환 (실제 응답 필드명 기준)."""
 
@@ -121,7 +149,7 @@ def _row_to_item(row: dict) -> AuctionItem:
         min_bid_price=to_int(row.get("lowstBidPrcIndctCont")),
         bid_start_date=row.get("cltrBidBgngDt") or None,
         bid_end_date=row.get("cltrBidEndDt") or None,
-        source_url="https://www.onbid.co.kr",
+        source_url=_detail_url(row),
         failed_count=to_int(row.get("usbdNft")),
         area_m2=row.get("bldSqms") or row.get("landSqms"),
         status=str(row.get("pbctStatNm") or "진행중"),
