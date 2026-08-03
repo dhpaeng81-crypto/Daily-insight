@@ -1,0 +1,27 @@
+name: Auction Agent Telegram Test Message
+
+on:
+  workflow_dispatch:
+
+jobs:
+  send-test-message:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r auction_agent/requirements.txt
+
+      - name: Send sample search result to Telegram
+        env:
+          ONBID_SERVICE_KEY: ${{ secrets.ONBID_SERVICE_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -m auction_agent.send_test_message
