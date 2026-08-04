@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#3d1f6e">
+  <meta name="theme-color" content="#1C2B4A">
   <title>오시는 길 | 주니어솔로몬</title>
   <meta name="description" content="주니어솔로몬 오시는 길 — 서울시 용산구 이촌로 200 LG프라자 4층 403호. 이촌역(4호선·경의중앙선) 1번 출구 도보 5분. ☎ 02-794-8123">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -19,19 +19,19 @@
     /* PAGE HERO */
     .page-hero {
       padding: calc(var(--header-h) + 56px) 0 56px;
-      background: linear-gradient(150deg, oklch(10% .03 292) 0%, oklch(18% .07 292) 60%, oklch(24% .10 285) 100%);
+      background: linear-gradient(150deg, oklch(18% .05 258) 0%, oklch(22% .07 258) 60%, oklch(28% .09 258) 100%);
       position: relative; overflow: hidden;
     }
     .page-hero::before {
       content:''; position:absolute; inset:0; pointer-events:none;
-      background: radial-gradient(ellipse 60% 70% at 80% 40%, oklch(68% .11 292 / .14), transparent);
+      background: radial-gradient(ellipse 60% 70% at 80% 40%, oklch(60% .12 72 / .14), transparent);
     }
-    .breadcrumb { display:flex; align-items:center; gap:6px; font-size:13px; color:oklch(55% .04 292); margin-bottom:20px; flex-wrap:wrap; }
-    .breadcrumb a { color:oklch(55% .04 292); text-decoration:none; }
-    .breadcrumb a:hover { color:oklch(80% .05 292); }
-    .breadcrumb span { color:oklch(40% .04 292); }
+    .breadcrumb { display:flex; align-items:center; gap:6px; font-size:13px; color:oklch(80% .02 78); margin-bottom:20px; flex-wrap:wrap; }
+    .breadcrumb a { color:oklch(80% .02 78); text-decoration:none; }
+    .breadcrumb a:hover { color:oklch(85% .025 80); }
+    .breadcrumb span { color:oklch(85% .015 78); }
     .page-hero h1 { font-size:clamp(28px,5vw,52px); font-weight:800; color:#fff; letter-spacing:-.03em; line-height:1.1; }
-    .page-hero p  { font-size:clamp(15px,1.8vw,17px); color:oklch(70% .04 292); margin-top:14px; line-height:1.75; max-width:520px; }
+    .page-hero p  { font-size:clamp(15px,1.8vw,17px); color:oklch(76% .015 80); margin-top:14px; line-height:1.75; max-width:520px; }
 
     /* MAP */
     .map-section { padding: 0; background: var(--surf-1); }
@@ -78,16 +78,16 @@
       display: flex; flex-direction: column; gap: .6rem;
       transition: box-shadow .25s, transform .25s;
     }
-    .info-card:hover { box-shadow: 0 6px 24px oklch(68% .11 292 / .1); transform: translateY(-2px); }
+    .info-card:hover { box-shadow: 0 6px 24px oklch(60% .12 72 / .1); transform: translateY(-2px); }
     .info-icon {
       width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
     }
     .info-icon.purple { background: var(--purple-light); }
     .info-icon.yellow { background: var(--yellow-light); }
-    .info-label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--purple); }
+    .info-label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--amber-text); }
     .info-value { font-size: 14px; color: var(--ink); font-weight: 500; line-height: 1.7; }
-    .info-value a { color: var(--purple); text-decoration: none; font-weight: 600; }
+    .info-value a { color: var(--amber-text); text-decoration: none; font-weight: 600; }
     .info-value a:hover { text-decoration: underline; }
     .info-sub { font-size: 12px; color: var(--ink-subtle); line-height: 1.6; }
 
@@ -98,7 +98,7 @@
     .hours-table thead tr { background: var(--purple-deep); }
     .hours-table th {
       padding: 14px 20px; font-size: 12px; font-weight: 700;
-      letter-spacing: .05em; text-transform: uppercase; color: oklch(85% .04 292); text-align: left;
+      letter-spacing: .05em; text-transform: uppercase; color: oklch(88% .015 80); text-align: left;
     }
     .hours-table td {
       padding: 14px 20px; font-size: 14px; color: var(--ink-muted);
@@ -122,7 +122,7 @@
       display: flex; gap: 1rem; align-items: flex-start;
     }
     .transport-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: .1rem; }
-    .transport-type { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--purple); margin-bottom: .3rem; }
+    .transport-type { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--amber-text); margin-bottom: .3rem; }
     .transport-desc { font-size: .9rem; color: var(--ink-muted); line-height: 1.75; }
     .transport-desc strong { color: var(--purple-deep); }
 
@@ -137,7 +137,7 @@
       text-decoration: none; color: var(--ink);
       transition: box-shadow .25s, transform .25s;
     }
-    .sns-card:hover { box-shadow: 0 6px 24px oklch(68% .11 292 / .1); transform: translateY(-2px); }
+    .sns-card:hover { box-shadow: 0 6px 24px oklch(60% .12 72 / .1); transform: translateY(-2px); }
     .sns-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .sns-icon svg { width: 22px; height: 22px; }
     .sns-icon.insta { background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af); color: #fff; }
@@ -148,10 +148,10 @@
     /* CONSULT */
     .consult { background: var(--purple-deep); padding: 72px 0; text-align: center; }
     .consult-title { font-size:clamp(22px,3.5vw,36px); font-weight:800; color:#fff; letter-spacing:-.025em; text-wrap:balance; }
-    .consult-sub { font-size:15px; color:oklch(72% .05 292); margin-top:12px; }
+    .consult-sub { font-size:15px; color:oklch(82% .015 80); margin-top:12px; }
     .consult-cta { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:32px; }
     .btn-naver {
-      background:oklch(76% .09 292); color:#fff; padding:15px 30px; border-radius:var(--r-pill);
+      background:oklch(60% .12 72); color:#fff; padding:15px 30px; border-radius:var(--r-pill);
       font-size:15px; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:8px;
       transition:opacity var(--t-fast),transform var(--t-base) cubic-bezier(.16,1,.3,1);
     }
@@ -177,7 +177,7 @@
 <header class="header" id="header" role="banner">
   <div class="header-inner">
     <a href="index.html" class="logo" aria-label="주니어솔로몬 홈으로">
-      <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="46" height="46">
+      <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="60" height="46">
       <div><div class="logo-text">주니어솔로몬</div><div class="logo-sub">Jr. Solomon Academy</div></div>
     </a>
     <nav class="nav" role="navigation" aria-label="주메뉴">
@@ -267,22 +267,23 @@
 
   <!-- MAP -->
   <section class="map-section" aria-label="지도">
-    <div class="map-placeholder">
-      <div class="map-placeholder-icon" aria-hidden="true">📍</div>
-      <p class="map-placeholder-text">
-        서울시 용산구 이촌로 200<br>
-        LG프라자 4층 403호
-      </p>
-      <div class="map-btns">
-        <a href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%EC%8B%9C+%EC%9A%A9%EC%82%B0%EA%B5%AC+%EC%9D%B4%EC%B4%8C%EB%A1%9C+200+LG%ED%94%84%EB%9D%BC%EC%9E%90"
-           target="_blank" rel="noopener noreferrer" class="map-naver-btn">
-          네이버 지도로 보기
-        </a>
-        <a href="https://map.kakao.com/link/search/서울시+용산구+이촌로+200+LG프라자"
-           target="_blank" rel="noopener noreferrer" class="map-kakao-btn">
-          카카오맵으로 보기
-        </a>
-      </div>
+    <div class="map-embed">
+      <iframe
+        src="https://maps.google.com/maps?q=서울+용산구+이촌로+200+LG프라자&hl=ko&z=17&output=embed"
+        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="주니어솔로몬 위치 — 서울 용산구 이촌로 200 LG프라자 4층 403호">
+      </iframe>
+    </div>
+    <div class="map-btns" style="padding: 20px 0 28px;">
+      <a href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%EC%8B%9C+%EC%9A%A9%EC%82%B0%EA%B5%AC+%EC%9D%B4%EC%B4%8C%EB%A1%9C+200+LG%ED%94%84%EB%9D%BC%EC%9E%90"
+         target="_blank" rel="noopener noreferrer" class="map-naver-btn">
+        네이버 지도로 보기
+      </a>
+      <a href="https://map.kakao.com/link/search/서울시+용산구+이촌로+200+LG프라자"
+         target="_blank" rel="noopener noreferrer" class="map-kakao-btn">
+        카카오맵으로 보기
+      </a>
     </div>
   </section>
 
@@ -519,10 +520,10 @@
           <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="40" height="40">
           <div style="margin-left:10px;">
             <div class="logo-text" style="color:#fff;font-size:17px;">주니어솔로몬</div>
-            <div class="logo-sub" style="color:oklch(45% .04 292);">Jr. Solomon Academy</div>
+            <div class="logo-sub" style="color:oklch(82% .015 80);">Jr. Solomon Academy</div>
           </div>
         </a>
-        <p style="font-size:13px;color:oklch(40% .04 292);line-height:1.7;margin-top:12px;">
+        <p style="font-size:13px;color:oklch(85% .015 78);line-height:1.7;margin-top:12px;">
           "모든 아이는 솔로몬의 지혜를 품을 수 있습니다"<br>
           서울 용산구 이촌로 200, LG프라자 4층 403호<br>
           ☎ 02-794-8123 · 월~금 14:00~21:00 / 토 09:00~18:00
@@ -530,22 +531,22 @@
       </div>
       <nav aria-label="푸터 메뉴" style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;">
         <div>
-          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:oklch(40% .04 292);margin-bottom:10px;">학원소개</div>
-          <a href="vision.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">비전 &amp; 교육철학</a>
-          <a href="mission.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">교육방향</a>
-          <a href="introduction.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">선생님 소개</a>
-          <a href="facility.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;">시설 안내</a>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:oklch(85% .015 78);margin-bottom:10px;">학원소개</div>
+          <a href="vision.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;margin-bottom:7px;">비전 &amp; 교육철학</a>
+          <a href="mission.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;margin-bottom:7px;">교육방향</a>
+          <a href="introduction.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;margin-bottom:7px;">선생님 소개</a>
+          <a href="facility.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;">시설 안내</a>
         </div>
         <div>
-          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:oklch(40% .04 292);margin-bottom:10px;">프로그램</div>
-          <a href="curriculum.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">커리큘럼</a>
-          <a href="edu-1.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">소포스에듀</a>
-          <a href="fee.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">교습비 안내</a>
-          <a href="contact.html" style="display:block;font-size:13px;color:oklch(80% .05 292);text-decoration:none;font-weight:700;">오시는길</a>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:oklch(85% .015 78);margin-bottom:10px;">프로그램</div>
+          <a href="curriculum.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;margin-bottom:7px;">커리큘럼</a>
+          <a href="edu-1.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;margin-bottom:7px;">소포스에듀</a>
+          <a href="fee.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;margin-bottom:7px;">교습비 안내</a>
+          <a href="contact.html" style="display:block;font-size:13px;color:oklch(85% .025 80);text-decoration:none;font-weight:700;">오시는길</a>
         </div>
       </nav>
     </div>
-    <div style="border-top:1px solid oklch(18% .03 292);padding-top:20px;font-size:12px;color:oklch(35% .04 292);line-height:1.8;">
+    <div style="border-top:1px solid oklch(28% .06 258);padding-top:20px;font-size:12px;color:oklch(82% .015 80);line-height:1.8;">
       대표: 장화연 · 사업자 511-96-33718 · 중부교육지원청 제3336호<br>
       © 2017–2026 주니어솔로몬. All rights reserved.
     </div>

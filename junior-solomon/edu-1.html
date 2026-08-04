@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0d1b3e">
+  <meta name="theme-color" content="#1C2B4A">
   <title>소포스에듀 | 주니어솔로몬</title>
   <meta name="description" content="소포스에듀 — 서울대 졸업 이대건 선생님의 수능·내신 전문 국어 프로그램. 용산구 이촌동 주니어솔로몬 내 운영.">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -24,19 +24,11 @@
     .program-table tbody tr:last-child{border-bottom:none;}
     .program-table tbody tr:hover{background:var(--surf-1);}
     .program-table td{padding:14px 16px;font-size:14px;color:var(--ink);}
-    .program-table td:first-child{font-weight:700;color:var(--purple);}
+    .program-table td:first-child{font-weight:700;color:var(--amber-text);}
     .prog-badge{display:inline-block;padding:3px 10px;border-radius:var(--r-pill);font-size:11px;font-weight:700;}
     .prog-badge.open{background:oklch(93% 0.07 55);color:oklch(40% 0.18 50);}
-    .prog-badge.upcoming{background:var(--purple-light);color:var(--purple);}
+    .prog-badge.upcoming{background:var(--purple-light);color:var(--amber-text);}
     .prog-badge.summer{background:oklch(93% 0.07 330);color:oklch(35% 0.18 330);}
-    .summer-section{background:linear-gradient(135deg,var(--yellow),oklch(64% 0.20 38));border-radius:var(--r-xl);padding:36px;color:#fff;margin-top:40px;}
-    .summer-section h2{font-size:clamp(20px,2.5vw,26px);font-weight:800;margin-bottom:8px;}
-    .summer-section p{color:rgba(255,255,255,0.80);font-size:14px;margin-bottom:24px;}
-    .summer-programs{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-    @media(max-width:640px){.summer-programs{grid-template-columns:1fr;}}
-    .summer-prog-card{background:rgba(255,255,255,0.15);border-radius:var(--r-lg);padding:18px 20px;border:1px solid rgba(255,255,255,0.20);}
-    .summer-prog-name{font-size:15px;font-weight:800;margin-bottom:4px;}
-    .summer-prog-info{font-size:13px;color:rgba(255,255,255,0.72);}
   </style>
 </head>
 <body>
@@ -45,7 +37,7 @@
 <header class="header" id="header" role="banner">
   <div class="header-inner">
     <a href="index.html" class="logo" aria-label="주니어솔로몬 홈으로">
-      <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="46" height="46">
+      <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="60" height="46">
       <div><div class="logo-text">주니어솔로몬</div><div class="logo-sub">Jr. Solomon Academy</div></div>
     </a>
     <nav class="nav" role="navigation" aria-label="주메뉴">
@@ -132,65 +124,11 @@
         <p>아래 프로그램은 주니어솔로몬 내에서 별도로 운영됩니다. 정원이 제한되어 있으므로 조기 마감될 수 있습니다.</p>
       </div>
 
-      <div style="overflow-x:auto;" class="anim anim-d2">
-        <table class="program-table" role="table" aria-label="소포스에듀 프로그램 현황">
-          <thead>
-            <tr>
-              <th scope="col">프로그램</th>
-              <th scope="col">요일 · 시간</th>
-              <th scope="col">개강일</th>
-              <th scope="col">대상</th>
-              <th scope="col">상태</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>수능 문학독서반</td>
-              <td>화·금 18:00–21:00</td>
-              <td>5/12, 5/15</td>
-              <td>고등</td>
-              <td><span class="prog-badge open">개강</span></td>
-            </tr>
-            <tr>
-              <td>수능 문법반</td>
-              <td>목 18:00–21:00</td>
-              <td>5/14</td>
-              <td>중·고등</td>
-              <td><span class="prog-badge open">개강</span></td>
-            </tr>
-            <tr>
-              <td>용강중 기말 내신대비반</td>
-              <td>월 16:30–19:30</td>
-              <td>6/1, 6/8, 6/15, 6/22</td>
-              <td>중등</td>
-              <td><span class="prog-badge upcoming">예약중</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="summer-section anim anim-d3">
-        <h2>☀️ 2026 여름방학 특강</h2>
-        <p>7월 22일 ~ 8월 17일 집중 운영 | 박효정T · 이대건T 공동 진행</p>
-        <div class="summer-programs">
-          <div class="summer-prog-card">
-            <div class="summer-prog-name">고전문학 집중 특강</div>
-            <div class="summer-prog-info">박효정T 진행 | 7/22–8/17<br>수능 고전문학 핵심 작품 전략 분석</div>
-          </div>
-          <div class="summer-prog-card">
-            <div class="summer-prog-name">현대문학 독서 특강</div>
-            <div class="summer-prog-info">이대건T 진행 | 7/22–8/17<br>수능 현대문학 독서 심화</div>
-          </div>
-          <div class="summer-prog-card">
-            <div class="summer-prog-name">수능 문법 집중반</div>
-            <div class="summer-prog-info">이대건T 진행 | 7/22–8/17<br>문법 전 단원 + 실전 문제 완성</div>
-          </div>
-          <div class="summer-prog-card">
-            <div class="summer-prog-name">중등 내신 특강</div>
-            <div class="summer-prog-info">이대건T 진행 | 7/22–8/17<br>2학기 내신 선행 대비</div>
-          </div>
-        </div>
-      </div>
+      <ul style="margin:16px 0 0;padding:0 0 0 1.2em;list-style:disc;display:flex;flex-direction:column;gap:8px;" class="anim anim-d2">
+        <li style="font-size:15px;font-weight:700;color:var(--ink);">수능 문학독서반 <span style="font-size:13px;font-weight:400;color:var(--ink-muted);">— 고등</span></li>
+        <li style="font-size:15px;font-weight:700;color:var(--ink);">수능 문법반 <span style="font-size:13px;font-weight:400;color:var(--ink-muted);">— 중·고등</span></li>
+        <li style="font-size:15px;font-weight:700;color:var(--ink);">내신 대비반 <span style="font-size:13px;font-weight:400;color:var(--ink-muted);">— 중등</span></li>
+      </ul>
 
       <div class="content-prose anim" style="margin-top:40px;">
         <h2>소포스에듀 수강 안내</h2>
@@ -198,14 +136,14 @@
           <li>소포스에듀는 주니어솔로몬 정규 과정과 <strong>별도로 등록</strong>합니다.</li>
           <li>기존 주니어솔로몬 수강생도 추가 신청 가능합니다.</li>
           <li>소수정예 운영으로 정원이 차면 조기 마감됩니다.</li>
-          <li>수강 문의: <a href="tel:027948123" style="color:var(--purple);font-weight:700;">02-794-8123</a> / <a href="tel:01032128123" style="color:var(--purple);">010-3212-8123</a></li>
+          <li>수강 문의: <a href="tel:027948123" style="color:var(--amber-text);font-weight:700;">02-794-8123</a> / <a href="tel:01032128123" style="color:var(--amber-text);">010-3212-8123</a></li>
         </ul>
       </div>
     </div>
   </section>
 
   <div class="cta-band">
-    <div class="container">
+    <div class="cta-band-inner">
       <h2>수강 신청 및 문의</h2>
       <p>빠른 정원 마감이 예상됩니다. 지금 바로 문의해 주세요</p>
       <div class="cta-band-actions">
@@ -219,7 +157,7 @@
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-brand">
-      <div class="logo"><img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="46" height="46"><div><div class="logo-text">주니어솔로몬</div><div class="logo-sub">Jr. Solomon Academy</div></div></div>
+      <div class="logo"><img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="60" height="46"><div><div class="logo-text">주니어솔로몬</div><div class="logo-sub">Jr. Solomon Academy</div></div></div>
       <p>서울시 용산구 이촌로 200 LG프라자 4층 403호<br>대표전화: 02-794-8123 | 상담: 010-3212-8123<br>이메일: juniorsolomon@naver.com<br>중부교육지원청 제3336호</p>
     </div>
     <div class="footer-col"><h4>학원소개</h4><ul><li><a href="vision.html">비전 &amp; 교육철학</a></li><li><a href="mission.html">교육방향</a></li><li><a href="introduction.html">선생님 소개</a></li><li><a href="facility.html">시설안내</a></li></ul></div>

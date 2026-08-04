@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#3d1f6e">
+  <meta name="theme-color" content="#1C2B4A">
   <title>시설 안내 | 주니어솔로몬</title>
   <meta name="description" content="주니어솔로몬 학원 시설 안내. 솔로몬 사설 도서관, 하브루타 수업실, UV 도서 소독 시스템. 서울 용산구 이촌동 LG프라자 4층.">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -19,26 +19,48 @@
     /* PAGE HERO */
     .page-hero {
       padding: calc(var(--header-h) + 56px) 0 56px;
-      background: linear-gradient(150deg, oklch(10% .03 292) 0%, oklch(18% .07 292) 60%, oklch(24% .10 285) 100%);
+      background: linear-gradient(150deg, oklch(18% .05 258) 0%, oklch(22% .07 258) 60%, oklch(28% .09 258) 100%);
       position: relative; overflow: hidden;
     }
     .page-hero::before {
       content:''; position:absolute; inset:0; pointer-events:none;
-      background: radial-gradient(ellipse 60% 70% at 80% 40%, oklch(68% .11 292 / .14), transparent);
+      background: radial-gradient(ellipse 60% 70% at 80% 40%, oklch(60% .12 72 / .14), transparent);
     }
-    .breadcrumb { display:flex; align-items:center; gap:6px; font-size:13px; color:oklch(55% .04 292); margin-bottom:20px; flex-wrap:wrap; }
-    .breadcrumb a { color:oklch(55% .04 292); text-decoration:none; }
-    .breadcrumb a:hover { color:oklch(80% .05 292); }
-    .breadcrumb span { color:oklch(40% .04 292); }
-    .page-hero h1 { font-size:clamp(28px,5vw,52px); font-weight:800; color:#fff; letter-spacing:-.03em; line-height:1.1; }
-    .page-hero p  { font-size:clamp(15px,1.8vw,17px); color:oklch(70% .04 292); margin-top:14px; line-height:1.75; max-width:520px; }
+    .breadcrumb { display:flex; align-items:center; gap:6px; font-size:13px; color:oklch(80% .02 78); margin-bottom:20px; flex-wrap:wrap; }
+    .breadcrumb a { color:oklch(80% .02 78); text-decoration:none; }
+    .breadcrumb a:hover { color:oklch(85% .025 80); }
+    .breadcrumb span { color:oklch(85% .015 78); }
+    .page-hero h1 { font-size:clamp(28px,5vw,68px); font-weight:800; color:#fff; letter-spacing:-.03em; line-height:1.1; }
+    .page-hero p  { font-size:clamp(15px,1.8vw,17px); color:oklch(76% .015 80); margin-top:14px; line-height:1.75; max-width:520px; }
 
-    /* HERO PHOTO */
-    .hero-photo {
-      width: 100%; aspect-ratio: 21/9; object-fit: cover;
-      display: block;
+    /* HERO PHOTO MOSAIC */
+    .hero-mosaic {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      grid-template-rows: 1fr 1fr;
+      height: 420px;
+      gap: 3px;
     }
-    @media (max-width: 640px) { .hero-photo { aspect-ratio: 4/3; } }
+    .hero-mosaic-main {
+      grid-row: 1 / 3;
+      overflow: hidden;
+    }
+    .hero-mosaic-main img,
+    .hero-mosaic-sub img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    .hero-mosaic-main:hover img,
+    .hero-mosaic-sub:hover img { transform: scale(1.04); }
+    .hero-mosaic-sub { overflow: hidden; }
+    @media (max-width: 600px) {
+      .hero-mosaic {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 200px 140px;
+        height: auto;
+      }
+      .hero-mosaic-main { grid-row: 1 / 2; grid-column: 1 / 3; }
+    }
 
     /* OVERVIEW */
     .overview-section { padding: 5rem 2rem; background: var(--canvas); }
@@ -74,7 +96,7 @@
     .space-photo {
       width: 100%; aspect-ratio: 4/3; object-fit: cover;
       border-radius: 16px; display: block;
-      box-shadow: 0 8px 32px oklch(68% .11 292 / .12);
+      box-shadow: 0 8px 32px oklch(60% .12 72 / .12);
     }
     .space-photo-pair {
       display: grid; grid-template-columns: 1fr 1fr; gap: .75rem;
@@ -82,7 +104,7 @@
     .space-photo-pair .space-photo { aspect-ratio: 1/1; }
 
     .space-text-col {}
-    .space-label { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--purple); margin-bottom: .5rem; }
+    .space-label { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--amber-text); margin-bottom: .5rem; }
     .space-title { font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 800; color: var(--purple-deep); letter-spacing: -.025em; line-height: 1.2; margin-bottom: 1rem; }
     .space-desc  { font-size: .95rem; color: var(--text-2); line-height: 1.85; margin-bottom: 1.25rem; }
     .space-features { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .5rem; }
@@ -108,16 +130,16 @@
       display: flex; gap: 1.25rem; align-items: flex-start;
     }
     .uv-icon { font-size: 2rem; flex-shrink: 0; }
-    .uv-title { font-size: 1rem; font-weight: 700; color: var(--yellow); margin-bottom: .4rem; }
-    .uv-desc  { font-size: .85rem; color: oklch(72% .05 292); line-height: 1.75; }
+    .uv-title { font-size: 1rem; font-weight: 700; color: var(--amber-on-dark); margin-bottom: .4rem; }
+    .uv-desc  { font-size: .85rem; color: oklch(82% .015 80); line-height: 1.75; }
 
     /* CONSULT */
     .consult { background: var(--purple-deep); padding: 72px 0; text-align: center; }
     .consult-title { font-size:clamp(22px,3.5vw,36px); font-weight:800; color:#fff; letter-spacing:-.025em; text-wrap:balance; }
-    .consult-sub { font-size:15px; color:oklch(72% .05 292); margin-top:12px; }
+    .consult-sub { font-size:15px; color:oklch(82% .015 80); margin-top:12px; }
     .consult-cta { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:32px; }
     .btn-naver {
-      background:oklch(76% .09 292); color:#fff; padding:15px 30px; border-radius:var(--r-pill);
+      background:oklch(60% .12 72); color:#fff; padding:15px 30px; border-radius:var(--r-pill);
       font-size:15px; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:8px;
       transition:opacity var(--t-fast),transform var(--t-base) cubic-bezier(.16,1,.3,1);
     }
@@ -137,7 +159,7 @@
 <header class="header" id="header" role="banner">
   <div class="header-inner">
     <a href="index.html" class="logo" aria-label="주니어솔로몬 홈으로">
-      <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="46" height="46">
+      <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="60" height="46">
       <div><div class="logo-text">주니어솔로몬</div><div class="logo-sub">Jr. Solomon Academy</div></div>
     </a>
     <nav class="nav" role="navigation" aria-label="주메뉴">
@@ -224,14 +246,30 @@
   </div>
 </section>
 
-<!-- HERO PHOTO: 로비 전경 -->
-<img
-  src="img-facility-05.jpg"
-  alt="주니어솔로몬 로비. 주니어솔로몬 간판과 안내 데스크, 그 뒤로 도서관이 보입니다."
-  class="hero-photo"
-  loading="eager"
-  width="1200" height="514"
->
+<!-- HERO PHOTO MOSAIC -->
+<div class="hero-mosaic" role="img" aria-label="주니어솔로몬 시설 사진">
+  <div class="hero-mosaic-main">
+    <img
+      src="img-facility-05.jpg"
+      alt="주니어솔로몬 로비. 간판과 안내 데스크, 그 뒤로 도서관이 보입니다."
+      loading="eager"
+    >
+  </div>
+  <div class="hero-mosaic-sub">
+    <img
+      src="img-facility-02.jpg"
+      alt="강의실 내부"
+      loading="eager"
+    >
+  </div>
+  <div class="hero-mosaic-sub">
+    <img
+      src="img-facility-06.jpg"
+      alt="열람 공간"
+      loading="lazy"
+    >
+  </div>
+</div>
 
 <main id="main">
 
@@ -424,10 +462,10 @@
           <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="40" height="40">
           <div style="margin-left:10px;">
             <div class="logo-text" style="color:#fff;font-size:17px;">주니어솔로몬</div>
-            <div class="logo-sub" style="color:oklch(45% .04 292);">Jr. Solomon Academy</div>
+            <div class="logo-sub" style="color:oklch(82% .015 80);">Jr. Solomon Academy</div>
           </div>
         </a>
-        <p style="font-size:13px;color:oklch(40% .04 292);line-height:1.7;margin-top:12px;">
+        <p style="font-size:13px;color:oklch(85% .015 78);line-height:1.7;margin-top:12px;">
           "모든 아이는 솔로몬의 지혜를 품을 수 있습니다"<br>
           서울 용산구 이촌로 200, LG프라자 4층 403호<br>
           ☎ 02-794-8123 · 월~금 14:00~21:00 / 토 09:00~18:00
@@ -435,22 +473,22 @@
       </div>
       <nav aria-label="푸터 메뉴" style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;">
         <div>
-          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:oklch(40% .04 292);margin-bottom:10px;">학원소개</div>
-          <a href="vision.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">비전 &amp; 교육철학</a>
-          <a href="mission.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">교육방향</a>
-          <a href="introduction.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">선생님 소개</a>
-          <a href="facility.html" style="display:block;font-size:13px;color:oklch(80% .05 292);text-decoration:none;font-weight:700;">시설 안내</a>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:oklch(85% .015 78);margin-bottom:10px;">학원소개</div>
+          <a href="vision.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;margin-bottom:7px;">비전 &amp; 교육철학</a>
+          <a href="mission.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;margin-bottom:7px;">교육방향</a>
+          <a href="introduction.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;margin-bottom:7px;">선생님 소개</a>
+          <a href="facility.html" style="display:block;font-size:13px;color:oklch(85% .025 80);text-decoration:none;font-weight:700;">시설 안내</a>
         </div>
         <div>
-          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:oklch(40% .04 292);margin-bottom:10px;">프로그램</div>
-          <a href="curriculum.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">커리큘럼</a>
-          <a href="edu-1.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">소포스에듀</a>
-          <a href="fee.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">교습비 안내</a>
-          <a href="contact.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;">오시는길</a>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:oklch(85% .015 78);margin-bottom:10px;">프로그램</div>
+          <a href="curriculum.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;margin-bottom:7px;">커리큘럼</a>
+          <a href="edu-1.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;margin-bottom:7px;">소포스에듀</a>
+          <a href="fee.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;margin-bottom:7px;">교습비 안내</a>
+          <a href="contact.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;">오시는길</a>
         </div>
       </nav>
     </div>
-    <div style="border-top:1px solid oklch(18% .03 292);padding-top:20px;font-size:12px;color:oklch(35% .04 292);line-height:1.8;">
+    <div style="border-top:1px solid oklch(28% .06 258);padding-top:20px;font-size:12px;color:oklch(82% .015 80);line-height:1.8;">
       대표: 장화연 · 사업자 511-96-33718 · 중부교육지원청 제3336호<br>
       © 2017–2026 주니어솔로몬. All rights reserved.
     </div>

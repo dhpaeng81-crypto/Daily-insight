@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#1a0d30">
+  <meta name="theme-color" content="#1C2B4A">
   <title>커리큘럼 | 주니어솔로몬</title>
-  <meta name="description" content="주니어솔로몬 5단계 커리큘럼. 7세반부터 중등부까지 독서·철학·하브루타·논술 맞춤 교육과정. 2026 여름방학 특강 8종 안내.">
+  <meta name="description" content="주니어솔로몬 5단계 커리큘럼. 7세반부터 중등부까지 독서·철학·하브루타·논술 맞춤 교육과정. 소포스에듀 수능 국어 전문 강좌.">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="stylesheet" href="style.css">
   <style>
@@ -19,19 +19,19 @@
     /* PAGE HERO */
     .page-hero {
       padding: calc(var(--header-h) + 56px) 0 56px;
-      background: linear-gradient(150deg, oklch(10% .03 292) 0%, oklch(18% .07 292) 60%, oklch(24% .10 285) 100%);
+      background: linear-gradient(150deg, oklch(18% .05 258) 0%, oklch(22% .07 258) 60%, oklch(28% .09 258) 100%);
       position: relative; overflow: hidden;
     }
     .page-hero::before {
       content:''; position:absolute; inset:0; pointer-events:none;
-      background: radial-gradient(ellipse 60% 70% at 80% 40%, oklch(68% .11 292 / .14), transparent);
+      background: radial-gradient(ellipse 60% 70% at 80% 40%, oklch(60% .12 72 / .14), transparent);
     }
-    .breadcrumb { display:flex; align-items:center; gap:6px; font-size:13px; color:oklch(55% .04 292); margin-bottom:20px; flex-wrap:wrap; }
-    .breadcrumb a { color:oklch(55% .04 292); text-decoration:none; transition:color var(--t-fast); }
-    .breadcrumb a:hover { color:oklch(80% .05 292); }
-    .breadcrumb span { color:oklch(40% .04 292); }
-    .page-hero h1 { font-size:clamp(28px,5vw,52px); font-weight:800; color:#fff; letter-spacing:-.03em; line-height:1.1; text-wrap:balance; }
-    .page-hero p  { font-size:clamp(15px,1.8vw,17px); color:oklch(70% .04 292); margin-top:14px; line-height:1.75; max-width:520px; text-wrap:balance; }
+    .breadcrumb { display:flex; align-items:center; gap:6px; font-size:13px; color:oklch(80% .02 78); margin-bottom:20px; flex-wrap:wrap; }
+    .breadcrumb a { color:oklch(80% .02 78); text-decoration:none; transition:color var(--t-fast); }
+    .breadcrumb a:hover { color:oklch(85% .025 80); }
+    .breadcrumb span { color:oklch(85% .015 78); }
+    .page-hero h1 { font-size:clamp(28px,5vw,68px); font-weight:800; color:#fff; letter-spacing:-.03em; line-height:1.1; text-wrap:balance; }
+    .page-hero p  { font-size:clamp(15px,1.8vw,17px); color:oklch(76% .015 80); margin-top:14px; line-height:1.75; max-width:520px; text-wrap:balance; }
 
     /* TAB NAV */
     .tab-nav {
@@ -49,11 +49,11 @@
       color:var(--ink-subtle); text-decoration:none; white-space:nowrap;
       border-bottom:2px solid transparent; transition:color var(--t-fast), border-color var(--t-fast);
     }
-    .tab-link:hover { color:var(--purple); }
-    .tab-link.active { color:var(--purple); border-bottom-color:var(--purple); }
+    .tab-link:hover { color:var(--amber-text); }
+    .tab-link.active { color:var(--amber-text); border-bottom-color:var(--amber); }
     .tab-badge {
       font-size:10px; font-weight:800; padding:2px 6px;
-      border-radius:var(--r-pill); background:var(--purple-light); color:var(--purple);
+      border-radius:var(--r-pill); background:var(--purple-light); color:var(--amber-text);
     }
 
     /* LEVEL SECTION */
@@ -68,12 +68,12 @@
     }
     .l1 { background:var(--purple-mid); }
     .l2 { background:var(--purple); }
-    .l3 { background:oklch(62% .11 292); }
-    .l4 { background:oklch(56% .12 292); }
+    .l3 { background:oklch(62% .12 72); }
+    .l4 { background:oklch(55% .12 72); }
     .l5 { background:var(--purple-deep); }
     .level-meta {
       font-size:12px; font-weight:700; letter-spacing:.10em; text-transform:uppercase;
-      color:var(--purple); margin-bottom:8px;
+      color:var(--amber-text); margin-bottom:8px;
     }
     .level-title { font-size:clamp(22px,3vw,32px); font-weight:800; color:var(--ink); letter-spacing:-.025em; text-wrap:balance; margin-bottom:6px; }
     .level-target { font-size:15px; font-weight:600; color:var(--ink-muted); }
@@ -95,41 +95,6 @@
       border-radius:var(--r-pill); background:var(--purple-light); color:var(--purple-deep);
     }
     .level-arrow { color:var(--ink-subtle); font-size:14px; }
-
-    /* SUMMER */
-    .summer-section { padding:80px 0; background:var(--hero-dark); }
-    .summer-date-badge {
-      display:inline-flex; align-items:center; gap:6px;
-      font-size:12px; font-weight:700; color:var(--yellow-deep);
-      background:oklch(88% .13 97 / .15); border:1px solid oklch(88% .13 97 / .3);
-      padding:5px 14px; border-radius:var(--r-pill); margin-bottom:16px;
-    }
-    .summer-title { font-size:clamp(24px,3.5vw,38px); font-weight:800; color:#fff; letter-spacing:-.025em; text-wrap:balance; margin-bottom:8px; }
-    .summer-sub { font-size:15px; color:oklch(65% .04 292); line-height:1.7; margin-bottom:40px; }
-    .summer-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
-    .summer-card {
-      border-radius:var(--r-lg); padding:22px;
-      background:oklch(16% .05 292 / .7);
-      border:1px solid oklch(35% .06 292 / .35);
-      display:flex; flex-direction:column; gap:8px;
-      transition:border-color var(--t-base), background var(--t-base);
-    }
-    .summer-card:hover { border-color:oklch(68% .11 292 / .5); background:oklch(20% .06 292 / .7); }
-    .summer-card.sophos-card {
-      border-color:oklch(88% .13 97 / .3);
-      background:oklch(18% .05 292 / .9);
-    }
-    .summer-card.sophos-card:hover { border-color:var(--yellow); }
-    .summer-icon { font-size:24px; }
-    .summer-name { font-size:15px; font-weight:800; color:#fff; }
-    .summer-teacher { font-size:12px; font-weight:600; color:var(--yellow); }
-    .summer-target { font-size:12px; color:oklch(60% .04 292); }
-    .summer-period {
-      display:inline-flex; align-items:center; gap:4px;
-      font-size:11px; font-weight:700; color:var(--yellow-deep);
-      background:oklch(88% .13 97 / .15); border-radius:var(--r-pill);
-      padding:3px 8px; width:fit-content; margin-top:2px;
-    }
 
     /* SOPHOS TABLE */
     .sophos-section { padding:72px 0; background:var(--surf-1); }
@@ -155,10 +120,10 @@
     /* CONSULT */
     .consult { background:var(--purple-deep); padding:72px 0; text-align:center; }
     .consult-title { font-size:clamp(22px,3.5vw,36px); font-weight:800; color:#fff; letter-spacing:-.025em; text-wrap:balance; }
-    .consult-sub { font-size:15px; color:oklch(72% .05 292); margin-top:12px; }
+    .consult-sub { font-size:15px; color:oklch(82% .015 80); margin-top:12px; }
     .consult-cta { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:32px; }
     .btn-naver {
-      background:oklch(76% .09 292); color:#fff;
+      background:oklch(60% .12 72); color:#fff;
       padding:15px 30px; border-radius:var(--r-pill);
       font-size:15px; font-weight:800; text-decoration:none;
       display:inline-flex; align-items:center; gap:8px;
@@ -174,16 +139,64 @@
     }
     .btn-kakao:hover { opacity:.9; transform:translateY(-2px); }
 
-    /* RESPONSIVE */
-    @media (min-width:640px) {
-      .summer-grid { grid-template-columns:repeat(3,1fr); }
+    /* OUTCOME BOX */
+    .level-outcomes {
+      background: oklch(94% .018 78); border:1px solid oklch(84% .020 78);
+      border-radius: var(--r-lg); padding:20px 24px; margin-top:24px;
     }
+    .level-outcomes-title {
+      font-size:12px; font-weight:800; letter-spacing:.10em; text-transform:uppercase;
+      color:var(--purple-deep); margin-bottom:12px;
+    }
+    .level-outcomes ul {
+      margin:0; padding:0 0 0 1.1em; list-style:disc;
+      display:flex; flex-direction:column; gap:6px;
+    }
+    .level-outcomes li { font-size:14px; color:var(--ink-muted); line-height:1.6; }
+
+    /* PROGRESSION TRACK */
+    .prog-track {
+      background:var(--canvas); border-bottom:1px solid var(--border);
+      padding:28px 0;
+    }
+    .prog-track-inner {
+      max-width:1200px; margin:0 auto; padding:0 24px;
+    }
+    .prog-track-title {
+      font-size:12px; font-weight:700; letter-spacing:.10em; text-transform:uppercase;
+      color:var(--ink-subtle); margin-bottom:18px; text-align:center;
+    }
+    .prog-steps {
+      display:flex; align-items:stretch; gap:0; position:relative;
+      overflow-x:auto; padding-bottom:4px; scrollbar-width:none;
+    }
+    .prog-steps::-webkit-scrollbar { display:none; }
+    .prog-step {
+      flex:1; min-width:140px; display:flex; flex-direction:column;
+      align-items:center; gap:8px; text-align:center; position:relative;
+      padding:0 8px;
+    }
+    .prog-step + .prog-step::before {
+      content:''; position:absolute; left:0; top:18px;
+      width:1px; height:20px; background:var(--border);
+    }
+    .prog-step-num {
+      width:36px; height:36px; border-radius:50%; display:flex;
+      align-items:center; justify-content:center;
+      font-size:11px; font-weight:900; color:#fff; flex-shrink:0;
+    }
+    .prog-step-label { font-size:13px; font-weight:800; color:var(--ink); }
+    .prog-step-age { font-size:11px; color:var(--ink-subtle); }
+    .prog-step-tag {
+      font-size:10px; font-weight:700; padding:3px 8px;
+      border-radius:var(--r-pill); background:oklch(92% .018 78);
+      color:var(--ink-muted); margin-top:2px;
+    }
+
+    /* RESPONSIVE */
     @media (min-width:768px) {
       .level-header { grid-template-columns:auto 1fr; align-items:start; }
       .level-cards  { grid-template-columns:repeat(3,1fr); }
-    }
-    @media (min-width:1024px) {
-      .summer-grid { grid-template-columns:repeat(4,1fr); }
     }
   </style>
 </head>
@@ -194,7 +207,7 @@
 <header class="header" id="header" role="banner">
   <div class="header-inner">
     <a href="index.html" class="logo" aria-label="주니어솔로몬 홈으로">
-      <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="46" height="46">
+      <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="60" height="46">
       <div><div class="logo-text">주니어솔로몬</div><div class="logo-sub">Jr. Solomon Academy</div></div>
     </a>
     <nav class="nav" role="navigation" aria-label="주메뉴">
@@ -301,15 +314,53 @@
   </div>
 </div>
 
+<!-- PROGRESSION TRACK -->
+<div class="prog-track" aria-hidden="true">
+  <div class="prog-track-inner">
+    <p class="prog-track-title">5단계 성장 경로</p>
+    <div class="prog-steps">
+      <div class="prog-step">
+        <div class="prog-step-num l1" style="background:var(--purple-mid);">L1</div>
+        <div class="prog-step-label">7세반</div>
+        <div class="prog-step-age">만 4~7세</div>
+        <div class="prog-step-tag">그림책 철학</div>
+      </div>
+      <div class="prog-step">
+        <div class="prog-step-num l2" style="background:var(--purple);">L2</div>
+        <div class="prog-step-label">초1·2반</div>
+        <div class="prog-step-age">초등 1~2학년</div>
+        <div class="prog-step-tag">예술 통합</div>
+      </div>
+      <div class="prog-step">
+        <div class="prog-step-num l3" style="background:oklch(62% .12 72);">L3</div>
+        <div class="prog-step-label">초3·4반</div>
+        <div class="prog-step-age">초등 3~4학년</div>
+        <div class="prog-step-tag">하브루타 시작</div>
+      </div>
+      <div class="prog-step">
+        <div class="prog-step-num l4" style="background:oklch(55% .12 72);">L4</div>
+        <div class="prog-step-label">초5·6반</div>
+        <div class="prog-step-age">초등 5~6학년</div>
+        <div class="prog-step-tag">장편 완독</div>
+      </div>
+      <div class="prog-step">
+        <div class="prog-step-num l5" style="background:var(--purple-deep);">L5</div>
+        <div class="prog-step-label">중등부</div>
+        <div class="prog-step-age">중학교 1~3학년</div>
+        <div class="prog-step-tag">고전 · 논술 완성</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- TAB NAV -->
 <div class="tab-nav" role="navigation" aria-label="커리큘럼 탭">
   <div class="tab-nav-inner">
-    <a href="#level1" class="tab-link active">7세반</a>
+    <a href="#level1" class="tab-link active">7세반 <span style="font-size:11px;font-weight:400;opacity:.7;">(만 4~7세)</span></a>
     <a href="#level2" class="tab-link">초1~2반</a>
     <a href="#level3" class="tab-link">초3~4반</a>
     <a href="#level4" class="tab-link">초5~6반</a>
     <a href="#level5" class="tab-link">중등부</a>
-    <a href="#summer" class="tab-link">여름방학 <span class="tab-badge">8종</span></a>
     <a href="#sophos" class="tab-link">소포스에듀</a>
   </div>
 </div>
@@ -327,8 +378,9 @@
     </div>
     <p class="level-desc anim anim-d2">
       아이가 처음으로 '왜?'라는 질문을 품는 시기입니다. 만 4세부터 수업이 가능하며,
-      그림책 한 권을 함께 읽으며 철학적 주제를 감성적으로 접합니다. 오감을 활용한
-      체험 활동으로 생각하는 즐거움을 놀이처럼 자연스럽게 익힙니다.
+      엄선된 그림책 한 권을 함께 읽으면서 이야기 속 인물의 감정·선택·가치관을 철학적으로
+      탐구합니다. 오감을 활용한 체험 활동으로 생각하는 즐거움을 놀이처럼 자연스럽게
+      익히며, 뇌 발달이 가장 왕성한 이 시기에 '질문하는 습관'을 자연스럽게 심어줍니다.
     </p>
     <div class="level-cards anim anim-d3">
       <div class="level-card">
@@ -338,7 +390,7 @@
       </div>
       <div class="level-card">
         <div class="level-card-icon">🎨</div>
-        <div class="level-card-title">오감체험</div>
+        <div class="level-card-title">오감 체험</div>
         <div class="level-card-desc">보고·듣고·만지는 활동으로 책 속 이야기를 몸으로 체험하고 표현합니다.</div>
       </div>
       <div class="level-card">
@@ -356,7 +408,15 @@
       <span class="level-arrow">→</span>
       <span class="level-step">자유 표현</span>
     </div>
-    <p style="font-size:13px;color:var(--ink-subtle);margin-top:12px;" class="anim anim-d3">담당: 손수영 선생님</p>
+    <div class="level-outcomes anim anim-d3">
+      <p class="level-outcomes-title">이 단계를 마치면</p>
+      <ul>
+        <li>그림책을 읽으며 스스로 "왜?"를 묻는 질문 습관 형성</li>
+        <li>이야기 속 인물의 감정과 이유를 자기 언어로 표현</li>
+        <li>생각을 그림·말로 자신감 있게 나타내는 표현력의 기초</li>
+      </ul>
+    </div>
+    <p style="font-size:13px;color:var(--ink-subtle);margin-top:16px;" class="anim anim-d3">담당: 손수영 선생님</p>
   </div>
 </section>
 
@@ -372,9 +432,11 @@
       </div>
     </div>
     <p class="level-desc anim anim-d2">
-      그림책과 철학 대화로 생각하는 습관을 이어가면서, 예술 통합 활동으로 표현력을
-      풍성하게 키우는 단계입니다. 읽고 느끼고 만들며 '내 생각을 표현하는 것'에 대한
-      자신감을 자연스럽게 쌓습니다.
+      그림책에서 이야기책으로 넘어가며 표현력이 폭발적으로 성장하는 시기입니다.
+      그림책과 철학 대화로 생각하는 습관을 이어가면서, 예술 통합 활동으로
+      읽고 느낀 것을 그림·만들기·글쓰기 등 다양한 방식으로 드러냅니다.
+      선생님의 소크라테스식 질문으로 아이 스스로 깊이 생각하는 경험을 쌓으며,
+      '내 생각을 표현하는 것'에 대한 자신감을 자연스럽게 키웁니다.
     </p>
     <div class="level-cards anim anim-d3">
       <div class="level-card">
@@ -402,6 +464,14 @@
       <span class="level-arrow">→</span>
       <span class="level-step">짧은 글쓰기</span>
     </div>
+    <div class="level-outcomes anim anim-d3">
+      <p class="level-outcomes-title">이 단계를 마치면</p>
+      <ul>
+        <li>일기·독서 감상문을 스스로 쓰는 기초 문장력</li>
+        <li>짝과 내 생각을 나누고 다른 의견을 경청하는 습관</li>
+        <li>그림책에서 이야기책으로 확장되는 독서 폭</li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -417,9 +487,11 @@
       </div>
     </div>
     <p class="level-desc anim anim-d2">
-      하브루타 토론이 본격적으로 시작되는 단계입니다. 철학 수업을 바탕으로 단편소설을
-      읽으며 인물·사건·주제를 깊이 탐구하고, 역사 위인의 삶을 통해 가치관을 형성합니다.
-      짝과 질문을 주고받으며 논리적으로 생각하는 힘을 기릅니다.
+      하브루타 토론이 본격적으로 시작되는 단계입니다. 짝과 질문을 교환하고
+      서로의 생각을 부딪히는 경험이 논리적 사고력의 기초를 만듭니다.
+      국내외 단편소설을 읽으며 인물·사건·주제를 다층적으로 탐구하고,
+      역사 위인의 선택과 삶을 통해 '나라면 어떻게 했을까?'를 스스로 묻는
+      시간을 가집니다. 사고기술(Thinking Skills) 기반 철학 수업으로 논리적 사고의 뼈대를 세웁니다.
     </p>
     <div class="level-cards anim anim-d3">
       <div class="level-card">
@@ -439,13 +511,21 @@
       </div>
     </div>
     <div class="level-process anim anim-d3">
-      <span class="level-step">인문독서</span>
+      <span class="level-step">인문 독서</span>
       <span class="level-arrow">→</span>
-      <span class="level-step">창의질문</span>
+      <span class="level-step">창의 질문</span>
       <span class="level-arrow">→</span>
       <span class="level-step">하브루타</span>
       <span class="level-arrow">→</span>
       <span class="level-step">논리 글쓰기</span>
+    </div>
+    <div class="level-outcomes anim anim-d3">
+      <p class="level-outcomes-title">이 단계를 마치면</p>
+      <ul>
+        <li>내 의견을 이유와 근거를 들어 말하고 쓰는 능력</li>
+        <li>짝의 주장에 질문하고 자기 생각을 다듬는 토론 기술</li>
+        <li>논리적 구조를 갖춘 짧은 논술문 작성</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -462,9 +542,10 @@
       </div>
     </div>
     <p class="level-desc anim anim-d2">
-      철학적 사고를 바탕으로 장편소설을 완독하고, 한국사와 비문학 독해까지 영역을
-      확장하는 단계입니다. 중학교 논술·수행평가를 대비하면서 논리적 글쓰기 능력을
-      완성합니다.
+      장편소설을 완독하며 서사 구조와 인물 심리를 깊이 분석하는 단계입니다.
+      윤리·정의·자유 같은 철학적 주제로 심층 토론하고, 비문학 독해와
+      한국사를 연계하여 중학교 교과 학습의 기초를 단단히 다집니다.
+      수행평가·논술형 답안 작성 능력도 이 단계에서 완성됩니다.
     </p>
     <div class="level-cards anim anim-d3">
       <div class="level-card">
@@ -492,6 +573,14 @@
       <span class="level-arrow">→</span>
       <span class="level-step">심화 논술</span>
     </div>
+    <div class="level-outcomes anim anim-d3">
+      <p class="level-outcomes-title">이 단계를 마치면</p>
+      <ul>
+        <li>장편소설 구조 분석과 인물·주제에 대한 비평문 쓰기</li>
+        <li>비문학 지문 독해와 핵심 요약 능력</li>
+        <li>중학교 수행평가·논술형 답안 즉시 대응 가능</li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -507,9 +596,10 @@
       </div>
     </div>
     <p class="level-desc anim anim-d2">
-      동서양 고전과 세계사, 시사이슈를 연결하며 깊이 있는 사고력을 완성하는 단계입니다.
-      철학 수업을 기반으로 고전 텍스트를 분석하고, 세계사적 관점과 현재 시사를 연결하는
-      논술로 수능 국어의 기초를 완성합니다.
+      동서양 고전과 세계사, 현재의 시사이슈를 연결하며 수능 국어의 기초를 완성하는
+      단계입니다. 다양한 고전 텍스트를 철학적 관점으로 읽으며 내신 수행평가·논술에
+      바로 활용할 수 있는 통합적 사고력을 완성합니다. 수능 국어 심화 과정은
+      소포스에듀(이대건T)와 연계하여 체계적으로 준비합니다.
     </p>
     <div class="level-cards anim anim-d3">
       <div class="level-card">
@@ -524,7 +614,7 @@
       </div>
       <div class="level-card">
         <div class="level-card-icon">📰</div>
-        <div class="level-card-title">시사이슈 논술</div>
+        <div class="level-card-title">시사 이슈 논술</div>
         <div class="level-card-desc">현재 시사 이슈를 고전·역사와 연결하여 논리적 논술문으로 완성합니다.</div>
       </div>
     </div>
@@ -537,78 +627,17 @@
       <span class="level-arrow">→</span>
       <span class="level-step">수능 대비</span>
     </div>
-    <p style="font-size:13px;color:var(--ink-subtle);margin-top:12px;" class="anim anim-d3">
-      수능 국어 심화는 <a href="edu-1.html" style="color:var(--purple);font-weight:700;">소포스에듀 (이대건T)</a>와 연계합니다.
-    </p>
-  </div>
-</section>
-
-<!-- ════ 여름방학 특강 ════ -->
-<section class="summer-section" id="summer" aria-labelledby="summer-title">
-  <div class="container">
-    <span class="summer-date-badge anim">📅 2026년 7월 22일 ~ 8월 17일</span>
-    <h2 id="summer-title" class="summer-title anim anim-d1">2026 여름방학 특강 8종</h2>
-    <p class="summer-sub anim anim-d2">
-      방학을 알차게 채우는 주니어솔로몬·소포스에듀 여름 집중 프로그램.
-      레벨별, 목적별로 원하는 과정을 선택하세요.
-    </p>
-    <div class="summer-grid">
-      <div class="summer-card anim anim-d1">
-        <div class="summer-icon">📚</div>
-        <div class="summer-name">고원재독서캠프</div>
-        <div class="summer-target">초등 3학년 이상</div>
-        <div class="summer-teacher">주니어솔로몬</div>
-      </div>
-      <div class="summer-card anim anim-d2">
-        <div class="summer-icon">🤝</div>
-        <div class="summer-name">하브루타독서캠프</div>
-        <div class="summer-target">초등 전학년</div>
-        <div class="summer-teacher">주니어솔로몬</div>
-      </div>
-      <div class="summer-card anim anim-d3">
-        <div class="summer-icon">🌊</div>
-        <div class="summer-name">리딩오션</div>
-        <div class="summer-target">초등 전학년</div>
-        <div class="summer-teacher">교과연계 독서</div>
-      </div>
-      <div class="summer-card anim anim-d1">
-        <div class="summer-icon">🎬</div>
-        <div class="summer-name">시나리오창작</div>
-        <div class="summer-target">초등 4학년 이상</div>
-        <div class="summer-teacher">주니어솔로몬</div>
-      </div>
-      <div class="summer-card anim anim-d2">
-        <div class="summer-icon">🖼️</div>
-        <div class="summer-name">그림책캠프</div>
-        <div class="summer-target">7세~초등 2학년</div>
-        <div class="summer-teacher">주니어솔로몬</div>
-      </div>
-      <div class="summer-card anim anim-d3">
-        <div class="summer-icon">✏️</div>
-        <div class="summer-name">한글캠프</div>
-        <div class="summer-target">7세~초등 1학년</div>
-        <div class="summer-teacher">기초 문해력</div>
-      </div>
-      <div class="summer-card sophos-card anim anim-d1">
-        <div class="summer-icon">📖</div>
-        <div class="summer-name">고전문학특강</div>
-        <div class="summer-teacher">박효정T · 소포스에듀</div>
-        <div class="summer-target">중·고등</div>
-        <div class="summer-period">📅 7/22 ~ 8/17</div>
-      </div>
-      <div class="summer-card sophos-card anim anim-d2">
-        <div class="summer-icon">🎯</div>
-        <div class="summer-name">문학독서·문법특강</div>
-        <div class="summer-teacher">이대건T · 소포스에듀</div>
-        <div class="summer-target">중·고등</div>
-        <div class="summer-period">📅 7/22 ~ 8/17</div>
-      </div>
+    <div class="level-outcomes anim anim-d3">
+      <p class="level-outcomes-title">이 단계를 마치면</p>
+      <ul>
+        <li>고전·역사·시사를 연결하는 통합적 사고력 완성</li>
+        <li>내신 수행평가 및 학생부 종합 대비 논술 작성</li>
+        <li>수능 국어 독해 기초 확립 (소포스에듀 연계 심화 가능)</li>
+      </ul>
     </div>
-    <div style="text-align:center;margin-top:32px;" class="anim anim-d3">
-      <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="btn-naver">
-        💬 여름방학 특강 신청 문의
-      </a>
-    </div>
+    <p style="font-size:13px;color:var(--ink-subtle);margin-top:16px;" class="anim anim-d3">
+      수능 국어 심화는 <a href="edu-1.html" style="color:var(--amber-text);font-weight:700;">소포스에듀 (이대건T)</a>와 연계합니다.
+    </p>
   </div>
 </section>
 
@@ -623,42 +652,42 @@
       서울대 출신 이대건 선생님의 수능 국어 전문 강좌.
       문학·문법·내신을 전략적으로 완성합니다.
     </p>
-    <div style="overflow-x:auto;" class="anim anim-d3">
-      <table class="class-table" aria-label="소포스에듀 개설 강좌">
-        <thead>
-          <tr>
-            <th>프로그램</th>
-            <th>요일 · 시간</th>
-            <th>개강일</th>
-            <th>대상</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="prog-name">수능 문학독서반</span></td>
-            <td>화·금 18:00~21:00</td>
-            <td>5/12 · 5/15</td>
-            <td><span class="class-badge">고등</span></td>
-          </tr>
-          <tr>
-            <td><span class="prog-name">수능 문법반</span></td>
-            <td>목 18:00~21:00</td>
-            <td>5/14</td>
-            <td><span class="class-badge">중·고등</span></td>
-          </tr>
-          <tr>
-            <td><span class="prog-name">용강중 기말 내신대비반</span></td>
-            <td>월 16:30~19:30</td>
-            <td>6/1 · 6/8 · 6/15 · 6/22</td>
-            <td><span class="class-badge">중등</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <ul style="margin:16px 0 0;padding:0 0 0 1.2em;list-style:disc;display:flex;flex-direction:column;gap:8px;" class="anim anim-d3">
+      <li style="font-size:15px;font-weight:700;color:var(--ink);">수능 문학독서반 <span style="font-size:13px;font-weight:400;color:var(--ink-muted);">— 고등</span></li>
+      <li style="font-size:15px;font-weight:700;color:var(--ink);">수능 문법반 <span style="font-size:13px;font-weight:400;color:var(--ink-muted);">— 중·고등</span></li>
+      <li style="font-size:15px;font-weight:700;color:var(--ink);">내신 대비반 <span style="font-size:13px;font-weight:400;color:var(--ink-muted);">— 중등</span></li>
+    </ul>
     <div style="margin-top:24px;" class="anim anim-d3">
-      <a href="edu-1.html" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--purple);text-decoration:none;">
+      <a href="edu-1.html" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--amber-text);text-decoration:none;">
         소포스에듀 상세 안내 →
       </a>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEW STRIP -->
+<section style="padding:56px 0;background:var(--canvas);" aria-labelledby="review-strip-title">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:36px;" class="anim">
+      <span style="font-size:12px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--amber-text);">수강생 후기</span>
+      <h2 id="review-strip-title" style="font-size:clamp(20px,2.5vw,28px);font-weight:800;color:var(--ink);margin-top:8px;letter-spacing:-.025em;">실제 학부모님이 전해주신 이야기</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
+      <blockquote style="margin:0;background:var(--surf-1);border-radius:var(--r-lg);padding:24px;border:1px solid var(--border);" class="anim anim-d1">
+        <p style="font-size:14px;color:var(--ink-muted);line-height:1.75;margin:0 0 16px;">"아이가 책을 읽는 방식이 완전히 바뀌었어요. 단순히 줄거리가 아니라 스스로 질문을 만들고 토론하는 모습을 보며 정말 놀랐습니다."</p>
+        <footer style="font-size:12px;font-weight:700;color:var(--amber-text);">이○○ 학부모 <span style="font-weight:400;color:var(--ink-subtle);">· 초5 자녀, 수강 2년차</span></footer>
+      </blockquote>
+      <blockquote style="margin:0;background:var(--surf-1);border-radius:var(--r-lg);padding:24px;border:1px solid var(--border);" class="anim anim-d2">
+        <p style="font-size:14px;color:var(--ink-muted);line-height:1.75;margin:0 0 16px;">"처음엔 글쓰기를 너무 싫어했는데 이제는 스스로 쓰고 싶다고 합니다. 소수 정예라 집중해서 가르쳐 주시는 게 느껴집니다."</p>
+        <footer style="font-size:12px;font-weight:700;color:var(--amber-text);">김○○ 학부모 <span style="font-weight:400;color:var(--ink-subtle);">· 초3 자녀, 수강 1년차</span></footer>
+      </blockquote>
+      <blockquote style="margin:0;background:var(--surf-1);border-radius:var(--r-lg);padding:24px;border:1px solid var(--border);" class="anim anim-d3">
+        <p style="font-size:14px;color:var(--ink-muted);line-height:1.75;margin:0 0 16px;">"하브루타 방식이 처음엔 낯설었는데, 아이가 토론을 즐기기 시작하면서 확신이 생겼어요. 학교 수업 시간에도 손을 잘 든다고 담임 선생님이 칭찬해주셨어요."</p>
+        <footer style="font-size:12px;font-weight:700;color:var(--amber-text);">정○○ 학부모 <span style="font-weight:400;color:var(--ink-subtle);">· 초4 자녀, 수강 1년차</span></footer>
+      </blockquote>
+    </div>
+    <div style="text-align:center;margin-top:24px;" class="anim">
+      <a href="board-review.html" style="font-size:14px;font-weight:700;color:var(--amber-text);text-decoration:none;">더 많은 후기 보기 →</a>
     </div>
   </div>
 </section>
@@ -686,31 +715,31 @@
           <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="40" height="40">
           <div style="margin-left:10px;">
             <div class="logo-text" style="color:#fff;font-size:17px;">주니어솔로몬</div>
-            <div class="logo-sub" style="color:oklch(45% .04 292);">Jr. Solomon Academy</div>
+            <div class="logo-sub" style="color:oklch(82% .015 80);">Jr. Solomon Academy</div>
           </div>
         </a>
-        <p style="font-size:13px;color:oklch(40% .04 292);line-height:1.7;margin-top:12px;">
+        <p style="font-size:13px;color:oklch(85% .015 78);line-height:1.7;margin-top:12px;">
           서울 용산구 이촌로 200, LG프라자 4층 403호<br>
           ☎ 02-794-8123 · 월~금 14:00~21:00 / 토 09:00~18:00
         </p>
       </div>
       <nav aria-label="푸터 메뉴" style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;">
         <div>
-          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:oklch(40% .04 292);margin-bottom:10px;">학원소개</div>
-          <a href="vision.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">비전 &amp; 교육철학</a>
-          <a href="introduction.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">선생님 소개</a>
-          <a href="facility.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;">시설 안내</a>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:oklch(85% .015 78);margin-bottom:10px;">학원소개</div>
+          <a href="vision.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;margin-bottom:7px;">비전 &amp; 교육철학</a>
+          <a href="introduction.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;margin-bottom:7px;">선생님 소개</a>
+          <a href="facility.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;">시설 안내</a>
         </div>
         <div>
-          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:oklch(40% .04 292);margin-bottom:10px;">프로그램</div>
-          <a href="curriculum.html" style="display:block;font-size:13px;color:oklch(80% .05 292);text-decoration:none;font-weight:700;margin-bottom:7px;">커리큘럼</a>
-          <a href="edu-1.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">소포스에듀</a>
-          <a href="fee.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;margin-bottom:7px;">교습비 안내</a>
-          <a href="contact.html" style="display:block;font-size:13px;color:oklch(52% .04 292);text-decoration:none;">오시는길</a>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:oklch(85% .015 78);margin-bottom:10px;">프로그램</div>
+          <a href="curriculum.html" style="display:block;font-size:13px;color:oklch(85% .025 80);text-decoration:none;font-weight:700;margin-bottom:7px;">커리큘럼</a>
+          <a href="edu-1.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;margin-bottom:7px;">소포스에듀</a>
+          <a href="fee.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;margin-bottom:7px;">교습비 안내</a>
+          <a href="contact.html" style="display:block;font-size:13px;color:oklch(82% .015 80);text-decoration:none;">오시는길</a>
         </div>
       </nav>
     </div>
-    <div style="border-top:1px solid oklch(18% .03 292);margin-top:32px;padding-top:20px;font-size:12px;color:oklch(35% .04 292);line-height:1.8;">
+    <div style="border-top:1px solid oklch(28% .06 258);margin-top:32px;padding-top:20px;font-size:12px;color:oklch(82% .015 80);line-height:1.8;">
       대표: 장화연 · 사업자 511-96-33718 · 중부교육지원청 제3336호<br>
       © 2017–2026 주니어솔로몬. All rights reserved.
     </div>

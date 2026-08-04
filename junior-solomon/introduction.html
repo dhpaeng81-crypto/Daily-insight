@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#1a0d30">
+  <meta name="theme-color" content="#1C2B4A">
   <title>선생님 소개 | 주니어솔로몬</title>
   <meta name="description" content="장화연 원장을 비롯한 주니어솔로몬 교사진 소개. 하브루타·독서·논술·수능국어 전문 선생님 5명이 소수정예로 아이의 성장을 이끕니다.">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="style.css">
   <style>
     .anim { opacity: 0; transform: translateY(20px); transition: opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1); }
@@ -19,26 +21,26 @@
     /* ── PAGE HERO ── */
     .page-hero {
       padding: calc(var(--header-h) + 56px) 0 56px;
-      background: linear-gradient(150deg, oklch(10% 0.03 292) 0%, oklch(18% 0.07 292) 60%, oklch(24% 0.10 285) 100%);
+      background: linear-gradient(150deg, oklch(18% 0.05 258) 0%, oklch(22% 0.07 258) 60%, oklch(28% 0.09 258) 100%);
       position: relative; overflow: hidden;
     }
     .page-hero::before {
       content: ''; position: absolute; inset: 0; pointer-events: none;
-      background: radial-gradient(ellipse 60% 70% at 80% 40%, oklch(68% 0.11 292 / 0.14), transparent);
+      background: radial-gradient(ellipse 60% 70% at 80% 40%, oklch(60% 0.12 72 / 0.14), transparent);
     }
     .breadcrumb {
       display: flex; align-items: center; gap: 6px;
-      font-size: 13px; color: oklch(55% 0.04 292); margin-bottom: 20px; flex-wrap: wrap;
+      font-size: 13px; color: oklch(80% 0.02 78); margin-bottom: 20px; flex-wrap: wrap;
     }
-    .breadcrumb a { color: oklch(55% 0.04 292); text-decoration: none; transition: color var(--t-fast); }
-    .breadcrumb a:hover { color: oklch(80% 0.05 292); }
-    .breadcrumb span { color: oklch(40% 0.04 292); }
+    .breadcrumb a { color: oklch(80% 0.02 78); text-decoration: none; transition: color var(--t-fast); }
+    .breadcrumb a:hover { color: oklch(85% 0.025 80); }
+    .breadcrumb span { color: oklch(85% 0.015 78); }
     .page-hero h1 {
-      font-size: clamp(28px, 5vw, 52px); font-weight: 800;
-      color: #fff; letter-spacing: -0.03em; line-height: 1.1; text-wrap: balance;
+      font-size: clamp(28px, 5vw, 68px); font-weight: 800;
+      color: oklch(97% 0.010 80); letter-spacing: -0.03em; line-height: 1.1; text-wrap: balance;
     }
     .page-hero p {
-      font-size: clamp(15px, 1.8vw, 17px); color: oklch(70% 0.04 292);
+      font-size: clamp(15px, 1.8vw, 17px); color: oklch(76% 0.015 80);
       margin-top: 14px; line-height: 1.75; max-width: 520px; text-wrap: balance;
     }
 
@@ -56,19 +58,19 @@
       gap: 0;
     }
     .principal-photo {
-      background: linear-gradient(145deg, oklch(80% 0.08 292), oklch(68% 0.11 292));
+      background: linear-gradient(145deg, oklch(75% 0.12 72), oklch(60% 0.12 72));
       min-height: 200px; display: flex; align-items: center; justify-content: center;
       font-size: 64px; position: relative; overflow: hidden;
     }
     .principal-photo::after {
       content: ''; position: absolute; inset: 0;
-      background: linear-gradient(to bottom, transparent 60%, oklch(68% 0.11 292 / 0.3));
+      background: linear-gradient(to bottom, transparent 60%, oklch(60% 0.12 72 / 0.3));
     }
     .principal-content { padding: 36px 32px; }
     .principal-role {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 11px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase;
-      color: var(--purple); background: var(--purple-light);
+      color: var(--amber-text); background: var(--purple-light);
       padding: 4px 12px; border-radius: var(--r-pill); margin-bottom: 16px;
     }
     .principal-name {
@@ -81,11 +83,31 @@
     .principal-quote {
       font-size: clamp(17px, 2.2vw, 22px); font-weight: 700;
       color: var(--ink); line-height: 1.4; letter-spacing: -0.02em;
-      border-left: 4px solid var(--yellow); padding-left: 18px;
+      position: relative;
+      padding: 20px 24px 20px 24px;
+      background: var(--purple-xlight);
+      border-radius: var(--r-md);
       margin-bottom: 20px; text-wrap: balance;
+    }
+    .principal-quote::before {
+      content: '\201C';
+      position: absolute; top: 0; left: 10px;
+      font-family: var(--serif); font-size: 72px; line-height: 1;
+      color: var(--amber); opacity: 0.35; font-weight: 400;
+      pointer-events: none;
     }
     .principal-body {
       font-size: 15px; color: var(--ink-muted); line-height: 1.85;
+    }
+    .principal-greeting {
+      font-size: 15px; color: var(--ink-muted); line-height: 1.9;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .principal-greeting p { margin: 0; }
+    .principal-greeting strong { color: var(--ink); font-weight: 700; }
+    .principal-sig-inline {
+      margin-top: 8px; font-size: 14px; font-weight: 700;
+      color: var(--amber-text); letter-spacing: 0.02em;
     }
     .principal-highlights {
       display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px;
@@ -94,6 +116,24 @@
       font-size: 12px; font-weight: 600; padding: 5px 12px;
       border-radius: var(--r-pill); background: var(--surf-2); color: var(--ink-muted);
       border: 1px solid var(--border);
+    }
+    .publication-card {
+      margin-top: 20px; padding: 16px 18px;
+      background: var(--amber-xlight); border: 1.5px solid var(--border);
+      border-radius: var(--r-md); display: flex; gap: 14px; align-items: flex-start;
+    }
+    .publication-icon {
+      font-size: 22px; flex-shrink: 0; margin-top: 2px;
+    }
+    .publication-meta {
+      font-size: 10px; font-weight: 700; letter-spacing: .10em; text-transform: uppercase;
+      color: var(--amber-text); margin-bottom: 4px;
+    }
+    .publication-title {
+      font-size: 13px; font-weight: 700; color: var(--ink); line-height: 1.45; margin-bottom: 4px;
+    }
+    .publication-source {
+      font-size: 12px; color: var(--ink-muted);
     }
 
     /* ── TEACHER GRID ── */
@@ -112,6 +152,40 @@
     .teacher-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
     .teacher-color-bar { height: 5px; background: var(--purple); }
     .teacher-color-bar.sophos { background: var(--yellow); }
+
+    /* ── TEACHER PHOTO ── */
+    .teacher-photo {
+      width: 100%; aspect-ratio: 3/4; max-height: 260px; overflow: hidden;
+      background: var(--surf-2); position: relative;
+    }
+    .teacher-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      display: block;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    .teacher-card:hover .teacher-photo img { transform: scale(1.04); }
+    @media (min-width: 768px) {
+      .teacher-photo { max-height: none; }
+    }
+
+    /* ── SOPHOS CTA LINK ── */
+    .sophos-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 12px 24px; background: var(--yellow); color: #3B1B1B;
+      border-radius: var(--r-pill); font-size: 14px; font-weight: 800;
+      text-decoration: none;
+      transition: opacity var(--t-fast), transform var(--t-base) cubic-bezier(0.16,1,0.3,1);
+    }
+    .sophos-cta:hover, .sophos-cta:focus-visible {
+      opacity: 0.85; transform: translateY(-1px);
+    }
+
+    .principal-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      display: block;
+    }
     .teacher-body { padding: 28px; }
     .teacher-role-tag {
       display: inline-flex; align-items: center; gap: 5px;
@@ -121,7 +195,7 @@
     .teacher-role-tag.js  { background: var(--purple-light); color: var(--purple-deep); }
     .teacher-role-tag.sop { background: var(--yellow-light); color: var(--yellow-deep); }
     .teacher-name { font-size: 22px; font-weight: 900; color: var(--ink); margin-bottom: 3px; }
-    .teacher-spec { font-size: 14px; font-weight: 600; color: var(--purple); margin-bottom: 16px; }
+    .teacher-spec { font-size: 14px; font-weight: 600; color: var(--amber-text); margin-bottom: 16px; }
     .teacher-spec.sophos  { color: var(--yellow-deep); }
     .teacher-divider { height: 1px; background: var(--border); margin-bottom: 16px; }
     .teacher-desc { font-size: 14px; color: var(--ink-muted); line-height: 1.8; }
@@ -135,68 +209,85 @@
     /* ── SOPHOS SECTION ── */
     .sophos-section {
       padding: 80px 0;
-      background: linear-gradient(150deg, oklch(10% 0.03 292), oklch(18% 0.07 292));
+      background: var(--surf-1);
     }
     .sophos-header { margin-bottom: 40px; }
     .sophos-badge {
       display: inline-flex; align-items: center; gap: 8px;
       font-size: 11px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase;
-      color: var(--yellow-deep); background: oklch(88% 0.13 97 / 0.15);
-      border: 1px solid oklch(88% 0.13 97 / 0.3);
+      color: var(--yellow-deep); background: oklch(88% 0.13 97 / 0.25);
+      border: 1px solid oklch(72% 0.14 78 / 0.4);
       padding: 5px 14px; border-radius: var(--r-pill); margin-bottom: 16px;
     }
     .sophos-title {
       font-size: clamp(22px, 3.5vw, 36px); font-weight: 800;
-      color: #fff; letter-spacing: -0.025em; text-wrap: balance; margin-bottom: 8px;
+      color: var(--ink); letter-spacing: -0.025em; text-wrap: balance; margin-bottom: 8px;
     }
-    .sophos-sub { font-size: 15px; color: oklch(65% 0.04 292); line-height: 1.7; }
+    .sophos-sub { font-size: 15px; color: var(--ink-muted); line-height: 1.7; }
     .sophos-card {
-      background: oklch(16% 0.05 292 / 0.8);
-      border: 1px solid oklch(35% 0.06 292 / 0.4);
-      border-radius: var(--r-xl); padding: 32px;
+      background: var(--canvas);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl); overflow: hidden;
+      box-shadow: var(--shadow-sm);
     }
-    .sophos-teacher-name { font-size: 26px; font-weight: 900; color: #fff; margin-bottom: 4px; }
-    .sophos-teacher-spec { font-size: 14px; color: var(--yellow); margin-bottom: 20px; }
-    .sophos-teacher-desc { font-size: 14px; color: oklch(65% 0.04 292); line-height: 1.8; margin-bottom: 24px; }
+    .sophos-card-inner {
+      display: grid; grid-template-columns: 1fr; gap: 0;
+    }
+    .sophos-photo {
+      width: 100%; aspect-ratio: 3/4; overflow: hidden;
+      background: var(--surf-2); max-height: 360px;
+    }
+    .sophos-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top; display: block;
+    }
+    .sophos-content { padding: 32px; }
+    .sophos-teacher-name { font-size: 26px; font-weight: 900; color: var(--ink); margin-bottom: 4px; }
+    .sophos-teacher-spec { font-size: 14px; color: var(--yellow-deep); font-weight: 600; margin-bottom: 20px; }
+    .sophos-teacher-desc { font-size: 14px; color: var(--ink-muted); line-height: 1.8; margin-bottom: 24px; }
     .sophos-career {
       display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;
     }
     .sophos-career-tag {
       font-size: 12px; font-weight: 600; padding: 5px 12px;
       border-radius: var(--r-pill);
-      background: oklch(24% 0.06 292 / 0.8);
-      border: 1px solid oklch(40% 0.06 292 / 0.4);
-      color: oklch(75% 0.04 292);
+      background: var(--surf-2);
+      border: 1px solid var(--border);
+      color: var(--ink-muted);
     }
     .sophos-table-title {
-      font-size: 13px; font-weight: 700; color: oklch(60% 0.05 292);
+      font-size: 13px; font-weight: 700; color: var(--ink-subtle);
       letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px;
     }
     .class-table { width: 100%; border-collapse: collapse; }
     .class-table th {
-      background: oklch(22% 0.06 292); color: oklch(70% 0.04 292);
+      background: var(--surf-1); color: var(--ink-muted);
       font-size: 12px; font-weight: 700; letter-spacing: 0.04em;
-      padding: 10px 14px; text-align: left;
+      padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border);
     }
     .class-table td {
-      padding: 12px 14px; font-size: 13px; color: oklch(75% 0.03 292);
-      border-bottom: 1px solid oklch(24% 0.04 292 / 0.6);
+      padding: 12px 14px; font-size: 13px; color: var(--ink-muted);
+      border-bottom: 1px solid var(--border);
     }
     .class-table tr:last-child td { border-bottom: none; }
-    .class-table .prog-name { font-weight: 700; color: #fff; }
+    .class-table .prog-name { font-weight: 700; color: var(--ink); }
     .class-badge {
       display: inline-block; font-size: 11px; font-weight: 700;
       padding: 2px 8px; border-radius: var(--r-pill);
       background: var(--yellow); color: #3B1B1B;
     }
+    @media (min-width: 768px) {
+      .sophos-card-inner { grid-template-columns: 260px 1fr; }
+      .sophos-photo { aspect-ratio: auto; max-height: none; height: 100%; }
+    }
 
     /* ── CONSULT CTA ── */
     .consult { background: var(--purple-deep); padding: 72px 0; text-align: center; }
-    .consult-title { font-size: clamp(22px, 3.5vw, 36px); font-weight: 800; color: #fff; letter-spacing: -0.025em; text-wrap: balance; }
-    .consult-sub { font-size: 15px; color: oklch(72% 0.05 292); margin-top: 12px; }
+    .consult-title { font-size: clamp(22px, 3.5vw, 36px); font-weight: 800; color: var(--ink-on-dark); letter-spacing: -0.025em; text-wrap: balance; }
+    .consult-sub { font-size: 15px; color: oklch(82% 0.015 80); margin-top: 12px; }
     .consult-cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 32px; }
     .btn-naver {
-      background: oklch(76% 0.09 292); color: #fff;
+      background: oklch(60% 0.12 72); color: #fff;
       padding: 15px 30px; border-radius: var(--r-pill);
       font-size: 15px; font-weight: 800; text-decoration: none;
       display: inline-flex; align-items: center; gap: 8px;
@@ -214,8 +305,16 @@
 
     /* ── RESPONSIVE ── */
     @media (min-width: 768px) {
-      .principal-grid { grid-template-columns: 280px 1fr; }
-      .principal-photo { min-height: auto; }
+      .principal-grid {
+        grid-template-columns: 300px 1fr;
+        align-items: start;
+      }
+      .principal-photo {
+        min-height: auto;
+        aspect-ratio: 3 / 4;
+        position: sticky;
+        top: calc(var(--header-h) + 24px);
+      }
       .teacher-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (min-width: 1024px) {
@@ -230,7 +329,7 @@
 <header class="header" id="header" role="banner">
   <div class="header-inner">
     <a href="index.html" class="logo" aria-label="주니어솔로몬 홈으로">
-      <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="46" height="46">
+      <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="60" height="46">
       <div><div class="logo-text">주니어솔로몬</div><div class="logo-sub">Jr. Solomon Academy</div></div>
     </a>
     <nav class="nav" role="navigation" aria-label="주메뉴">
@@ -324,56 +423,71 @@
 <!-- ── 원장 장화연 ── -->
 <section class="principal-section" id="principal" aria-labelledby="principal-heading">
   <div class="container">
-    <p style="font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--purple);margin-bottom:10px;" class="anim">원장 소개</p>
+    <p style="font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--amber-text);margin-bottom:10px;" class="anim">원장 소개</p>
     <h2 id="principal-heading" style="font-size:clamp(22px,3vw,32px);font-weight:800;color:var(--ink);letter-spacing:-0.025em;margin-bottom:32px;text-wrap:balance;" class="anim anim-d1">
       원장님을 보고 직접 찾아오는 학생들
     </h2>
     <div class="principal-card anim anim-d2">
       <div class="principal-grid">
-        <div class="principal-photo" aria-hidden="true">
-          👑
+        <div class="principal-photo">
+          <img src="images/teacher-jang.jpg" alt="장화연 원장" loading="eager">
         </div>
         <div class="principal-content">
           <span class="principal-role">설립자 · 원장</span>
           <div class="principal-name">장화연</div>
           <div class="principal-title">주니어솔로몬 설립자 · 어린이철학교육 전문</div>
           <blockquote class="principal-quote">
-            "좋은 선생님과의 만남은<br>
-            내 아이에게 줄 수 있는<br>
-            가장 큰 선물입니다."
+            "좋은 교육은 아이 대신 길을 정해 주는 일이 아니라,<br>
+            어떤 길에서도 자신을 잃지 않도록<br>
+            내면의 나침반을 세워 주는 일입니다."
           </blockquote>
-          <p class="principal-body">
-            어린이철학교육을 통한 '생각하는 인재' 양성을 평생의 교육 철학으로 삼고 있습니다.
-            2017년 주니어솔로몬을 설립한 이후, 아이 한 명 한 명의 지적 성장을 직접 챙기는
-            방식으로 깊은 신뢰를 쌓아왔습니다.
-          </p>
-          <div style="display:grid;gap:14px;margin-top:18px;font-size:13px;">
+          <div class="principal-greeting">
+            <p>세상에 이미 많은 학원이 있습니다.<br>저는 그 위에 또 하나의 학원을 보태고 싶지 않았습니다.</p>
+            <p>아이들이 성적과 입시만을 위해 책을 읽고 글을 쓰는 곳이 아니라, 삶을 깊이 바라보고 자신만의 중심을 세우는 곳을 만들고 싶었습니다.</p>
+            <p>문학 속에는 수많은 삶이 담겨 있습니다. 아이들은 책을 통해 아직 살아 보지 않은 인생을 만나고, 자신이 미처 겪지 못한 기쁨과 상실, 선택과 책임, 관계와 갈등을 먼저 통과합니다.</p>
+            <p>그 과정에서 아이들은 삶이 언제나 뜻대로만 흘러가지 않는다는 사실을 배웁니다. 동시에 어려움 앞에서도 쉽게 흔들리지 않고, 자신이 옳다고 믿는 방향을 스스로 선택하며 나아가는 힘을 기릅니다. 저는 그것을 <strong>삶의 근력</strong>이라고 생각합니다.</p>
+            <p>주니어솔로몬은 단순히 책을 읽고 글을 쓰는 학원이 아닙니다. 책을 통해 질문하고, 토론하며, 자신의 생각을 언어로 세우는 곳입니다. 다른 사람의 관점을 이해하되 휩쓸리지 않고, 자신의 생각을 주장하되 타인의 목소리를 존중하는 태도를 배우는 곳입니다.</p>
+            <p>지식은 쌓이는 것이지만, 지혜는 깨어나는 것입니다. 아이 안에 이미 존재하는 사유의 불씨를 깨우고, 스스로 생각하고 판단하며 책임질 수 있는 사람으로 성장하도록 돕는 것. 그것이 주니어솔로몬이 지향하는 교육입니다.</p>
+            <p>저는 성적과 입시만을 위한 교육이 아니라, 아이의 지성과 감성, 언어와 인격이 함께 자라는 <strong>전인적 교육</strong>을 꿈꾸었습니다. 삶에서 만나게 될 수많은 질문과 시련 앞에 아이가 자신의 중심을 잃지 않도록, 생각의 힘과 마음의 힘을 단련하는 삶의 부트캠프를 만들고 싶었습니다.</p>
+            <p>우리가 믿는 교육은 마음의 방향을 세우는 일입니다. 진리를 사랑하고, 언어로 품격을 세우며, 지혜로운 사람이 되어 세상 속에서 선한 영향력을 끼치는 것 — 그것이 주니어솔로몬이 꿈꾸는 교육의 완성입니다.</p>
+            <p class="principal-sig-inline">원장 장화연 드림</p>
+          </div>
+          <dl style="display:grid;gap:14px;margin-top:18px;font-size:13px;">
             <div>
-              <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple);margin-bottom:5px;">학력</div>
-              <div style="color:var(--ink-muted);line-height:1.8;">
+              <dt style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--amber-text);margin-bottom:5px;">학력</dt>
+              <dd style="color:var(--ink-muted);line-height:1.8;margin:0;">
                 한국외국어대학교 대학원 독서논술교육과 졸업<br>
                 한국외국어대학교 스페인어과 졸업
-              </div>
+              </dd>
             </div>
             <div>
-              <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple);margin-bottom:5px;">경력</div>
-              <div style="color:var(--ink-muted);line-height:1.8;">
+              <dt style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--amber-text);margin-bottom:5px;">경력</dt>
+              <dd style="color:var(--ink-muted);line-height:1.8;margin:0;">
                 현) 주니어솔로몬 이촌 본점 원장 (2017~)<br>
                 전) 한국방송출판(KBS) · 보림출판사 도서편집<br>
                 전) 월간지 &lt;빛과 소금&gt; 기자<br>
                 전) 고차적사고력교육센터 목동점 부원장<br>
                 전) CGNTV · MKTV(미국) 아나운서
-              </div>
+              </dd>
             </div>
             <div>
-              <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple);margin-bottom:5px;">해외 연수</div>
-              <div style="color:var(--ink-muted);line-height:1.8;">
+              <dt style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--amber-text);margin-bottom:5px;">해외 연수</dt>
+              <dd style="color:var(--ink-muted);line-height:1.8;margin:0;">
                 스페인 살라망카 대학교 (Universidad de Salamanca)<br>
                 미국 뉴욕 컬럼비아 대학교 (Columbia University in the City of New York)<br>
                 이스라엘 예루살렘 히브루 대학교 (Hebrew University of Jerusalem)
-              </div>
+              </dd>
             </div>
-          </div>
+          </dl>
+          <a href="article-worldview.html" class="publication-card anim" style="text-decoration:none;display:flex;gap:14px;align-items:flex-start;cursor:pointer;" aria-label="WORLDVIEW 기고문 전문 읽기">
+            <div class="publication-icon">✍️</div>
+            <div style="flex:1;">
+              <div class="publication-meta">기고 논문 · WORLDVIEW 2019.10</div>
+              <div class="publication-title">독서란 인생이라는 정원에 꽃과 나무를 심는 일</div>
+              <div class="publication-source">어린이철학교육(P4C) 현장 스케치 — 하브루타식 독서토론 수업의 철학과 실천</div>
+              <div style="margin-top:8px;font-size:12px;font-weight:700;color:var(--amber-text);">전문 읽기 →</div>
+            </div>
+          </a>
           <div class="principal-highlights" style="margin-top:16px;">
             <span class="highlight-tag">한국외대 대학원</span>
             <span class="highlight-tag">KBS 도서편집</span>
@@ -391,7 +505,7 @@
 <!-- ── 주니어솔로몬 교사진 ── -->
 <section class="teachers-section" id="teachers" aria-labelledby="teachers-heading">
   <div class="container">
-    <p style="font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--purple);margin-bottom:10px;" class="anim">하브루타 · 글쓰기</p>
+    <p style="font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--amber-text);margin-bottom:10px;" class="anim">하브루타 · 글쓰기</p>
     <h2 id="teachers-heading" style="font-size:clamp(22px,3vw,32px);font-weight:800;color:var(--ink);letter-spacing:-0.025em;margin-bottom:8px;text-wrap:balance;" class="anim anim-d1">
       주니어솔로몬 전문 교사진
     </h2>
@@ -402,6 +516,9 @@
 
       <!-- 박효정 -->
       <div class="teacher-card anim anim-d1">
+        <div class="teacher-photo">
+          <img src="images/teacher-park.jpg" alt="박효정 선생님" loading="lazy">
+        </div>
         <div class="teacher-color-bar"></div>
         <div class="teacher-body">
           <span class="teacher-role-tag js">수석 지도교사</span>
@@ -424,6 +541,9 @@
 
       <!-- 하정빈 -->
       <div class="teacher-card anim anim-d2">
+        <div class="teacher-photo">
+          <img src="images/teacher-ha.jpg" alt="하정빈 선생님" loading="lazy">
+        </div>
         <div class="teacher-color-bar"></div>
         <div class="teacher-body">
           <span class="teacher-role-tag js">독서 · 철학 · 하브루타</span>
@@ -446,6 +566,9 @@
 
       <!-- 손수영 -->
       <div class="teacher-card anim anim-d3">
+        <div class="teacher-photo">
+          <img src="images/teacher-son.jpg" alt="손수영 선생님" loading="lazy">
+        </div>
         <div class="teacher-color-bar"></div>
         <div class="teacher-body">
           <span class="teacher-role-tag js">7세반 전담</span>
@@ -474,17 +597,17 @@
   <div class="container">
     <div class="sophos-header">
       <span class="sophos-badge anim">소포스에듀 (Sophos Edu)</span>
-      <h2 id="sophos-heading" class="sophos-title anim anim-d1">
-        수능 국어의 전략적 완성
-      </h2>
-      <p class="sophos-sub anim anim-d2">
-        주니어솔로몬과 함께하는 수능 국어 전문 브랜드.<br>
-        이대건 선생님이 문학·문법·내신을 체계적으로 지도합니다.
-      </p>
+      <h2 id="sophos-heading" class="sophos-title anim anim-d1">수능 국어의 전략적 완성</h2>
+      <p class="sophos-sub anim anim-d2">주니어솔로몬과 함께하는 수능 국어 전문 브랜드.<br>이대건 선생님이 문학·문법·내신을 체계적으로 지도합니다.</p>
     </div>
     <div class="sophos-card anim anim-d2">
-      <div class="teacher-name" style="color:#fff;font-size:26px;margin-bottom:4px;">이대건</div>
-      <div style="font-size:14px;color:var(--yellow);margin-bottom:20px;font-weight:600;">수능 문학독서 · 문법 · 내신 전문</div>
+      <div class="sophos-card-inner">
+        <div class="sophos-photo">
+          <img src="images/teacher-lee.jpg" alt="이대건 선생님" loading="lazy">
+        </div>
+        <div class="sophos-content">
+      <div class="sophos-teacher-name">이대건</div>
+      <div class="sophos-teacher-spec">수능 문학독서 · 문법 · 내신 전문</div>
       <p class="sophos-teacher-desc">
         서울대학교 졸업 후 미래탐구·대치명인·대치메이드에서 강의한 경력을 바탕으로,
         수능 문학독서·문법·내신을 전략적으로 지도합니다.
@@ -498,45 +621,20 @@
         <span class="sophos-career-tag">수능 문학·문법</span>
         <span class="sophos-career-tag">내신 전략</span>
       </div>
-      <div class="sophos-table-title">현재 개설 강좌</div>
-      <div style="overflow-x:auto;">
-        <table class="class-table" aria-label="소포스에듀 개설 강좌">
-          <thead>
-            <tr>
-              <th>프로그램</th>
-              <th>요일 · 시간</th>
-              <th>개강일</th>
-              <th>대상</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="prog-name">수능 문학독서반</span></td>
-              <td>화·금 18:00~21:00</td>
-              <td>5/12 · 5/15</td>
-              <td><span class="class-badge">고등</span></td>
-            </tr>
-            <tr>
-              <td><span class="prog-name">수능 문법반</span></td>
-              <td>목 18:00~21:00</td>
-              <td>5/14</td>
-              <td><span class="class-badge">중·고등</span></td>
-            </tr>
-            <tr>
-              <td><span class="prog-name">용강중 기말 내신대비반</span></td>
-              <td>월 16:30~19:30</td>
-              <td>6/1 · 6/8 · 6/15 · 6/22</td>
-              <td><span class="class-badge">중등</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div style="margin-top:24px;text-align:center;">
-        <a href="edu-1.html" style="display:inline-flex;align-items:center;gap:6px;padding:12px 24px;background:var(--yellow);color:#3B1B1B;border-radius:var(--r-pill);font-size:14px;font-weight:800;text-decoration:none;transition:opacity var(--t-fast);" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+      <div class="sophos-table-title">운영 강좌</div>
+      <ul style="margin:0;padding:0 0 0 1.2em;list-style:disc;display:flex;flex-direction:column;gap:6px;">
+        <li style="font-size:14px;font-weight:700;color:var(--ink);">수능 문학독서반 <span style="font-size:12px;font-weight:400;color:var(--ink-muted);">— 고등</span></li>
+        <li style="font-size:14px;font-weight:700;color:var(--ink);">수능 문법반 <span style="font-size:12px;font-weight:400;color:var(--ink-muted);">— 중·고등</span></li>
+        <li style="font-size:14px;font-weight:700;color:var(--ink);">내신 대비반 <span style="font-size:12px;font-weight:400;color:var(--ink-muted);">— 중등</span></li>
+      </ul>
+      <div style="margin-top:24px;">
+        <a href="edu-1.html" class="sophos-cta">
           소포스에듀 상세 안내 →
         </a>
       </div>
-    </div>
+        </div><!-- sophos-content -->
+      </div><!-- sophos-card-inner -->
+    </div><!-- sophos-card -->
   </div>
 </section>
 
@@ -571,10 +669,10 @@
           <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="40" height="40">
           <div style="margin-left:10px;">
             <div class="logo-text" style="color:#fff;font-size:17px;">주니어솔로몬</div>
-            <div class="logo-sub" style="color:oklch(45% 0.04 292);">Jr. Solomon Academy</div>
+            <div class="logo-sub" style="color:oklch(82% 0.015 80);">Jr. Solomon Academy</div>
           </div>
         </a>
-        <p style="font-size:13px;color:oklch(40% 0.04 292);line-height:1.7;margin-top:12px;">
+        <p style="font-size:13px;color:oklch(85% 0.015 78);line-height:1.7;margin-top:12px;">
           "모든 아이는 솔로몬의 지혜를 품을 수 있습니다"<br>
           서울 용산구 이촌로 200, LG프라자 4층 403호<br>
           ☎ 02-794-8123 · 월~금 14:00~21:00 / 토 09:00~18:00
@@ -582,22 +680,22 @@
       </div>
       <nav aria-label="푸터 메뉴" style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;">
         <div>
-          <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:oklch(40% 0.04 292);margin-bottom:10px;">학원소개</div>
-          <a href="vision.html" style="display:block;font-size:13px;color:oklch(52% 0.04 292);text-decoration:none;margin-bottom:7px;">비전 &amp; 교육철학</a>
-          <a href="mission.html" style="display:block;font-size:13px;color:oklch(52% 0.04 292);text-decoration:none;margin-bottom:7px;">교육방향</a>
-          <a href="introduction.html" style="display:block;font-size:13px;color:oklch(80% 0.05 292);text-decoration:none;font-weight:700;margin-bottom:7px;">선생님 소개</a>
-          <a href="facility.html" style="display:block;font-size:13px;color:oklch(52% 0.04 292);text-decoration:none;">시설 안내</a>
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:oklch(85% 0.015 78);margin-bottom:10px;">학원소개</div>
+          <a href="vision.html" style="display:block;font-size:13px;color:oklch(82% 0.015 80);text-decoration:none;margin-bottom:7px;">비전 &amp; 교육철학</a>
+          <a href="mission.html" style="display:block;font-size:13px;color:oklch(82% 0.015 80);text-decoration:none;margin-bottom:7px;">교육방향</a>
+          <a href="introduction.html" style="display:block;font-size:13px;color:oklch(85% 0.025 80);text-decoration:none;font-weight:700;margin-bottom:7px;">선생님 소개</a>
+          <a href="facility.html" style="display:block;font-size:13px;color:oklch(82% 0.015 80);text-decoration:none;">시설 안내</a>
         </div>
         <div>
-          <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:oklch(40% 0.04 292);margin-bottom:10px;">프로그램</div>
-          <a href="curriculum.html" style="display:block;font-size:13px;color:oklch(52% 0.04 292);text-decoration:none;margin-bottom:7px;">커리큘럼</a>
-          <a href="edu-1.html" style="display:block;font-size:13px;color:oklch(52% 0.04 292);text-decoration:none;margin-bottom:7px;">소포스에듀</a>
-          <a href="fee.html" style="display:block;font-size:13px;color:oklch(52% 0.04 292);text-decoration:none;margin-bottom:7px;">교습비 안내</a>
-          <a href="contact.html" style="display:block;font-size:13px;color:oklch(52% 0.04 292);text-decoration:none;">오시는길</a>
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:oklch(85% 0.015 78);margin-bottom:10px;">프로그램</div>
+          <a href="curriculum.html" style="display:block;font-size:13px;color:oklch(82% 0.015 80);text-decoration:none;margin-bottom:7px;">커리큘럼</a>
+          <a href="edu-1.html" style="display:block;font-size:13px;color:oklch(82% 0.015 80);text-decoration:none;margin-bottom:7px;">소포스에듀</a>
+          <a href="fee.html" style="display:block;font-size:13px;color:oklch(82% 0.015 80);text-decoration:none;margin-bottom:7px;">교습비 안내</a>
+          <a href="contact.html" style="display:block;font-size:13px;color:oklch(82% 0.015 80);text-decoration:none;">오시는길</a>
         </div>
       </nav>
     </div>
-    <div style="border-top:1px solid oklch(18% 0.03 292);padding-top:20px;font-size:12px;color:oklch(35% 0.04 292);line-height:1.8;">
+    <div style="border-top:1px solid oklch(28% 0.06 258);padding-top:20px;font-size:12px;color:oklch(82% 0.015 80);line-height:1.8;">
       대표: 장화연 · 사업자 511-96-33718 · 중부교육지원청 제3336호<br>
       © 2017–2026 주니어솔로몬. All rights reserved.
     </div>

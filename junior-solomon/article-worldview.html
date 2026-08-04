@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1C2B4A">
+  <title>독서란 인생이라는 정원에 꽃과 나무를 심는 일 | 장화연 · WORLDVIEW 2019</title>
+  <meta name="description" content="장화연 원장의 WORLDVIEW 2019년 10월 기고문. 어린이철학교육(P4C)과 하브루타식 독서토론 수업의 철학과 실천.">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .anim { opacity:0; transform:translateY(20px); transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1); }
+    .anim.in { opacity:1; transform:translateY(0); }
+    .anim-d1 { transition-delay:.08s; }
+    .anim-d2 { transition-delay:.16s; }
+    @media (prefers-reduced-motion:reduce) { .anim { opacity:1; transform:none; } }
+
+    /* ARTICLE HERO */
+    .article-hero {
+      padding: calc(var(--header-h) + 64px) 0 56px;
+      background: linear-gradient(160deg, oklch(16% 0.04 258) 0%, oklch(22% 0.07 258) 100%);
+      position: relative; overflow: hidden;
+    }
+    .article-hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 55% 65% at 85% 40%, oklch(60% 0.10 72 / 0.12), transparent);
+    }
+    .breadcrumb {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; color: rgba(255,255,255,0.75);
+      margin-bottom: 24px; flex-wrap: wrap;
+    }
+    .breadcrumb a { color: rgba(255,255,255,0.75); text-decoration: none; transition: color var(--t-fast); }
+    .breadcrumb a:hover { color: rgba(255,255,255,0.85); }
+    .breadcrumb-sep { opacity: 0.4; }
+
+    .article-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-bottom: 20px;
+    }
+    .article-mag {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--amber-on-dark); padding: 4px 12px;
+      border: 1.5px solid oklch(80% 0.08 74 / 0.50);
+      border-radius: var(--r-pill);
+    }
+    .article-date {
+      font-size: 12px; color: rgba(255,255,255,0.78); letter-spacing: 0.05em;
+    }
+
+    .article-hero-title {
+      font-family: var(--serif);
+      font-size: clamp(26px, 4vw, 46px);
+      font-weight: 700; color: #fff;
+      line-height: 1.25; letter-spacing: -0.01em;
+      text-wrap: balance; max-width: 760px;
+      margin-bottom: 16px;
+    }
+    .article-hero-sub {
+      font-size: 16px; color: rgba(255,255,255,0.82);
+      line-height: 1.7; max-width: 600px; margin-bottom: 28px;
+    }
+    .article-author {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 0; border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .article-author-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, oklch(70% 0.12 72), oklch(55% 0.12 72));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 900; color: #fff; flex-shrink: 0;
+    }
+    .article-author-name { font-size: 15px; font-weight: 700; color: #fff; }
+    .article-author-role { font-size: 12px; color: rgba(255,255,255,0.78); margin-top: 2px; }
+
+    /* PDF DOWNLOAD BAR */
+    .pdf-bar {
+      background: var(--amber-xlight);
+      border-bottom: 1px solid oklch(88% 0.04 78);
+      padding: 14px 0;
+    }
+    .pdf-bar-inner {
+      max-width: 760px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      flex-wrap: wrap;
+    }
+    .pdf-bar-text { font-size: 13px; color: var(--ink-muted); }
+    .pdf-bar-text strong { color: var(--ink); }
+    .pdf-link {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 20px; background: var(--navy); color: #fff;
+      border-radius: var(--r-pill); font-size: 13px; font-weight: 700;
+      text-decoration: none; white-space: nowrap;
+      transition: opacity var(--t-fast), transform var(--t-base);
+    }
+    .pdf-link:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* ARTICLE BODY */
+    .article-body {
+      max-width: 760px; margin: 0 auto; padding: 56px 24px 80px;
+    }
+
+    /* Author bio box */
+    .author-bio {
+      background: var(--surf-1); border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 20px 24px;
+      margin-bottom: 48px;
+      font-size: 14px; color: var(--ink-muted); line-height: 1.8;
+    }
+    .author-bio-label {
+      font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--amber-text); margin-bottom: 8px;
+    }
+
+    /* Article text */
+    .article-text {
+      font-family: var(--serif);
+      font-size: clamp(17px, 1.8vw, 19px);
+      line-height: 2.0;
+      color: var(--ink);
+    }
+    .article-text p { margin-bottom: 1.6em; }
+    .article-text h3 {
+      font-family: var(--font);
+      font-size: clamp(18px, 2vw, 22px); font-weight: 800;
+      color: var(--ink); letter-spacing: -0.02em;
+      margin: 2.2em 0 0.8em;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--amber-xlight);
+    }
+    .article-text h3:first-child { margin-top: 0; }
+
+    /* Pull quote */
+    .pull-quote {
+      margin: 2em -20px;
+      padding: 24px 28px;
+      background: oklch(94% 0.020 78);
+      border-left: 4px solid var(--amber);
+      border-radius: 0 var(--r-md) var(--r-md) 0;
+      font-family: var(--font);
+      font-size: clamp(16px, 1.8vw, 18px); font-weight: 700;
+      color: var(--ink); line-height: 1.5; font-style: normal;
+    }
+    @media (min-width: 640px) { .pull-quote { margin: 2em 0; } }
+
+    /* Divider */
+    .article-divider {
+      display: flex; align-items: center; gap: 16px;
+      margin: 2.5em 0;
+    }
+    .article-divider::before,
+    .article-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    .article-divider span {
+      font-size: 18px; color: var(--amber); flex-shrink: 0;
+    }
+
+    /* Back nav */
+    .article-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 14px; font-weight: 700; color: var(--amber-text);
+      text-decoration: none; margin-bottom: 40px;
+      transition: gap var(--t-fast);
+    }
+    .article-back:hover { gap: 10px; }
+
+    /* CTA bottom */
+    .article-cta {
+      background: var(--surf-1); border: 1px solid var(--border);
+      border-radius: var(--r-xl); padding: 36px 32px;
+      text-align: center; margin-top: 64px;
+    }
+    .article-cta-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--amber-text); margin-bottom: 10px;
+    }
+    .article-cta h2 {
+      font-size: clamp(20px, 2.5vw, 26px); font-weight: 800;
+      color: var(--ink); letter-spacing: -0.025em; margin-bottom: 8px;
+      text-wrap: balance;
+    }
+    .article-cta p {
+      font-size: 15px; color: var(--ink-muted); margin-bottom: 20px;
+    }
+    .article-cta-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  </style>
+</head>
+<body>
+<a href="#main" class="skip-link">본문 바로가기</a>
+
+<header class="header" id="header" role="banner">
+  <div class="header-inner">
+    <a href="index.html" class="logo" aria-label="주니어솔로몬 홈으로">
+      <img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="60" height="46">
+      <div><div class="logo-text">주니어솔로몬</div><div class="logo-sub">Jr. Solomon Academy</div></div>
+    </a>
+    <nav class="nav" role="navigation" aria-label="주메뉴">
+      <div class="nav-item">
+        <button class="nav-link active" aria-haspopup="true" aria-expanded="false">학원소개 <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"/></svg></button>
+        <div class="dropdown" role="menu">
+          <a href="vision.html" role="menuitem">비전 &amp; 교육철학</a>
+          <a href="mission.html" role="menuitem">교육방향</a>
+          <a href="introduction.html" role="menuitem" class="active">선생님 소개</a>
+          <a href="facility.html" role="menuitem">시설 안내</a>
+        </div>
+      </div>
+      <a href="curriculum.html" class="nav-link">커리큘럼</a>
+      <a href="edu-1.html" class="nav-link">소포스에듀</a>
+      <a href="fee.html" class="nav-link">교습비</a>
+      <a href="board-notice.html" class="nav-link">공지사항</a>
+      <a href="contact.html" class="nav-link">오시는길</a>
+    </nav>
+    <div class="header-cta-stack">
+      <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="header-btn header-btn-naver">💬 네이버 톡톡</a>
+      <a href="http://pf.kakao.com/_xadGxnxb" target="_blank" rel="noopener noreferrer" class="header-btn header-btn-kakao">🟡 카카오톡 채널</a>
+    </div>
+    <button class="menu-toggle" aria-label="메뉴 열기" aria-expanded="false" id="menuToggle"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav" aria-label="모바일 메뉴">
+  <a href="vision.html">비전 &amp; 교육철학</a>
+  <a href="mission.html">교육방향</a>
+  <a href="curriculum.html">커리큘럼</a>
+  <a href="introduction.html" class="active">선생님 소개</a>
+  <a href="facility.html">시설안내</a>
+  <a href="fee.html">교습비 안내</a>
+  <a href="edu-1.html">소포스에듀</a>
+  <a href="board-notice.html">공지사항</a>
+  <a href="contact.html">오시는길</a>
+  <a href="tel:027948123" class="m-tel">☎ 02-794-8123 전화상담</a>
+  <div class="m-cta-row">
+    <a href="https://talk.naver.com/ct/wcal0q?frm=pnmb" target="_blank" rel="noopener noreferrer" class="m-cta-naver">💬 네이버 톡톡</a>
+    <a href="http://pf.kakao.com/_xadGxnxb" target="_blank" rel="noopener noreferrer" class="m-cta-kakao">🟡 카카오채널</a>
+  </div>
+</nav>
+
+<!-- ARTICLE HERO -->
+<section class="article-hero" aria-labelledby="article-title">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="현재 위치">
+      <a href="index.html">홈</a>
+      <span class="breadcrumb-sep" aria-hidden="true">›</span>
+      <a href="introduction.html">선생님 소개</a>
+      <span class="breadcrumb-sep" aria-hidden="true">›</span>
+      <span>WORLDVIEW 기고</span>
+    </nav>
+    <div class="article-eyebrow anim">
+      <span class="article-mag">WORLDVIEW</span>
+      <span class="article-date">2019년 10월호</span>
+    </div>
+    <h1 id="article-title" class="article-hero-title anim anim-d1">
+      독서란 인생이라는 정원에<br>꽃과 나무를 심는 일
+    </h1>
+    <p class="article-hero-sub anim anim-d1">
+      어린이철학교육(P4C) 현장 스케치 — 하브루타식 독서토론 수업의 철학과 실천
+    </p>
+    <div class="article-author anim anim-d2">
+      <div class="article-author-avatar" aria-hidden="true">장</div>
+      <div>
+        <div class="article-author-name">장화연</div>
+        <div class="article-author-role">주니어솔로몬 설립자 · 원장</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PDF DOWNLOAD BAR -->
+<div class="pdf-bar">
+  <div class="pdf-bar-inner">
+    <p class="pdf-bar-text"><strong>원본 PDF</strong> — WORLDVIEW 2019년 10월호 수록 (pp. 30–35)</p>
+    <a href="worldview-2019.pdf" target="_blank" rel="noopener" class="pdf-link" aria-label="원본 PDF 열기">
+      <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z"/><path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z"/></svg>
+      원본 PDF 보기
+    </a>
+  </div>
+</div>
+
+<main id="main">
+  <div class="article-body">
+
+    <a href="introduction.html#principal" class="article-back anim" aria-label="선생님 소개 페이지로 돌아가기">
+      ← 선생님 소개로 돌아가기
+    </a>
+
+    <!-- 저자 소개 -->
+    <div class="author-bio anim">
+      <div class="author-bio-label">저자 소개</div>
+      스페인 살라망카 대학교, 미국 컬럼비아 대학교에서 공부하였으며 한국외국어대학교 스페인어학과를 졸업했다. 월간 〈빛과 소금〉 기자, 고차적사고력교육센터(HOTEC) 선임 연구원이며, 다수의 그림책과 단행본을 기획하고 편집했다. 현재 한국외국어대학원 독서토론교육 석사 과정에 있다. 솔로몬 왕의 지혜를 닮기를 바라는 마음으로 주니어솔로몬(이촌 본원)에서 초·중등학생을 위한 어린이 철학 프로그램을 개발하고 하브루타식 독서 토론 수업을 진행하고 있다.
+    </div>
+
+    <div class="article-text anim">
+
+      <p>"다다다다다다..."</p>
+
+      <p>복도를 달리는 소리가 들린다. 아이들이다. 전속력으로 달리느라 빠져나온 아이들 웃음소리가 문틈으로 먼저 새어 들어온다. 학원에 오는 아이들의 일상 풍경이다. 학원을 좋아하는 도시의 아이들이라니? 믿기지 않는다. '학교에 가기 싫어요', '학원에 가기 싫어요'를 입에 달고 사는 것처럼 보이는 초등학생 아이들에게 어떤 변화가 생긴 것일까? 일주일의 기다림이 아이들의 발걸음에서 느껴진다.</p>
+
+      <p>놀라운 사랑을 받으며 초·중등학생들과 함께 독서토론 수업을 하고 있다. 오래되지 않아서인지 아직도 늘 설레고, 여전히 첫사랑이 진행 중이다.</p>
+
+      <h3>정답은 없다. 자신의 생각이 있을 뿐</h3>
+
+      <p>시중에 판매되는 초등 국어 문제집을 풀게 한 적이 있다. 이런 문제가 적혀있었다.</p>
+
+      <blockquote class="pull-quote">
+        빈칸에 알맞은 낱말을 넣어 문장을 완성하세요.<br>
+        [ 현주는 ○○ 할 차례가 돌아오자 심장이 콩닥콩닥 뛰었어요. ]
+      </blockquote>
+
+      <p>한 학생이 손을 들고 묻는다. "선생님, 이건 '사랑'이라는 단어가 들어가야 할 거 같은데요? 심장이 콩닥콩닥 뛴다고 하니까요." 초등학교 2학년 남자아이다. 아이들은 금세 와— 하고 웃는다. 이 문제의 답안지에 적힌 정답은 '발표'였다.</p>
+
+      <p>"땡!"하고 빨간 펜으로 주욱 그었다면 아이는 이런 말을 애초에 꺼내지 않았을 것이다. 풀던 문제집을 덮고 아이들 눈을 맞추며 이 문장에 어울리는 가장 좋은 낱말은 어떤 것일지, 각자 자신의 정답을 만들어 보는 것으로 수업의 방향을 이끈다. 우리는 지금 정답을 맞히는 것이 아니라, 참신하고 창의적인 생각을 발견하는 것이 더 경쟁력 있는 사회 속에 살고 있다. 그래서 우리는 토론 수업을 하고 있다. 맞고 틀리고, 옳고 그름이 아니라 다름에 대해 의견을 나누고 있는 것이다.</p>
+
+      <p>하나의 정답이 있고 이외의 것은 모두 오답이던 때가 있었다. 다행인지 필자는 5지선다형인 객관식을 넘어 주관식이라는 서술형 시험 문제가 최초로 등장했던 시대를 살았다. 그러나 지금은 그때와 비교해도 완전히 다른 세상이다. 교육의 틀이 시대를 따라잡지 못한 느낌이다. 더 놀라운 사실은 빈칸에 적은 단어는 고학년이 될수록 비슷한 단어로 추려지고, 어른이 되면 거의 한두 개의 같은 단어로 통일이 된다는 것이다. 창의성과 상상력은 어린아이들의 전유물인 것인가? 우리는 왜 상상을 멈추고 표준화 되어가는 것일까?</p>
+
+      <div class="article-divider"><span>✦</span></div>
+
+      <h3>어린이가 철학을 한다는 것</h3>
+
+      <p>필자가 주니어솔로몬에서 진행하고 있는 수업의 뿌리는 어린이 철학 프로그램(Philosophy for Children, P4C)이다. 미국 IAPC(the Institute for Advancement of Philosophy for Children) 연구소를 설립한 매튜 립맨(Mattew Lipman) 교수님의 제자인 서울교대 한국철학아카데미의 박진환 교수님 밑에서 처음 이 학문을 접하게 되었다.</p>
+
+      <p>한국에서 나고 자란 토종 한국인으로서 주입식 교육과 암기식 학습법에 익숙한 나에게 미국식 토론 수업 장면은 충격이었다. 학습이 우선시 되는 일방적인 교수법(learn to know)이 아니라 질문을 기초로 학생들이 스스로 배울 수 있는, 자기주도적인 수업을 이끌어가는(teach to learn) 역발상의 수업이었다. 유대인 교육인 하브루타 수업, 자기주도 학습법, 플립 러닝(Flipped Learning, 거꾸로 수업) 등이 인기를 모으고 있지만 그것을 포괄한 토론식 수업이었다. 아이들은 말하는 데 두려움이 없었다. 각자 다른 생각을 가진 것이지 틀린 것이 없기 때문이다.</p>
+
+      <blockquote class="pull-quote">
+        어른이 된 아이들이 여전히 성장하고 있다는 뜻이다. 남은 삶을 얼마나 풍요롭게 가꿀 수 있겠는가.
+      </blockquote>
+
+      <p>어린이 철학(P4C)이라는 프로그램의 시초부터가 아이들의 능력에 대한 믿음을 근거로 시작된 것이다. 어린이는 메타적이고 철학적인 사고를 할 수 없다는 피아제(Piaget)의 인지발달이론에 대한 정면 저항으로 — 어린이들도 철학적으로 생각할 수 있는 능력이 충분하며 철학 교육을 통해서 비판적이고 창의적인 생각을 연습할 수 있다는 신념을 가진 한 교수님의 실험 정신에서 시작된 프로그램이다.</p>
+
+      <p>주니어솔로몬에서는 이를 기초로 어린이 학생들과 함께 매주 90분씩 토론 수업을 진행하고 있다. 책을 읽고, 질문을 만들고, 좋은 질문을 뽑아 토론한다. 그리고 생각을 정리해 글을 쓴다. 큰 틀은 여기에서 벗어나지 않는다. 그런데 아이들은 이 수업을 몹시 좋아한다. 수업 중에도 시간을 몇 번이나 확인한다. 수업이 빨리 끝날까 노심초사다. 왜 그럴까? 'A는 B'라는 정답을 강요받는 것이 아니라 'A는 A와 그 나머지의 모든 가능성'이 되기 때문이다.</p>
+
+      <div class="article-divider"><span>✦</span></div>
+
+      <h3>요즘 같은 세상에 책을 읽는다는 것은</h3>
+
+      <p>지상 최고의 아날로그는 책 읽기가 아닐까. 요즘 아이들에게 적용될 것이다. 아이들은 바쁘다. 학교와 학원 스케줄을 소화해야 하는 것은 물론이고, 스마트폰으로 할 수 있는 것들이 너무나 많다. 그토록 재미있는 디지털적인 것을 모두 포기하고 꽃잎 같은 종이 책장이나 넘기는 아날로그적인 사치를 부릴 인내심이 없는지도 모르겠다.</p>
+
+      <p>책을 읽지 않으니 성경을 읽기는 더 요원하고, 책을 읽지 않으니 아집이 늘고 독선적이 된다. 등장인물의 마음이 되어 볼 기회가 없으니 타인의 마음을 공감할 수 없다. 책을 읽지 않으면 방향을 잃고 휩쓸리기 쉽다. 쉽고 빠른 것만을 선택하는 요즘 아이들에게 생각할 수 있는 기회를 줄 수 있는 것은 책밖에 없다.</p>
+
+      <p>책이라는 좋은 도구를 통해 다양한 관점을 배우고 접한 뒤에 자신만의 체계를 세우고, 인공지능과 4차 산업혁명이 따라잡지 못하는 오직 자신만의 창의적이고 독창적인 아이디어를 계발해야 한다.</p>
+
+      <div class="article-divider"><span>✦</span></div>
+
+      <h3>첫 경험은 언제나 가장 중요하다</h3>
+
+      <p>최초의 독서에 대한 기억을 떠올려 본다. 맨 처음 독서는 종이책으로 이루어지지 않았다. 한밤중, 불이 다 꺼진 방 안에서 아빠는 당신의 기억에 의지해 밤이 깊도록 요셉과 형제들의 이야기, 다니엘과 사자 굴 이야기, 홍해를 가르는 모세의 이야기며 돌아온 탕자 이야기를 들려주셨다. 어둠 속에서 라이브로 진행된 성경 이야기는 무한한 상상력을 불러일으켰다.</p>
+
+      <p>책에 대한 첫 경험이 좋은 아이는 읽는 재미에 빠지고 점차 배움의 기쁨에 젖어 가는 것이다. 그러니 시작이 중요하다. 생텍쥐페리의 말처럼 — 배를 만들게 하려면 배 만드는 법을 가르치려 하지 말고 바다를 동경하게 하라. 책을 읽히려고 강요하는 것보다 책 읽는 기쁨을 맛보게 한다면 아이는 자연히 책을 가까이할 수밖에 없을 것이다.</p>
+
+      <blockquote class="pull-quote">
+        책을 읽는다는 것은 마치 낡은 옷장처럼 문을 여는 순간 현실과 완전히 다른 새로운 세상 속으로 들어가는 것과 같다. — C.S. 루이스 〈나니아 연대기〉에서
+      </blockquote>
+
+      <div class="article-divider"><span>✦</span></div>
+
+      <h3>독서의 효용은 무엇보다 재미</h3>
+
+      <p>2019년 칼데콧 대상을 받은 소피 블랙올의 〈안녕, 나의 등대〉로 수업을 했다. '안녕'이라는 말이 '안녕?' 인지 '안녕!' 인지에 대해 상상해보았다. 문장부호가 아니면 만남인지 헤어짐인지 알 수 없이 오묘한 한국어 '안녕'이라는 단어에 대해서 아이들과 이야기를 나누었다.</p>
+
+      <p>고학년 아이들과는 우리나라 최초의 등대인 팔미도 등대의 시작 배경을 살펴보고, 일제 강점기와 맥아더 장군의 인천 상륙작전에 대한 이야기도 나누었다. 수업의 마무리로 1학년부터 6학년까지 아이들 모두 단 한 번도 들어본 적이 없다는 '등대지기' 동요를 오케스트라 버전으로 들려주었다.</p>
+
+      <p>시작은 〈안녕, 나의 등대〉라는 좋은 그림책의 선정이었다. 책을 읽기 전과, 수업을 마치고 나서 아이들의 생각과 사고가 확장되는 것을 눈으로 본다.</p>
+
+      <div class="article-divider"><span>✦</span></div>
+
+      <p>〈맹자〉에 나오는 독서상우(讀書尙友, 책을 읽음으로써 옛날의 현인들과 벗이 될 수 있음을 이르는 말)라는 말처럼 책은 아이 곁에서 함께 자라는 좋은 친구가 될 것이다. 모든 지식과 지혜가 켜켜이 쌓여 세상 유일한 자신만의 눈을 갖게 될 것이다.</p>
+
+      <p>인생에 정답이 없듯이 독서에도 정답이 없지만, <strong>독서란 아이의 인생이라는 정원에 꽃과 나무를 심는 일이다.</strong></p>
+
+      <p style="font-size:13px;color:var(--ink-subtle);margin-top:0.5em;">— hwayeonjang@gmail.com</p>
+
+    </div><!-- /.article-text -->
+
+    <!-- CTA -->
+    <div class="article-cta anim">
+      <p class="article-cta-label">주니어솔로몬</p>
+      <h2>이 수업을 직접 경험해 보세요</h2>
+      <p>하브루타식 독서토론 수업이 궁금하시다면 언제든지 문의해 주세요.</p>
+      <div class="article-cta-actions">
+        <a href="tel:027948123" class="btn btn-primary">☎ 02-794-8123</a>
+        <a href="introduction.html#principal" class="btn btn-ghost" style="border-color:var(--border);color:var(--ink);">원장 소개 보기</a>
+      </div>
+    </div>
+
+  </div><!-- /.article-body -->
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo"><img src="logo.svg" class="logo-img" alt="" aria-hidden="true" width="60" height="46"><div><div class="logo-text">주니어솔로몬</div><div class="logo-sub">Jr. Solomon Academy</div></div></div>
+      <p>서울시 용산구 이촌로 200 LG프라자 4층 403호<br>대표전화: 02-794-8123 | 상담: 010-3212-8123<br>이메일: juniorsolomon@naver.com<br>중부교육지원청 제3336호</p>
+    </div>
+    <div class="footer-col"><h4>학원소개</h4><ul><li><a href="vision.html">비전 &amp; 교육철학</a></li><li><a href="mission.html">교육방향</a></li><li><a href="introduction.html">선생님 소개</a></li><li><a href="facility.html">시설안내</a></li></ul></div>
+    <div class="footer-col"><h4>프로그램</h4><ul><li><a href="curriculum.html">커리큘럼</a></li><li><a href="edu-1.html">소포스에듀</a></li><li><a href="fee.html">교습비 안내</a></li></ul></div>
+    <div class="footer-col"><h4>커뮤니티</h4><ul><li><a href="board-notice.html">공지사항</a></li><li><a href="board-gallery.html">갤러리</a></li><li><a href="board-qna.html">Q&amp;A</a></li><li><a href="board-review.html">수강후기</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2017–2026 주니어솔로몬. All rights reserved.</span><span>2022 한국브랜드소비자평가 대상</span></div>
+</footer>
+
+<button class="scroll-top" id="scrollTop" aria-label="맨 위로"><svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04L10.75 5.612V16.25A.75.75 0 0 1 10 17Z"/></svg></button>
+
+<script>
+(function(){
+  var h=document.getElementById('header');
+  window.addEventListener('scroll',function(){h.classList.toggle('scrolled',window.scrollY>40);},{passive:true});
+  var st=document.getElementById('scrollTop');
+  window.addEventListener('scroll',function(){st.classList.toggle('visible',window.scrollY>400);},{passive:true});
+  st.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  var t=document.getElementById('menuToggle'),m=document.getElementById('mobileNav');
+  t.addEventListener('click',function(){var o=m.classList.toggle('open');t.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';});
+  m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){m.classList.remove('open');t.setAttribute('aria-expanded','false');document.body.style.overflow='';});});
+  document.querySelectorAll('.nav-item button.nav-link').forEach(function(btn){
+    btn.addEventListener('click',function(){var e=btn.getAttribute('aria-expanded')==='true';document.querySelectorAll('.nav-item button.nav-link').forEach(function(b){b.setAttribute('aria-expanded','false');});btn.setAttribute('aria-expanded',!e);});
+  });
+  document.addEventListener('click',function(e){if(!e.target.closest('.nav-item'))document.querySelectorAll('.nav-item button.nav-link').forEach(function(b){b.setAttribute('aria-expanded','false');});});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.08});
+  document.querySelectorAll('.anim').forEach(function(el){io.observe(el);});
+})();
+</script>
+</body>
+</html>
