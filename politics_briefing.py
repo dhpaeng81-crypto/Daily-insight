@@ -120,6 +120,17 @@ def is_duplicate(title, existing_titles, threshold=0.7):
             return True
     return False
 
+def is_stale(entry, max_age_days=2):
+    import time
+    for attr in ("published_parsed", "updated_parsed"):
+        t = getattr(entry, attr, None)
+        if t:
+            age = (now_kst().timestamp() - time.mktime(t)) / 86400
+            if age > max_age_days:
+                return True
+            return False
+    return False
+
 def collect_news():
     all_news = []
     seen_titles = []
@@ -134,6 +145,9 @@ def collect_news():
                     break
                 title = entry.get("title", "").strip()
                 if not title:
+                    continue
+                if is_stale(entry):
+                    print(f"  오래된 기사 제외: {title[:30]}...")
                     continue
                 if is_duplicate(title, seen_titles):
                     print(f"  중복 제거: {title[:30]}...")
